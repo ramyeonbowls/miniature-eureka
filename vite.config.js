@@ -12,6 +12,7 @@ export default defineConfig({
                 'resources/sass/pages/auth.scss',
                 'resources/js/app.js',
                 'resources/js/assets/static/js/initTheme.js',
+                'resources/js/assets/static/js/components/dark.js',
             ],
             refresh: true,
         }),
@@ -32,5 +33,9 @@ export default defineConfig({
             '~perfect-scrollbar': resolve(__dirname, 'node_modules/perfect-scrollbar'),
             '~@fontsource': resolve(__dirname, 'node_modules/@fontsource'),
         },
+    },
+    build: {
+        sourcemap: true,
+        chunkSizeWarningLimit: 1000
     },
 });

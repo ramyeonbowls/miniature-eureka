@@ -15,7 +15,7 @@
         @yield('favicon')
 
         <!-- Scripts -->
-        @vite(['resources/sass/app.scss', 'resources/sass/themes/dark/app-dark.scss', 'resources/sass/pages/auth.scss', 'resources/js/app.js'])
+        @vite(['resources/sass/app.scss', 'resources/sass/themes/dark/app-dark.scss', 'resources/sass/pages/auth.scss'])
     </head>
     <body>
         @vite(['resources/js/assets/static/js/initTheme.js'])

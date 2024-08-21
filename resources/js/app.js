@@ -8,6 +8,17 @@ import './bootstrap'
 import { createApp } from 'vue'
 import './assets/mazer'
 import featherIcons from 'feather-icons'
+import PerfectScrollbar from 'perfect-scrollbar'
+import App from './App.vue'
+import routes from './routes'
+import { createRouter, createWebHistory } from 'vue-router'
+
+const router = createRouter({
+    history: createWebHistory(),
+    linkActiveClass: 'active',
+    routes,
+})
+
 featherIcons.replace()
 
 /**
@@ -16,7 +27,7 @@ featherIcons.replace()
  * to use in your application's views. An example is included for you.
  */
 
-const app = createApp({})
+const app = createApp(App)
 
 /**
  * The following block of code may be used to automatically register your
@@ -36,4 +47,5 @@ const app = createApp({})
  * scaffolding. Otherwise, you will need to add an element yourself.
  */
 
+app.use(router)
 app.mount('#page-container')
