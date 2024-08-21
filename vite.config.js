@@ -27,7 +27,6 @@ export default defineConfig({
     resolve: {
         alias: {
             vue: 'vue/dist/vue.esm-bundler.js',
-            '@': normalizePath(resolve(__dirname, 'resources')),
             '~bootstrap': resolve(__dirname, 'node_modules/bootstrap'),
             '~bootstrap-icons': resolve(__dirname, 'node_modules/bootstrap-icons'),
             '~perfect-scrollbar': resolve(__dirname, 'node_modules/perfect-scrollbar'),
