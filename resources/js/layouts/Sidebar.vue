@@ -39,21 +39,21 @@
                         <li class="sidebar-title">{{ sidebarItem.name }}</li>
                     </template>
                     <template v-else>
-                        <li :class="['sidebar-item', { 'has-sub': sidebarItem.submenu && sidebarItem.submenu.length > 0 }]">
-                            <a :href="sidebarItem.url !== undefined ? sidebarItem.url : '#'" class="sidebar-link">
+                        <li :class="['sidebar-item', { active: sidebarItem.url === $route.fullPath }, { 'has-sub': sidebarItem.submenu && sidebarItem.submenu.length > 0 }]">
+                            <router-link :to="sidebarItem.url !== undefined ? sidebarItem.url : '#'" class="sidebar-link">
                                 <i :class="'bi bi-' + sidebarItem.icon"></i>
                                 <span>{{ sidebarItem.name }}</span>
-                            </a>
+                            </router-link>
                             <template v-if="sidebarItem.submenu && sidebarItem.submenu.length > 0">
-                                <ul class="submenu">
+                                <ul :class="['submenu', { active: sidebarItem.url === $route.fullPath }]">
                                     <template v-for="sub in sidebarItem.submenu">
-                                        <li :class="['submenu-item', { 'has-sub': sub.submenu && sub.submenu.length > 0 }]">
-                                            <a :href="sub.url" class="submenu-link">{{ sub.name }}</a>
+                                        <li :class="['submenu-item', { active: sub.url === $route.fullPath }, { 'has-sub': sub.submenu && sub.submenu.length > 0 }]">
+                                            <router-link :to="sub.url" class="submenu-link">{{ sub.name }}</router-link>
                                             <template v-if="sub.submenu && sub.submenu.length">
                                                 <ul class="submenu submenu-level-2">
                                                     <template v-for="subsub in sub.submenu">
-                                                        <li class="submenu-item">
-                                                            <a :href="subsub.url" class="submenu-link">{{ subsub.name }}</a>
+                                                        <li :class="['submenu-item', { active: subsub.url === $route.fullPath }]">
+                                                            <router-link :to="subsub.url" class="submenu-link">{{ subsub.name }}</router-link>
                                                         </li>
                                                     </template>
                                                 </ul>
@@ -72,7 +72,7 @@
 
 <script>
 export default {
-    name: 'Sidebar',
+    name: 'sidebarItems',
 
     data() {
         return {
@@ -83,7 +83,7 @@ export default {
                 },
                 {
                     name: 'Dashboard',
-                    url: 'index.html',
+                    url: '/',
                     icon: 'grid-fill',
                 },
                 {
@@ -93,75 +93,75 @@ export default {
                     submenu: [
                         {
                             name: 'Accordion',
-                            url: 'component-accordion.html',
+                            url: 'component-accordion',
                         },
                         {
                             name: 'Alert',
-                            url: 'component-alert.html',
+                            url: 'component-alert',
                         },
                         {
                             name: 'Badge',
-                            url: 'component-badge.html',
+                            url: 'component-badge',
                         },
                         {
                             name: 'Breadcrumb',
-                            url: 'component-breadcrumb.html',
+                            url: 'component-breadcrumb',
                         },
                         {
                             name: 'Button',
-                            url: 'component-button.html',
+                            url: 'component-button',
                         },
                         {
                             name: 'Card',
-                            url: 'component-card.html',
+                            url: 'component-card',
                         },
                         {
                             name: 'Carousel',
-                            url: 'component-carousel.html',
+                            url: 'component-carousel',
                         },
                         {
                             name: 'Collapse',
-                            url: 'component-collapse.html',
+                            url: 'component-collapse',
                         },
                         {
                             name: 'Dropdown',
-                            url: 'component-dropdown.html',
+                            url: 'component-dropdown',
                         },
                         {
                             name: 'List Group',
-                            url: 'component-list-group.html',
+                            url: 'component-list-group',
                         },
                         {
                             name: 'Modal',
-                            url: 'component-modal.html',
+                            url: 'component-modal',
                         },
                         {
                             name: 'Navs',
-                            url: 'component-navs.html',
+                            url: 'component-navs',
                         },
                         {
                             name: 'Pagination',
-                            url: 'component-pagination.html',
+                            url: 'component-pagination',
                         },
                         {
                             name: 'Placeholder',
-                            url: 'component-placeholder.html',
+                            url: 'component-placeholder',
                         },
                         {
                             name: 'Progress',
-                            url: 'component-progress.html',
+                            url: 'component-progress',
                         },
                         {
                             name: 'Spinner',
-                            url: 'component-spinner.html',
+                            url: 'component-spinner',
                         },
                         {
                             name: 'Toasts',
-                            url: 'component-toasts.html',
+                            url: 'component-toasts',
                         },
                         {
                             name: 'Tooltip',
-                            url: 'component-tooltip.html',
+                            url: 'component-tooltip',
                         },
                     ],
                 },
@@ -172,35 +172,35 @@ export default {
                     submenu: [
                         {
                             name: 'Avatar',
-                            url: 'extra-component-avatar.html',
+                            url: 'extra-component-avatar',
                         },
                         {
                             name: 'Comment',
-                            url: 'extra-component-comment.html',
+                            url: 'extra-component-comment',
                         },
                         {
                             name: 'Divider',
-                            url: 'extra-component-divider.html',
+                            url: 'extra-component-divider',
                         },
                         {
                             name: 'Date Picker',
-                            url: 'extra-component-date-picker.html',
+                            url: 'extra-component-date-picker',
                         },
                         {
                             name: 'Flag',
-                            url: 'extra-component-flag.html',
+                            url: 'extra-component-flag',
                         },
                         {
                             name: 'Sweet Alert',
-                            url: 'extra-component-sweetalert.html',
+                            url: 'extra-component-sweetalert',
                         },
                         {
                             name: 'Toastify',
-                            url: 'extra-component-toastify.html',
+                            url: 'extra-component-toastify',
                         },
                         {
                             name: 'Rating',
-                            url: 'extra-component-rating.html',
+                            url: 'extra-component-rating',
                         },
                     ],
                 },
@@ -211,23 +211,23 @@ export default {
                     submenu: [
                         {
                             name: 'Default Layout',
-                            url: 'layout-default.html',
+                            url: 'layout-default',
                         },
                         {
                             name: '1 Column',
-                            url: 'layout-vertical-1-column.html',
+                            url: 'layout-vertical-1-column',
                         },
                         {
                             name: 'Vertical Navbar',
-                            url: 'layout-vertical-navbar.html',
+                            url: 'layout-vertical-navbar',
                         },
                         {
                             name: 'RTL Layout',
-                            url: 'layout-rtl.html',
+                            url: 'layout-rtl',
                         },
                         {
                             name: 'Horizontal Menu',
-                            url: 'layout-horizontal.html',
+                            url: 'layout-horizontal',
                         },
                     ],
                 },
@@ -242,33 +242,33 @@ export default {
                     submenu: [
                         {
                             name: 'Input',
-                            url: 'form-element-input.html',
+                            url: 'form-element-input',
                         },
                         {
                             name: 'Input Group',
-                            url: 'form-element-input-group.html',
+                            url: 'form-element-input-group',
                         },
                         {
                             name: 'Select',
-                            url: 'form-element-select.html',
+                            url: 'form-element-select',
                         },
                         {
                             name: 'Radio',
-                            url: 'form-element-radio.html',
+                            url: 'form-element-radio',
                         },
                         {
                             name: 'Checkbox',
-                            url: 'form-element-checkbox.html',
+                            url: 'form-element-checkbox',
                         },
                         {
                             name: 'Textarea',
-                            url: 'form-element-textarea.html',
+                            url: 'form-element-textarea',
                         },
                     ],
                 },
                 {
                     name: 'Form Layout',
-                    url: 'form-layout.html',
+                    url: 'form-layout',
                     icon: 'file-earmark-medical-fill',
                 },
                 {
@@ -278,7 +278,7 @@ export default {
                     submenu: [
                         {
                             name: 'Parsley',
-                            url: 'form-validation-parsley.html',
+                            url: 'form-validation-parsley',
                         },
                     ],
                 },
@@ -289,25 +289,25 @@ export default {
                     submenu: [
                         {
                             name: 'Quill',
-                            url: 'form-editor-quill.html',
+                            url: 'form-editor-quill',
                         },
                         {
                             name: 'CKEditor',
-                            url: 'form-editor-ckeditor.html',
+                            url: 'form-editor-ckeditor',
                         },
                         {
                             name: 'Summernote',
-                            url: 'form-editor-summernote.html',
+                            url: 'form-editor-summernote',
                         },
                         {
                             name: 'TinyMCE',
-                            url: 'form-editor-tinymce.html',
+                            url: 'form-editor-tinymce',
                         },
                     ],
                 },
                 {
                     name: 'Table',
-                    url: 'table.html',
+                    url: 'table',
                     icon: 'grid-1x2-fill',
                 },
                 {
@@ -317,11 +317,11 @@ export default {
                     submenu: [
                         {
                             name: 'Datatable',
-                            url: 'table-datatable.html',
+                            url: 'table-datatable',
                         },
                         {
                             name: 'Datatable (jQuery)',
-                            url: 'table-datatable-jquery.html',
+                            url: 'table-datatable-jquery',
                         },
                     ],
                 },
@@ -336,15 +336,15 @@ export default {
                     submenu: [
                         {
                             name: 'Chatbox',
-                            url: 'ui-widgets-chatbox.html',
+                            url: 'ui-widgets-chatbox',
                         },
                         {
                             name: 'Pricing',
-                            url: 'ui-widgets-pricing.html',
+                            url: 'ui-widgets-pricing',
                         },
                         {
                             name: 'To-do List',
-                            url: 'ui-widgets-todolist.html',
+                            url: 'ui-widgets-todolist',
                         },
                     ],
                 },
@@ -355,15 +355,15 @@ export default {
                     submenu: [
                         {
                             name: 'Bootstrap Icons ',
-                            url: 'ui-icons-bootstrap-icons.html',
+                            url: 'ui-icons-bootstrap-icons',
                         },
                         {
                             name: 'Fontawesome',
-                            url: 'ui-icons-fontawesome.html',
+                            url: 'ui-icons-fontawesome',
                         },
                         {
                             name: 'Dripicons',
-                            url: 'ui-icons-dripicons.html',
+                            url: 'ui-icons-dripicons',
                         },
                     ],
                 },
@@ -374,11 +374,11 @@ export default {
                     submenu: [
                         {
                             name: 'ChartJS',
-                            url: 'ui-chart-chartjs.html',
+                            url: 'ui-chart-chartjs',
                         },
                         {
                             name: 'Apexcharts',
-                            url: 'ui-chart-apexcharts.html',
+                            url: 'ui-chart-apexcharts',
                         },
                     ],
                 },
@@ -386,7 +386,7 @@ export default {
                     name: 'File Uploader',
                     key: 'ui-file',
                     icon: 'cloud-arrow-up-fill',
-                    url: 'ui-file-uploader.html',
+                    url: 'ui-file-uploader',
                 },
                 {
                     name: 'Maps',
@@ -395,19 +395,19 @@ export default {
                     submenu: [
                         {
                             name: 'Google Map',
-                            url: 'ui-map-google-map.html',
+                            url: 'ui-map-google-map',
                         },
                         {
                             name: 'JS Vector Map',
-                            url: 'ui-map-jsvectormap.html',
+                            url: 'ui-map-jsvectormap',
                         },
                         {
                             name: 'Leaflet Map',
-                            url: 'ui-map-leaflet.html',
+                            url: 'ui-map-leaflet',
                         },
                         {
                             name: 'OpenLayers Map',
-                            url: 'ui-map-openlayers.html',
+                            url: 'ui-map-openlayers',
                         },
                     ],
                 },
@@ -423,7 +423,7 @@ export default {
                             submenu: [
                                 {
                                     name: 'Second Level',
-                                    url: 'ui-multi-level-menu.html',
+                                    url: 'ui-multi-level-menu',
                                 },
                                 {
                                     name: 'Second Level Menu',
@@ -451,25 +451,25 @@ export default {
                     name: 'Email Application',
                     key: 'application-email',
                     icon: 'envelope-fill',
-                    url: 'application-email.html',
+                    url: 'application-email',
                 },
                 {
                     name: 'Chat Application',
                     key: 'application-chat',
                     icon: 'chat-dots-fill',
-                    url: 'application-chat.html',
+                    url: 'application-chat',
                 },
                 {
                     name: 'Photo Gallery',
                     key: 'application-gallery',
                     icon: 'image-fill',
-                    url: 'application-gallery.html',
+                    url: 'application-gallery',
                 },
                 {
                     name: 'Checkout Page',
                     key: 'application-checkout',
                     icon: 'basket-fill',
-                    url: 'application-checkout.html',
+                    url: 'application-checkout',
                 },
                 {
                     name: 'Account',
@@ -478,11 +478,11 @@ export default {
                     submenu: [
                         {
                             name: 'Profile',
-                            url: 'account-profile.html',
+                            url: 'account-profile',
                         },
                         {
                             name: 'Security',
-                            url: 'account-security.html',
+                            url: 'account-security',
                         },
                     ],
                 },
@@ -493,15 +493,15 @@ export default {
                     submenu: [
                         {
                             name: 'Login',
-                            url: 'auth-login.html',
+                            url: 'auth-login',
                         },
                         {
                             name: 'Register',
-                            url: 'auth-register.html',
+                            url: 'auth-register',
                         },
                         {
                             name: 'Forgot Password',
-                            url: 'auth-forgot-password.html',
+                            url: 'auth-forgot-password',
                         },
                     ],
                 },
@@ -512,15 +512,15 @@ export default {
                     submenu: [
                         {
                             name: '403',
-                            url: 'error-403.html',
+                            url: 'error-403',
                         },
                         {
                             name: '404',
-                            url: 'error-404.html',
+                            url: 'error-404',
                         },
                         {
                             name: '500',
-                            url: 'error-500.html',
+                            url: 'error-500',
                         },
                     ],
                 },
@@ -550,9 +550,7 @@ export default {
         }
     },
 
-    mounted() {
-        console.log(window)
-    },
+    mounted() {},
 
     methods: {},
 

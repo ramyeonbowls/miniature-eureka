@@ -6,7 +6,6 @@
 
 import './bootstrap'
 import { createApp } from 'vue'
-import './assets/mazer'
 import featherIcons from 'feather-icons'
 import PerfectScrollbar from 'perfect-scrollbar'
 import App from './App.vue'

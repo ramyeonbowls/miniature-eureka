@@ -2,10 +2,18 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+Auth::routes([
+    'register' => true,
+    'verify' => false,
+    'confirm' => true,
+    'reset' => true
+]);
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+    Route::get('/{any}', [App\Http\Controllers\HomeController::class, 'index'])
+        ->where('any', '.*')
+        ->name('catch-all')
+        ->middleware(['password.confirm']);
 });
-
-Auth::routes();
-
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
