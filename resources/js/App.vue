@@ -29,15 +29,14 @@ export default {
         footerItems,
     },
 
-    data() {
-        return {
-            form: {
-                data: '',
-            },
-        }
+    mounted() {
+        document.addEventListener('DOMContentLoaded', () => {
+            let loader = this.$loading.show()
+            setTimeout(() => {
+                loader.hide()
+            }, 1000)
+        })
     },
-
-    mounted() {},
 
     methods: {},
 

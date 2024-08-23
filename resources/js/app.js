@@ -11,6 +11,8 @@ import PerfectScrollbar from 'perfect-scrollbar'
 import App from './App.vue'
 import routes from './routes'
 import { createRouter, createWebHistory } from 'vue-router'
+import { LoadingPlugin } from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/css/index.css'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -46,5 +48,6 @@ const app = createApp(App)
  * scaffolding. Otherwise, you will need to add an element yourself.
  */
 
+app.use(LoadingPlugin, { enforceFocus: false, canCancel: false, loader: 'spinner', color: '#8080ff', backgroundColor: '#111111', width: 110, height: 110, opacity: 0.4, zIndex: 1999 })
 app.use(router)
 app.mount('#page-container')
