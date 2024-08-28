@@ -13,12 +13,35 @@ import routes from './routes'
 import { createRouter, createWebHistory } from 'vue-router'
 import { LoadingPlugin } from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
+import VueSweetalert2 from 'vue-sweetalert2'
+import 'sweetalert2/dist/sweetalert2.min.css'
 
 const router = createRouter({
     history: createWebHistory(),
     linkActiveClass: 'active',
     routes,
 })
+
+const gloading = {
+    enforceFocus: false,
+    canCancel: false,
+    loader: 'spinner',
+    color: '#8080ff',
+    backgroundColor: '#111111',
+    width: 110,
+    height: 110,
+    opacity: 0.4,
+    zIndex: 1999,
+}
+
+const gSwal = {
+    buttonsStyling: false,
+    customClass: {
+        htmlContainer: 'mx-2 fs-sm',
+        confirmButton: 'btn btn-sm btn-primary me-2',
+        cancelButton: 'btn btn-sm btn-secondary',
+    },
+}
 
 featherIcons.replace()
 
@@ -48,6 +71,7 @@ const app = createApp(App)
  * scaffolding. Otherwise, you will need to add an element yourself.
  */
 
-app.use(LoadingPlugin, { enforceFocus: false, canCancel: false, loader: 'spinner', color: '#8080ff', backgroundColor: '#111111', width: 110, height: 110, opacity: 0.4, zIndex: 1999 })
+app.use(VueSweetalert2)
+app.use(LoadingPlugin, gloading)
 app.use(router)
 app.mount('#page-container')

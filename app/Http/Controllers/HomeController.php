@@ -25,4 +25,29 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    /**
+     * Show forbidden page.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function forbidden()
+    {
+        if(auth()->user()->activated) {
+            return redirect(\App\Providers\RouteServiceProvider::HOME);
+        }
+
+        return view('errors.403');
+    }
+
+    public function userInfo()
+    {
+        $user = auth()->user();
+
+        return response()->json([
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+        ], 200);
+    }
 }

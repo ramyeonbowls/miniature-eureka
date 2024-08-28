@@ -29,6 +29,10 @@ export default {
         footerItems,
     },
 
+    created() {
+        window.addEventListener('blur', this.handleAppBlur)
+    },
+
     mounted() {
         document.addEventListener('DOMContentLoaded', () => {
             let loader = this.$loading.show()
@@ -38,7 +42,20 @@ export default {
         })
     },
 
-    methods: {},
+    beforeUnmount() {
+        window.removeEventListener('blur', this.handleAppBlur)
+    },
+
+    methods: {
+        handleAppBlur() {
+            // console.log('App lost focus, user may have switched apps.')
+            this.$swal.fire({
+                icon: "warning",
+                title: "Warning",
+                text: 'Alert: Screenshot attempt detected!'
+            })
+        },
+    },
 
     computed: {},
 }
