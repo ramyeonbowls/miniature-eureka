@@ -256,11 +256,6 @@ if (document.readyState !== 'loading') {
 window.Sidebar = Sidebar
 window.onFirstLoad = onFirstLoad
 
-if (sidebarEl) {
-    // initialize
-    const sidebar = new window.Sidebar(sidebarEl)
-}
-
 // NOTE use this to reinitialize sidebar with recalculate height
 // NOTE fixed dropdown smooth animation
 /* 

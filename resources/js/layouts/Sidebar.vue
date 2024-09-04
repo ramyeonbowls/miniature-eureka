@@ -86,7 +86,7 @@ export default {
                     const sidebarEl = document.getElementById('sidebar');
                     if (sidebarEl) {
                         window.onFirstLoad(sidebarEl)
-                        const sidebar = new window.Sidebar(sidebarEl)
+                        new window.Sidebar(sidebarEl)
                     }
                 }, 1000)
             })
