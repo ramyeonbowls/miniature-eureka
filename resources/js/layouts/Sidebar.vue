@@ -34,35 +34,25 @@
         </div>
         <div class="sidebar-menu">
             <ul class="menu">
-                <template v-for="sidebarItem in sidebarItems">
-                    <template v-if="sidebarItem.isTitle">
-                        <li class="sidebar-title">{{ sidebarItem.name }}</li>
+                <template v-for="menuItem in webmenus">
+                    <template v-if="menuItem.childs.length > 0 || menuItem.menu_link === 'N'">
+                        <li class="sidebar-item has-sub">
+                            <a href="javascript:void(0)" class="sidebar-link">
+                                <i :class="menuItem.menu_icon"></i>
+                                <span>{{ menuItem.menu_label }}</span>
+                            </a>
+                            <ul class="submenu">
+                                <li class="submenu-item" v-for="(childs, i) in menuItem.childs" :key="i">
+                                    <router-link :to="{ name: childs.menu_fn }" class="submenu-link">{{ childs.menu_label }}</router-link>
+                                </li>
+                            </ul>
+                        </li>
                     </template>
                     <template v-else>
-                        <li :class="['sidebar-item', { active: sidebarItem.url === $route.fullPath }, { 'has-sub': sidebarItem.submenu && sidebarItem.submenu.length > 0 }]">
-                            <router-link :to="sidebarItem.url !== undefined ? sidebarItem.url : '#'" class="sidebar-link">
-                                <i :class="'bi bi-' + sidebarItem.icon"></i>
-                                <span>{{ sidebarItem.name }}</span>
-                            </router-link>
-                            <template v-if="sidebarItem.submenu && sidebarItem.submenu.length > 0">
-                                <ul :class="['submenu', { active: sidebarItem.url === $route.fullPath }]">
-                                    <template v-for="sub in sidebarItem.submenu">
-                                        <li :class="['submenu-item', { active: sub.url === $route.fullPath }, { 'has-sub': sub.submenu && sub.submenu.length > 0 }]">
-                                            <router-link :to="sub.url" class="submenu-link">{{ sub.name }}</router-link>
-                                            <template v-if="sub.submenu && sub.submenu.length">
-                                                <ul class="submenu submenu-level-2">
-                                                    <template v-for="subsub in sub.submenu">
-                                                        <li :class="['submenu-item', { active: subsub.url === $route.fullPath }]">
-                                                            <router-link :to="subsub.url" class="submenu-link">{{ subsub.name }}</router-link>
-                                                        </li>
-                                                    </template>
-                                                </ul>
-                                            </template>
-                                        </li>
-                                    </template>
-                                </ul>
-                            </template>
-                        </li>
+                        <router-link :to="{ name: menuItem.menu_fn }" class="sidebar-link">
+                            <i :class="menuItem.menu_icon"></i>
+                            <span>{{ menuItem.menu_label }}</span>
+                        </router-link>
                     </template>
                 </template>
             </ul>
@@ -76,35 +66,35 @@ export default {
 
     data() {
         return {
-            sidebarItems: [
-                {
-                    name: 'Menu',
-                    isTitle: true,
-                },
-                {
-                    name: 'Dashboard',
-                    url: '/',
-                    icon: 'grid-fill',
-                },
-                {
-                    name: 'Setting',
-                    key: 'setting',
-                    icon: 'stack',
-                    submenu: [
-                        {
-                            name: 'Role Menu',
-                            url: '/role-menu',
-                        },
-                    ],
-                },
-                
-            ],
+            webmenus: [],
         }
     },
 
-    mounted() {},
+    mounted() {
+        this.myWebMenu()
+    },
 
-    methods: {},
+    methods: {
+        myWebMenu() {
+            this.webmenus = [];
+
+            window.axios.get('/my-web-menu')
+            .then((response) => {
+                this.webmenus = response.data;
+
+                setTimeout(() => {
+                    const sidebarEl = document.getElementById('sidebar');
+                    if (sidebarEl) {
+                        window.onFirstLoad(sidebarEl)
+                        const sidebar = new window.Sidebar(sidebarEl)
+                    }
+                }, 1000)
+            })
+            .catch((e) => {
+                console.error(e);
+            })
+        },
+    },
 
     computed: {},
 }

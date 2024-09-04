@@ -254,6 +254,7 @@ if (document.readyState !== 'loading') {
 
 // NOTE make Sidebar method as a global function
 window.Sidebar = Sidebar
+window.onFirstLoad = onFirstLoad
 
 if (sidebarEl) {
     // initialize
