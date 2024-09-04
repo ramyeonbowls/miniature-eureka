@@ -100,20 +100,21 @@ export default {
     },
 
     mounted() {
-        this.userinfo();
+        this.userinfo()
     },
 
     methods: {
         userinfo() {
-            this.user = {};
+            this.user = {}
 
-            window.axios.get('/userinfo')
-            .then((response) => {
-                this.user = response.data;
-            })
-            .catch((e) => {
-                console.error(e);
-            })
+            window.axios
+                .get('/userinfo')
+                .then((response) => {
+                    this.user = response.data
+                })
+                .catch((e) => {
+                    console.error(e)
+                })
         },
 
         logout() {

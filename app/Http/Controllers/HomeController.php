@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Logs;
+use App\Services\Web\WebMenuService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class HomeController extends Controller
 {
@@ -49,5 +52,22 @@ class HomeController extends Controller
             'name' => $user->name,
             'email' => $user->email,
         ], 200);
+    }
+
+    public function webMenuAcl()
+    {
+        $logs = new Logs( auth()->user()->email .'_'. Arr::last(explode("\\", get_class())) );
+        $logs->write(__FUNCTION__, "START");
+
+        $my_webmenus = [];
+        try {
+            $webMenuService = new WebMenuService(new \App\Repositories\Web\WebMenuRepository());
+            $my_webmenus = $webMenuService->getAccessControlList(auth()->user()->email);
+        } catch (\Throwable $th) {
+            $logs->write("ERROR", $th->getMessage());
+        }
+        $logs->write(__FUNCTION__, "STOP\r\n");
+
+        return response()->json($my_webmenus, 200);
     }
 }
