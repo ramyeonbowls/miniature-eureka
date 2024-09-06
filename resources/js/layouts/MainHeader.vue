@@ -7,7 +7,7 @@
                 </a>
 
                 <div class="logo">
-                    <a href="/"><img src="./../assets/static/images/logo/logo.svg" alt="Logo"></a>
+                    <a href="/"><img src="./../assets/static/images/logo/logo.svg" alt="Logo" /></a>
                 </div>
                 <div class="header-top-right">
                     <div class="theme-toggle d-flex gap-2">
@@ -38,14 +38,14 @@
         <nav class="main-navbar" :class="{ 'dropdown-visible': isDropdownVisible, 'dropdown-hidden': !isDropdownVisible }">
             <div class="container">
                 <ul>
-                    <li class="menu-item ">
-                        <router-link to="/" class='menu-link'>
+                    <li class="menu-item">
+                        <router-link to="/" class="menu-link">
                             <span> Home</span>
                         </router-link>
                     </li>
                     <template v-if="!isAuthenticated">
-                        <li class="menu-item ">
-                            <router-link to="/mlogin" class='menu-link'>
+                        <li class="menu-item">
+                            <router-link to="/mlogin" class="menu-link">
                                 <span> Login</span>
                             </router-link>
                         </li>
@@ -76,25 +76,25 @@ export default {
     },
 
     mounted() {
-        this.getInfo();
-        window.addEventListener('resize', this.handleResize);
-        this.handleResize();
+        this.getInfo()
+        window.addEventListener('resize', this.handleResize)
+        this.handleResize()
     },
 
     beforeDestroy() {
-        window.removeEventListener('resize', this.handleResize);
+        window.removeEventListener('resize', this.handleResize)
     },
 
     methods: {
         toggleDropdown() {
-            this.isDropdownVisible = !this.isDropdownVisible;
+            this.isDropdownVisible = !this.isDropdownVisible
         },
 
         handleResize() {
             if (window.innerWidth >= 992) {
-                this.isDropdownVisible = true;
+                this.isDropdownVisible = true
             } else {
-                this.isDropdownVisible = false;
+                this.isDropdownVisible = false
             }
         },
 
@@ -102,17 +102,17 @@ export default {
             this.user = {}
 
             window.axios
-            .get('/getInfo')
-            .then((response) => {
-                this.user = response.data;
+                .get('/getInfo')
+                .then((response) => {
+                    this.user = response.data
 
-                if(response.data.name!=''){
-                    this.isAuthenticated = true;
-                }
-            })
-            .catch((e) => {
-                console.error(e)
-            });
+                    if (response.data.name != '') {
+                        this.isAuthenticated = true
+                    }
+                })
+                .catch((e) => {
+                    console.error(e)
+                })
         },
 
         logout() {

@@ -76,23 +76,24 @@ export default {
 
     methods: {
         myWebMenu() {
-            this.webmenus = [];
+            this.webmenus = []
 
-            window.axios.get('/my-web-menu')
-            .then((response) => {
-                this.webmenus = response.data;
+            window.axios
+                .get('/my-web-menu')
+                .then((response) => {
+                    this.webmenus = response.data
 
-                setTimeout(() => {
-                    const sidebarEl = document.getElementById('sidebar');
-                    if (sidebarEl) {
-                        window.onFirstLoad(sidebarEl)
-                        new window.Sidebar(sidebarEl)
-                    }
-                }, 1000)
-            })
-            .catch((e) => {
-                console.error(e);
-            })
+                    setTimeout(() => {
+                        const sidebarEl = document.getElementById('sidebar')
+                        if (sidebarEl) {
+                            window.onFirstLoad(sidebarEl)
+                            new window.Sidebar(sidebarEl)
+                        }
+                    }, 1000)
+                })
+                .catch((e) => {
+                    console.error(e)
+                })
         },
     },
 

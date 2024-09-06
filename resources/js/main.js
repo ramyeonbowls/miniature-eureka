@@ -19,7 +19,7 @@ import 'sweetalert2/dist/sweetalert2.min.css'
 const router = createRouter({
     history: createWebHistory(),
     linkActiveClass: 'active',
-    routes: _routes
+    routes: _routes,
 })
 
 const gloading = {
@@ -43,12 +43,12 @@ const gSwal = {
     },
 }
 
-const token = document.head.querySelector('meta[name="csrf-token"]').content;
+const token = document.head.querySelector('meta[name="csrf-token"]').content
 
 if (token) {
-    axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
+    axios.defaults.headers.common['X-CSRF-TOKEN'] = token
 }
-axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = true
 
 featherIcons.replace()
 

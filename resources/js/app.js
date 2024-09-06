@@ -15,6 +15,11 @@ import { LoadingPlugin } from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
 import VueSweetalert2 from 'vue-sweetalert2'
 import 'sweetalert2/dist/sweetalert2.min.css'
+import $ from 'jquery'
+import 'datatables.net-bs5/css/dataTables.bootstrap5.css'
+import 'datatables.net-bs5'
+
+window.$ = window.jQuery = $
 
 const router = createRouter({
     history: createWebHistory(),

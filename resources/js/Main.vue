@@ -2,7 +2,7 @@
     <div id="app-usr">
         <div id="main" class="layout-horizontal">
             <headerItems></headerItems>
-        
+
             <div class="content-wrapper container">
                 <router-view></router-view>
             </div>

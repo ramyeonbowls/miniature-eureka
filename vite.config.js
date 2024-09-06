@@ -25,6 +25,7 @@ export default defineConfig({
                 'resources/js/assets/static/js/initTheme.js',
                 'resources/js/assets/static/js/components/dark.js',
                 'resources/js/assets/static/js/components/sidebar.js',
+                'resources/js/assets/static/js/pages/simple-datatables.js',
             ],
             refresh: true,
         }),

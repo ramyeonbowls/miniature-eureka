@@ -5,14 +5,19 @@ const routes = [
         component: () => import(/* webpackChunkName: "404" */ './layouts/404.vue'),
     },
     {
-        path: '/home',
+        path: '/dashboard',
         name: 'home',
         component: () => import(/* webpackChunkName: "home" */ './components/Home.vue'),
     },
     {
-        path: '/role-menu',
+        path: '/setting/role-menu',
         name: 'role_menu',
         component: () => import(/* webpackChunkName: "setting/role_menu" */ './components/setting/RoleMenu.vue'),
+    },
+    {
+        path: '/report/report-read-book',
+        name: 'report_read_book',
+        component: () => import(/* webpackChunkName: "report/report_read_book" */ './components/report/ReportReadBook.vue'),
     },
 ]
 
