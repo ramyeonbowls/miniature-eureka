@@ -70,4 +70,9 @@ class HomeController extends Controller
 
         return response()->json($my_webmenus, 200);
     }
+
+    public function main()
+    {
+        return view('main');
+    }
 }

@@ -38,6 +38,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
         
         $middleware->alias([
+            'role.user' => \App\Http\Middleware\CheckRole::class,
             'activated.user' => \App\Http\Middleware\ActivatedUser::class,
             'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
             'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
