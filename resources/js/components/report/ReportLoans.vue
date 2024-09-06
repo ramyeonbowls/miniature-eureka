@@ -3,7 +3,7 @@
 
     <!-- filter modal -->
     <div class="modal fade text-left modal-borderless" id="border-less" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Filter</h5>
@@ -13,7 +13,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-12 col-12">
+                        <div class="col-md-6 col-12">
                             <div class="row">
                                 <div class="col-md-12 mb-12">
                                     <div class="form-group">
@@ -48,10 +48,25 @@
                                         </select>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="row">
                                 <div class="col-md-12 mb-12">
                                     <div class="form-group">
                                         <label for="sdate" class="form-label">Tanggal</label>
                                         <Flatpickr v-model="filter.date" class="form-control flatpickr-range" :config="configdate" placeholder="Select date.."></Flatpickr>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-12">
+                                    <div class="form-group">
+                                        <label for="basicSelect4" class="form-label">Status</label>
+                                        <select class="form-select" id="basicSelect4">
+                                            <option>--</option>
+                                            <option>Dipinjam</option>
+                                            <option>Dikembalikan</option>
+                                            <option>Overdue</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -84,8 +99,11 @@
                             <th>Nama WL</th>
                             <th>Provinsi</th>
                             <th>Kab/Kota</th>
-                            <th>Jumlah Pembaca</th>
-                            <th>Total Jam</th>
+                            <th>Nama Member</th>
+                            <th>Tanggal Pinjam</th>
+                            <th>Judul Buku</th>
+                            <th>Tempo Kembali</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -93,169 +111,101 @@
                             <td>Gramedia</td>
                             <td>Jawa Barat</td>
                             <td>Bandung</td>
-                            <td>124</td>
-                            <td>42</td>
-                        </tr>
-                        <tr>
-                            <td>Erlangga</td>
-                            <td>Sumatera Utara</td>
-                            <td>Medan</td>
-                            <td>203</td>
-                            <td>56</td>
-                        </tr>
-                        <tr>
-                            <td>Mizan</td>
-                            <td>Jawa Tengah</td>
-                            <td>Semarang</td>
-                            <td>98</td>
-                            <td>33</td>
+                            <td>Ardi Pratama</td>
+                            <td>01 Januari 2024</td>
+                            <td>Belajar Laravel dari Dasar</td>
+                            <td>15 Januari 2024</td>
+                            <td><span class="badge bg-success">Dikembalikan</span></td>
                         </tr>
                         <tr>
                             <td>Balai Pustaka</td>
-                            <td>Bali</td>
-                            <td>Denpasar</td>
-                            <td>145</td>
-                            <td>49</td>
-                        </tr>
-                        <tr>
-                            <td>Andi Offset</td>
-                            <td>DKI Jakarta</td>
-                            <td>Jakarta Selatan</td>
-                            <td>310</td>
-                            <td>78</td>
-                        </tr>
-                        <tr>
-                            <td>Kanisius</td>
-                            <td>Kalimantan Timur</td>
-                            <td>Samarinda</td>
-                            <td>210</td>
-                            <td>64</td>
-                        </tr>
-                        <tr>
-                            <td>Salemba</td>
                             <td>Jawa Timur</td>
                             <td>Surabaya</td>
-                            <td>190</td>
-                            <td>55</td>
+                            <td>Siti Nurhaliza</td>
+                            <td>05 Februari 2024</td>
+                            <td>Pemrograman Vue.js Modern</td>
+                            <td>19 Februari 2024</td>
+                            <td><span class="badge bg-warning">Dipinjam</span></td>
                         </tr>
                         <tr>
-                            <td>Tiga Serangkai</td>
-                            <td>Sulawesi Selatan</td>
-                            <td>Makassar</td>
-                            <td>230</td>
-                            <td>62</td>
+                            <td>Pustaka Jaya</td>
+                            <td>DI Yogyakarta</td>
+                            <td>Yogyakarta</td>
+                            <td>Joko Santoso</td>
+                            <td>10 Maret 2024</td>
+                            <td>Desain UI/UX untuk Pemula</td>
+                            <td>24 Maret 2024</td>
+                            <td><span class="badge bg-success">Dikembalikan</span></td>
                         </tr>
                         <tr>
-                            <td>Obor</td>
-                            <td>Banten</td>
-                            <td>Serang</td>
-                            <td>132</td>
-                            <td>48</td>
+                            <td>Literasi Utama</td>
+                            <td>Sumatera Utara</td>
+                            <td>Medan</td>
+                            <td>Andi Wirawan</td>
+                            <td>15 April 2024</td>
+                            <td>Dasar-Dasar JavaScript</td>
+                            <td>29 April 2024</td>
+                            <td><span class="badge bg-warning">Dipinjam</span></td>
                         </tr>
                         <tr>
-                            <td>Deepublish</td>
-                            <td>Nusa Tenggara Barat</td>
-                            <td>Mataram</td>
-                            <td>180</td>
-                            <td>51</td>
+                            <td>Toko Buku Mandiri</td>
+                            <td>Jawa Tengah</td>
+                            <td>Semarang</td>
+                            <td>Rina Melati</td>
+                            <td>20 Mei 2024</td>
+                            <td>Pemrograman PHP untuk Pemula</td>
+                            <td>03 Juni 2024</td>
+                            <td><span class="badge bg-danger">Overdue</span></td>
                         </tr>
                         <tr>
-                            <td>Visimedia</td>
-                            <td>Papua</td>
-                            <td>Jayapura</td>
-                            <td>110</td>
-                            <td>44</td>
-                        </tr>
-                        <tr>
-                            <td>Bukune</td>
-                            <td>Jambi</td>
-                            <td>Kota Jambi</td>
-                            <td>167</td>
-                            <td>53</td>
-                        </tr>
-                        <tr>
-                            <td>Harfeey</td>
-                            <td>Sulawesi Tenggara</td>
-                            <td>Kendari</td>
-                            <td>146</td>
-                            <td>47</td>
-                        </tr>
-                        <tr>
-                            <td>Zikrul</td>
-                            <td>Lampung</td>
-                            <td>Bandar Lampung</td>
-                            <td>189</td>
-                            <td>59</td>
-                        </tr>
-                        <tr>
-                            <td>Putaka Utama</td>
-                            <td>Jawa Barat</td>
-                            <td>Bekasi</td>
-                            <td>215</td>
-                            <td>66</td>
-                        </tr>
-                        <tr>
-                            <td>Alfabeta</td>
-                            <td>Riau</td>
-                            <td>Pekanbaru</td>
-                            <td>128</td>
-                            <td>40</td>
-                        </tr>
-                        <tr>
-                            <td>Cetakan Mulia</td>
-                            <td>Maluku</td>
-                            <td>Ambon</td>
-                            <td>141</td>
-                            <td>45</td>
-                        </tr>
-                        <tr>
-                            <td>Ilman Press</td>
-                            <td>Bengkulu</td>
-                            <td>Kota Bengkulu</td>
-                            <td>163</td>
-                            <td>54</td>
-                        </tr>
-                        <tr>
-                            <td>Mentari</td>
+                            <td>Pustaka Sejahtera</td>
                             <td>Kalimantan Barat</td>
                             <td>Pontianak</td>
-                            <td>207</td>
-                            <td>60</td>
+                            <td>Ahmad Zulkarnain</td>
+                            <td>25 Juni 2024</td>
+                            <td>Pengantar Database MySQL</td>
+                            <td>09 Juli 2024</td>
+                            <td><span class="badge bg-success">Dikembalikan</span></td>
                         </tr>
                         <tr>
-                            <td>Surya Cipta</td>
-                            <td>Sumatera Barat</td>
-                            <td>Padang</td>
-                            <td>186</td>
-                            <td>57</td>
-                        </tr>
-                        <tr>
-                            <td>Media Presindo</td>
+                            <td>Gramedia</td>
                             <td>Sumatera Selatan</td>
                             <td>Palembang</td>
-                            <td>223</td>
-                            <td>63</td>
+                            <td>Vivi Lestari</td>
+                            <td>01 Agustus 2024</td>
+                            <td>Pengenalan Python</td>
+                            <td>15 Agustus 2024</td>
+                            <td><span class="badge bg-warning">Dipinjam</span></td>
                         </tr>
                         <tr>
-                            <td>Asoka</td>
-                            <td>Aceh</td>
-                            <td>Banda Aceh</td>
-                            <td>135</td>
-                            <td>43</td>
+                            <td>Toko Buku Cerdas</td>
+                            <td>Kalimantan Timur</td>
+                            <td>Balikpapan</td>
+                            <td>Rizky Anwar</td>
+                            <td>05 September 2024</td>
+                            <td>Pemrograman React.js</td>
+                            <td>19 September 2024</td>
+                            <td><span class="badge bg-danger">Overdue</span></td>
                         </tr>
                         <tr>
-                            <td>Sinar Dunia</td>
-                            <td>Sulawesi Tengah</td>
-                            <td>Palu</td>
-                            <td>150</td>
-                            <td>46</td>
+                            <td>Literasi Pustaka</td>
+                            <td>Jawa Timur</td>
+                            <td>Malang</td>
+                            <td>Fitri Sari</td>
+                            <td>10 Oktober 2024</td>
+                            <td>Panduan CSS dan HTML</td>
+                            <td>24 Oktober 2024</td>
+                            <td><span class="badge bg-warning">Dipinjam</span></td>
                         </tr>
                         <tr>
-                            <td>Penebar Swadaya</td>
-                            <td>Nusa Tenggara Timur</td>
-                            <td>Kupang</td>
-                            <td>211</td>
-                            <td>65</td>
+                            <td>Pustaka Utama</td>
+                            <td>Jawa Barat</td>
+                            <td>Depok</td>
+                            <td>Indah Pratiwi</td>
+                            <td>15 November 2024</td>
+                            <td>Pengantar Data Science</td>
+                            <td>29 November 2024</td>
+                            <td><span class="badge bg-success">Dikembalikan</span></td>
                         </tr>
                     </tbody>
                 </table>

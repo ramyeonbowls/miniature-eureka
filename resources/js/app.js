@@ -15,11 +15,10 @@ import { LoadingPlugin } from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
 import VueSweetalert2 from 'vue-sweetalert2'
 import 'sweetalert2/dist/sweetalert2.min.css'
-import $ from 'jquery'
 import 'datatables.net-bs5/css/dataTables.bootstrap5.css'
 import 'datatables.net-bs5'
-
-window.$ = window.jQuery = $
+import 'flatpickr/dist/flatpickr.css'
+import Flatpickr from 'vue-flatpickr-component'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -58,8 +57,21 @@ featherIcons.replace()
 
 const app = createApp(App)
 
+app.mixin({
+    methods: {
+        web_access_log(menufn = null) {
+            return window.axios.post('/web-access-log', {
+                url: this.$route.path,
+                full_url: this.$route.fullPath,
+                name: menufn ? menufn : this.$route.name,
+            })
+        },
+    },
+})
+
 import ActionBar from './layouts/Action.vue'
 app.component('action-bar', ActionBar)
+app.component('Flatpickr', Flatpickr)
 
 /**
  * The following block of code may be used to automatically register your
@@ -79,7 +91,7 @@ app.component('action-bar', ActionBar)
  * scaffolding. Otherwise, you will need to add an element yourself.
  */
 
-app.use(VueSweetalert2)
+app.use(VueSweetalert2, gSwal)
 app.use(LoadingPlugin, gloading)
 app.use(router)
 app.mount('#page-container')

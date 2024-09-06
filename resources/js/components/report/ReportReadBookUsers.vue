@@ -84,7 +84,8 @@
                             <th>Nama WL</th>
                             <th>Provinsi</th>
                             <th>Kab/Kota</th>
-                            <th>Jumlah Pembaca</th>
+                            <th>Nama Pembaca</th>
+                            <th>Jumlah Buku di Baca</th>
                             <th>Total Jam</th>
                         </tr>
                     </thead>
@@ -93,169 +94,329 @@
                             <td>Gramedia</td>
                             <td>Jawa Barat</td>
                             <td>Bandung</td>
-                            <td>124</td>
-                            <td>42</td>
-                        </tr>
-                        <tr>
-                            <td>Erlangga</td>
-                            <td>Sumatera Utara</td>
-                            <td>Medan</td>
-                            <td>203</td>
-                            <td>56</td>
+                            <td>Arya</td>
+                            <td>12</td>
+                            <td>32</td>
                         </tr>
                         <tr>
                             <td>Mizan</td>
-                            <td>Jawa Tengah</td>
-                            <td>Semarang</td>
-                            <td>98</td>
-                            <td>33</td>
+                            <td>Sumatera Utara</td>
+                            <td>Medan</td>
+                            <td>Siti</td>
+                            <td>10</td>
+                            <td>28</td>
                         </tr>
                         <tr>
                             <td>Balai Pustaka</td>
-                            <td>Bali</td>
-                            <td>Denpasar</td>
-                            <td>145</td>
-                            <td>49</td>
+                            <td>Jawa Tengah</td>
+                            <td>Semarang</td>
+                            <td>Rani</td>
+                            <td>8</td>
+                            <td>21</td>
                         </tr>
                         <tr>
-                            <td>Andi Offset</td>
-                            <td>DKI Jakarta</td>
-                            <td>Jakarta Selatan</td>
-                            <td>310</td>
-                            <td>78</td>
+                            <td>Erlangga</td>
+                            <td>Bali</td>
+                            <td>Denpasar</td>
+                            <td>Joko</td>
+                            <td>15</td>
+                            <td>40</td>
                         </tr>
                         <tr>
                             <td>Kanisius</td>
-                            <td>Kalimantan Timur</td>
-                            <td>Samarinda</td>
-                            <td>210</td>
-                            <td>64</td>
+                            <td>DKI Jakarta</td>
+                            <td>Jakarta Selatan</td>
+                            <td>Budi</td>
+                            <td>22</td>
+                            <td>50</td>
                         </tr>
                         <tr>
                             <td>Salemba</td>
-                            <td>Jawa Timur</td>
-                            <td>Surabaya</td>
-                            <td>190</td>
-                            <td>55</td>
+                            <td>Kalimantan Timur</td>
+                            <td>Samarinda</td>
+                            <td>Fatimah</td>
+                            <td>13</td>
+                            <td>36</td>
                         </tr>
                         <tr>
                             <td>Tiga Serangkai</td>
-                            <td>Sulawesi Selatan</td>
-                            <td>Makassar</td>
-                            <td>230</td>
-                            <td>62</td>
-                        </tr>
-                        <tr>
-                            <td>Obor</td>
-                            <td>Banten</td>
-                            <td>Serang</td>
-                            <td>132</td>
-                            <td>48</td>
+                            <td>Jawa Timur</td>
+                            <td>Surabaya</td>
+                            <td>Ahmad</td>
+                            <td>18</td>
+                            <td>42</td>
                         </tr>
                         <tr>
                             <td>Deepublish</td>
-                            <td>Nusa Tenggara Barat</td>
-                            <td>Mataram</td>
-                            <td>180</td>
-                            <td>51</td>
-                        </tr>
-                        <tr>
-                            <td>Visimedia</td>
-                            <td>Papua</td>
-                            <td>Jayapura</td>
-                            <td>110</td>
-                            <td>44</td>
+                            <td>Sulawesi Selatan</td>
+                            <td>Makassar</td>
+                            <td>Indra</td>
+                            <td>20</td>
+                            <td>45</td>
                         </tr>
                         <tr>
                             <td>Bukune</td>
-                            <td>Jambi</td>
-                            <td>Kota Jambi</td>
-                            <td>167</td>
-                            <td>53</td>
+                            <td>Banten</td>
+                            <td>Serang</td>
+                            <td>Maya</td>
+                            <td>7</td>
+                            <td>19</td>
+                        </tr>
+                        <tr>
+                            <td>Visimedia</td>
+                            <td>Nusa Tenggara Barat</td>
+                            <td>Mataram</td>
+                            <td>Andre</td>
+                            <td>17</td>
+                            <td>38</td>
                         </tr>
                         <tr>
                             <td>Harfeey</td>
-                            <td>Sulawesi Tenggara</td>
-                            <td>Kendari</td>
-                            <td>146</td>
-                            <td>47</td>
+                            <td>Papua</td>
+                            <td>Jayapura</td>
+                            <td>Yuni</td>
+                            <td>16</td>
+                            <td>30</td>
                         </tr>
                         <tr>
                             <td>Zikrul</td>
-                            <td>Lampung</td>
-                            <td>Bandar Lampung</td>
-                            <td>189</td>
-                            <td>59</td>
+                            <td>Jambi</td>
+                            <td>Kota Jambi</td>
+                            <td>Rizki</td>
+                            <td>14</td>
+                            <td>35</td>
                         </tr>
                         <tr>
                             <td>Putaka Utama</td>
-                            <td>Jawa Barat</td>
-                            <td>Bekasi</td>
-                            <td>215</td>
-                            <td>66</td>
+                            <td>Lampung</td>
+                            <td>Bandar Lampung</td>
+                            <td>Maria</td>
+                            <td>19</td>
+                            <td>41</td>
                         </tr>
                         <tr>
                             <td>Alfabeta</td>
                             <td>Riau</td>
                             <td>Pekanbaru</td>
-                            <td>128</td>
-                            <td>40</td>
+                            <td>Asep</td>
+                            <td>21</td>
+                            <td>48</td>
                         </tr>
                         <tr>
                             <td>Cetakan Mulia</td>
                             <td>Maluku</td>
                             <td>Ambon</td>
-                            <td>141</td>
-                            <td>45</td>
+                            <td>Hana</td>
+                            <td>9</td>
+                            <td>25</td>
                         </tr>
                         <tr>
                             <td>Ilman Press</td>
                             <td>Bengkulu</td>
                             <td>Kota Bengkulu</td>
-                            <td>163</td>
-                            <td>54</td>
+                            <td>Tommy</td>
+                            <td>11</td>
+                            <td>30</td>
                         </tr>
                         <tr>
                             <td>Mentari</td>
                             <td>Kalimantan Barat</td>
                             <td>Pontianak</td>
-                            <td>207</td>
-                            <td>60</td>
+                            <td>Anita</td>
+                            <td>13</td>
+                            <td>34</td>
                         </tr>
                         <tr>
                             <td>Surya Cipta</td>
                             <td>Sumatera Barat</td>
                             <td>Padang</td>
-                            <td>186</td>
-                            <td>57</td>
+                            <td>Rizal</td>
+                            <td>20</td>
+                            <td>43</td>
                         </tr>
                         <tr>
                             <td>Media Presindo</td>
                             <td>Sumatera Selatan</td>
                             <td>Palembang</td>
-                            <td>223</td>
-                            <td>63</td>
+                            <td>Toni</td>
+                            <td>12</td>
+                            <td>27</td>
                         </tr>
                         <tr>
                             <td>Asoka</td>
                             <td>Aceh</td>
                             <td>Banda Aceh</td>
-                            <td>135</td>
-                            <td>43</td>
+                            <td>Yudha</td>
+                            <td>14</td>
+                            <td>31</td>
                         </tr>
                         <tr>
                             <td>Sinar Dunia</td>
                             <td>Sulawesi Tengah</td>
                             <td>Palu</td>
-                            <td>150</td>
-                            <td>46</td>
+                            <td>Aldi</td>
+                            <td>23</td>
+                            <td>50</td>
                         </tr>
                         <tr>
                             <td>Penebar Swadaya</td>
                             <td>Nusa Tenggara Timur</td>
                             <td>Kupang</td>
-                            <td>211</td>
-                            <td>65</td>
+                            <td>Hendra</td>
+                            <td>22</td>
+                            <td>46</td>
+                        </tr>
+                        <tr>
+                            <td>Erlangga</td>
+                            <td>Jawa Barat</td>
+                            <td>Bekasi</td>
+                            <td>Nina</td>
+                            <td>9</td>
+                            <td>26</td>
+                        </tr>
+                        <tr>
+                            <td>Gramedia</td>
+                            <td>Jawa Timur</td>
+                            <td>Malang</td>
+                            <td>Farhan</td>
+                            <td>15</td>
+                            <td>37</td>
+                        </tr>
+                        <tr>
+                            <td>Mizan</td>
+                            <td>Sumatera Utara</td>
+                            <td>Binjai</td>
+                            <td>Lisa</td>
+                            <td>11</td>
+                            <td>29</td>
+                        </tr>
+                        <tr>
+                            <td>Balai Pustaka</td>
+                            <td>Jawa Tengah</td>
+                            <td>Solo</td>
+                            <td>Aulia</td>
+                            <td>24</td>
+                            <td>53</td>
+                        </tr>
+                        <tr>
+                            <td>Tiga Serangkai</td>
+                            <td>Jawa Timur</td>
+                            <td>Kediri</td>
+                            <td>Renata</td>
+                            <td>18</td>
+                            <td>41</td>
+                        </tr>
+                        <tr>
+                            <td>Deepublish</td>
+                            <td>Sulawesi Utara</td>
+                            <td>Manado</td>
+                            <td>Fikri</td>
+                            <td>17</td>
+                            <td>38</td>
+                        </tr>
+                        <tr>
+                            <td>Bukune</td>
+                            <td>Banten</td>
+                            <td>Tangerang</td>
+                            <td>Gilang</td>
+                            <td>25</td>
+                            <td>55</td>
+                        </tr>
+                        <tr>
+                            <td>Kanisius</td>
+                            <td>Jawa Barat</td>
+                            <td>Depok</td>
+                            <td>Novi</td>
+                            <td>16</td>
+                            <td>36</td>
+                        </tr>
+                        <tr>
+                            <td>Salemba</td>
+                            <td>Kalimantan Tengah</td>
+                            <td>Palangkaraya</td>
+                            <td>Ilham</td>
+                            <td>20</td>
+                            <td>48</td>
+                        </tr>
+                        <tr>
+                            <td>Zikrul</td>
+                            <td>Jawa Timur</td>
+                            <td>Pasuruan</td>
+                            <td>Fahmi</td>
+                            <td>14</td>
+                            <td>30</td>
+                        </tr>
+                        <tr>
+                            <td>Putaka Utama</td>
+                            <td>Lampung</td>
+                            <td>Metro</td>
+                            <td>Vina</td>
+                            <td>10</td>
+                            <td>25</td>
+                        </tr>
+                        <tr>
+                            <td>Visimedia</td>
+                            <td>Sumatera Barat</td>
+                            <td>Bukittinggi</td>
+                            <td>Rosa</td>
+                            <td>18</td>
+                            <td>39</td>
+                        </tr>
+                        <tr>
+                            <td>Harfeey</td>
+                            <td>Bengkulu</td>
+                            <td>Kota Bengkulu</td>
+                            <td>Angga</td>
+                            <td>21</td>
+                            <td>47</td>
+                        </tr>
+                        <tr>
+                            <td>Zikrul</td>
+                            <td>Sumatera Selatan</td>
+                            <td>Lubuklinggau</td>
+                            <td>Putri</td>
+                            <td>19</td>
+                            <td>42</td>
+                        </tr>
+                        <tr>
+                            <td>Penebar Swadaya</td>
+                            <td>Jawa Barat</td>
+                            <td>Cimahi</td>
+                            <td>Dian</td>
+                            <td>22</td>
+                            <td>50</td>
+                        </tr>
+                        <tr>
+                            <td>Erlangga</td>
+                            <td>Bali</td>
+                            <td>Badung</td>
+                            <td>Agus</td>
+                            <td>12</td>
+                            <td>29</td>
+                        </tr>
+                        <tr>
+                            <td>Gramedia</td>
+                            <td>Kalimantan Timur</td>
+                            <td>Balikpapan</td>
+                            <td>Rina</td>
+                            <td>15</td>
+                            <td>34</td>
+                        </tr>
+                        <tr>
+                            <td>Mizan</td>
+                            <td>Jawa Barat</td>
+                            <td>Subang</td>
+                            <td>Juli</td>
+                            <td>18</td>
+                            <td>41</td>
+                        </tr>
+                        <tr>
+                            <td>Balai Pustaka</td>
+                            <td>Nusa Tenggara Barat</td>
+                            <td>Lombok</td>
+                            <td>Tari</td>
+                            <td>23</td>
+                            <td>49</td>
                         </tr>
                     </tbody>
                 </table>

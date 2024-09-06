@@ -84,178 +84,69 @@
                             <th>Nama WL</th>
                             <th>Provinsi</th>
                             <th>Kab/Kota</th>
-                            <th>Jumlah Pembaca</th>
-                            <th>Total Jam</th>
+                            <th>Jumlah Pengunjung</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Gramedia</td>
+                            <td>Distributor Buku Nusantara</td>
                             <td>Jawa Barat</td>
                             <td>Bandung</td>
-                            <td>124</td>
-                            <td>42</td>
+                            <td>1,230</td>
                         </tr>
                         <tr>
-                            <td>Erlangga</td>
-                            <td>Sumatera Utara</td>
-                            <td>Medan</td>
-                            <td>203</td>
-                            <td>56</td>
-                        </tr>
-                        <tr>
-                            <td>Mizan</td>
-                            <td>Jawa Tengah</td>
-                            <td>Semarang</td>
-                            <td>98</td>
-                            <td>33</td>
-                        </tr>
-                        <tr>
-                            <td>Balai Pustaka</td>
-                            <td>Bali</td>
-                            <td>Denpasar</td>
-                            <td>145</td>
-                            <td>49</td>
-                        </tr>
-                        <tr>
-                            <td>Andi Offset</td>
-                            <td>DKI Jakarta</td>
-                            <td>Jakarta Selatan</td>
-                            <td>310</td>
-                            <td>78</td>
-                        </tr>
-                        <tr>
-                            <td>Kanisius</td>
-                            <td>Kalimantan Timur</td>
-                            <td>Samarinda</td>
-                            <td>210</td>
-                            <td>64</td>
-                        </tr>
-                        <tr>
-                            <td>Salemba</td>
+                            <td>Literasi Pustaka Mandiri</td>
                             <td>Jawa Timur</td>
                             <td>Surabaya</td>
-                            <td>190</td>
-                            <td>55</td>
+                            <td>980</td>
                         </tr>
                         <tr>
-                            <td>Tiga Serangkai</td>
-                            <td>Sulawesi Selatan</td>
-                            <td>Makassar</td>
-                            <td>230</td>
-                            <td>62</td>
-                        </tr>
-                        <tr>
-                            <td>Obor</td>
-                            <td>Banten</td>
-                            <td>Serang</td>
-                            <td>132</td>
-                            <td>48</td>
-                        </tr>
-                        <tr>
-                            <td>Deepublish</td>
-                            <td>Nusa Tenggara Barat</td>
-                            <td>Mataram</td>
-                            <td>180</td>
-                            <td>51</td>
-                        </tr>
-                        <tr>
-                            <td>Visimedia</td>
-                            <td>Papua</td>
-                            <td>Jayapura</td>
-                            <td>110</td>
-                            <td>44</td>
-                        </tr>
-                        <tr>
-                            <td>Bukune</td>
-                            <td>Jambi</td>
-                            <td>Kota Jambi</td>
-                            <td>167</td>
-                            <td>53</td>
-                        </tr>
-                        <tr>
-                            <td>Harfeey</td>
-                            <td>Sulawesi Tenggara</td>
-                            <td>Kendari</td>
-                            <td>146</td>
-                            <td>47</td>
-                        </tr>
-                        <tr>
-                            <td>Zikrul</td>
-                            <td>Lampung</td>
-                            <td>Bandar Lampung</td>
-                            <td>189</td>
-                            <td>59</td>
-                        </tr>
-                        <tr>
-                            <td>Putaka Utama</td>
-                            <td>Jawa Barat</td>
-                            <td>Bekasi</td>
-                            <td>215</td>
-                            <td>66</td>
-                        </tr>
-                        <tr>
-                            <td>Alfabeta</td>
-                            <td>Riau</td>
-                            <td>Pekanbaru</td>
-                            <td>128</td>
-                            <td>40</td>
-                        </tr>
-                        <tr>
-                            <td>Cetakan Mulia</td>
-                            <td>Maluku</td>
-                            <td>Ambon</td>
-                            <td>141</td>
-                            <td>45</td>
-                        </tr>
-                        <tr>
-                            <td>Ilman Press</td>
-                            <td>Bengkulu</td>
-                            <td>Kota Bengkulu</td>
-                            <td>163</td>
-                            <td>54</td>
-                        </tr>
-                        <tr>
-                            <td>Mentari</td>
-                            <td>Kalimantan Barat</td>
-                            <td>Pontianak</td>
-                            <td>207</td>
-                            <td>60</td>
-                        </tr>
-                        <tr>
-                            <td>Surya Cipta</td>
+                            <td>Warung Buku Sejahtera</td>
                             <td>Sumatera Barat</td>
                             <td>Padang</td>
-                            <td>186</td>
-                            <td>57</td>
+                            <td>865</td>
                         </tr>
                         <tr>
-                            <td>Media Presindo</td>
-                            <td>Sumatera Selatan</td>
-                            <td>Palembang</td>
-                            <td>223</td>
-                            <td>63</td>
+                            <td>Distributor Cerdas</td>
+                            <td>Jawa Tengah</td>
+                            <td>Semarang</td>
+                            <td>1,120</td>
                         </tr>
                         <tr>
-                            <td>Asoka</td>
-                            <td>Aceh</td>
-                            <td>Banda Aceh</td>
-                            <td>135</td>
-                            <td>43</td>
+                            <td>Pustaka Inspirasi</td>
+                            <td>Bali</td>
+                            <td>Denpasar</td>
+                            <td>920</td>
                         </tr>
                         <tr>
-                            <td>Sinar Dunia</td>
-                            <td>Sulawesi Tengah</td>
-                            <td>Palu</td>
-                            <td>150</td>
-                            <td>46</td>
+                            <td>Literasi Indonesia Maju</td>
+                            <td>Riau</td>
+                            <td>Pekanbaru</td>
+                            <td>750</td>
                         </tr>
                         <tr>
-                            <td>Penebar Swadaya</td>
-                            <td>Nusa Tenggara Timur</td>
-                            <td>Kupang</td>
-                            <td>211</td>
-                            <td>65</td>
+                            <td>Distributor Sukses</td>
+                            <td>Kalimantan Timur</td>
+                            <td>Samarinda</td>
+                            <td>600</td>
+                        </tr>
+                        <tr>
+                            <td>Warung Buku Cendekia</td>
+                            <td>Jawa Timur</td>
+                            <td>Malang</td>
+                            <td>1,050</td>
+                        </tr>
+                        <tr>
+                            <td>Literasi Terdepan</td>
+                            <td>Jawa Barat</td>
+                            <td>Bogor</td>
+                            <td>1,270</td>
+                        </tr>
+                        <tr>
+                            <td>Pustaka Cemerlang</td>
+                            <td>Jawa Tengah</td>
+                            <td>Solo</td>
+                            <td>890</td>
                         </tr>
                     </tbody>
                 </table>

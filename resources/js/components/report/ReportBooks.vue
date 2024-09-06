@@ -84,8 +84,12 @@
                             <th>Nama WL</th>
                             <th>Provinsi</th>
                             <th>Kab/Kota</th>
-                            <th>Jumlah Pembaca</th>
-                            <th>Total Jam</th>
+                            <th>Judul Buku</th>
+                            <th>Penerbit</th>
+                            <th>Penulis</th>
+                            <th>ISBN</th>
+                            <th>EISBN</th>
+                            <th>Qty</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -93,169 +97,199 @@
                             <td>Gramedia</td>
                             <td>Jawa Barat</td>
                             <td>Bandung</td>
-                            <td>124</td>
-                            <td>42</td>
+                            <td>Teknologi Masa Depan</td>
+                            <td>Erlangga</td>
+                            <td>Budi Santoso</td>
+                            <td>978-1234567890</td>
+                            <td>978-9876543210</td>
+                            <td>100</td>
                         </tr>
                         <tr>
-                            <td>Erlangga</td>
+                            <td>Toko Buku Agung</td>
+                            <td>Jawa Timur</td>
+                            <td>Surabaya</td>
+                            <td>Sejarah Indonesia</td>
+                            <td>Gramedia</td>
+                            <td>Agus Supriyadi</td>
+                            <td>978-2345678901</td>
+                            <td>978-8765432109</td>
+                            <td>75</td>
+                        </tr>
+                        <tr>
+                            <td>Pustaka Utama</td>
                             <td>Sumatera Utara</td>
                             <td>Medan</td>
-                            <td>203</td>
-                            <td>56</td>
-                        </tr>
-                        <tr>
+                            <td>Pendidikan di Era Digital</td>
                             <td>Mizan</td>
-                            <td>Jawa Tengah</td>
-                            <td>Semarang</td>
-                            <td>98</td>
-                            <td>33</td>
+                            <td>Siti Nurhaliza</td>
+                            <td>978-3456789012</td>
+                            <td>978-7654321098</td>
+                            <td>120</td>
                         </tr>
                         <tr>
                             <td>Balai Pustaka</td>
-                            <td>Bali</td>
-                            <td>Denpasar</td>
-                            <td>145</td>
-                            <td>49</td>
-                        </tr>
-                        <tr>
-                            <td>Andi Offset</td>
-                            <td>DKI Jakarta</td>
-                            <td>Jakarta Selatan</td>
-                            <td>310</td>
-                            <td>78</td>
-                        </tr>
-                        <tr>
-                            <td>Kanisius</td>
-                            <td>Kalimantan Timur</td>
-                            <td>Samarinda</td>
-                            <td>210</td>
-                            <td>64</td>
-                        </tr>
-                        <tr>
-                            <td>Salemba</td>
-                            <td>Jawa Timur</td>
-                            <td>Surabaya</td>
-                            <td>190</td>
-                            <td>55</td>
-                        </tr>
-                        <tr>
-                            <td>Tiga Serangkai</td>
-                            <td>Sulawesi Selatan</td>
-                            <td>Makassar</td>
-                            <td>230</td>
-                            <td>62</td>
-                        </tr>
-                        <tr>
-                            <td>Obor</td>
-                            <td>Banten</td>
-                            <td>Serang</td>
-                            <td>132</td>
-                            <td>48</td>
-                        </tr>
-                        <tr>
-                            <td>Deepublish</td>
-                            <td>Nusa Tenggara Barat</td>
-                            <td>Mataram</td>
-                            <td>180</td>
-                            <td>51</td>
-                        </tr>
-                        <tr>
-                            <td>Visimedia</td>
-                            <td>Papua</td>
-                            <td>Jayapura</td>
-                            <td>110</td>
-                            <td>44</td>
-                        </tr>
-                        <tr>
-                            <td>Bukune</td>
-                            <td>Jambi</td>
-                            <td>Kota Jambi</td>
-                            <td>167</td>
-                            <td>53</td>
-                        </tr>
-                        <tr>
-                            <td>Harfeey</td>
-                            <td>Sulawesi Tenggara</td>
-                            <td>Kendari</td>
-                            <td>146</td>
-                            <td>47</td>
-                        </tr>
-                        <tr>
-                            <td>Zikrul</td>
-                            <td>Lampung</td>
-                            <td>Bandar Lampung</td>
-                            <td>189</td>
-                            <td>59</td>
-                        </tr>
-                        <tr>
-                            <td>Putaka Utama</td>
-                            <td>Jawa Barat</td>
-                            <td>Bekasi</td>
-                            <td>215</td>
-                            <td>66</td>
-                        </tr>
-                        <tr>
-                            <td>Alfabeta</td>
-                            <td>Riau</td>
-                            <td>Pekanbaru</td>
-                            <td>128</td>
-                            <td>40</td>
-                        </tr>
-                        <tr>
-                            <td>Cetakan Mulia</td>
-                            <td>Maluku</td>
-                            <td>Ambon</td>
-                            <td>141</td>
-                            <td>45</td>
-                        </tr>
-                        <tr>
-                            <td>Ilman Press</td>
-                            <td>Bengkulu</td>
-                            <td>Kota Bengkulu</td>
-                            <td>163</td>
-                            <td>54</td>
-                        </tr>
-                        <tr>
-                            <td>Mentari</td>
-                            <td>Kalimantan Barat</td>
-                            <td>Pontianak</td>
-                            <td>207</td>
+                            <td>Jawa Tengah</td>
+                            <td>Semarang</td>
+                            <td>Ekonomi Global</td>
+                            <td>Balai Pustaka</td>
+                            <td>Dedi Kurniawan</td>
+                            <td>978-4567890123</td>
+                            <td>978-6543210987</td>
                             <td>60</td>
                         </tr>
                         <tr>
-                            <td>Surya Cipta</td>
-                            <td>Sumatera Barat</td>
-                            <td>Padang</td>
-                            <td>186</td>
-                            <td>57</td>
+                            <td>Toko Buku Online</td>
+                            <td>DI Yogyakarta</td>
+                            <td>Yogyakarta</td>
+                            <td>Kesehatan Masyarakat</td>
+                            <td>Erlangga</td>
+                            <td>Ani Susanti</td>
+                            <td>978-5678901234</td>
+                            <td>978-5432109876</td>
+                            <td>80</td>
                         </tr>
                         <tr>
-                            <td>Media Presindo</td>
+                            <td>Surya Pustaka</td>
+                            <td>Bali</td>
+                            <td>Denpasar</td>
+                            <td>Seni dan Budaya Indonesia</td>
+                            <td>Visimedia</td>
+                            <td>Putra Aditya</td>
+                            <td>978-6789012345</td>
+                            <td>978-4321098765</td>
+                            <td>95</td>
+                        </tr>
+                        <tr>
+                            <td>Mulia Buku</td>
+                            <td>Kalimantan Timur</td>
+                            <td>Samarinda</td>
+                            <td>Teknologi Informasi</td>
+                            <td>Zikrul</td>
+                            <td>Arif Hidayat</td>
+                            <td>978-7890123456</td>
+                            <td>978-3210987654</td>
+                            <td>50</td>
+                        </tr>
+                        <tr>
+                            <td>Toko Buku Serambi</td>
+                            <td>Sulawesi Selatan</td>
+                            <td>Makassar</td>
+                            <td>Ilmu Sosial dan Politik</td>
+                            <td>Pustaka Utama</td>
+                            <td>Indra Wijaya</td>
+                            <td>978-8901234567</td>
+                            <td>978-2109876543</td>
+                            <td>110</td>
+                        </tr>
+                        <tr>
+                            <td>Gramedia</td>
+                            <td>Banten</td>
+                            <td>Tangerang</td>
+                            <td>Manajemen dan Kepemimpinan</td>
+                            <td>Erlangga</td>
+                            <td>Diana Pramesti</td>
+                            <td>978-9012345678</td>
+                            <td>978-1098765432</td>
+                            <td>90</td>
+                        </tr>
+                        <tr>
+                            <td>Pustaka Jaya</td>
+                            <td>Jawa Barat</td>
+                            <td>Bogor</td>
+                            <td>Psikologi dan Perilaku</td>
+                            <td>Mizan</td>
+                            <td>Wahyu Setiawan</td>
+                            <td>978-0123456789</td>
+                            <td>978-0987654321</td>
+                            <td>70</td>
+                        </tr>
+                        <tr>
+                            <td>Toko Buku Harapan</td>
+                            <td>Jawa Timur</td>
+                            <td>Malang</td>
+                            <td>Bisnis dan Investasi</td>
+                            <td>Gramedia</td>
+                            <td>Ratna Dewi</td>
+                            <td>978-8765432109</td>
+                            <td>978-2345678901</td>
+                            <td>105</td>
+                        </tr>
+                        <tr>
+                            <td>Literasi Pustaka</td>
                             <td>Sumatera Selatan</td>
                             <td>Palembang</td>
-                            <td>223</td>
-                            <td>63</td>
+                            <td>Sejarah Dunia</td>
+                            <td>Visimedia</td>
+                            <td>Denny Sugiarto</td>
+                            <td>978-7654321098</td>
+                            <td>978-3456789012</td>
+                            <td>115</td>
                         </tr>
                         <tr>
-                            <td>Asoka</td>
-                            <td>Aceh</td>
-                            <td>Banda Aceh</td>
-                            <td>135</td>
-                            <td>43</td>
+                            <td>Toko Buku Nusantara</td>
+                            <td>Jawa Tengah</td>
+                            <td>Solo</td>
+                            <td>Pengembangan Diri</td>
+                            <td>Erlangga</td>
+                            <td>Yusuf Pratama</td>
+                            <td>978-6543210987</td>
+                            <td>978-4567890123</td>
+                            <td>85</td>
                         </tr>
                         <tr>
-                            <td>Sinar Dunia</td>
-                            <td>Sulawesi Tengah</td>
-                            <td>Palu</td>
-                            <td>150</td>
-                            <td>46</td>
+                            <td>Pustaka Sejahtera</td>
+                            <td>Sumatera Barat</td>
+                            <td>Padang</td>
+                            <td>Ekonomi Kreatif</td>
+                            <td>Mizan</td>
+                            <td>Maria Ulfa</td>
+                            <td>978-5432109876</td>
+                            <td>978-5678901234</td>
+                            <td>130</td>
                         </tr>
                         <tr>
-                            <td>Penebar Swadaya</td>
-                            <td>Nusa Tenggara Timur</td>
-                            <td>Kupang</td>
-                            <td>211</td>
+                            <td>Toko Buku Sahabat</td>
+                            <td>Kalimantan Barat</td>
+                            <td>Pontianak</td>
+                            <td>Perkembangan Teknologi AI</td>
+                            <td>Zikrul</td>
+                            <td>Hasan Basri</td>
+                            <td>978-4321098765</td>
+                            <td>978-6789012345</td>
                             <td>65</td>
+                        </tr>
+                        <tr>
+                            <td>Pustaka Utama</td>
+                            <td>Jawa Timur</td>
+                            <td>Kediri</td>
+                            <td>Pengantar Ilmu Komputer</td>
+                            <td>Pustaka Utama</td>
+                            <td>Fitriani</td>
+                            <td>978-3210987654</td>
+                            <td>978-7890123456</td>
+                            <td>125</td>
+                        </tr>
+                        <tr>
+                            <td>Gramedia</td>
+                            <td>DKI Jakarta</td>
+                            <td>Jakarta</td>
+                            <td>Teknologi di Era Globalisasi</td>
+                            <td>Erlangga</td>
+                            <td>Budi Nugraha</td>
+                            <td>978-2109876543</td>
+                            <td>978-8901234567</td>
+                            <td>140</td>
+                        </tr>
+                        <tr>
+                            <td>Toko Buku Mega</td>
+                            <td>Bali</td>
+                            <td>Kuta</td>
+                            <td>Bisnis Digital</td>
+                            <td>Gramedia</td>
+                            <td>Andi Kurniawan</td>
+                            <td>978-1098765432</td>
+                            <td>978-9012345678</td>
+                            <td>90</td>
                         </tr>
                     </tbody>
                 </table>
