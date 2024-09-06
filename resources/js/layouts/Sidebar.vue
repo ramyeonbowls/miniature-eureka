@@ -42,17 +42,19 @@
                                 <span>{{ menuItem.menu_label }}</span>
                             </a>
                             <ul class="submenu">
-                                <li class="submenu-item" v-for="(childs, i) in menuItem.childs" :key="i">
+                                <li class="submenu-item" v-for="(childs, i) in menuItem.childs" :key="i" :class="{ active: childs.menu_fn === $route.name }">
                                     <router-link :to="{ name: childs.menu_fn }" class="submenu-link">{{ childs.menu_label }}</router-link>
                                 </li>
                             </ul>
                         </li>
                     </template>
                     <template v-else>
-                        <router-link :to="{ name: menuItem.menu_fn }" class="sidebar-link">
-                            <i :class="menuItem.menu_icon"></i>
-                            <span>{{ menuItem.menu_label }}</span>
-                        </router-link>
+                        <li class="sidebar-item" :class="{ active: menuItem.menu_fn === $route.name }">
+                            <router-link :to="{ name: menuItem.menu_fn }" class="sidebar-link">
+                                <i :class="menuItem.menu_icon"></i>
+                                <span>{{ menuItem.menu_label }}</span>
+                            </router-link>
+                        </li>
                     </template>
                 </template>
             </ul>

@@ -10,6 +10,11 @@ const routes = [
         component: () => import(/* webpackChunkName: "home" */ './components/Home.vue'),
     },
     {
+        path: '/profile',
+        name: 'profile',
+        component: () => import(/* webpackChunkName: "home" */ './components/Profile.vue'),
+    },
+    {
         path: '/setting/role-menu',
         name: 'role_menu',
         component: () => import(/* webpackChunkName: "setting/role_menu" */ './components/setting/RoleMenu.vue'),
