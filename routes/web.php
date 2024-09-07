@@ -21,7 +21,7 @@ Route::get('/getBuku', [App\Http\Controllers\MainController::class, 'getBuku'])-
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware('activated.user')->group(function() {
         Route::group(['middleware' => ['role.user:admin']], function () {
-            Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+            Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index'])->name('admin');
             Route::get('/userinfo', [App\Http\Controllers\HomeController::class, 'userinfo'])->name('userinfo');
             Route::get('/my-web-menu', [App\Http\Controllers\HomeController::class, 'webMenuAcl'])->name('web_menu_acl');
     
