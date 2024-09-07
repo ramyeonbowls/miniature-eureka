@@ -22,6 +22,7 @@ export default defineConfig({
                 'resources/sass/pages/summernote.scss',
                 'resources/sass/pages/sweetalert2.scss',
                 'resources/js/app.js',
+                'resources/js/main.js',
                 'resources/js/assets/static/js/initTheme.js',
                 'resources/js/assets/static/js/components/dark.js',
                 'resources/js/assets/static/js/components/sidebar.js',

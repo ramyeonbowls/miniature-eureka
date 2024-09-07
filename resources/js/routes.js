@@ -62,7 +62,27 @@ const routes = [
     {
         path: '/report/report-Libraryl-officers',
         name: 'report_library_officers',
-        component: () => import(/* webpackChunkName: "report/report_library-officers" */ './components/report/ReportLibraryOfficers.vue'),
+        component: () => import(/* webpackChunkName: "report/report_library_officers" */ './components/report/ReportLibraryOfficers.vue'),
+    },
+    {
+        path: '/master/master-books',
+        name: 'master_books',
+        component: () => import(/* webpackChunkName: "report/master_books" */ './components/master/MasterBooks.vue'),
+    },
+    {
+        path: '/master/master-members',
+        name: 'master_members',
+        component: () => import(/* webpackChunkName: "report/master_members" */ './components/master/MasterMembers.vue'),
+    },
+    {
+        path: '/report/report-po',
+        name: 'report_po',
+        component: () => import(/* webpackChunkName: "report/report_po" */ './components/report/ReportPO.vue'),
+    },
+    {
+        path: '/master/master-library-officers',
+        name: 'master_library_officers',
+        component: () => import(/* webpackChunkName: "report/master_library_officers" */ './components/master/MasterLibraryOfficers.vue'),
     },
 ]
 
