@@ -19,7 +19,7 @@ import 'sweetalert2/dist/sweetalert2.min.css'
 const router = createRouter({
     history: createWebHistory(),
     linkActiveClass: 'active',
-    routes: _routes,
+    routes: _routes
 })
 
 const gloading = {
@@ -43,12 +43,12 @@ const gSwal = {
     },
 }
 
-const token = document.head.querySelector('meta[name="csrf-token"]').content
+const token = document.head.querySelector('meta[name="csrf-token"]').content;
 
 if (token) {
-    axios.defaults.headers.common['X-CSRF-TOKEN'] = token
+    axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
 }
-axios.defaults.withCredentials = true
+axios.defaults.withCredentials = true;
 
 featherIcons.replace()
 
@@ -58,7 +58,7 @@ featherIcons.replace()
  * to use in your application's views. An example is included for you.
  */
 
-const app = createApp(Main)
+const appUser = createApp(Main)
 
 /**
  * The following block of code may be used to automatically register your
@@ -78,7 +78,7 @@ const app = createApp(Main)
  * scaffolding. Otherwise, you will need to add an element yourself.
  */
 
-app.use(VueSweetalert2)
-app.use(LoadingPlugin, gloading)
-app.use(router)
-app.mount('#usr-page-container')
+appUser.use(VueSweetalert2)
+appUser.use(LoadingPlugin, gloading)
+appUser.use(router)
+appUser.mount('#usr-page-container')

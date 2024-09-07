@@ -7,12 +7,18 @@ const _routes = [
     {
         path: '/',
         name: 'main',
-        component: () => import(/* webpackChunkName: "/usrhome" */ './components/member/HomeMain.vue'),
+        component: () => import(/* webpackChunkName: "/usr/home" */ './components/member/HomeMain.vue'),
+        props: route => ({ isAuthenticated: route.meta.isAuthenticated})
     },
     {
         path: '/mlogin',
         name: 'mlogin',
         component: () => import(/* webpackChunkName: "usr/mlogin" */ './components/member/formLogin.vue'),
+    },
+    {
+        path: '/buku',
+        name: 'buku',
+        component: () => import(/* webpackChunkName: "usr/buku" */ './components/member/formLogin.vue'),
     },
 ]
 

@@ -7,9 +7,9 @@
                 </a>
 
                 <div class="logo">
-                    <a href="/"><img src="./../assets/static/images/logo/logo.svg" alt="Logo" /></a>
+                    <a href="/"><img src="/images/logo/Logo GINESIA_20240905_064017_0003.png"></a>
                 </div>
-                <div class="header-top-right">
+                <!-- <div class="header-top-right">
                     <div class="theme-toggle d-flex gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--system-uicons" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21">
                             <g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
@@ -32,20 +32,25 @@
                             ></path>
                         </svg>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
         <nav class="main-navbar" :class="{ 'dropdown-visible': isDropdownVisible, 'dropdown-hidden': !isDropdownVisible }">
             <div class="container">
                 <ul>
-                    <li class="menu-item">
-                        <router-link to="/" class="menu-link">
+                    <li class="menu-item ">
+                        <router-link to="/" class='menu-link'>
                             <span> Home</span>
                         </router-link>
                     </li>
+                    <li class="menu-item ">
+                        <router-link to="/buku" class='menu-link'>
+                            <span> Buku</span>
+                        </router-link>
+                    </li>
                     <template v-if="!isAuthenticated">
-                        <li class="menu-item">
-                            <router-link to="/mlogin" class="menu-link">
+                        <li class="menu-item ">
+                            <router-link to="/mlogin" class='menu-link'>
                                 <span> Login</span>
                             </router-link>
                         </li>
@@ -67,52 +72,39 @@
 export default {
     name: 'headerItems',
 
+    props: {
+        isAuthenticated: {
+            type: Boolean,
+            required: true
+        }
+    },
+
     data() {
         return {
-            user: {},
             isDropdownVisible: false,
-            isAuthenticated: false,
         }
     },
 
     mounted() {
-        this.getInfo()
-        window.addEventListener('resize', this.handleResize)
-        this.handleResize()
+        window.addEventListener('resize', this.handleResize);
+        this.handleResize();
     },
 
     beforeDestroy() {
-        window.removeEventListener('resize', this.handleResize)
+        window.removeEventListener('resize', this.handleResize);
     },
 
     methods: {
         toggleDropdown() {
-            this.isDropdownVisible = !this.isDropdownVisible
+            this.isDropdownVisible = !this.isDropdownVisible;
         },
 
         handleResize() {
             if (window.innerWidth >= 992) {
-                this.isDropdownVisible = true
+                this.isDropdownVisible = true;
             } else {
-                this.isDropdownVisible = false
+                this.isDropdownVisible = false;
             }
-        },
-
-        getInfo() {
-            this.user = {}
-
-            window.axios
-                .get('/getInfo')
-                .then((response) => {
-                    this.user = response.data
-
-                    if (response.data.name != '') {
-                        this.isAuthenticated = true
-                    }
-                })
-                .catch((e) => {
-                    console.error(e)
-                })
         },
 
         logout() {
