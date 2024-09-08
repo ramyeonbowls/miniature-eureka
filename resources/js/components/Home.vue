@@ -33,7 +33,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                        <h6 class="text-muted font-semibold">Data Buku</h6>
+                                        <h6 class="text-muted font-semibold">Data Books</h6>
                                         <h6 class="font-extrabold mb-0">183.000</h6>
                                     </div>
                                 </div>
@@ -46,7 +46,7 @@
                                 <div class="row">
                                     <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
                                         <div class="stats-icon green mb-2">
-                                            <i class="iconly-boldAdd-User"></i>
+                                            <i class="iconly-boldUser1"></i>
                                         </div>
                                     </div>
                                     <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
@@ -63,7 +63,7 @@
                                 <div class="row">
                                     <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
                                         <div class="stats-icon red mb-2">
-                                            <i class="iconly-boldBookmark"></i>
+                                            <i class="iconly-boldBuy"></i>
                                         </div>
                                     </div>
                                     <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
@@ -76,7 +76,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-12">
                         <div class="card">
                             <div class="card-header">
                                 <h4>Total Visitor</h4>
@@ -86,10 +86,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Top 3 Read Book</h4>
+                                <h4>Top 10 Read Book</h4>
                             </div>
                             <div class="card-body">
                                 <div id="bar"></div>
@@ -108,273 +108,40 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-6 col-xl-6">
+                    <div class="col-12 col-xl-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Tpp 10 Member Read Books</h4>
+                                <h4>Top 10 Member Read Books</h4>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-hover table-lg">
+                                    <table class="table table-striped" id="table_member">
                                         <thead>
                                             <tr>
+                                                <th>Photo</th>
                                                 <th>Name</th>
-                                                <th>Jam</th>
+                                                <th>Total Hours</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="col-3">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="avatar avatar-md">
-                                                            <img src="images/faces/5.jpg" />
-                                                        </div>
-                                                        <p class="font-bold ms-3 mb-0">Si Cantik</p>
-                                                    </div>
-                                                </td>
-                                                <td class="col-auto">
-                                                    <p class="mb-0">00:01:36</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="col-3">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="avatar avatar-md">
-                                                            <img src="images/faces/2.jpg" />
-                                                        </div>
-                                                        <p class="font-bold ms-3 mb-0">Si Ganteng</p>
-                                                    </div>
-                                                </td>
-                                                <td class="col-auto">
-                                                    <p class="mb-0">00:01:36</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="col-3">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="avatar avatar-md">
-                                                            <img src="images/faces/8.jpg" />
-                                                        </div>
-                                                        <p class="font-bold ms-3 mb-0">Singh Eknoor</p>
-                                                    </div>
-                                                </td>
-                                                <td class="col-auto">
-                                                    <p class="mb-0">00:01:36</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="col-3">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="avatar avatar-md">
-                                                            <img src="images/faces/5.jpg" />
-                                                        </div>
-                                                        <p class="font-bold ms-3 mb-0">Rani Jhadav</p>
-                                                    </div>
-                                                </td>
-                                                <td class="col-auto">
-                                                    <p class="mb-0">00:01:36</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="col-3">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="avatar avatar-md">
-                                                            <img src="images/faces/6.jpg" />
-                                                        </div>
-                                                        <p class="font-bold ms-3 mb-0">Rani Jhadav</p>
-                                                    </div>
-                                                </td>
-                                                <td class="col-auto">
-                                                    <p class="mb-0">00:01:36</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="col-3">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="avatar avatar-md">
-                                                            <img src="images/faces/7.jpg" />
-                                                        </div>
-                                                        <p class="font-bold ms-3 mb-0">Rani Jhadav</p>
-                                                    </div>
-                                                </td>
-                                                <td class="col-auto">
-                                                    <p class="mb-0">00:01:36</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="col-3">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="avatar avatar-md">
-                                                            <img src="images/faces/1.jpg" />
-                                                        </div>
-                                                        <p class="font-bold ms-3 mb-0">Rani Jhadav</p>
-                                                    </div>
-                                                </td>
-                                                <td class="col-auto">
-                                                    <p class="mb-0">00:01:36</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="col-3">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="avatar avatar-md">
-                                                            <img src="images/faces/4.jpg" />
-                                                        </div>
-                                                        <p class="font-bold ms-3 mb-0">Rani Jhadav</p>
-                                                    </div>
-                                                </td>
-                                                <td class="col-auto">
-                                                    <p class="mb-0">00:01:36</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="col-3">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="avatar avatar-md">
-                                                            <img src="images/faces/5.jpg" />
-                                                        </div>
-                                                        <p class="font-bold ms-3 mb-0">Rani Jhadav</p>
-                                                    </div>
-                                                </td>
-                                                <td class="col-auto">
-                                                    <p class="mb-0">00:01:36</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="col-3">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="avatar avatar-md">
-                                                            <img src="images/faces/3.jpg" />
-                                                        </div>
-                                                        <p class="font-bold ms-3 mb-0">Rani Jhadav</p>
-                                                    </div>
-                                                </td>
-                                                <td class="col-auto">
-                                                    <p class="mb-0">00:01:36</p>
-                                                </td>
-                                            </tr>
-                                        </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-6 col-xl-6">
+                    <div class="col-12 col-xl-12">
                         <div class="card">
                             <div class="card-header">
                                 <h4>Top 10 Read Books</h4>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-hover table-lg">
+                                    <table class="table table-striped" id="table_book">
                                         <thead>
                                             <tr>
                                                 <th>Cover</th>
                                                 <th>Judul</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="col-3">
-                                                    <div class="d-flex align-items-center">
-                                                        <img src="https://via.placeholder.com/50x80" />
-                                                    </div>
-                                                </td>
-                                                <td class="col-auto">
-                                                    <p class="mb-0">Pemrograman Web Modern</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="col-3">
-                                                    <div class="d-flex align-items-center">
-                                                        <img src="https://via.placeholder.com/50x80" />
-                                                    </div>
-                                                </td>
-                                                <td class="col-auto">
-                                                    <p class="mb-0">Belajar Laravel Pemula</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="col-3">
-                                                    <div class="d-flex align-items-center">
-                                                        <img src="https://via.placeholder.com/50x80" />
-                                                    </div>
-                                                </td>
-                                                <td class="col-auto">
-                                                    <p class="mb-0">Pemrograman Web Modern</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="col-3">
-                                                    <div class="d-flex align-items-center">
-                                                        <img src="https://via.placeholder.com/50x80" />
-                                                    </div>
-                                                </td>
-                                                <td class="col-auto">
-                                                    <p class="mb-0">Data Science Fundamental</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="col-3">
-                                                    <div class="d-flex align-items-center">
-                                                        <img src="https://via.placeholder.com/50x80" />
-                                                    </div>
-                                                </td>
-                                                <td class="col-auto">
-                                                    <p class="mb-0">Manajemen Waktu Efektif</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="col-3">
-                                                    <div class="d-flex align-items-center">
-                                                        <img src="https://via.placeholder.com/50x80" />
-                                                    </div>
-                                                </td>
-                                                <td class="col-auto">
-                                                    <p class="mb-0">Kreativitas Tanpa Batas</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="col-3">
-                                                    <div class="d-flex align-items-center">
-                                                        <img src="https://via.placeholder.com/50x80" />
-                                                    </div>
-                                                </td>
-                                                <td class="col-auto">
-                                                    <p class="mb-0">Pemrograman Web Modern</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="col-3">
-                                                    <div class="d-flex align-items-center">
-                                                        <img src="https://via.placeholder.com/50x80" />
-                                                    </div>
-                                                </td>
-                                                <td class="col-auto">
-                                                    <p class="mb-0">Belajar Laravel Pemula</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="col-3">
-                                                    <div class="d-flex align-items-center">
-                                                        <img src="https://via.placeholder.com/50x80" />
-                                                    </div>
-                                                </td>
-                                                <td class="col-auto">
-                                                    <p class="mb-0">Pemrograman Web Modern</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="col-3">
-                                                    <div class="d-flex align-items-center">
-                                                        <img src="https://via.placeholder.com/50x80" />
-                                                    </div>
-                                                </td>
-                                                <td class="col-auto">
-                                                    <p class="mb-0">Data Science Fundamental</p>
-                                                </td>
-                                            </tr>
-                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -389,19 +156,104 @@
 <script>
 import ApexCharts from 'apexcharts'
 
+let table_members, table_books
 export default {
     components: {},
 
     data() {
-        return {}
+        return {
+            data_members: [],
+        }
     },
 
     mounted() {
         this.__Chart()
+        this.__randomDataMember()
+
+        let _row = this
+        $(document).ready(function() {
+            table_members = $('#table_member').DataTable();
+            _row.data_members.forEach(item => {
+                table_members.row.add([
+                    `<img src="${item.foto}" alt="${item.nama}" style="width: 50px; height: 50px;" />`,
+                    item.nama,
+                    item.lamaJam
+                ]).draw();
+            });
+
+            table_books = $('#table_book').DataTable();
+            const data = [
+                {
+                    cover: 'https://via.placeholder.com/80x80',
+                    judul: 'The Great Adventure'
+                },
+                {
+                    cover: 'https://via.placeholder.com/80x80',
+                    judul: 'Journey to the Unknown'
+                },
+                {
+                    cover: 'https://via.placeholder.com/80x80',
+                    judul: 'Mystery of the Old Castle'
+                },
+                {
+                    cover: 'https://via.placeholder.com/80x80',
+                    judul: 'The Secret of the Forest'
+                },
+                {
+                    cover: 'https://via.placeholder.com/80x80',
+                    judul: 'Legends of the Lost City'
+                },
+                {
+                    cover: 'https://via.placeholder.com/80x80',
+                    judul: 'Quest for the Ancient Relic'
+                },
+                {
+                    cover: 'https://via.placeholder.com/80x80',
+                    judul: 'The Enchanted Kingdom'
+                },
+                {
+                    cover: 'https://via.placeholder.com/80x80',
+                    judul: 'Tales of the Forgotten'
+                },
+                {
+                    cover: 'https://via.placeholder.com/80x80',
+                    judul: 'Beyond the Horizon'
+                },
+                {
+                    cover: 'https://via.placeholder.com/80x80',
+                    judul: 'Wonders of the Deep Sea'
+                }
+            ];
+
+            data.forEach(item => {
+                table_books.row.add([
+                    `<img src="${item.cover}" alt="${item.judul}" style="width: 50px; height: 80px;" />`,
+                    item.judul
+                ]).draw();
+            });
+        });
+
     },
 
     methods: {
+        __randomDataMember() {
+            this.data_members = [];
+            let names = ['John Doe', 'Jane Smith', 'Alice Johnson', 'Bob Brown', 'Charlie Wilson', 'Emily Davis', 'Michael Taylor', 'Sophia Martinez', 'William Lee', 'Olivia Anderson'];
+
+            for (let i = 0; i < 10; i++) {
+                const randomSeconds = Math.floor(Math.random() * 3600);
+                let randomData = {
+                    foto: 'https://via.placeholder.com/50x80',
+                    nama: names[i],
+                    lamaJam: this.formatTime(randomSeconds)      
+                };
+                this.data_members.push(randomData);
+            }
+        },
+
         __Chart() {
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
             var optionsProfileVisit = {
                 annotations: {
                     position: 'back',
@@ -419,33 +271,60 @@ export default {
                 plotOptions: {},
                 series: [
                     {
-                        name: 'sales',
-                        data: [9, 20, 30, 20, 10, 20, 30, 20, 10, 20, 30, 20],
+                        name: 'Visitors',
+                        data: months.map(() => Math.floor(Math.random() * 10)),
                     },
                 ],
                 colors: '#435ebe',
                 xaxis: {
-                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    categories: months,
                 },
             }
 
             var chartProfileVisit = new ApexCharts(document.querySelector('#chart-profile-visit'), optionsProfileVisit)
-
             chartProfileVisit.render()
 
             var barOptions = {
                 series: [
                     {
                         name: 'Book 1',
-                        data: [44, 55, 57, 56, 61, 58, 63, 60, 66],
+                        data: months.map(() => Math.floor(Math.random() * 10)),
                     },
                     {
                         name: 'Book 2',
-                        data: [76, 85, 101, 98, 87, 105, 91, 114, 94],
+                        data: months.map(() => Math.floor(Math.random() * 10)),
                     },
                     {
                         name: 'Book 3',
-                        data: [35, 41, 36, 26, 45, 48, 52, 53, 41],
+                        data: months.map(() => Math.floor(Math.random() * 10)),
+                    },
+                    {
+                        name: 'Book 4',
+                        data: months.map(() => Math.floor(Math.random() * 10)),
+                    },
+                    {
+                        name: 'Book 5',
+                        data: months.map(() => Math.floor(Math.random() * 10)),
+                    },
+                    {
+                        name: 'Book 6',
+                        data: months.map(() => Math.floor(Math.random() * 10)),
+                    },
+                    {
+                        name: 'Book 7',
+                        data: months.map(() => Math.floor(Math.random() * 10)),
+                    },
+                    {
+                        name: 'Book 8',
+                        data: months.map(() => Math.floor(Math.random() * 10)),
+                    },
+                    {
+                        name: 'Book 9',
+                        data: months.map(() => Math.floor(Math.random() * 10)),
+                    },
+                    {
+                        name: 'Book 10',
+                        data: months.map(() => Math.floor(Math.random() * 10)),
                     },
                 ],
                 chart: {
@@ -468,11 +347,11 @@ export default {
                     colors: ['transparent'],
                 },
                 xaxis: {
-                    categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+                    categories: months,
                 },
                 yaxis: {
                     title: {
-                        text: '$ (thousands)',
+                        text: '(reads)',
                     },
                 },
                 fill: {
@@ -481,20 +360,24 @@ export default {
                 tooltip: {
                     y: {
                         formatter: function (val) {
-                            return '$ ' + val + ' thousands'
+                            return val + ' reads'
                         },
                     },
                 },
             }
+
+            var bar = new ApexCharts(document.querySelector('#bar'), barOptions)
+            bar.render()
+
             var areaOptions = {
                 series: [
                     {
                         name: '2023',
-                        data: [31, 40, 28, 51, 42, 109, 100],
+                        data: months.map(() => Math.floor(Math.random() * 10)),
                     },
                     {
                         name: '2024',
-                        data: [11, 32, 45, 32, 34, 52, 41],
+                        data: months.map(() => Math.floor(Math.random() * 10)),
                     },
                 ],
                 chart: {
@@ -508,20 +391,26 @@ export default {
                     curve: 'smooth',
                 },
                 xaxis: {
-                    type: 'datetime',
-                    categories: ['2018-09-19T00:00:00.000Z', '2018-09-19T01:30:00.000Z', '2018-09-19T02:30:00.000Z', '2018-09-19T03:30:00.000Z', '2018-09-19T04:30:00.000Z', '2018-09-19T05:30:00.000Z', '2018-09-19T06:30:00.000Z'],
+                    type: 'month',
+                    categories: months,
                 },
                 tooltip: {
                     x: {
-                        format: 'dd/MM/yy HH:mm',
+                        format: 'MM',
                     },
                 },
             }
+
             var area = new ApexCharts(document.querySelector('#area'), areaOptions)
-            var bar = new ApexCharts(document.querySelector('#bar'), barOptions)
             area.render()
-            bar.render()
         },
+
+        formatTime(seconds) {
+            const hrs = Math.floor(seconds / 3600);
+            const mins = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+            return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
     },
 
     computed: {},
