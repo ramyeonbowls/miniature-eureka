@@ -127,7 +127,7 @@
                                                 <td class="col-3">
                                                     <div class="d-flex align-items-center">
                                                         <div class="avatar avatar-md">
-                                                            <img src="./../assets/static/images/faces/5.jpg" />
+                                                            <img src="images/faces/5.jpg" />
                                                         </div>
                                                         <p class="font-bold ms-3 mb-0">Si Cantik</p>
                                                     </div>
@@ -140,7 +140,7 @@
                                                 <td class="col-3">
                                                     <div class="d-flex align-items-center">
                                                         <div class="avatar avatar-md">
-                                                            <img src="./../assets/static/images/faces/2.jpg" />
+                                                            <img src="images/faces/2.jpg" />
                                                         </div>
                                                         <p class="font-bold ms-3 mb-0">Si Ganteng</p>
                                                     </div>
@@ -153,7 +153,7 @@
                                                 <td class="col-3">
                                                     <div class="d-flex align-items-center">
                                                         <div class="avatar avatar-md">
-                                                            <img src="./../assets/static/images/faces/8.jpg" />
+                                                            <img src="images/faces/8.jpg" />
                                                         </div>
                                                         <p class="font-bold ms-3 mb-0">Singh Eknoor</p>
                                                     </div>
@@ -166,7 +166,7 @@
                                                 <td class="col-3">
                                                     <div class="d-flex align-items-center">
                                                         <div class="avatar avatar-md">
-                                                            <img src="./../assets/static/images/faces/5.jpg" />
+                                                            <img src="images/faces/5.jpg" />
                                                         </div>
                                                         <p class="font-bold ms-3 mb-0">Rani Jhadav</p>
                                                     </div>
@@ -179,7 +179,7 @@
                                                 <td class="col-3">
                                                     <div class="d-flex align-items-center">
                                                         <div class="avatar avatar-md">
-                                                            <img src="./../assets/static/images/faces/6.jpg" />
+                                                            <img src="images/faces/6.jpg" />
                                                         </div>
                                                         <p class="font-bold ms-3 mb-0">Rani Jhadav</p>
                                                     </div>
@@ -192,7 +192,7 @@
                                                 <td class="col-3">
                                                     <div class="d-flex align-items-center">
                                                         <div class="avatar avatar-md">
-                                                            <img src="./../assets/static/images/faces/7.jpg" />
+                                                            <img src="images/faces/7.jpg" />
                                                         </div>
                                                         <p class="font-bold ms-3 mb-0">Rani Jhadav</p>
                                                     </div>
@@ -205,7 +205,7 @@
                                                 <td class="col-3">
                                                     <div class="d-flex align-items-center">
                                                         <div class="avatar avatar-md">
-                                                            <img src="./../assets/static/images/faces/1.jpg" />
+                                                            <img src="images/faces/1.jpg" />
                                                         </div>
                                                         <p class="font-bold ms-3 mb-0">Rani Jhadav</p>
                                                     </div>
@@ -218,7 +218,7 @@
                                                 <td class="col-3">
                                                     <div class="d-flex align-items-center">
                                                         <div class="avatar avatar-md">
-                                                            <img src="./../assets/static/images/faces/4.jpg" />
+                                                            <img src="images/faces/4.jpg" />
                                                         </div>
                                                         <p class="font-bold ms-3 mb-0">Rani Jhadav</p>
                                                     </div>
@@ -231,7 +231,7 @@
                                                 <td class="col-3">
                                                     <div class="d-flex align-items-center">
                                                         <div class="avatar avatar-md">
-                                                            <img src="./../assets/static/images/faces/5.jpg" />
+                                                            <img src="images/faces/5.jpg" />
                                                         </div>
                                                         <p class="font-bold ms-3 mb-0">Rani Jhadav</p>
                                                     </div>
@@ -244,7 +244,7 @@
                                                 <td class="col-3">
                                                     <div class="d-flex align-items-center">
                                                         <div class="avatar avatar-md">
-                                                            <img src="./../assets/static/images/faces/3.jpg" />
+                                                            <img src="images/faces/3.jpg" />
                                                         </div>
                                                         <p class="font-bold ms-3 mb-0">Rani Jhadav</p>
                                                     </div>

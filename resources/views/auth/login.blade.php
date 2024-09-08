@@ -5,7 +5,7 @@
         <div class="col-md-5 col-12">
             <div id="auth-left">
                 <div class="auth-logo">
-                    <a href="{{ url('/') }}"><img src="./images/logo/GINESIA_20240905_064017_0003.png" alt="Logo" /></a>
+                    <a href="{{ url('/') }}"><img src="./images/logo/logo_03.png" alt="Logo" /></a>
                 </div>
                 <h1 class="auth-title">Log in.</h1>
                 <p class="auth-subtitle mb-4">Log in with your data that you entered during registration.</p>
