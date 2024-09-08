@@ -27,6 +27,7 @@ export default defineConfig({
                 'resources/js/assets/static/js/components/dark.js',
                 'resources/js/assets/static/js/components/sidebar.js',
                 'resources/js/assets/static/js/pages/simple-datatables.js',
+                'resources/js/assets/static/js/pages/horizontal-layout.js',
             ],
             refresh: true,
         }),

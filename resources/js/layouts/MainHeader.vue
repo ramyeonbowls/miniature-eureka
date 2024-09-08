@@ -1,5 +1,5 @@
 <template>
-    <header class="header">
+    <header class="header mb-2">
         <div class="header-top">
             <div class="container">
                 <a href="#" class="burger-btn d-block d-xl-none" @click="toggleDropdown">
@@ -7,9 +7,9 @@
                 </a>
 
                 <div class="logo">
-                    <a href="/"><img src="/images/logo/Logo GINESIA_20240905_064017_0003.png"></a>
+                    <a href="/"><img src="/images/logo/logo_03.png"></a>
                 </div>
-                <!-- <div class="header-top-right">
+                <div class="header-top-right">
                     <div class="theme-toggle d-flex gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--system-uicons" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21">
                             <g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
@@ -32,10 +32,10 @@
                             ></path>
                         </svg>
                     </div>
-                </div> -->
+                </div>
             </div>
         </div>
-        <nav class="main-navbar" :class="{ 'dropdown-visible': isDropdownVisible, 'dropdown-hidden': !isDropdownVisible }">
+        <nav class="main-navbar">
             <div class="container">
                 <ul>
                     <li class="menu-item ">
@@ -86,27 +86,10 @@ export default {
     },
 
     mounted() {
-        window.addEventListener('resize', this.handleResize);
-        this.handleResize();
-    },
-
-    beforeDestroy() {
-        window.removeEventListener('resize', this.handleResize);
+    
     },
 
     methods: {
-        toggleDropdown() {
-            this.isDropdownVisible = !this.isDropdownVisible;
-        },
-
-        handleResize() {
-            if (window.innerWidth >= 992) {
-                this.isDropdownVisible = true;
-            } else {
-                this.isDropdownVisible = false;
-            }
-        },
-
         logout() {
             window.axios.post('/logout').then((e) => {
                 window.location = '/'
@@ -117,37 +100,3 @@ export default {
     computed: {},
 }
 </script>
-
-<style scoped>
-.header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000; /* Pastikan header berada di atas elemen lain */
-    background-color: #fff; /* Sesuaikan dengan warna header Anda */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Menambahkan bayangan pada header */
-    transition: background-color 0.3s ease;
-}
-
-/* Default: Hide navbar */
-.main-navbar {
-    display: none;
-}
-
-/* Show navbar on large screens */
-@media (min-width: 992px) {
-    .main-navbar {
-        display: block;
-    }
-}
-
-/* Show/hide dropdown on mobile screens */
-.main-navbar.dropdown-visible {
-    display: block;
-}
-
-.main-navbar.dropdown-hidden {
-    display: none;
-}
-</style>
