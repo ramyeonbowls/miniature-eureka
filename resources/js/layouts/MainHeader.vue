@@ -9,6 +9,9 @@
                 <div class="logo">
                     <a href="/"><img src="/images/logo/logo_03.png"></a>
                 </div>
+                <div class="d-none d-sm-block">
+                    <h3 class="header-title">PERPUSTAKAAN DIGITAL GINESIA</h3>
+                </div>
                 <div class="header-top-right">
                     <div class="theme-toggle d-flex gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--system-uicons" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21">
@@ -65,6 +68,26 @@
                 </ul>
             </div>
         </nav>
+
+        <nav class="navbar navbar-dark bg-info navbar-expand d-md-none d-lg-none d-xl-none fixed-bottom">
+            <ul class="navbar-nav nav-justified w-100">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Cari</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Add</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Notif</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Profile</a>
+                </li>
+            </ul>
+        </nav>
     </header>
 </template>
 
@@ -81,12 +104,12 @@ export default {
 
     data() {
         return {
-            isDropdownVisible: false,
+
         }
     },
 
     mounted() {
-    
+
     },
 
     methods: {

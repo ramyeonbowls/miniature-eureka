@@ -61,10 +61,35 @@
                 <div class="divider divider-left-center">
                         <h2>Frasa</h2>
                     </div>
-                <div class="card" style="height: 660px; max-height: 660px;">
-                    <div class="card-body overflow-auto">
-                        <div class="row mb-3">
-                            <div v-for="(value, findex) in frasa" :key="findex" class="comment">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="comment">
+                            <swiper
+                                :modules="modules"
+                                :slides-per-view="1"
+                                :space-between="10"
+                                :breakpoints="swiperBreakpointsfrasa"
+                                navigation
+                                :scrollbar="{ draggable: true }"
+                                @swiper="onSwiper"
+                                @slideChange="onSlideChange"
+                                class="swiper-container swiper-frasa"
+                                loop
+                            >
+                                <swiper-slide v-for="(value, index) in frasa" :key="index">
+                                    
+                                        <div class="comment-header">
+                                            <div class="comment-message">
+                                                <blockquote class="blockquote text-center">
+                                                    <p class="mb-5">{{ value.kata }}</p>
+                                                    <footer class="blockquote-footer text-center"><cite title="Source Title">{{ value.by }}</cite></footer>
+                                                </blockquote>
+                                            </div>
+                                        </div>
+                                    
+                                </swiper-slide>
+                            </swiper>
+                            <!-- <div v-for="(value, findex) in frasa" :key="findex" class="comment">
                                 <div class="comment-header">
                                     <div class="comment-message">
                                         <p class="mx-auto">
@@ -73,7 +98,7 @@
                                         <p class="text-center"><b><i>{{ value.by }}</i></b> </p>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -82,7 +107,7 @@
         <section class="row">
             <div class="col-12 col-lg-12">
                 <div class="card">
-                    <div class="row mb</div>-2 py-0 px-0 mx-0 my-0">
+                    <div class="row mb-2 py-0 px-0 mx-0 my-0">
                         <div class="divider divider-left-center">
                             <h2>Koleksi Buku</h2>
                         </div>
@@ -124,57 +149,142 @@
                 <div class="divider divider-left-center">
                     <h2>Tajuk Utama</h2>
                 </div>
-                <div class="card">
-                    <div class="row">
-                        <div style="display: flex; align-items: center; justify-content: flex-end;" class="mt-2 px-5 py-3">
-                            <a href="#">Lihat Semua</a>
-                            <span class="line"></span>
+                <div class="card py-2 px-4">
+                    <div class="row mb-4">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="text-end pt-3">
+                                <button class="btn btn-primary btn-sm">Lihat Semua</button>
+                            </div>
                         </div>
-                        <div class="col-md-6 my-auto mx-3">
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
                             <div class="panel blog-container">
-                                <div class="panel-body pb-3">
-                                    <div class="image-wrapper py-2 mb-3">
-                                        <a class="image-wrapper" href="#">
-                                            <img src="images/news/literasiday.png" alt="Photo of Blog" style="max-width: 650px; max-height: 210px;">
+                                <div class="panel-body mt-4">
+                                    <div class="mb-3">
+                                        <a href="#">
+                                            <img src="images/news/literasiday.png" class="img-fluid" alt="Photo of Blog">
                                         </a>
                                     </div>
-                                    <h5><a href="#">Merayakan Hari Literasi Internasional 2024: Menyongsong Masa Depan Melalui Kekuatan Membaca</a></h5>
-                                    <small class="text-muted">By <a href="#"><strong> John Doe</strong></a> |  Post on Jan 8, 2013</small>
-                                    <p class="m-top-sm m-bottom-sm mt-3">
+                                    <a href="#">
+                                        <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" title="Merayakan Hari Literasi Internasional 2024: Menyongsong Masa Depan Melalui Kekuatan Membaca">
+                                            Merayakan Hari Literasi Internasional 2024: Menyongsong Masa Depan Melalui Kekuatan Membaca
+                                        </h5>
+                                    </a>
+                                    <small class="text-muted">By <strong> John Doe</strong> |  Post on Jan 8, 2013</small>
+                                    <p class="m-top-sm m-bottom-sm mt-2">
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eros nibh, viverra a dui a, gravida varius velit. Nunc vel tempor nisi. Aenean id pellentesque mi, non placerat mi. Integer luctus accumsan tellus. Vivamus quis elit sit amet nibh lacinia suscipit eu quis purus. Vivamus tristique est non ipsum dapibus lacinia sed nec metus.
                                     </p>
-                                    <a href="#"><i class="fa fa-angle-double-right"></i> Continue reading</a>
-                                    <!-- <span class="post-like text-muted tooltip-test" data-toggle="tooltip" data-original-title="I like this post!">
-                                        <i class="fa fa-heart"></i> <span class="like-count">25</span>
-                                    </span> -->
+                                    <a href="#">
+                                        <i class="fa fa-angle-double-right"></i> <h6>Continue reading </h6>
+                                    </a>
                                 </div>
                             </div>           
                         </div>
-                        <div class="col-md-5 mx-3">
-                            <div class="media popular-post py-2">
+                        <div class="col-lg-6">
+                            <div class="media popular-post" style="height: 150px; max-height: 150px;">
                                 <a class="pull-left" href="#">
                                     <img src="images/samples/architecture1.jpg" alt="Photo of Blog" style="max-width: 150px; max-height: 150px;">
                                 </a>
                                 <div class="media-body">
-                                    Merayakan Hari Literasi Internasional 2024: Menyongsong Masa Depan Melalui Kekuatan Membaca
+                                    <a href="#">
+                                        <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" title="Merayakan Hari Literasi Internasional 2024: Menyongsong Masa Depan Melalui Kekuatan Membaca">Merayakan Hari Literasi Internasional 2024: Menyongsong Masa Depan Melalui Kekuatan Membaca</h6>
+                                    </a>
                                 </div>
                             </div>
-                            <div class="media popular-post py-2">
+                            <div class="media popular-post" style="height: 150px; max-height: 150px;">
                                 <a class="pull-left" href="#">
                                     <img src="images/samples/motorcycle.jpg" alt="Photo of Blog" style="max-width: 150px; max-height: 150px;">
                                 </a>
                                 <div class="media-body">
-                                    Kampus Terbaik Dunia: Universitas-Inovasi yang Mendorong Masa Depan Pendidikan
+                                    <a href="#">
+                                        <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" title="Kampus Terbaik Dunia: Universitas-Inovasi yang Mendorong Masa Depan Pendidikan">Kampus Terbaik Dunia: Universitas-Inovasi yang Mendorong Masa Depan Pendidikan</h6>
+                                    </a>
                                 </div>
                             </div>
-                            <div class="media popular-post py-2">
+                            <div class="media popular-post" style="height: 150px; max-height: 150px;">
+                                <a class="pull-left" href="#">
+                                    <img src="images/samples/origami.jpg" alt="Photo of Blog" style="max-width: 150px; max-height: 150px;">
+                                </a>
+                                <div class="media-body">
+                                    <a href="#">
+                                        <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit.">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </h6>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="row">
+            <div class="col-12 col-lg-12">
+                <div class="divider divider-left-center">
+                    <h2>Tajuk Utama</h2>
+                </div>
+                <div class="card py-2 px-4">
+                    <div class="row mb-4">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="text-end pt-3">
+                                <button class="btn btn-primary btn-sm">Lihat Semua</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="media popular-post" style="height: 150px; max-height: 150px;">
                                 <a class="pull-left" href="#">
                                     <img src="images/samples/architecture1.jpg" alt="Photo of Blog" style="max-width: 150px; max-height: 150px;">
                                 </a>
                                 <div class="media-body">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                                    <a href="#">
+                                        <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" title="Merayakan Hari Literasi Internasional 2024: Menyongsong Masa Depan Melalui Kekuatan Membaca">Merayakan Hari Literasi Internasional 2024: Menyongsong Masa Depan Melalui Kekuatan Membaca</h6>
+                                    </a>
                                 </div>
                             </div>
+                            <div class="media popular-post" style="height: 150px; max-height: 150px;">
+                                <a class="pull-left" href="#">
+                                    <img src="images/samples/motorcycle.jpg" alt="Photo of Blog" style="max-width: 150px; max-height: 150px;">
+                                </a>
+                                <div class="media-body">
+                                    <a href="#">
+                                        <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" title="Kampus Terbaik Dunia: Universitas-Inovasi yang Mendorong Masa Depan Pendidikan">Kampus Terbaik Dunia: Universitas-Inovasi yang Mendorong Masa Depan Pendidikan</h6>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="media popular-post" style="height: 150px; max-height: 150px;">
+                                <a class="pull-left" href="#">
+                                    <img src="images/samples/origami.jpg" alt="Photo of Blog" style="max-width: 150px; max-height: 150px;">
+                                </a>
+                                <div class="media-body">
+                                    <a href="#">
+                                        <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit.">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </h6>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="panel blog-container">
+                                <div class="panel-body mt-4">
+                                    <div class="mb-3">
+                                        <a href="#">
+                                            <img src="images/news/literasiday.png" class="img-fluid" alt="Photo of Blog">
+                                        </a>
+                                    </div>
+                                    <a href="#">
+                                        <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" title="Merayakan Hari Literasi Internasional 2024: Menyongsong Masa Depan Melalui Kekuatan Membaca">
+                                            Merayakan Hari Literasi Internasional 2024: Menyongsong Masa Depan Melalui Kekuatan Membaca
+                                        </h5>
+                                    </a>
+                                    <small class="text-muted">By <strong> John Doe</strong> |  Post on Jan 8, 2013</small>
+                                    <p class="m-top-sm m-bottom-sm mt-2">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eros nibh, viverra a dui a, gravida varius velit. Nunc vel tempor nisi. Aenean id pellentesque mi, non placerat mi. Integer luctus accumsan tellus. Vivamus quis elit sit amet nibh lacinia suscipit eu quis purus. Vivamus tristique est non ipsum dapibus lacinia sed nec metus.
+                                    </p>
+                                    <a href="#">
+                                        <i class="fa fa-angle-double-right"></i> <h6>Continue reading </h6>
+                                    </a>
+                                </div>
+                            </div>           
                         </div>
                     </div>
                 </div>
@@ -184,12 +294,19 @@
 </template>
 
 <style>
-    .image-wrapper {
-        position: relative;
-        display: block;
-        overflow: hidden;
-    }
+.swiper-frasa .swiper-button-next,
+.swiper-frasa .swiper-button-prev {
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+.swiper-frasa .swiper-button-next::after,
+.swiper-frasa .swiper-button-prev::after {
+    font-size: 16px; /* Ukuran ikon tombol */
+}
     .blog-container a:not(.btn) {
         color: #999;
         transition: all .2s linear;
@@ -197,14 +314,6 @@
         -moz-transition: all .2s linear;
         -ms-transition: all .2s linear;
         -o-transition: all .2s linear;
-    }
-
-    .image-wrapper img {
-        transition: all .4s ease;
-        -webkit-transition: all .4s ease;
-        -moz-transition: all .4s ease;
-        -ms-transition: all .4s ease;
-        -o-transition: all .4s ease;
     }
 
     .post-like {
@@ -393,7 +502,25 @@ export default {
                     slidesPerView: 6,
                     spaceBetween: 10
                 }
-            }
+            },
+            swiperBreakpointsfrasa: {
+                320: {
+                    slidesPerView: 1,
+                    spaceBetween: 10
+                },
+                640: {
+                    slidesPerView: 1,
+                    spaceBetween: 10
+                },
+                768: {
+                    slidesPerView: 1,
+                    spaceBetween: 10
+                },
+                1024: {
+                    slidesPerView: 1,
+                    spaceBetween: 10
+                }
+            },
         };
     },
 
@@ -466,6 +593,17 @@ export default {
 
             for (let i = 0; i < this.buku_populer.length; i += chunkSize) {
                 grouped.push(this.buku_populer.slice(i, i + chunkSize));
+            }
+
+            return grouped;
+        },
+        
+        groupedfrasa() {
+            const chunkSize = 2;
+            const grouped = [];
+
+            for (let i = 0; i < this.frasa.length; i += chunkSize) {
+                grouped.push(this.frasa.slice(i, i + chunkSize));
             }
 
             return grouped;

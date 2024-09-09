@@ -38,7 +38,7 @@ class MainController extends Controller
     {
         $user = auth()->user();
 
-        if($user){
+        if($user && $user->role == 'member'){
             return response()->json([
                'name' => $user->name,
             ], 200);
