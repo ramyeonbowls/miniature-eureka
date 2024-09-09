@@ -47,6 +47,7 @@ export default defineConfig({
             '~bootstrap-icons': resolve(__dirname, 'node_modules/bootstrap-icons'),
             '~perfect-scrollbar': resolve(__dirname, 'node_modules/perfect-scrollbar'),
             '~@fontsource': resolve(__dirname, 'node_modules/@fontsource'),
+            '~@public': resolve(__dirname, 'public'),
         },
     },
     build: {
