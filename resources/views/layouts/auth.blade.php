@@ -18,7 +18,7 @@
         @vite(['resources/sass/app.scss', 'resources/sass/themes/dark/app-dark.scss', 'resources/sass/pages/auth.scss'])
     </head>
     <body>
-        @vite(['resources/js/assets/static/js/initTheme.js'])
+        @vite(['resources/js/assets/js/initTheme.js'])
 
         <div id="auth">
             @yield('content')

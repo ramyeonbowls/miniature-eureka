@@ -40,13 +40,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
             
         });
 
-        Route::get('/403', [App\Http\Controllers\HomeController::class, 'forbidden'])->name('forbidden');
-
-        Route::get('/{any}', [App\Http\Controllers\HomeController::class, 'index'])
-            ->where('any', '.*')
-            ->name('catch-all')
-            ->middleware(['password.confirm']
-        );
+        Route::controller(App\Http\Controllers\HomeController::class)->group(function () {
+            Route::get('/403', 'forbidden')->name('forbidden');
+            Route::get('/{any}', 'index')
+                ->where('any', '.*')
+                ->name('catch-all')
+                ->middleware(['activated.user']);
+        });
 
     });
 });
+
+Route::get('/{any}', [App\Http\Controllers\MainController::class, 'index'])
+    ->where('any', '.*')
+    ->name('catch-all');

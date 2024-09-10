@@ -18,7 +18,7 @@
         @vite(['resources/sass/app.scss', 'resources/sass/pages/error.scss'])
     </head>
     <body>
-        @vite(['resources/js/assets/static/js/initTheme.js'])
+        @vite(['resources/js/assets/js/initTheme.js'])
 
         <div id="main-container">
             <div class="error-page container">
