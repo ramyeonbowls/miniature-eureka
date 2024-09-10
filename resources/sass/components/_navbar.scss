@@ -241,7 +241,7 @@
         }
 
         @media screen and (max-width: 1199px) {
-            background-color: lighten($primary, 47%);
+            background-color: $horizontal-header-bg;
             overflow: hidden;
             padding: 1rem;
             display: none;
