@@ -20,6 +20,16 @@ const _routes = [
         name: 'buku',
         component: () => import(/* webpackChunkName: "usr/buku" */ './components/member/formLogin.vue'),
     },
+    {
+        path: '/baca-buku',
+        name: 'baca_buku',
+        component: () => import(/* webpackChunkName: "usr/buku" */ './components/member/ReadBook.vue'),
+    },
+    {
+        path: '/view-buku',
+        name: 'view_buku',
+        component: () => import(/* webpackChunkName: "usr/buku" */ './components/member/ViewBook.vue'),
+    },
 ]
 
 export default _routes

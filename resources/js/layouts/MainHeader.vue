@@ -51,6 +51,16 @@
                             <span> Buku</span>
                         </router-link>
                     </li>
+                    <li class="menu-item ">
+                        <router-link to="/baca-buku" class='menu-link'>
+                            <span> Baca Buku</span>
+                        </router-link>
+                    </li>
+                    <li class="menu-item ">
+                        <router-link to="/view-buku" class='menu-link'>
+                            <span> View Buku</span>
+                        </router-link>
+                    </li>
                     <template v-if="!isAuthenticated">
                         <li class="menu-item ">
                             <router-link to="/mlogin" class='menu-link'>
