@@ -9,8 +9,8 @@
                                 <img :src="detail.image" class="img-fluid" :alt="detail.title" height="80%" width="80%">
                             </div>
                             <div class="buttons">
-                                <button class="btn btn-light-primary mr-2">Baca</button>
-                                <button class="btn btn-light-primary ml-2">Pinjam</button>
+                                <button class="btn btn-light-primary mr-2">Read More</button>
+                                <button class="btn btn-light-primary ml-2">Read More</button>
                             </div>
                         </div>
                     </div>
@@ -24,12 +24,12 @@
                     </div>
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" :class="{ active: activeTab === 'sinopsis' }" @click="scrollTo('sinopsis')" id="sinopsis-tab" type="button" role="tab" aria-controls="sinopsis" :aria-selected="activeTab === 'sinopsis'" >
+                            <button class="nav-link" :class="{ active: activeTab === 'sinopsis' }" @click="scrollTo('sinopsis')" id="sinopsis" type="button" role="tab" aria-controls="sinopsis" :aria-selected="activeTab === 'sinopsis'" >
                                 Sinopsis
                             </button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" :class="{ active: activeTab === 'details' }" @click="scrollTo('details')" id="detail-tab" type="button" role="tab" aria-controls="details" :aria-selected="activeTab === 'details'" >
+                            <button class="nav-link" :class="{ active: activeTab === 'details' }" @click="scrollTo('details')" id="detail" type="button" role="tab" aria-controls="details" :aria-selected="activeTab === 'details'" >
                                 Detail
                             </button>
                         </li>
@@ -115,7 +115,7 @@
                                     loop
                                 >
                                     <swiper-slide v-for="(item, index) in buku_populer" :key="index" class="col-md-3 col-6">
-                                        <router-link :to="{ name: 'view_buku', params: { idb: item.isbn } }">
+                                        <router-link :to="{ name: 'detailbuku', params: { idb: item.isbn } }">
                                             <div class="card">
                                                 <div class="product-image">
                                                     <img :src="item.image" class="img-fluid" :alt="item.alt">
@@ -232,7 +232,7 @@ export default {
             }
         },
 
-        getBukuPopuler() {
+        async getBukuPopuler() {
             this.buku_populer = [];
 
             window.axios
@@ -263,22 +263,12 @@ export default {
             }
         },
 
-        scrollTo(sectionId) {
-            const element = document.getElementById(sectionId);
-            this.activeTab = sectionId;
+        scrollTo(target) {
+            this.activeTab = target;
+            const element = document.getElementById(target);
             if (element) {
-                const offsetTop = element.getBoundingClientRect().top + window.pageYOffset;
-                window.scrollTo({
-                top: offsetTop - 200,
-                behavior: 'smooth'
-                });
+                element.scrollIntoView({ behavior: 'smooth' });
             }
-        },
-
-        async refreshData() {
-            this.idb = this.$route.params.idb;
-            await this.getDetail();
-            await this.getBukuPopuler();
         }
     },
 
@@ -293,9 +283,5 @@ export default {
             return this.detail.sinopsis && this.detail.sinopsis.length > this.limit;
         }
     },
-
-    watch: {
-        '$route.params.idb': 'refreshData'
-    }
 };
 </script>

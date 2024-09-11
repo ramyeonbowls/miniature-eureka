@@ -17,6 +17,7 @@ Auth::routes([
 Route::get('/getInfo', [App\Http\Controllers\MainController::class, 'getInfo'])->name('getInfo');
 Route::get('/getBukuPopuler', [App\Http\Controllers\MainController::class, 'getBukuPopuler'])->name('getBukuPopuler');
 Route::get('/getBuku', [App\Http\Controllers\MainController::class, 'getBuku'])->name('getBuku');
+Route::get('/getDetail', [App\Http\Controllers\MainController::class, 'getDetail'])->name('getDetail');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware('activated.user')->group(function() {

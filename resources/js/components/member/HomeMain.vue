@@ -1,30 +1,30 @@
 <template>
-    <div class="page-heading">
-        <section class="row mb-4">
-            <div class="col-12 col-lg-12">
-                <div class="row">
-                    <div class="col-12">
-                        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                            <div class="carousel-inner">
-                                <template v-if="banner.length>0">
-                                    <div v-for="(item, index) in banner" :key="index" :class="['carousel-item', { 'active': index === 0 }]">
-                                        <img :src="item.image" class="d-block w-100" :alt="item.alt">
-                                    </div>
-                                </template>
-                            </div>
-                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                            </a>
-                            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                            </a>
+    <div class="page-heading mb-0">
+        <div class="col-12 col-lg-12">
+            <div class="row">
+                <div class="col-12">
+                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <template v-if="banner.length>0">
+                                <div v-for="(item, index) in banner" :key="index" :class="['carousel-item', { 'active': index === 0 }]">
+                                    <img :src="item.image" class="d-block w-100" :alt="item.alt">
+                                </div>
+                            </template>
                         </div>
+                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </a>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
+    <div class="pag-content">
         <section class="row">
             <div class="col-12 col-lg-9">
                 <div class="row">
@@ -34,24 +34,26 @@
                     <div class="col-12">
                         <div v-for="(group, groupIndex) in groupedBukuPopuler" :key="groupIndex" class="row">
                             <div v-for="buku in group" :key="buku.id" class="col-md-3 col-6">
-                                <div class="card" style="max-height: 330px;">
-                                    <div class="card-content">
-                                        <div class="product-image">
-                                            <img :src="buku.image" :alt="buku.alt" class="img-fluid">
+                                <router-link :to="{ name: 'view_buku', params: { idb: buku.isbn } }">
+                                    <div class="card" style="max-height: 330px;">
+                                        <div class="card-content">
+                                            <div class="product-image">
+                                                <img :src="buku.image" :alt="buku.alt" class="img-fluid">
+                                            </div>
+                                            <div class="card-body py-2">
+                                                <a href="#">
+                                                    <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="buku.title">{{ buku.title }}</h6>
+                                                </a>
+                                            </div>
                                         </div>
-                                        <div class="card-body py-2">
-                                            <a href="#">
-                                                <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="buku.title">{{ buku.title }}</h6>
-                                            </a>
-                                        </div>
+                                        <!-- <div class="d-flex justify-content-between mb-3 px-1">
+                                            <button class="btn btn-outline-primary mx-auto" @click="bacaBuku">Baca</button>
+                                            <template v-if="isAuthenticated">
+                                                <button class="btn btn-outline-warning mx-auto">Pinjam</button>
+                                            </template>
+                                        </div> -->
                                     </div>
-                                    <!-- <div class="d-flex justify-content-between mb-3 px-1">
-                                        <button class="btn btn-outline-primary mx-auto" @click="bacaBuku">Baca</button>
-                                        <template v-if="isAuthenticated">
-                                            <button class="btn btn-outline-warning mx-auto">Pinjam</button>
-                                        </template>
-                                    </div> -->
-                                </div>
+                                </router-link>
                             </div>
                         </div>
                     </div>
@@ -77,7 +79,6 @@
                                 loop
                             >
                                 <swiper-slide v-for="(value, index) in frasa" :key="index">
-                                    
                                         <div class="comment-header">
                                             <div class="comment-message">
                                                 <blockquote class="blockquote text-center">
@@ -86,19 +87,8 @@
                                                 </blockquote>
                                             </div>
                                         </div>
-                                    
                                 </swiper-slide>
                             </swiper>
-                            <!-- <div v-for="(value, findex) in frasa" :key="findex" class="comment">
-                                <div class="comment-header">
-                                    <div class="comment-message">
-                                        <p class="mx-auto">
-                                            {{ value.kata }}
-                                        </p>
-                                        <p class="text-center"><b><i>{{ value.by }}</i></b> </p>
-                                    </div>
-                                </div>
-                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -126,16 +116,22 @@
                                     loop
                                 >
                                     <swiper-slide v-for="(item, index) in buku" :key="index" class="col-md-3 col-6">
-                                        <div class="card">
-                                            <div class="product-image">
-                                                <img :src="item.image" class="img-fluid" :alt="item.alt">
+                                        <router-link :to="{ name: 'view_buku', params: { idb: item.isbn } }">
+                                            <div class="card">
+                                                <div class="product-image">
+                                                    <img :src="item.image" class="img-fluid" :alt="item.alt">
+                                                </div>
+                                                <div class="card-body py-2">
+                                                    <a href="#">
+                                                        <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" 
+                                                        style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" 
+                                                            :title="item.title">
+                                                            {{ item.title }}
+                                                        </h6>
+                                                    </a>
+                                                </div>
                                             </div>
-                                            <div class="card-body py-2">
-                                                <a href="#">
-                                                    <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="item.title">{{ item.title }}</h6>
-                                                </a>
-                                            </div>
-                                        </div>
+                                        </router-link>
                                     </swiper-slide>
                                 </swiper>
                             </div>
@@ -146,15 +142,13 @@
         </section>
         <section class="row">
             <div class="col-12 col-lg-12">
-                <div class="divider divider-left-center">
-                    <h2>Tajuk Utama</h2>
-                </div>
                 <div class="card py-2 px-4">
-                    <div class="row mb-4">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                            <div class="text-end pt-3">
-                                <button class="btn btn-primary btn-sm">Lihat Semua</button>
-                            </div>
+                    <div class="row">
+                        <div class="col-6 text-start pt-3">
+                            <h2>Tajuk Utama</h2>
+                        </div>
+                        <div class="col-6 text-end pt-3">
+                            <button class="btn btn-primary btn-sm">Lihat Semua</button>
                         </div>
                     </div>
                     <div class="row">
@@ -219,18 +213,39 @@
         </section>
         <section class="row">
             <div class="col-12 col-lg-12">
-                <div class="divider divider-left-center">
-                    <h2>Tajuk Utama</h2>
-                </div>
                 <div class="card py-2 px-4">
-                    <div class="row mb-4">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                            <div class="text-end pt-3">
-                                <button class="btn btn-primary btn-sm">Lihat Semua</button>
-                            </div>
+                    <div class="row">
+                        <div class="col-6 text-start pt-3">
+                            <h2>Wawasan</h2>
+                        </div>
+                        <div class="col-6 text-end pt-3">
+                            <button class="btn btn-primary btn-sm">Lihat Semua</button>
                         </div>
                     </div>
                     <div class="row">
+                        <div class="col-lg-6">
+                            <div class="panel blog-container">
+                                <div class="panel-body mt-4">
+                                    <div class="mb-3">
+                                        <a href="#">
+                                            <img src="images/news/literasiday.png" class="img-fluid" alt="Photo of Blog">
+                                        </a>
+                                    </div>
+                                    <a href="#">
+                                        <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" title="Merayakan Hari Literasi Internasional 2024: Menyongsong Masa Depan Melalui Kekuatan Membaca">
+                                            Merayakan Hari Literasi Internasional 2024: Menyongsong Masa Depan Melalui Kekuatan Membaca
+                                        </h5>
+                                    </a>
+                                    <small class="text-muted">By <strong> John Doe</strong> |  Post on Jan 8, 2013</small>
+                                    <p class="m-top-sm m-bottom-sm mt-2">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eros nibh, viverra a dui a, gravida varius velit. Nunc vel tempor nisi. Aenean id pellentesque mi, non placerat mi. Integer luctus accumsan tellus. Vivamus quis elit sit amet nibh lacinia suscipit eu quis purus. Vivamus tristique est non ipsum dapibus lacinia sed nec metus.
+                                    </p>
+                                    <a href="#">
+                                        <i class="fa fa-angle-double-right"></i> <h6>Continue reading </h6>
+                                    </a>
+                                </div>
+                            </div>           
+                        </div>
                         <div class="col-lg-6">
                             <div class="media popular-post" style="height: 150px; max-height: 150px;">
                                 <a class="pull-left" href="#">
@@ -263,6 +278,22 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="row">
+            <div class="col-12 col-lg-12">
+                <div class="card py-2 px-4">
+                    <div class="row">
+                        <div class="col-6 text-start pt-3">
+                            <h2>Wawasan</h2>
+                        </div>
+                        <div class="col-6 text-end pt-3">
+                            <button class="btn btn-primary btn-sm">Lihat Semua</button>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-lg-6">
                             <div class="panel blog-container">
                                 <div class="panel-body mt-4">
@@ -285,6 +316,180 @@
                                     </a>
                                 </div>
                             </div>           
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="media popular-post" style="height: 150px; max-height: 150px;">
+                                <a class="pull-left" href="#">
+                                    <img src="images/samples/architecture1.jpg" alt="Photo of Blog" style="max-width: 150px; max-height: 150px;">
+                                </a>
+                                <div class="media-body">
+                                    <a href="#">
+                                        <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" title="Merayakan Hari Literasi Internasional 2024: Menyongsong Masa Depan Melalui Kekuatan Membaca">Merayakan Hari Literasi Internasional 2024: Menyongsong Masa Depan Melalui Kekuatan Membaca</h6>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="media popular-post" style="height: 150px; max-height: 150px;">
+                                <a class="pull-left" href="#">
+                                    <img src="images/samples/motorcycle.jpg" alt="Photo of Blog" style="max-width: 150px; max-height: 150px;">
+                                </a>
+                                <div class="media-body">
+                                    <a href="#">
+                                        <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" title="Kampus Terbaik Dunia: Universitas-Inovasi yang Mendorong Masa Depan Pendidikan">Kampus Terbaik Dunia: Universitas-Inovasi yang Mendorong Masa Depan Pendidikan</h6>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="media popular-post" style="height: 150px; max-height: 150px;">
+                                <a class="pull-left" href="#">
+                                    <img src="images/samples/origami.jpg" alt="Photo of Blog" style="max-width: 150px; max-height: 150px;">
+                                </a>
+                                <div class="media-body">
+                                    <a href="#">
+                                        <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit.">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </h6>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="row">
+            <div class="col-12 col-lg-12">
+                <div class="card py-2 px-4">
+                    <div class="row">
+                        <div class="col-6 text-start pt-3">
+                            <h2>Wawasan</h2>
+                        </div>
+                        <div class="col-6 text-end pt-3">
+                            <button class="btn btn-primary btn-sm">Lihat Semua</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="panel blog-container">
+                                <div class="panel-body mt-4">
+                                    <div class="mb-3">
+                                        <a href="#">
+                                            <img src="images/news/literasiday.png" class="img-fluid" alt="Photo of Blog">
+                                        </a>
+                                    </div>
+                                    <a href="#">
+                                        <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" title="Merayakan Hari Literasi Internasional 2024: Menyongsong Masa Depan Melalui Kekuatan Membaca">
+                                            Merayakan Hari Literasi Internasional 2024: Menyongsong Masa Depan Melalui Kekuatan Membaca
+                                        </h5>
+                                    </a>
+                                    <small class="text-muted">By <strong> John Doe</strong> |  Post on Jan 8, 2013</small>
+                                    <p class="m-top-sm m-bottom-sm mt-2">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eros nibh, viverra a dui a, gravida varius velit. Nunc vel tempor nisi. Aenean id pellentesque mi, non placerat mi. Integer luctus accumsan tellus. Vivamus quis elit sit amet nibh lacinia suscipit eu quis purus. Vivamus tristique est non ipsum dapibus lacinia sed nec metus.
+                                    </p>
+                                    <a href="#">
+                                        <i class="fa fa-angle-double-right"></i> <h6>Continue reading </h6>
+                                    </a>
+                                </div>
+                            </div>           
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="media popular-post" style="height: 150px; max-height: 150px;">
+                                <a class="pull-left" href="#">
+                                    <img src="images/samples/architecture1.jpg" alt="Photo of Blog" style="max-width: 150px; max-height: 150px;">
+                                </a>
+                                <div class="media-body">
+                                    <a href="#">
+                                        <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" title="Merayakan Hari Literasi Internasional 2024: Menyongsong Masa Depan Melalui Kekuatan Membaca">Merayakan Hari Literasi Internasional 2024: Menyongsong Masa Depan Melalui Kekuatan Membaca</h6>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="media popular-post" style="height: 150px; max-height: 150px;">
+                                <a class="pull-left" href="#">
+                                    <img src="images/samples/motorcycle.jpg" alt="Photo of Blog" style="max-width: 150px; max-height: 150px;">
+                                </a>
+                                <div class="media-body">
+                                    <a href="#">
+                                        <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" title="Kampus Terbaik Dunia: Universitas-Inovasi yang Mendorong Masa Depan Pendidikan">Kampus Terbaik Dunia: Universitas-Inovasi yang Mendorong Masa Depan Pendidikan</h6>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="media popular-post" style="height: 150px; max-height: 150px;">
+                                <a class="pull-left" href="#">
+                                    <img src="images/samples/origami.jpg" alt="Photo of Blog" style="max-width: 150px; max-height: 150px;">
+                                </a>
+                                <div class="media-body">
+                                    <a href="#">
+                                        <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit.">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </h6>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="row">
+            <div class="col-12 col-lg-12">
+                <div class="card py-2 px-4">
+                    <div class="row">
+                        <div class="col-6 text-start pt-3">
+                            <h2>Wawasan</h2>
+                        </div>
+                        <div class="col-6 text-end pt-3">
+                            <button class="btn btn-primary btn-sm">Lihat Semua</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="panel blog-container">
+                                <div class="panel-body mt-4">
+                                    <div class="mb-3">
+                                        <a href="#">
+                                            <img src="images/news/literasiday.png" class="img-fluid" alt="Photo of Blog">
+                                        </a>
+                                    </div>
+                                    <a href="#">
+                                        <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" title="Merayakan Hari Literasi Internasional 2024: Menyongsong Masa Depan Melalui Kekuatan Membaca">
+                                            Merayakan Hari Literasi Internasional 2024: Menyongsong Masa Depan Melalui Kekuatan Membaca
+                                        </h5>
+                                    </a>
+                                    <small class="text-muted">By <strong> John Doe</strong> |  Post on Jan 8, 2013</small>
+                                    <p class="m-top-sm m-bottom-sm mt-2">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eros nibh, viverra a dui a, gravida varius velit. Nunc vel tempor nisi. Aenean id pellentesque mi, non placerat mi. Integer luctus accumsan tellus. Vivamus quis elit sit amet nibh lacinia suscipit eu quis purus. Vivamus tristique est non ipsum dapibus lacinia sed nec metus.
+                                    </p>
+                                    <a href="#">
+                                        <i class="fa fa-angle-double-right"></i> <h6>Continue reading </h6>
+                                    </a>
+                                </div>
+                            </div>           
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="media popular-post" style="height: 150px; max-height: 150px;">
+                                <a class="pull-left" href="#">
+                                    <img src="images/samples/architecture1.jpg" alt="Photo of Blog" style="max-width: 150px; max-height: 150px;">
+                                </a>
+                                <div class="media-body">
+                                    <a href="#">
+                                        <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" title="Merayakan Hari Literasi Internasional 2024: Menyongsong Masa Depan Melalui Kekuatan Membaca">Merayakan Hari Literasi Internasional 2024: Menyongsong Masa Depan Melalui Kekuatan Membaca</h6>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="media popular-post" style="height: 150px; max-height: 150px;">
+                                <a class="pull-left" href="#">
+                                    <img src="images/samples/motorcycle.jpg" alt="Photo of Blog" style="max-width: 150px; max-height: 150px;">
+                                </a>
+                                <div class="media-body">
+                                    <a href="#">
+                                        <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" title="Kampus Terbaik Dunia: Universitas-Inovasi yang Mendorong Masa Depan Pendidikan">Kampus Terbaik Dunia: Universitas-Inovasi yang Mendorong Masa Depan Pendidikan</h6>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="media popular-post" style="height: 150px; max-height: 150px;">
+                                <a class="pull-left" href="#">
+                                    <img src="images/samples/origami.jpg" alt="Photo of Blog" style="max-width: 150px; max-height: 150px;">
+                                </a>
+                                <div class="media-body">
+                                    <a href="#">
+                                        <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit.">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </h6>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -530,25 +735,6 @@ export default {
     },
 
     methods: {
-        addCarouselClones() {
-            this.$nextTick(() => {
-                let items = document.querySelectorAll('#recipeCarousel #carousel-item-b');
-
-                items.forEach((el) => {
-                    const minPerSlide = 5;
-                    let next = el.nextElementSibling
-                    for (var i=1; i<minPerSlide; i++) {
-                        if (!next) {
-                            // wrap carousel by using first child
-                            next = items[0]
-                        }
-                        let cloneChild = next.cloneNode(true)
-                        el.appendChild(cloneChild.children[0])
-                        next = next.nextElementSibling
-                    }
-                });
-            });
-        },
         bacaBuku(){
             if(!this.isAuthenticated){
                 this.$router.push('/mlogin');
@@ -577,8 +763,6 @@ export default {
             .get('/getBuku')
             .then((response) => {
                 this.buku = response.data;
-                
-                this.addCarouselClones();
             })
             .catch((e) => {
                 console.error(e)

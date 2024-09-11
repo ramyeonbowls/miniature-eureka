@@ -104,4 +104,29 @@ class MainController extends Controller
 
         return response()->json($results, 200);
     }
+    
+    public function getDetail(Request $request)
+    {
+        $isbn = $request->id;
+
+        $results = DB::table('tbook as a')
+            ->select([
+                'a.isbn',
+                'a.title',
+                'a.sinopsis',
+                'a.filename',
+                'a.cover as image',
+                'a.writer',
+                'a.year',
+                'a.page'
+            ])
+            ->where('a.isbn','=', $isbn)
+            ->first();
+
+        if ($results) {
+            $results->image = (isset($results->image) && file_exists(public_path('/images/cover/' . $results->image))) ? "/images/cover/" . $results->image : '/images/cover/default-cover.jpg';
+        }
+
+        return response()->json($results, 200);
+    }
 }
