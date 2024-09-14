@@ -8,8 +8,8 @@ import './bootstrap.js'
 import { createApp } from 'vue'
 import featherIcons from 'feather-icons'
 import PerfectScrollbar from 'perfect-scrollbar'
-import Main from './Main.vue'
 import _routes from './mainroutes.js'
+import AppReader from './components/member/AppReader.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import { LoadingPlugin } from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
@@ -50,21 +50,6 @@ if (token) {
 }
 axios.defaults.withCredentials = true;
 
-axios.interceptors.response.use(
-    (response) => {
-        // Jika respons berhasil, kembalikan data
-        return response;
-    },
-    (error) => {
-        // Jika ada error, periksa apakah statusnya 401 (Unauthorized)
-        if (error.response && error.response.status === 401) {
-            // Redirect ke halaman login
-            router.push({ name: 'mlogin' });
-        }
-        return Promise.reject(error);
-    }
-);
-
 featherIcons.replace()
 
 /**
@@ -73,7 +58,7 @@ featherIcons.replace()
  * to use in your application's views. An example is included for you.
  */
 
-const appUser = createApp(Main)
+const appReaders = createApp(AppReader)
 
 /**
  * The following block of code may be used to automatically register your
@@ -93,8 +78,7 @@ const appUser = createApp(Main)
  * scaffolding. Otherwise, you will need to add an element yourself.
  */
 
-appUser.use(VueSweetalert2)
-appUser.use(LoadingPlugin, gloading)
-appUser.use(router)
-appUser.config.globalProperties.$axios = axios;
-appUser.mount('#usr-page-container')
+appReaders.use(VueSweetalert2)
+appReaders.use(LoadingPlugin, gloading)
+appReaders.use(router)
+appReaders.mount('#app-reader-container')

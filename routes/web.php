@@ -16,8 +16,11 @@ Auth::routes([
 
 Route::get('/getInfo', [App\Http\Controllers\MainController::class, 'getInfo'])->name('getInfo');
 Route::get('/getBukuPopuler', [App\Http\Controllers\MainController::class, 'getBukuPopuler'])->name('getBukuPopuler');
-Route::get('/getBuku', [App\Http\Controllers\MainController::class, 'getBuku'])->name('getBuku');
+Route::get('/getBook', [App\Http\Controllers\MainController::class, 'getBook'])->name('getBook');
 Route::get('/getDetail', [App\Http\Controllers\MainController::class, 'getDetail'])->name('getDetail');
+Route::get('/getCategory', [App\Http\Controllers\MainController::class, 'getCategory'])->name('getCategory');
+
+Route::get('/appreader', [App\Http\Controllers\BookController::class, 'index']);
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware('activated.user')->group(function() {

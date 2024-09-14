@@ -24,7 +24,7 @@
             </div>
         </div>
     </div>
-    <div class="pag-content">
+    <div class="page-content">
         <section class="row">
             <div class="col-12 col-lg-9">
                 <div class="row">
@@ -34,7 +34,7 @@
                     <div class="col-12">
                         <div v-for="(group, groupIndex) in groupedBukuPopuler" :key="groupIndex" class="row">
                             <div v-for="buku in group" :key="buku.id" class="col-md-3 col-6">
-                                <router-link :to="{ name: 'view_buku', params: { idb: buku.isbn } }">
+                                <router-link :to="{ name: 'detail_buku', params: { idb: buku.isbn } }">
                                     <div class="card" style="max-height: 330px;">
                                         <div class="card-content">
                                             <div class="product-image">
@@ -46,12 +46,6 @@
                                                 </a>
                                             </div>
                                         </div>
-                                        <!-- <div class="d-flex justify-content-between mb-3 px-1">
-                                            <button class="btn btn-outline-primary mx-auto" @click="bacaBuku">Baca</button>
-                                            <template v-if="isAuthenticated">
-                                                <button class="btn btn-outline-warning mx-auto">Pinjam</button>
-                                            </template>
-                                        </div> -->
                                     </div>
                                 </router-link>
                             </div>
@@ -116,7 +110,7 @@
                                     loop
                                 >
                                     <swiper-slide v-for="(item, index) in buku" :key="index" class="col-md-3 col-6">
-                                        <router-link :to="{ name: 'view_buku', params: { idb: item.isbn } }">
+                                        <router-link :to="{ name: 'detail_buku', params: { idb: item.isbn } }">
                                             <div class="card">
                                                 <div class="product-image">
                                                     <img :src="item.image" class="img-fluid" :alt="item.alt">
@@ -499,19 +493,20 @@
 </template>
 
 <style>
-.swiper-frasa .swiper-button-next,
-.swiper-frasa .swiper-button-prev {
-    width: 25px;
-    height: 25px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+    .swiper-frasa .swiper-button-next,
+    .swiper-frasa .swiper-button-prev {
+        width: 25px;
+        height: 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-.swiper-frasa .swiper-button-next::after,
-.swiper-frasa .swiper-button-prev::after {
-    font-size: 16px; /* Ukuran ikon tombol */
-}
+    .swiper-frasa .swiper-button-next::after,
+    .swiper-frasa .swiper-button-prev::after {
+        font-size: 16px;
+    }
+
     .blog-container a:not(.btn) {
         color: #999;
         transition: all .2s linear;
@@ -731,36 +726,29 @@ export default {
 
     mounted() {
         this.getBukuPopuler();
-        this.getBuku();
+        this.getBook();
     },
 
     methods: {
-        bacaBuku(){
-            if(!this.isAuthenticated){
-                this.$router.push('/mlogin');
-            }else{
-                alert('sudah login');
-            }
-        },
-
-        async getBukuPopuler() {
+        getBukuPopuler() {
             this.buku_populer = [];
 
-            window.axios
-            .get('/getBukuPopuler')
+            let loader = this.$loading.show();
+            window.axios.get('/getBukuPopuler')
             .then((response) => {
                 this.buku_populer = response.data;
+                loader.hide();
             })
             .catch((e) => {
                 console.error(e)
             });
         },
         
-        async getBuku() {
+        getBook() {
             this.buku = [];
 
             window.axios
-            .get('/getBuku')
+            .get('/getBook')
             .then((response) => {
                 this.buku = response.data;
             })

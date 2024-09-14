@@ -35,4 +35,14 @@ function listener() {
             submenuItem.querySelector('.subsubmenu').classList.toggle('active')
         })
     })
+
+    let simpleMenuItems = document.querySelectorAll('.menu-item:not(.has-sub)');
+    simpleMenuItems.forEach((simpleMenuItem) => {
+        simpleMenuItem.addEventListener('click', () => {
+            let navbar = document.querySelector('.main-navbar');
+            if (navbar.classList.contains('active')) {
+                navbar.classList.remove('active');
+            }
+        });
+    });
 }

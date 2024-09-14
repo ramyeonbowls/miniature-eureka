@@ -15,12 +15,12 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/search" class='menu-item'>
+                        <div class='menu-item' data-bs-toggle="modal" data-bs-target="#search-modal">
                             <i class="bi bi-search"></i>
-                        </router-link>
+                        </div>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/book" class='menu-item'>
+                        <router-link to="/koleksi-buku" class='menu-item'>
                             <i class="bi bi-book"></i>
                         </router-link>
                     </li>
@@ -42,7 +42,31 @@
                 <footerItems></footerItems>
             </footer>
         </div>
+
+        <!-- search modal -->
+        <div class="modal fade" id="search-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel33">Search </h4>
+                        <button type="button" id="close-search" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group position-relative has-icon-right">
+                            <input type="text" class="form-control rounded-pill" placeholder="Cari Judul, Penulis" v-model="searchQuery" @keypress.enter="searchBooks">
+                            <div class="form-control-icon">
+                                <i class="bi bi-search" @click="searchBooks"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- search modal -->
     </div>
+    <p>asdasdas</p>
 </template>
 
 <style scoped>
@@ -95,6 +119,7 @@ export default {
     data() {
         return {
             user: {},
+            searchQuery: '',
             isAuthenticated: false,
         }
     },
@@ -110,19 +135,18 @@ export default {
         });
 
         document.addEventListener('DOMContentLoaded', function () {
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl)
-        })
-    }, false);
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            })
+        }, false);
     },
 
     methods: {
         getInfo() {
             this.user = {};
 
-            window.axios
-            .get('/getInfo')
+            axios.get('/getInfo')
             .then((response) => {
                 this.user = response.data;
 
@@ -133,6 +157,15 @@ export default {
             .catch((e) => {
                 console.error(e)
             });
+        },
+
+        searchBooks() {
+            if(this.searchQuery!=''){
+                this.$router.push({ name: 'koleksi_buku', query: { search: this.searchQuery } });
+                this.searchQuery = '';
+                const closeButton = document.getElementById('close-search');
+                closeButton.click();
+            }
         },
     },
 

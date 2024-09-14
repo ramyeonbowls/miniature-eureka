@@ -1,7 +1,7 @@
 <template>
-    <div class="pag-content">
+    <div class="page-content">
         <section class="row">
-            <div class="col-12 col-lg-4">
+            <div class="col-12 col-lg-4 mb-3">
                 <div class="sticky-section">
                     <div class="card h-100">
                         <div class="card-body">
@@ -9,8 +9,10 @@
                                 <img :src="detail.image" class="img-fluid" :alt="detail.title" height="80%" width="80%">
                             </div>
                             <div class="buttons">
-                                <button class="btn btn-light-primary mr-2">Baca</button>
-                                <button class="btn btn-light-primary ml-2">Pinjam</button>
+                                <button class="btn btn-light-primary mr-2" @click="bacaBuku">Baca</button>
+                                <template v-if="isAuthenticated">
+                                    <button class="btn btn-light-primary ml-2">Pinjam</button>
+                                </template>
                             </div>
                         </div>
                     </div>
@@ -115,7 +117,7 @@
                                     loop
                                 >
                                     <swiper-slide v-for="(item, index) in buku_populer" :key="index" class="col-md-3 col-6">
-                                        <router-link :to="{ name: 'view_buku', params: { idb: item.isbn } }">
+                                        <router-link :to="{ name: 'detail_buku', params: { idb: item.isbn } }">
                                             <div class="card">
                                                 <div class="product-image">
                                                     <img :src="item.image" class="img-fluid" :alt="item.alt">
@@ -167,6 +169,10 @@ export default {
     props: {
         idb: {
             required:true
+        },
+        isAuthenticated: {
+            type: Boolean,
+            required: true
         }
     },
 
@@ -228,7 +234,12 @@ export default {
             if(!this.isAuthenticated){
                 this.$router.push('/mlogin');
             }else{
-                alert('sudah login');
+                const routeData = this.$router.resolve({
+                    name: 'appreader',
+                    query: { pdfToken: encodeURIComponent(this.detail.filename) }
+                });
+                console.log('Route URL:', routeData.href);
+                window.open(routeData.href, '_blank');
             }
         },
 

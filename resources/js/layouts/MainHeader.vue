@@ -12,6 +12,14 @@
                 <div class="d-none d-sm-block">
                     <h3 class="header-title">PERPUSTAKAAN DIGITAL GINESIA</h3>
                 </div>
+                <div class="d-none d-sm-block">
+                    <div class="form-group position-relative has-icon-right">
+                        <input type="text" class="form-control rounded-pill" placeholder="Cari Judul, Penulis" v-model="searchQuery" @keypress.enter="searchBooks">
+                        <div class="form-control-icon">
+                            <i class="bi bi-search" @click="searchBooks"></i>
+                        </div>
+                    </div>
+                </div>
                 <div class="header-top-right">
                     <div class="theme-toggle d-flex gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--system-uicons" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21">
@@ -47,15 +55,15 @@
                         </router-link>
                     </li>
                     <li class="menu-item ">
-                        <router-link to="/buku" class='menu-link'>
-                            <span> Buku</span>
+                        <router-link to="/koleksi-buku" class='menu-link'>
+                            <span> Koleksi Buku</span>
                         </router-link>
                     </li>
-                    <li class="menu-item ">
+                    <!-- <li class="menu-item ">
                         <router-link to="/baca-buku" class='menu-link'>
                             <span> Baca Buku</span>
                         </router-link>
-                    </li>
+                    </li> -->
                     <!-- <li class="menu-item ">
                         <router-link to="/view-buku" class='menu-link'>
                             <span> View Buku</span>
@@ -94,7 +102,7 @@ export default {
 
     data() {
         return {
-
+            searchQuery: ''
         }
     },
 
@@ -107,6 +115,13 @@ export default {
             window.axios.post('/logout').then((e) => {
                 window.location = '/'
             })
+        },
+
+        searchBooks() {
+            if(this.searchQuery!=''){
+                this.$router.push({ name: 'koleksi_buku', query: { search: this.searchQuery } });
+                this.searchQuery = '';
+            }
         },
     },
 

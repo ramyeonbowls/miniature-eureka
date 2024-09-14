@@ -16,9 +16,9 @@ const _routes = [
         component: () => import(/* webpackChunkName: "usr/mlogin" */ './components/member/formLogin.vue'),
     },
     {
-        path: '/buku',
-        name: 'buku',
-        component: () => import(/* webpackChunkName: "usr/buku" */ './components/member/formLogin.vue'),
+        path: '/koleksi-buku',
+        name: 'koleksi_buku',
+        component: () => import(/* webpackChunkName: "usr/buku" */ './components/member/Book.vue'),
     },
     {
         path: '/baca-buku',
@@ -26,9 +26,15 @@ const _routes = [
         component: () => import(/* webpackChunkName: "usr/buku" */ './components/member/ReadBook.vue'),
     },
     {
-        path: '/view-buku/:idb',
-        name: 'view_buku',
+        path: '/detail-buku/:idb',
+        name: 'detail_buku',
         component: () => import(/* webpackChunkName: "usr/buku" */ './components/member/ViewBook.vue'),
+    },
+    {
+        path: '/appreader',
+        name: 'appreader',
+        component: () => import(/* webpackChunkName: "usr/buku" */ './components/member/AppReader.vue'),
+        props: route => ({ pdfToken: route.query.pdfToken })
     },
 ]
 
