@@ -28,18 +28,19 @@
             </div>
             <div class="col-12 col-lg-9">
                 <template v-if="paginatedBuku.length > 0">
-                    <div class="row">
+                    <div class="row row-cols-2 row-cols-md-5">
                         <template v-for="(group, groupIndex) in paginatedBuku" :key="groupIndex">
-                            <div v-for="buku in group" :key="buku.id" class="col-md-2 col-6">
+                            <div v-for="buku in group" :key="buku.id" class="col">
                                 <router-link :to="{ name: 'detail_buku', params: { idb: buku.isbn } }">
-                                    <div class="card" style="max-height: 330px;">
+                                    <div class="card">
                                         <div class="card-content">
                                             <div class="product-image">
                                                 <img :src="buku.image" :alt="buku.alt" class="img-fluid">
                                             </div>
                                             <div class="card-body pt-0">
+                                                {{ buku.writer }}
                                                 <a href="#">
-                                                    <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="buku.title">{{ buku.title }}</h6>
+                                                    <h6 class="card-title mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="buku.title">{{ buku.title }}</h6>
                                                 </a>
                                             </div>
                                         </div>
@@ -85,7 +86,7 @@ export default {
             seeks: '',
             selectedCategories: [], 
             currentPage: 1,
-            itemsPerPage: 12
+            itemsPerPage: 15
         }
     },
 

@@ -52,9 +52,7 @@ class MainController extends Controller
     
     public function getBukuPopuler()
     {
-        $results = [];
-
-        $sql = DB::table('tbook as a')
+        $results = DB::table('tbook as a')
             ->select([
                 'a.isbn',
                 'a.title',
@@ -65,16 +63,19 @@ class MainController extends Controller
             ])
             ->orderBy('createdate', 'desc')
             ->take(8)
-            ->get();
-
-        foreach ($sql as $i => $value) {
-            $results[$i]['isbn']        = $value->isbn;
-            $results[$i]['title']       = $value->title;
-            $results[$i]['sinopsis']    = $value->sinopsis;
-            $results[$i]['filename']    = $value->filename;
-            $results[$i]['image']       = ( isset($value->image) && file_exists(public_path('/images/cover/'. $value->image)) ) ? "/images/cover/".$value->image : '/images/cover/default-cover.jpg';
-            $results[$i]['writer']      = $value->writer;
-        }
+            ->get()
+            ->map(function ($value) {
+                return [
+                    'isbn'     => $value->isbn,
+                    'title'    => $value->title,
+                    'sinopsis' => $value->sinopsis,
+                    'filename' => $value->filename,
+                    'image'    => (isset($value->image) && file_exists(public_path('/images/cover/' . $value->image))) 
+                                    ? '/images/cover/' . $value->image 
+                                    : '/images/cover/default-cover.jpg',
+                    'writer'   => $value->writer
+                ];
+            });
 
         return response()->json($results, 200);
     }
@@ -85,11 +86,10 @@ class MainController extends Controller
         $logs->write(__FUNCTION__, "START");
         DB::enableQueryLog();
 
-        $results    = [];
         $category   = $request->categories ?? [];
         $parameter  = $request->search ?? '';
 
-        $sql = DB::table('tbook as a')
+        $results = DB::table('tbook as a')
             ->select([
                 'a.isbn',
                 'a.title',
@@ -105,16 +105,19 @@ class MainController extends Controller
             ->when(count($category)>0, function($query) use ($category) {
 				$query->whereIn('a.category_id', $category);
 			})
-            ->get();
-
-        foreach ($sql as $i => $value) {
-            $results[$i]['isbn']        = $value->isbn;
-            $results[$i]['title']       = $value->title;
-            $results[$i]['sinopsis']    = $value->sinopsis;
-            $results[$i]['filename']    = $value->filename;
-            $results[$i]['image']       = ( isset($value->image) && file_exists(public_path('/images/cover/'. $value->image)) ) ? "/images/cover/".$value->image : '/images/cover/default-cover.jpg';
-            $results[$i]['writer']      = $value->writer;
-        }
+            ->get()
+            ->map(function ($value) {
+                return [
+                    'isbn'     => $value->isbn,
+                    'title'    => $value->title,
+                    'sinopsis' => $value->sinopsis,
+                    'filename' => $value->filename,
+                    'image'    => (isset($value->image) && file_exists(public_path('/images/cover/' . $value->image))) 
+                                    ? '/images/cover/' . $value->image 
+                                    : '/images/cover/default-cover.jpg',
+                    'writer'   => $value->writer
+                ];
+            });
 
         $queries = DB::getQueryLog();
         for($q = 0; $q < count($queries); $q++) {

@@ -26,11 +26,19 @@
     </div>
     <div class="page-content">
         <section class="row">
-            <div class="col-12 col-lg-9">
-                <div class="row">
-                    <div class="divider divider-left-center">
-                        <h2>Buku Terpopuler</h2>
+            <div class="row mt-3">
+                <div class="divider divider-left-center">
+                    <h2>BUKU POPULER</h2>
+                </div>
+            </div>
+            <div class="col-12 col-lg-3 d-none d-sm-block">
+                <div class="card" style="height:658px;">
+                    <div class="card-body background-populer">
+                        &nbsp;
                     </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-9">
                     <div class="col-12">
                         <div v-for="(group, groupIndex) in groupedBukuPopuler" :key="groupIndex" class="row">
                             <div v-for="buku in group" :key="buku.id" class="col-md-3 col-6">
@@ -51,41 +59,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-12 col-lg-3">
-                <div class="divider divider-left-center">
-                        <h2>Frasa</h2>
-                    </div>
-                <div class="card">
-                    <div class="card-body">
-                        <div class="comment">
-                            <swiper
-                                :modules="modules"
-                                :slides-per-view="1"
-                                :space-between="10"
-                                :breakpoints="swiperBreakpointsfrasa"
-                                navigation
-                                :scrollbar="{ draggable: true }"
-                                @swiper="onSwiper"
-                                @slideChange="onSlideChange"
-                                class="swiper-container swiper-frasa"
-                                loop
-                            >
-                                <swiper-slide v-for="(value, index) in frasa" :key="index">
-                                        <div class="comment-header">
-                                            <div class="comment-message">
-                                                <blockquote class="blockquote text-center">
-                                                    <p class="mb-5">{{ value.kata }}</p>
-                                                    <footer class="blockquote-footer text-center"><cite title="Source Title">{{ value.by }}</cite></footer>
-                                                </blockquote>
-                                            </div>
-                                        </div>
-                                </swiper-slide>
-                            </swiper>
-                        </div>
-                    </div>
-                </div>
             </div>
         </section>
         <section class="row">
@@ -93,7 +66,7 @@
                 <div class="card">
                     <div class="row mb-2 py-0 px-0 mx-0 my-0">
                         <div class="divider divider-left-center">
-                            <h2>Koleksi Buku</h2>
+                            <h2>KOLEKSI BUKU</h2>
                         </div>
                         <div class="col-12">
                             <div class="row">
@@ -139,7 +112,7 @@
                 <div class="card py-2 px-4">
                     <div class="row">
                         <div class="col-6 text-start pt-3">
-                            <h2>Tajuk Utama</h2>
+                            <h2>TAJUK UTAMA</h2>
                         </div>
                         <div class="col-6 text-end pt-3">
                             <button class="btn btn-primary btn-sm">Lihat Semua</button>
@@ -200,6 +173,53 @@
                                     </a>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="row mb-4">
+            <div class="col-12 col-lg-12">
+                <div class="testimonial-slider">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="testimonial-title">
+                                <i class="bi bi-quote display-2"></i>
+                                <h2 class="fw-bold display-6">FRASA</h2>
+                            </div>
+                            <div class="d-flex justify-content-center mt-3">
+                                <button class="swiper-button-prev-frasa btn btn-primary me-2">Prev</button>
+                                <button class="swiper-button-next-frasa btn btn-primary">Next</button>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <swiper
+                                ref="swiperFrasa"
+                                :modules="modules"
+                                :slides-per-view="2"
+                                :space-between="10"
+                                :breakpoints="swiperBreakpointsfrasa"
+                                :navigation="navigationFrasa"
+                                :scrollbar="{ draggable: true }"
+                                @swiper="onSwiper"
+                                @slideChange="onSlideChange"
+                                class="swiper-frasa col-md-10"
+                                loop
+                            >
+                                <swiper-slide v-for="(value, index) in frasa" :key="index">
+                                    <div class="card" style="height: 340px;">
+                                        <div class="d-flex justify-content-center align-items-center flex-column mt-3">
+                                            <div class="avatar">
+                                                <img src="/images/faces/1.jpg" style="height: 90px; width:90px;">
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ value.by }}</h5>
+                                            <p class="card-text">"{{ value.kata }}"</p>
+                                        </div>
+                                    </div>
+                                </swiper-slide>
+                            </swiper>
                         </div>
                     </div>
                 </div>
@@ -493,6 +513,26 @@
 </template>
 
 <style>
+.testimonial-slider {
+  background-color: #fab040;
+  padding: 2em 2em;
+  border-radius: 10px;
+}
+.testimonial-title {
+  color: #fff;
+}
+.testimonial-title h2 {
+  padding-left: 0.2em;
+}
+
+    .background-populer {
+        background-image: url('/images/logo/buku-populer.jpg');
+        background-size: cover;
+        background-position: center;
+        border-radius: 10px;
+        width: 100%;
+    }
+
     .swiper-frasa .swiper-button-next,
     .swiper-frasa .swiper-button-prev {
         width: 25px;
@@ -538,10 +578,6 @@
     .swiper-container:hover .swiper-scrollbar {
         display: block;
         opacity: 0;
-    }
-
-    .custom-swiper-slide {
-        max-width: 100%;
     }
 
     .product-card {
@@ -713,23 +749,38 @@ export default {
                     spaceBetween: 10
                 },
                 768: {
-                    slidesPerView: 1,
+                    slidesPerView: 2,
                     spaceBetween: 10
                 },
                 1024: {
-                    slidesPerView: 1,
+                    slidesPerView: 2,
                     spaceBetween: 10
                 }
+            },
+            navigationFrasa: {
+                nextEl: '.swiper-button-next-frasa',
+                prevEl: '.swiper-button-prev-frasa',
             },
         };
     },
 
-    mounted() {
+    created(){
         this.getBukuPopuler();
         this.getBook();
     },
 
+    mounted() {
+        
+    },
+
     methods: {
+        swiperPrev() {
+            this.$refs.swiperFrasa.swiper.slidePrev();
+        },
+        swiperNext() {
+            this.$refs.swiperFrasa.swiper.slideNext();
+        },
+
         getBukuPopuler() {
             this.buku_populer = [];
 

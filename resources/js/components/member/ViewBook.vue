@@ -219,9 +219,12 @@ export default {
         };
     },
 
+    created(){
+        this.getBukuPopuler();
+    },
+
     mounted() {
         this.idb = this.$route.params.idb;
-        this.getBukuPopuler();
         this.getDetail();
     },
 
