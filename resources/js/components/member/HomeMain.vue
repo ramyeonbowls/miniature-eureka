@@ -111,10 +111,10 @@
             <div class="col-12 col-lg-12">
                 <div class="card py-2 px-4">
                     <div class="row">
-                        <div class="col-6 text-start pt-3">
+                        <div class="col-7 text-start pt-3 pe-0">
                             <h2>TAJUK UTAMA</h2>
                         </div>
-                        <div class="col-6 text-end pt-3">
+                        <div class="col-5 text-end pt-3">
                             <button class="btn btn-primary btn-sm">Lihat Semua</button>
                         </div>
                     </div>
@@ -187,9 +187,9 @@
                                 <i class="bi bi-quote display-2"></i>
                                 <h2 class="fw-bold display-6 text-white">FRASA</h2>
                             </div>
-                            <div class="d-flex justify-content-center mb-3">
-                                <button class="swiper-button-prev-frasa btn btn-primary me-2"><i class="bi bi-arrow-left-circle"></i></button>
-                                <button class="swiper-button-next-frasa btn btn-primary"><i class="bi bi-arrow-right-circle"></i></button>
+                            <div class="d-flex justify-content-center mt-5 mb-3">
+                                <button class="swiper-button-prev-frasa btn rounded-pill me-2"><i class="bi bi-caret-left-fill" style="font-size: 2rem; color: white;"></i></button>
+                                <button class="swiper-button-next-frasa btn rounded-pill"><i class="bi bi-caret-right-fill" style="font-size: 2rem; color: white;"></i></button>
                             </div>
                         </div>
                         <div class="col-md-10">
