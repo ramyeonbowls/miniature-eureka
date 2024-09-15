@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('access_uid', 20)->default('');
             $table->unsignedBigInteger('access_mid')->default(0);
             $table->string('access_url')->default('');
-            $table->text('access_qstring')->default('');
+            $table->text('access_qstring');
             $table->string('access_ip', 45)->default('');
             $table->string('method', 10)->default('GET');
             $table->timestamp('access_date')->useCurrent();

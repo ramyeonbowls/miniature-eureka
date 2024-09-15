@@ -1,337 +1,167 @@
 <template>
-  <div class="pdf-viewer">
-    <div class="toolbar">
-      <button @click="previousPage" :disabled="currentPage <= 1" class="btn btn-primary">Previous</button>
-      <button @click="nextPage" :disabled="currentPage >= totalPages" class="btn btn-primary">Next</button>
-      <span>Page {{ currentPage }} of {{ totalPages }}</span>
-      <div class="zoom-controls btn-group">
-        <button @click="zoomOut" class="btn btn-secondary">-</button>
-        <span>Zoom: {{ zoomLevel * 100 }}%</span>
-        <button @click="zoomIn" class="btn btn-secondary">+</button>
-      </div>
-      <button @click="toggleAnnotationMode" class="btn btn-info">{{ isAnnotating ? 'Stop Annotating' : 'Start Annotating' }}</button>
-      <button @click="togglePencilMode" class="btn btn-info">{{ isPencilMode ? 'Stop Freehand' : 'Start Freehand' }}</button>
-      <button @click="searchPdf" class="btn btn-info">Search</button>
-      <button @click="toggleSidebar" class="btn btn-info">{{ isSidebarOpen ? 'Close Sidebar' : 'Open Sidebar' }}</button>
-    </div>
-    <div class="pdf-container">
-      <canvas ref="pdfCanvas" @mousedown="startDrawing" @mouseup="stopDrawing" @mousemove="draw" @click="addAnnotation"></canvas>
-    </div>
-    <div class="annotation-form" v-if="isAnnotating">
-      <textarea v-model="newAnnotation" class="form-control" placeholder="Type your annotation here..."></textarea>
-      <button @click="saveAnnotation" class="btn btn-success">Save Annotation</button>
-    </div>
-    <div class="sidebar" v-if="isSidebarOpen">
-      <h3>Pages</h3>
-      <ul>
-        <li v-for="page in totalPages" :key="page" @click="gotoPage(page)" class="list-group-item">Page {{ page }}</li>
-      </ul>
-    </div>
-  </div>
+	<section class="section">
+		<div class="card">
+			<!-- <div class="card-header">
+				<p class="text-subtitle text-muted">Nisa Amalia</p>
+				<h3 class="mt-1">5 Manfaat Daun Pandan yang Populer di Masyarakat</h3>
+			</div> -->
+			<div class="card-body">
+				<div class="d-flex justify-content-center align-items-center position-relative">
+					<!-- Floating Pagination -->
+					<nav aria-label="Page navigation example" class="pagination-float">
+						<ul class="pagination pagination-primary justify-content-center">
+							<li class="page-item"><a class="page-link" href="javascript:void(0);" @click="prevPage">Prev</a></li>
+							<li class="page-item"><a class="page-link disabled" href="javascript:void(0);">{{ currentPage }}</a></li>
+							<li class="page-item"><a class="page-link disabled" href="javascript:void(0);">/</a></li>
+							<li class="page-item"><a class="page-link disabled" href="javascript:void(0);">{{ totalPages }}</a></li>
+							<li class="page-item"><a class="page-link" href="javascript:void(0);" @click="nextPage">Next</a></li>
+						</ul>
+					</nav>
+					<!-- PDF Viewer -->
+					<VuePDF :pdf="pdf" :page="currentPage" text-layer />
+					<div v-if="showTooltip" class="tooltip">
+						<p>Click to copy</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 </template>
 
 <script>
-import { ref, onMounted, watch } from 'vue';
-import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
+import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { useRoute } from 'vue-router'
+import { VuePDF, usePDF } from '@tato30/vue-pdf'
+import '@tato30/vue-pdf/style.css'
 
 export default {
-  name: 'AppReader',
-  props: {
-    pdfUrl: {
-      type: String,
-      required: true
-    }
-  },
-  setup(props) {
-    const pdfCanvas = ref(null);
-    const currentPage = ref(1);
-    const totalPages = ref(0);
-    const zoomLevel = ref(1);
-    const isAnnotating = ref(false);
-    const isPencilMode = ref(false);
-    const isSidebarOpen = ref(false);
-    const newAnnotation = ref('');
-    const isRendering = ref(false);
-    let pdfDoc = null;
-    let annotations = ref([]);
-    let drawing = false;
-    let context = null;
+	name: 'AppReader',
+	components: {
+		VuePDF
+	},
 
-    // Set up PDF.js worker
-    pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
-      'pdfjs-dist/build/pdf.worker.mjs',
-      import.meta.url
-    ).toString();
+	data() {
+		return {
+			showTooltip: false,
+			selectedText: '',
+		};
+	},
 
-    const loadPdf = async () => {
-      const url = '/storage/pdf/5 Manfaat Daun Pandan yang Populer di Masyarakat.pdf';
-      pdfDoc = await pdfjsLib.getDocument(url).promise;
-      totalPages.value = pdfDoc.numPages;
-      renderPage(currentPage.value);
-    };
+  	setup() {
+		const route = useRoute()
+    	const pdfToken = computed(() => decodeURIComponent(route.query.pdfToken) || '')
+		const pdfUrl = computed(() => encodeURIComponent('/storage/pdf/'+pdfToken.value))
+		const { pdf, pages } = usePDF(pdfUrl)
+		const currentPage = ref(1)
+		const totalPages = computed(() => pages.value)
 
-    const renderPage = async (pageNum) => {
-      if (isRendering.value) return;
-      isRendering.value = true;
+		const prevPage = () => {
+			if (currentPage.value > 1) {
+				currentPage.value -= 1
+			}
+		}
+		
+		const nextPage = () => {
+			if (currentPage.value < totalPages.value) {
+				currentPage.value += 1
+			}
+		}
 
-      try {
-        const page = await pdfDoc.getPage(pageNum);
-        const viewport = page.getViewport({ scale: zoomLevel.value });
-        const canvas = pdfCanvas.value;
-        context = canvas.getContext('2d');
-        canvas.width = viewport.width;
-        canvas.height = viewport.height;
+		const showTooltip = ref(false)
+		const tooltipX = ref(0)
+		const tooltipY = ref(0)
 
-        await page.render({
-          canvasContext: context,
-          viewport: viewport
-        }).promise;
+		const handleTextSelection = (event) => {
+			const selection = window.getSelection()
+			if (selection.toString()) {
+				const range = selection.getRangeAt(0)
+				const rect = range.getBoundingClientRect()
+				tooltipX.value = rect.left + window.scrollX
+				tooltipY.value = rect.top + window.scrollY - 30 
+				showTooltip.value = true
+			}
+		}
 
-        // Draw annotations and freehand
-        drawAnnotations(context);
-        drawFreehand(context);
-      } finally {
-        isRendering.value = false;
-      }
-    };
+		const hideTooltip = () => {
+			showTooltip.value = false
+		}
 
-    const drawAnnotations = (context) => {
-      annotations.value.forEach(annot => {
-        if (annot.page === currentPage.value) {
-          context.font = '16px Arial';
-          context.fillStyle = 'red';
-          context.fillText(annot.text, annot.x, annot.y);
-        }
-      });
-    };
+		onMounted(() => {
+			document.addEventListener('selectionchange', handleTextSelection)
+			document.addEventListener('click', hideTooltip)
+		})
 
-    const drawFreehand = (context) => {
-      if (isPencilMode.value && drawing) {
-        context.strokeStyle = 'blue';
-        context.lineWidth = 2;
-        context.lineCap = 'round';
-        context.lineJoin = 'round';
-      }
-    };
+		onUnmounted(() => {
+			document.removeEventListener('selectionchange', handleTextSelection)
+			document.removeEventListener('click', hideTooltip)
+		})
+		
+		return {
+			pdf,
+			currentPage,
+			totalPages,
+			prevPage,
+			nextPage
+		}
+  	},
 
-    const previousPage = () => {
-      if (currentPage.value > 1) {
-        currentPage.value--;
-        renderPage(currentPage.value);
-      }
-    };
+	computed:{
+		pdfToken() {
+            return this.$route.query.pdfToken || '';
+        },
+	},
 
-    const nextPage = () => {
-      if (currentPage.value < totalPages.value) {
-        currentPage.value++;
-        renderPage(currentPage.value);
-      }
-    };
-
-    const zoomIn = () => {
-      zoomLevel.value += 0.1;
-      renderPage(currentPage.value);
-    };
-
-    const zoomOut = () => {
-      if (zoomLevel.value > 0.2) {
-        zoomLevel.value -= 0.1;
-        renderPage(currentPage.value);
-      }
-    };
-
-    const toggleAnnotationMode = () => {
-      isAnnotating.value = !isAnnotating.value;
-    };
-
-    const togglePencilMode = () => {
-      isPencilMode.value = !isPencilMode.value;
-    };
-
-    const searchPdf = () => {
-      // Implement search functionality here
-    };
-
-    const toggleSidebar = () => {
-      isSidebarOpen.value = !isSidebarOpen.value;
-    };
-
-    const addAnnotation = (event) => {
-      if (isAnnotating.value) {
-        const canvas = pdfCanvas.value;
-        const rect = canvas.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
-        annotations.value.push({
-          page: currentPage.value,
-          x,
-          y,
-          text: newAnnotation.value
+	mounted() {
+		document.addEventListener('DOMContentLoaded', () => {
+            let loader = this.$loading.show()
+            setTimeout(() => {
+                loader.hide()
+            }, 1000)
         });
-        renderPage(currentPage.value);
-        newAnnotation.value = '';
-        autosaveAnnotations();
-      }
-    };
+		document.addEventListener('keydown', this.preventCopy)
+		document.addEventListener('contextmenu', this.disableRightClick)
+	},
 
-    const startDrawing = (event) => {
-      if (isPencilMode.value) {
-        drawing = true;
-        const canvas = pdfCanvas.value;
-        const rect = canvas.getBoundingClientRect();
-        context.beginPath();
-        context.moveTo(event.clientX - rect.left, event.clientY - rect.top);
-      }
-    };
+	beforeUnmount() {
+		document.removeEventListener('contextmenu', this.disableRightClick)
+		document.removeEventListener('keydown', this.preventCopy)
+	},
 
-    const stopDrawing = () => {
-      if (isPencilMode.value) {
-        drawing = false;
-        context.closePath();
-      }
-    };
+	methods:{
+		disableRightClick(event) {
+			event.preventDefault();
+		},
 
-    const draw = (event) => {
-      if (isPencilMode.value && drawing) {
-        const canvas = pdfCanvas.value;
-        const rect = canvas.getBoundingClientRect();
-        context.lineTo(event.clientX - rect.left, event.clientY - rect.top);
-        context.stroke();
-      }
-    };
-
-    const saveAnnotation = () => {
-      if (newAnnotation.value.trim()) {
-        addAnnotation({ clientX: 100, clientY: 100 }); // Dummy coordinates, you should add real interaction
-        newAnnotation.value = '';
-      }
-    };
-
-    const gotoPage = (pageNum) => {
-      currentPage.value = pageNum;
-      renderPage(pageNum);
-    };
-
-    const autosaveAnnotations = () => {
-      // Implement autosave functionality here
-    };
-
-    watch([currentPage, zoomLevel], () => {
-      renderPage(currentPage.value);
-    });
-
-    onMounted(() => {
-      loadPdf();
-    });
-
-    return {
-      pdfCanvas,
-      currentPage,
-      totalPages,
-      zoomLevel,
-      isAnnotating,
-      isPencilMode,
-      isSidebarOpen,
-      newAnnotation,
-      previousPage,
-      nextPage,
-      zoomIn,
-      zoomOut,
-      toggleAnnotationMode,
-      togglePencilMode,
-      searchPdf,
-      toggleSidebar,
-      saveAnnotation,
-      addAnnotation,
-      startDrawing,
-      stopDrawing,
-      draw,
-      gotoPage
-    };
-  }
-};
+		preventCopy(event) {
+			if (event.ctrlKey && event.key === 'c') {
+				event.preventDefault();
+				event.stopImmediatePropagation();
+				console.log('Ctrl+C is disabled');
+			}
+		},
+	}
+}
 </script>
 
 <style scoped>
-.pdf-viewer {
-  max-width: 800px;
-  margin: 0 auto;
-  font-family: Arial, sans-serif;
-}
-
-.toolbar {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-button {
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
-.zoom-controls {
-  display: flex;
-  align-items: center;
-}
-
-.zoom-controls button {
-  padding: 5px;
-  cursor: pointer;
-}
-
-.pdf-container {
-  border: 1px solid #ddd;
-  padding: 10px;
-  position: relative;
-}
-
-canvas {
-  display: block;
-  margin: 0 auto;
-}
-
-.annotation-form {
-  margin-top: 10px;
-}
-
-.annotation-form textarea {
-  width: 100%;
-  height: 60px;
-}
-
-.sidebar {
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 200px;
-  background-color: #f4f4f4;
-  border-left: 1px solid #ddd;
-  padding: 10px;
-}
-
-.sidebar h3 {
-  margin-top: 0;
-}
-
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-}
-
-.sidebar li {
-  padding: 5px;
-  cursor: pointer;
-}
-
-.sidebar li:hover {
-  background-color: #ddd;
-}
+	.pagination-float {
+		position: absolute;
+		z-index: 10;
+		bottom: 20px;
+		left: 50%;
+		transform: translateX(-50%);
+		opacity: 0.1; /* Makes the pagination transparent */
+		transition: opacity 0.3s ease;
+	}
+	.pagination-float:hover {
+		opacity: 0.7; /* Fully visible on hover */
+	}
+	.tooltip {
+		position: absolute;
+		background-color: #ff0000;
+		border: 1px solid #ccc;
+		padding: 10px;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		cursor: pointer;
+	}
 </style>

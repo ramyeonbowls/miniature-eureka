@@ -219,9 +219,12 @@ export default {
         };
     },
 
+    created(){
+        this.getBukuPopuler();
+    },
+
     mounted() {
         this.idb = this.$route.params.idb;
-        this.getBukuPopuler();
         this.getDetail();
     },
 
@@ -234,12 +237,14 @@ export default {
             if(!this.isAuthenticated){
                 this.$router.push('/mlogin');
             }else{
+                // this.$router.push({ name: 'appreader', query: { pdfToken: encodeURIComponent(this.detail.filename) } });
                 const routeData = this.$router.resolve({
                     name: 'appreader',
                     query: { pdfToken: encodeURIComponent(this.detail.filename) }
                 });
-                console.log('Route URL:', routeData.href);
-                window.open(routeData.href, '_blank');
+                // console.log('Route URL:', routeData.href);
+                // window.open(routeData.href, '_blank');
+                window.location.assign(routeData.href);
             }
         },
 

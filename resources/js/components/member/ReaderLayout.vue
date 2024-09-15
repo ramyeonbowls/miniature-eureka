@@ -1,6 +1,6 @@
 <template>
     <div class="pdf-layout">
-      <router-view></router-view> <!-- Where the PdfReader component will be rendered -->
+      <router-view></router-view>
     </div>
   </template>
   

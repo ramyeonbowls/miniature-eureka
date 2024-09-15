@@ -50,21 +50,6 @@ if (token) {
 }
 axios.defaults.withCredentials = true;
 
-axios.interceptors.response.use(
-    (response) => {
-        // Jika respons berhasil, kembalikan data
-        return response;
-    },
-    (error) => {
-        // Jika ada error, periksa apakah statusnya 401 (Unauthorized)
-        if (error.response && error.response.status === 401) {
-            // Redirect ke halaman login
-            router.push({ name: 'mlogin' });
-        }
-        return Promise.reject(error);
-    }
-);
-
 featherIcons.replace()
 
 /**
@@ -96,5 +81,4 @@ const appUser = createApp(Main)
 appUser.use(VueSweetalert2)
 appUser.use(LoadingPlugin, gloading)
 appUser.use(router)
-appUser.config.globalProperties.$axios = axios;
 appUser.mount('#usr-page-container')
