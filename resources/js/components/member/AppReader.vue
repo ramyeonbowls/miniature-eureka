@@ -50,7 +50,7 @@ export default {
   	setup() {
 		const route = useRoute()
     	const pdfToken = computed(() => decodeURIComponent(route.query.pdfToken) || '')
-		const pdfUrl = computed(() => encodeURIComponent('/storage/pdf/'+pdfToken.value))
+		const pdfUrl = computed(() => '/storage/pdf/'+pdfToken.value)
 		const { pdf, pages } = usePDF(pdfUrl)
 		const currentPage = ref(1)
 		const totalPages = computed(() => pages.value)
