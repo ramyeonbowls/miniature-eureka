@@ -513,17 +513,17 @@
 </template>
 
 <style>
-.testimonial-slider {
-  background-color: #fab040;
-  padding: 2em 2em;
-  border-radius: 10px;
-}
-.testimonial-title {
-  color: #fff;
-}
-.testimonial-title h2 {
-  padding-left: 0.2em;
-}
+    .testimonial-slider {
+        background-color: #fab040;
+        padding: 2em 2em 0em;
+        border-radius: 10px;
+    }
+    .testimonial-title {
+        color: #fff;
+    }
+    .testimonial-title h2 {
+        padding-left: 0.2em;
+    }
 
     .background-populer {
         background-image: url('/images/logo/buku-populer.jpg');
