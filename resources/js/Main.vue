@@ -66,7 +66,6 @@
         </div>
         <!-- search modal -->
     </div>
-    <p>asdasdas</p>
 </template>
 
 <style scoped>

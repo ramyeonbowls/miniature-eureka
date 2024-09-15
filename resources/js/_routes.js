@@ -34,7 +34,6 @@ const _routes = [
         path: '/appreader',
         name: 'appreader',
         component: () => import(/* webpackChunkName: "usr/buku" */ './components/member/AppReader.vue'),
-        props: route => ({ pdfToken: route.query.pdfToken })
     },
 ]
 

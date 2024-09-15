@@ -82,9 +82,9 @@ class MainController extends Controller
     
     public function getBook(Request $request)
     {
-        $logs = new Logs( Arr::last(explode("\\", get_class())) );
-        $logs->write(__FUNCTION__, "START");
-        DB::enableQueryLog();
+        // $logs = new Logs( Arr::last(explode("\\", get_class())) );
+        // $logs->write(__FUNCTION__, "START");
+        // DB::enableQueryLog();
 
         $category   = $request->categories ?? [];
         $parameter  = $request->search ?? '';
@@ -119,14 +119,14 @@ class MainController extends Controller
                 ];
             });
 
-        $queries = DB::getQueryLog();
-        for($q = 0; $q < count($queries); $q++) {
-            $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
-            $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
-            $logs->write('SQL', $sql);
-        }
+        // $queries = DB::getQueryLog();
+        // for($q = 0; $q < count($queries); $q++) {
+        //     $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
+        //     $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+        //     $logs->write('SQL', $sql);
+        // }
 
-        $logs->write(__FUNCTION__, "STOP\r\n");
+        // $logs->write(__FUNCTION__, "STOP\r\n");
 
         return response()->json($results, 200);
     }
@@ -158,19 +158,12 @@ class MainController extends Controller
 
     public function getCategory()
     {
-        $results = [];
-
-        $sql = DB::table('tbook_category as a')
+        $results = DB::table('tbook_category as a')
             ->select([
                 'a.id',
                 'a.description'
             ])
             ->get();
-
-        foreach ($sql as $i => $value) {
-            $results[$i]['id']          = $value->id;
-            $results[$i]['description'] = $value->description;
-        }
 
         return response()->json($results, 200);
     }
