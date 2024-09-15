@@ -79,7 +79,27 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Total Visitor</h4>
+                                <h4>Jumlah Pengunjung Harian</h4>
+                            </div>
+                            <div class="card-body">
+                                <div id="chart-visit-daily"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Jumlah Pembaca Harian</h4>
+                            </div>
+                            <div class="card-body">
+                                <div id="chart-read-daily"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Jumlah Pengunjung Bulanan</h4>
                             </div>
                             <div class="card-body">
                                 <div id="chart-profile-visit"></div>
@@ -89,10 +109,10 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Top 10 Read Book</h4>
+                                <h4>Jumlah Pembaca Bulanan</h4>
                             </div>
                             <div class="card-body">
-                                <div id="bar"></div>
+                                <div id="chart-read-month"></div>
                             </div>
                         </div>
                     </div>
@@ -147,6 +167,16 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-12 col-xl-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Katalog Buku</h4>
+                            </div>
+                            <div class="card-body">
+                                <CarouselHome></CarouselHome>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -155,10 +185,13 @@
 
 <script>
 import ApexCharts from 'apexcharts'
+import CarouselHome from './../layouts/Carousel.vue'
 
 let table_members, table_books
 export default {
-    components: {},
+    components: {
+        CarouselHome,
+    },
 
     data() {
         return {
@@ -168,91 +201,84 @@ export default {
 
     mounted() {
         this.__Chart()
+        this.__DailyChart()
         this.__randomDataMember()
 
         let _row = this
-        $(document).ready(function() {
-            table_members = $('#table_member').DataTable();
-            _row.data_members.forEach(item => {
-                table_members.row.add([
-                    `<img src="${item.foto}" alt="${item.nama}" style="width: 50px; height: 50px;" />`,
-                    item.nama,
-                    item.lamaJam
-                ]).draw();
-            });
+        $(document).ready(function () {
+            table_members = $('#table_member').DataTable()
+            _row.data_members.forEach((item) => {
+                table_members.row.add([`<img src="${item.foto}" alt="${item.nama}" style="width: 50px; height: 50px;" />`, item.nama, item.lamaJam]).draw()
+            })
 
-            table_books = $('#table_book').DataTable();
+            table_books = $('#table_book').DataTable()
             const data = [
                 {
                     cover: 'https://via.placeholder.com/80x80',
-                    judul: 'The Great Adventure'
+                    judul: 'The Great Adventure',
                 },
                 {
                     cover: 'https://via.placeholder.com/80x80',
-                    judul: 'Journey to the Unknown'
+                    judul: 'Journey to the Unknown',
                 },
                 {
                     cover: 'https://via.placeholder.com/80x80',
-                    judul: 'Mystery of the Old Castle'
+                    judul: 'Mystery of the Old Castle',
                 },
                 {
                     cover: 'https://via.placeholder.com/80x80',
-                    judul: 'The Secret of the Forest'
+                    judul: 'The Secret of the Forest',
                 },
                 {
                     cover: 'https://via.placeholder.com/80x80',
-                    judul: 'Legends of the Lost City'
+                    judul: 'Legends of the Lost City',
                 },
                 {
                     cover: 'https://via.placeholder.com/80x80',
-                    judul: 'Quest for the Ancient Relic'
+                    judul: 'Quest for the Ancient Relic',
                 },
                 {
                     cover: 'https://via.placeholder.com/80x80',
-                    judul: 'The Enchanted Kingdom'
+                    judul: 'The Enchanted Kingdom',
                 },
                 {
                     cover: 'https://via.placeholder.com/80x80',
-                    judul: 'Tales of the Forgotten'
+                    judul: 'Tales of the Forgotten',
                 },
                 {
                     cover: 'https://via.placeholder.com/80x80',
-                    judul: 'Beyond the Horizon'
+                    judul: 'Beyond the Horizon',
                 },
                 {
                     cover: 'https://via.placeholder.com/80x80',
-                    judul: 'Wonders of the Deep Sea'
-                }
-            ];
+                    judul: 'Wonders of the Deep Sea',
+                },
+            ]
 
-            data.forEach(item => {
-                table_books.row.add([
-                    `<img src="${item.cover}" alt="${item.judul}" style="width: 50px; height: 80px;" />`,
-                    item.judul
-                ]).draw();
-            });
-        });
-
+            data.forEach((item) => {
+                table_books.row.add([`<img src="${item.cover}" alt="${item.judul}" style="width: 50px; height: 80px;" />`, item.judul]).draw()
+            })
+        })
     },
 
     methods: {
         __randomDataMember() {
-            this.data_members = [];
-            let names = ['John Doe', 'Jane Smith', 'Alice Johnson', 'Bob Brown', 'Charlie Wilson', 'Emily Davis', 'Michael Taylor', 'Sophia Martinez', 'William Lee', 'Olivia Anderson'];
+            this.data_members = []
+            let names = ['John Doe', 'Jane Smith', 'Alice Johnson', 'Bob Brown', 'Charlie Wilson', 'Emily Davis', 'Michael Taylor', 'Sophia Martinez', 'William Lee', 'Olivia Anderson']
 
             for (let i = 0; i < 10; i++) {
-                const randomSeconds = Math.floor(Math.random() * 3600);
+                const randomSeconds = Math.floor(Math.random() * 3600)
                 let randomData = {
                     foto: 'https://via.placeholder.com/50x80',
                     nama: names[i],
-                    lamaJam: this.formatTime(randomSeconds)      
-                };
-                this.data_members.push(randomData);
+                    lamaJam: this.formatTime(randomSeconds),
+                }
+                this.data_members.push(randomData)
             }
         },
 
         __Chart() {
-            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
             var optionsProfileVisit = {
                 annotations: {
@@ -284,90 +310,35 @@ export default {
             var chartProfileVisit = new ApexCharts(document.querySelector('#chart-profile-visit'), optionsProfileVisit)
             chartProfileVisit.render()
 
-            var barOptions = {
-                series: [
-                    {
-                        name: 'Book 1',
-                        data: months.map(() => Math.floor(Math.random() * 10)),
-                    },
-                    {
-                        name: 'Book 2',
-                        data: months.map(() => Math.floor(Math.random() * 10)),
-                    },
-                    {
-                        name: 'Book 3',
-                        data: months.map(() => Math.floor(Math.random() * 10)),
-                    },
-                    {
-                        name: 'Book 4',
-                        data: months.map(() => Math.floor(Math.random() * 10)),
-                    },
-                    {
-                        name: 'Book 5',
-                        data: months.map(() => Math.floor(Math.random() * 10)),
-                    },
-                    {
-                        name: 'Book 6',
-                        data: months.map(() => Math.floor(Math.random() * 10)),
-                    },
-                    {
-                        name: 'Book 7',
-                        data: months.map(() => Math.floor(Math.random() * 10)),
-                    },
-                    {
-                        name: 'Book 8',
-                        data: months.map(() => Math.floor(Math.random() * 10)),
-                    },
-                    {
-                        name: 'Book 9',
-                        data: months.map(() => Math.floor(Math.random() * 10)),
-                    },
-                    {
-                        name: 'Book 10',
-                        data: months.map(() => Math.floor(Math.random() * 10)),
-                    },
-                ],
-                chart: {
-                    type: 'bar',
-                    height: 350,
-                },
-                plotOptions: {
-                    bar: {
-                        horizontal: false,
-                        columnWidth: '55%',
-                        endingShape: 'rounded',
-                    },
+            var optionsReaders = {
+                annotations: {
+                    position: 'back',
                 },
                 dataLabels: {
                     enabled: false,
                 },
-                stroke: {
-                    show: true,
-                    width: 2,
-                    colors: ['transparent'],
-                },
-                xaxis: {
-                    categories: months,
-                },
-                yaxis: {
-                    title: {
-                        text: '(reads)',
-                    },
+                chart: {
+                    type: 'bar',
+                    height: 300,
                 },
                 fill: {
                     opacity: 1,
                 },
-                tooltip: {
-                    y: {
-                        formatter: function (val) {
-                            return val + ' reads'
-                        },
+                plotOptions: {},
+                series: [
+                    {
+                        name: 'Readers',
+                        data: months.map(() => Math.floor(Math.random() * 10)),
                     },
+                ],
+                colors: '#435ebe',
+                xaxis: {
+                    categories: months,
                 },
             }
 
-            var bar = new ApexCharts(document.querySelector('#bar'), barOptions)
-            bar.render()
+            var chartReaders = new ApexCharts(document.querySelector('#chart-read-month'), optionsReaders)
+            chartReaders.render()
 
             var areaOptions = {
                 series: [
@@ -405,12 +376,160 @@ export default {
             area.render()
         },
 
+        __DailyChart() {
+            let date = new Date()
+            let options = { year: 'numeric', month: 'long' }
+            let formattedDate = date.toLocaleDateString('en-US', options)
+            let year = date.getFullYear()
+            let month = date.getMonth() + 1
+            let totalDaysInMonth = new Date(year, month, 0).getDate()
+            let days = Array.from({ length: totalDaysInMonth }, (_, i) => (i + 1).toString())
+
+            var optionsReadDaily = {
+                series: [
+                    {
+                        name: formattedDate,
+                        data: days.map(() => Math.floor(Math.random() * 10)),
+                    },
+                ],
+                chart: {
+                    type: 'bar',
+                    height: 350,
+                    colors: ['#ff4560'],
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                        columnWidth: '55%',
+                        endingShape: 'rounded',
+                        colors: {
+                            ranges: [
+                                {
+                                    from: 0,
+                                    to: 5,
+                                    color: '#00e396',
+                                },
+                                {
+                                    from: 6,
+                                    to: 7,
+                                    color: '#f5aa19',
+                                },
+                                {
+                                    from: 8,
+                                    to: 10,
+                                    color: '#ff4560',
+                                },
+                            ],
+                        },
+                    },
+                },
+                dataLabels: {
+                    enabled: false,
+                },
+                stroke: {
+                    show: true,
+                    width: 2,
+                    colors: ['transparent'],
+                },
+                xaxis: {
+                    categories: days,
+                },
+                yaxis: {
+                    title: {
+                        text: formattedDate,
+                    },
+                },
+                fill: {
+                    opacity: 1,
+                },
+                tooltip: {
+                    y: {
+                        formatter: function (val) {
+                            return val + ' reads'
+                        },
+                    },
+                },
+            }
+
+            var chartReadDaily = new ApexCharts(document.querySelector('#chart-read-daily'), optionsReadDaily)
+            chartReadDaily.render()
+
+            var optioVisitoradDaily = {
+                series: [
+                    {
+                        name: formattedDate,
+                        data: days.map(() => Math.floor(Math.random() * 10)),
+                    },
+                ],
+                chart: {
+                    type: 'bar',
+                    height: 350,
+                    colors: ['#ff4560'],
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                        columnWidth: '55%',
+                        endingShape: 'rounded',
+                        colors: {
+                            ranges: [
+                                {
+                                    from: 0,
+                                    to: 5,
+                                    color: '#00e396',
+                                },
+                                {
+                                    from: 6,
+                                    to: 7,
+                                    color: '#f5aa19',
+                                },
+                                {
+                                    from: 8,
+                                    to: 10,
+                                    color: '#ff4560',
+                                },
+                            ],
+                        },
+                    },
+                },
+                dataLabels: {
+                    enabled: false,
+                },
+                stroke: {
+                    show: true,
+                    width: 2,
+                    colors: ['transparent'],
+                },
+                xaxis: {
+                    categories: days,
+                },
+                yaxis: {
+                    title: {
+                        text: formattedDate,
+                    },
+                },
+                fill: {
+                    opacity: 1,
+                },
+                tooltip: {
+                    y: {
+                        formatter: function (val) {
+                            return val + ' visits'
+                        },
+                    },
+                },
+            }
+
+            var chartVisitorDaily = new ApexCharts(document.querySelector('#chart-visit-daily'), optioVisitoradDaily)
+            chartVisitorDaily.render()
+        },
+
         formatTime(seconds) {
-            const hrs = Math.floor(seconds / 3600);
-            const mins = Math.floor((seconds % 3600) / 60);
-            const secs = seconds % 60;
-            return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-        }
+            const hrs = Math.floor(seconds / 3600)
+            const mins = Math.floor((seconds % 3600) / 60)
+            const secs = seconds % 60
+            return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
+        },
     },
 
     computed: {},
