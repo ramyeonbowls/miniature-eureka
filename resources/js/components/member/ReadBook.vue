@@ -36,7 +36,7 @@
   import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
   
   export default {
-    name: 'AppReader',
+    name: 'ReadBook',
     data() {
       return {
         pdfUrl: '',

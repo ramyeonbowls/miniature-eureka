@@ -23,6 +23,7 @@ export default defineConfig({
                 'resources/sass/pages/sweetalert2.scss',
                 'resources/js/app.js',
                 'resources/js/main.js',
+                'resources/js/appreader.js',
                 'resources/js/assets/js/initTheme.js',
                 'resources/js/assets/js/components/dark.js',
                 'resources/js/assets/js/components/sidebar.js',

@@ -137,7 +137,7 @@
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eros nibh, viverra a dui a, gravida varius velit. Nunc vel tempor nisi. Aenean id pellentesque mi, non placerat mi. Integer luctus accumsan tellus. Vivamus quis elit sit amet nibh lacinia suscipit eu quis purus. Vivamus tristique est non ipsum dapibus lacinia sed nec metus.
                                     </p>
                                     <a href="#">
-                                        <i class="fa fa-angle-double-right"></i> <h6>Continue reading </h6>
+                                        <i class="fa fa-angle-double-right"></i> <h6>Lanjutkan Membaca </h6>
                                     </a>
                                 </div>
                             </div>           
@@ -185,11 +185,11 @@
                         <div class="col-md-2">
                             <div class="testimonial-title">
                                 <i class="bi bi-quote display-2"></i>
-                                <h2 class="fw-bold display-6">FRASA</h2>
+                                <h2 class="fw-bold display-6 text-white">FRASA</h2>
                             </div>
-                            <div class="d-flex justify-content-center mt-3">
-                                <button class="swiper-button-prev-frasa btn btn-primary me-2">Prev</button>
-                                <button class="swiper-button-next-frasa btn btn-primary">Next</button>
+                            <div class="d-flex justify-content-center mb-3">
+                                <button class="swiper-button-prev-frasa btn btn-primary me-2"><i class="bi bi-arrow-left-circle"></i></button>
+                                <button class="swiper-button-next-frasa btn btn-primary"><i class="bi bi-arrow-right-circle"></i></button>
                             </div>
                         </div>
                         <div class="col-md-10">
@@ -255,7 +255,7 @@
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eros nibh, viverra a dui a, gravida varius velit. Nunc vel tempor nisi. Aenean id pellentesque mi, non placerat mi. Integer luctus accumsan tellus. Vivamus quis elit sit amet nibh lacinia suscipit eu quis purus. Vivamus tristique est non ipsum dapibus lacinia sed nec metus.
                                     </p>
                                     <a href="#">
-                                        <i class="fa fa-angle-double-right"></i> <h6>Continue reading </h6>
+                                        <i class="fa fa-angle-double-right"></i> <h6>Lanjutkan Membaca </h6>
                                     </a>
                                 </div>
                             </div>           
@@ -326,7 +326,7 @@
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eros nibh, viverra a dui a, gravida varius velit. Nunc vel tempor nisi. Aenean id pellentesque mi, non placerat mi. Integer luctus accumsan tellus. Vivamus quis elit sit amet nibh lacinia suscipit eu quis purus. Vivamus tristique est non ipsum dapibus lacinia sed nec metus.
                                     </p>
                                     <a href="#">
-                                        <i class="fa fa-angle-double-right"></i> <h6>Continue reading </h6>
+                                        <i class="fa fa-angle-double-right"></i> <h6>Lanjutkan Membaca </h6>
                                     </a>
                                 </div>
                             </div>           
@@ -397,7 +397,7 @@
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eros nibh, viverra a dui a, gravida varius velit. Nunc vel tempor nisi. Aenean id pellentesque mi, non placerat mi. Integer luctus accumsan tellus. Vivamus quis elit sit amet nibh lacinia suscipit eu quis purus. Vivamus tristique est non ipsum dapibus lacinia sed nec metus.
                                     </p>
                                     <a href="#">
-                                        <i class="fa fa-angle-double-right"></i> <h6>Continue reading </h6>
+                                        <i class="fa fa-angle-double-right"></i> <h6>Lanjutkan Membaca </h6>
                                     </a>
                                 </div>
                             </div>           
@@ -468,7 +468,7 @@
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eros nibh, viverra a dui a, gravida varius velit. Nunc vel tempor nisi. Aenean id pellentesque mi, non placerat mi. Integer luctus accumsan tellus. Vivamus quis elit sit amet nibh lacinia suscipit eu quis purus. Vivamus tristique est non ipsum dapibus lacinia sed nec metus.
                                     </p>
                                     <a href="#">
-                                        <i class="fa fa-angle-double-right"></i> <h6>Continue reading </h6>
+                                        <i class="fa fa-angle-double-right"></i> <h6>Lanjutkan Membaca </h6>
                                     </a>
                                 </div>
                             </div>           
