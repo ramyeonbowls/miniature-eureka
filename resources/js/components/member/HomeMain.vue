@@ -38,7 +38,7 @@
             </div>
             <div class="col-12 col-xl-9">
                 <div class="row row-cols-2 row-cols-md-4">
-                    <div v-for="buku in buku_populer" :key="buku.id" class="col mt-3">
+                    <div v-for="buku in buku_populer" :key="buku.id" class="col">
                         <router-link :to="{ name: 'detail-buku', params: { idb: buku.isbn } }">
                             <div class="card h-100 mb-0">
                                 <div class="card-content">

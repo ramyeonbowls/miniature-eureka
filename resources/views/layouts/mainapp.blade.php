@@ -6,7 +6,7 @@
 
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}" />
-        <meta property="og:image" content="{{ env('APP_URL') }}images/logo/favicon.svg" />
+        <meta property="og:image" content="{{ env('APP_URL') }}/images/logo/favicon.svg" />
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
