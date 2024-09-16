@@ -30,7 +30,7 @@
                 <h2>BUKU POPULER</h2>
             </div>
             <div class="col-xl-3 d-none d-xl-block">
-                <div class="card mt-3" style="height: 786px;">
+                <div class="card h-100">
                     <div class="card-body background-populer">
                         &nbsp;
                     </div>
