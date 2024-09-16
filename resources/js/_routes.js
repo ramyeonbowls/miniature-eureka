@@ -40,6 +40,11 @@ const _routes = [
         name: 'mregister',
         component: () => import(/* webpackChunkName: "usr/mregister" */ './components/member/FormRegister.vue'),
     },
+    {
+        path: '/rent-book',
+        name: 'rent_book',
+        component: () => import(/* webpackChunkName: "usr/book" */ './components/member/Book.vue'),
+    },
 ]
 
 export default _routes

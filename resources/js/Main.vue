@@ -8,32 +8,32 @@
             </div>
 
             <nav class="navbar-dark bg-secondary navbar-expand d-md-none d-lg-none d-xl-none fixed-bottom" role="navigation">
-                <ul class="navbar-nav nav-justified">
+                <ul class="navbar-nav nav-justified pt-2">
                     <li class="nav-item">
                         <router-link to="/" class='menu-item'>
-                            <i class="bi bi-house"></i>
+                            <i class="bi bi-house"></i> Beranda
                         </router-link>
                     </li>
                     <li class="nav-item">
                         <div class='menu-item' data-bs-toggle="modal" data-bs-target="#search-modal">
-                            <i class="bi bi-search"></i>
+                            <i class="bi bi-search"></i> Cari
                         </div>
                     </li>
                     <li class="nav-item">
                         <router-link to="/koleksi-buku" class='menu-item'>
-                            <i class="bi bi-book"></i>
+                            <i class="bi bi-book"></i> Koleksi
                         </router-link>
                     </li>
                     <template v-if="isAuthenticated">
                         <li class="nav-item">
-                            <router-link to="/" class='menu-item'>
-                                <i class="bi bi-bookmark"></i>
+                            <router-link to="/rent-book" class='menu-item'>
+                                <i class="bi bi-bookmark"></i> Pinjaman
                             </router-link>
                         </li>
                     </template>
                     <li class="nav-item">
                         <router-link to="/mlogin" class='menu-item'>
-                            <i class="bi bi-person"></i>
+                            <i class="bi bi-person"></i> Profil
                         </router-link>
                     </li>
                 </ul>
@@ -48,7 +48,7 @@
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel33">Search </h4>
+                        <h4 class="modal-title" id="myModalLabel33">Cari </h4>
                         <button type="button" id="close-search" class="close" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -82,7 +82,7 @@
     .menu-item {
         color: white;
         text-decoration: none;
-        padding: 1rem 0;
+        padding: 0.1rem;
         display: flex;
         justify-content: center;
         align-items: center;

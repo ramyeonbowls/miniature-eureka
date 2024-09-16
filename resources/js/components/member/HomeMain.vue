@@ -31,7 +31,7 @@
                     <h2>BUKU POPULER</h2>
                 </div>
             </div>
-            <div class="col-12 col-lg-3 d-none d-sm-block">
+            <div class="col-12 col-lg-3 d-none d-md-block d-xl-block">
                 <div class="card" style="height:658px;">
                     <div class="card-body background-populer">
                         &nbsp;
