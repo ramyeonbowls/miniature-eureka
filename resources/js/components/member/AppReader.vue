@@ -2,21 +2,19 @@
 	<section class="section">
 		<div class="col-12">
 			<div class="card">
-				<div class="card-header">
-					<!-- Zoom Level Selector -->
-					<div class="zoom-selector">
-						<select id="zoom" v-model="zoom">
-							<option value="0.25">25%</option>
-							<option value="0.5">50%</option>
-							<option value="0.75">75%</option>
-							<option value="1">100%</option>
-							<option value="1.5">150%</option>
-							<option value="2">200%</option>
-						</select>
-					</div>
-				</div>
 				<div class="card-body">
 					<div class="d-flex justify-content-center align-items-center position-relative">
+						<!-- Zoom Level Selector -->
+						<div class="zoom-selector">
+							<select id="zoom" v-model="zoom">
+								<option value="0.25">25%</option>
+								<option value="0.5">50%</option>
+								<option value="0.75">75%</option>
+								<option value="1">100%</option>
+								<option value="1.5">150%</option>
+								<option value="2">200%</option>
+							</select>
+						</div>
 						<!-- Floating Pagination -->
 						<nav aria-label="Page navigation example" class="pagination-float">
 							<ul class="pagination pagination-primary justify-content-center">
@@ -156,7 +154,7 @@ export default {
 	.pagination-float {
 		position: absolute;
 		z-index: 10;
-		bottom: 20px;
+		bottom: -10px;
 		left: 50%;
 		transform: translateX(-50%);
 		opacity: 0.3; /* Makes the pagination transparent */
@@ -174,8 +172,11 @@ export default {
 		cursor: pointer;
 	}
 	.zoom-selector {
-		margin-top: 10px;
-		text-align: center;
+		position: absolute;
+		z-index: 10;
+		top: 10px;
+		left: 50%;
+		transform: translateX(-50%);
 		opacity: 0.3; /* Makes the pagination transparent */
 		transition: opacity 0.3s ease;
 	}
