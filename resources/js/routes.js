@@ -20,6 +20,11 @@ const routes = [
         component: () => import(/* webpackChunkName: "setting/role_menu" */ './components/setting/RoleMenu.vue'),
     },
     {
+        path: '/setting/banner',
+        name: 'banner',
+        component: () => import(/* webpackChunkName: "setting/banner" */ './components/setting/Banner.vue'),
+    },
+    {
         path: '/report/report-read-book',
         name: 'report_read_book',
         component: () => import(/* webpackChunkName: "report/report_read_book" */ './components/report/ReportReadBook.vue'),

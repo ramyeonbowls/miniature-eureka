@@ -33,9 +33,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::namespace('App\Http\Controllers\Core')->group(function() {
                     Route::apiResource('web-access-log', WebAccessLogController::class);
     
-                    /* Route::prefix('setting')->namespace('Settings')->group(function() {
-                        Route::apiResource('web-role', WebRoleMenuController::class);
-                    }); */
+                    Route::prefix('setting')->namespace('Setting')->group(function() {
+                        Route::apiResource('banner-mst', BannerMasterController::class);
+                    });
                 });
             }); 
         });
