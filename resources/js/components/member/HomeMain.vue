@@ -29,31 +29,33 @@
             <div class="divider divider-left-center mb-0">
                 <h2>BUKU POPULER</h2>
             </div>
-            <div class="col-xl-3 d-none d-xl-block">
-                <div class="card h-100">
-                    <div class="card-body background-populer">
-                        &nbsp;
+            <div class="row equal-height">
+                <div class="col-xl-3 d-none d-xl-block">
+                    <div class="card h-100">
+                        <div class="card-body background-populer">
+                            &nbsp;
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-12 col-xl-9">
-                <div v-for="(grouped, i) in groupedBukuPopuler" :key="i" :class="i == 0 ? 'row' : 'row mt-3'">
-                    <div v-for="buku in grouped" :key="buku.id" class="col">
-                        <router-link :to="{ name: 'detail-buku', params: { idb: buku.isbn } }">
-                            <div class="card h-100 mb-0">
-                                <div class="card-content">
-                                    <div class="product-image mt-3 mb-0 pb-0">
-                                        <img :src="buku.image" :alt="buku.alt" class="img-fluid">
-                                    </div>
-                                    <div class="card-body mt-0 mb-0 mx-0 px-2">
-                                        <p class="card-title mb-0">{{ buku.writer }}</p>
-                                        <a href="#">
+                <div class="col-12 col-xl-9">
+                    <div class="row row-cols-2 row-cols-md-4">
+                        <div v-for="(buku, i) in buku_populer" :key="i" :class="i > 3 ? 'col mt-3' : 'col'">
+                            <router-link :to="{ name: 'detail-buku', params: { idb: buku.isbn } }">
+                                <div class="card h-100 mb-0">
+                                    <div class="card-content">
+                                        <div class="product-image mt-3 mb-0 pb-0">
+                                            <img :src="buku.image" :alt="buku.alt" class="img-fluid">
+                                        </div>
+                                        <div class="card-body mt-0 mb-0 mx-0 px-2">
+                                            <p class="card-title mb-0">{{ buku.writer }}</p>
+                                            <a href="#">
                                             <div data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="buku.title">{{ buku.title }}</div>
-                                        </a>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </router-link>
+                            </router-link>
+                        </div>
                     </div>
                 </div>
             </div>
