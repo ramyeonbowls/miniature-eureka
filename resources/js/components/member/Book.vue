@@ -116,6 +116,7 @@ export default {
                 loader.hide();
             })
             .catch((e) => {
+                loader.hide();
                 console.error(e)
             });
         },
@@ -188,7 +189,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     .product-card {
         width: 220px;
         border-radius: 10px;

@@ -1,26 +1,37 @@
 <template>
 	<section class="section">
-		<div class="card">
-			<!-- <div class="card-header">
-				<p class="text-subtitle text-muted">Nisa Amalia</p>
-				<h3 class="mt-1">5 Manfaat Daun Pandan yang Populer di Masyarakat</h3>
-			</div> -->
-			<div class="card-body">
-				<div class="d-flex justify-content-center align-items-center position-relative">
-					<!-- Floating Pagination -->
-					<nav aria-label="Page navigation example" class="pagination-float">
-						<ul class="pagination pagination-primary justify-content-center">
-							<li class="page-item"><a class="page-link" href="javascript:void(0);" @click="prevPage">Prev</a></li>
-							<li class="page-item"><a class="page-link disabled" href="javascript:void(0);">{{ currentPage }}</a></li>
-							<li class="page-item"><a class="page-link disabled" href="javascript:void(0);">/</a></li>
-							<li class="page-item"><a class="page-link disabled" href="javascript:void(0);">{{ totalPages }}</a></li>
-							<li class="page-item"><a class="page-link" href="javascript:void(0);" @click="nextPage">Next</a></li>
-						</ul>
-					</nav>
-					<!-- PDF Viewer -->
-					<VuePDF :pdf="pdf" :page="currentPage" text-layer />
-					<div v-if="showTooltip" class="tooltip">
-						<p>Click to copy</p>
+		<div class="col-12">
+			<div class="card">
+				<div class="card-header">
+					<!-- Zoom Level Selector -->
+					<div class="zoom-selector">
+						<select id="zoom" v-model="zoom">
+							<option value="0.25">25%</option>
+							<option value="0.5">50%</option>
+							<option value="0.75">75%</option>
+							<option value="1">100%</option>
+							<option value="1.5">150%</option>
+							<option value="2">200%</option>
+						</select>
+					</div>
+				</div>
+				<div class="card-body">
+					<div class="d-flex justify-content-center align-items-center position-relative">
+						<!-- Floating Pagination -->
+						<nav aria-label="Page navigation example" class="pagination-float">
+							<ul class="pagination pagination-primary justify-content-center">
+								<li class="page-item"><a class="page-link" href="javascript:void(0);" @click="prevPage">Prev</a></li>
+								<li class="page-item"><a class="page-link disabled" href="javascript:void(0);">{{ currentPage }}</a></li>
+								<li class="page-item"><a class="page-link disabled" href="javascript:void(0);">/</a></li>
+								<li class="page-item"><a class="page-link disabled" href="javascript:void(0);">{{ totalPages }}</a></li>
+								<li class="page-item"><a class="page-link" href="javascript:void(0);" @click="nextPage">Next</a></li>
+							</ul>
+						</nav>
+						<!-- PDF Viewer -->
+						<VuePDF :pdf="pdf" :page="currentPage" :scale="zoom" text-layer />
+						<div v-if="showTooltip" class="tooltip">
+							<p>Click to copy</p>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -44,13 +55,14 @@ export default {
 		return {
 			showTooltip: false,
 			selectedText: '',
+			zoom: 1, // Default zoom level
 		};
 	},
 
-  	setup() {
+	setup() {
 		const route = useRoute()
-    	const pdfToken = computed(() => decodeURIComponent(route.query.pdfToken) || '')
-		const pdfUrl = computed(() => '/storage/pdf/'+pdfToken.value)
+		const pdfToken = computed(() => decodeURIComponent(route.query.pdfToken) || '')
+		const pdfUrl = computed(() => '/storage/pdf/' + pdfToken.value)
 		const { pdf, pages } = usePDF(pdfUrl)
 		const currentPage = ref(1)
 		const totalPages = computed(() => pages.value)
@@ -60,7 +72,7 @@ export default {
 				currentPage.value -= 1
 			}
 		}
-		
+
 		const nextPage = () => {
 			if (currentPage.value < totalPages.value) {
 				currentPage.value += 1
@@ -77,7 +89,7 @@ export default {
 				const range = selection.getRangeAt(0)
 				const rect = range.getBoundingClientRect()
 				tooltipX.value = rect.left + window.scrollX
-				tooltipY.value = rect.top + window.scrollY - 30 
+				tooltipY.value = rect.top + window.scrollY - 30
 				showTooltip.value = true
 			}
 		}
@@ -95,29 +107,26 @@ export default {
 			document.removeEventListener('selectionchange', handleTextSelection)
 			document.removeEventListener('click', hideTooltip)
 		})
-		
+
 		return {
 			pdf,
 			currentPage,
 			totalPages,
 			prevPage,
-			nextPage
+			nextPage,
+			showTooltip,
+			tooltipX,
+			tooltipY
 		}
-  	},
-
-	computed:{
-		pdfToken() {
-            return this.$route.query.pdfToken || '';
-        },
 	},
 
 	mounted() {
 		document.addEventListener('DOMContentLoaded', () => {
-            let loader = this.$loading.show()
-            setTimeout(() => {
-                loader.hide()
-            }, 1000)
-        });
+			let loader = this.$loading.show()
+			setTimeout(() => {
+				loader.hide()
+			}, 1000)
+		});
 		document.addEventListener('keydown', this.preventCopy)
 		document.addEventListener('contextmenu', this.disableRightClick)
 	},
@@ -127,7 +136,7 @@ export default {
 		document.removeEventListener('keydown', this.preventCopy)
 	},
 
-	methods:{
+	methods: {
 		disableRightClick(event) {
 			event.preventDefault();
 		},
@@ -150,7 +159,7 @@ export default {
 		bottom: 20px;
 		left: 50%;
 		transform: translateX(-50%);
-		opacity: 0.1; /* Makes the pagination transparent */
+		opacity: 0.3; /* Makes the pagination transparent */
 		transition: opacity 0.3s ease;
 	}
 	.pagination-float:hover {
@@ -163,5 +172,14 @@ export default {
 		padding: 10px;
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 		cursor: pointer;
+	}
+	.zoom-selector {
+		margin-top: 10px;
+		text-align: center;
+		opacity: 0.3; /* Makes the pagination transparent */
+		transition: opacity 0.3s ease;
+	}
+	.zoom-selector:hover {
+		opacity: 0.7; /* Fully visible on hover */
 	}
 </style>

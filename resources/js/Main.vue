@@ -7,7 +7,7 @@
                 <router-view :isAuthenticated="isAuthenticated"></router-view>
             </div>
 
-            <nav class="navbar-dark bg-secondary navbar-expand d-md-none d-lg-none d-xl-none fixed-bottom" role="navigation">
+            <nav class="navbar-dark bg-secondary navbar-expand d-block d-xs-block d-xl-none fixed-bottom" role="navigation">
                 <ul class="navbar-nav nav-justified pt-2">
                     <li class="nav-item">
                         <router-link to="/" class='menu-item'>
@@ -67,43 +67,6 @@
         <!-- search modal -->
     </div>
 </template>
-
-<style scoped>
-    .content-wrapper{
-        margin-top: 160px;
-    }
-
-    @media screen and (max-width: 1199px) {
-        .content-wrapper{
-            margin-top: 90px;
-        }   
-    }
-
-    .menu-item {
-        color: white;
-        text-decoration: none;
-        padding: 0.1rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-    }
-
-    .menu-item i {
-        font-size: 1.1rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        -webkit-text-stroke: 1px;
-    }
-
-    .menu-item.active {
-        color: white;
-        border-bottom: 2px solid rgb(255, 255, 255); /* Underline biru untuk item aktif */
-    }
-
-</style>
 
 <script>
 import headerItems from './layouts/MainHeader.vue'
@@ -171,3 +134,40 @@ export default {
     computed: {},
 }
 </script>
+
+<style scoped>
+    .content-wrapper{
+        margin-top: 160px;
+    }
+
+    @media screen and (max-width: 1199px) {
+        .content-wrapper{
+            margin-top: 90px;
+        }   
+    }
+
+    .menu-item {
+        color: white;
+        text-decoration: none;
+        padding: 0.1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .menu-item i {
+        font-size: 1.1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        -webkit-text-stroke: 1px;
+    }
+
+    .menu-item.active {
+        color: white;
+        border-bottom: 2px solid rgb(255, 255, 255);
+    }
+
+</style>
