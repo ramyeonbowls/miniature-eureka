@@ -28,7 +28,8 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
+    protected $client_id = '';
 
     /**
      * Create a new controller instance.
@@ -38,6 +39,7 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+        $this->client_id = env('APP_CLIENT_ID', '');
     }
 
     /**
@@ -67,7 +69,10 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'role' => 'admin',
+            'role' => $data['role'],
+            'phone' => $data['phone'],
+            'jenkel' => $data['jenkel'],
+            'client_id' => $this->client_id,
         ]);
     }
 }

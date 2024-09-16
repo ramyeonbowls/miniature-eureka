@@ -2,8 +2,8 @@
     <div class="page-heading">
             <div class="col-md-5 col-12">
             <div id="auth-left">
-                <h1 class="auth-title">Log in.</h1>
-                <p class="auth-subtitle mb-4">Log in with your data that you entered during registration.</p>
+                <h1 class="auth-title">Masuk</h1>
+                <p class="auth-subtitle mb-4">Masuk dengan email yang di daftarkan</p>
 
                 <form @submit.prevent="handleLogin">
                     <div class="form-group position-relative has-icon-left mb-4">
@@ -15,7 +15,7 @@
                             v-model="email"
                         />
                         <div class="form-control-icon">
-                            <i class="bi bi-person"></i>
+                            <i class="bi bi-envelope"></i>
                         </div>
                         <div v-if="errors.email" class="invalid-feedback">{{ errors.email[0] }}</div>
                     </div>
@@ -24,7 +24,7 @@
                             type="password"
                             class="form-control form-control-md"
                             :class="{'is-invalid': errors.password}"
-                            placeholder="Password"
+                            placeholder="Kata Sandi"
                             v-model="password"
                         />
                         <div class="form-control-icon">
@@ -33,18 +33,16 @@
                         <div v-if="errors.password" class="invalid-feedback">{{ errors.password[0] }}</div>
                     </div>
                     
-                    <button type="submit" class="btn btn-primary btn-block btn-md shadow-md mt-3">Log in</button>
+                    <button type="submit" class="btn btn-primary btn-block btn-md shadow-md mt-3">Masuk</button>
                 </form>
-                <div class="text-center mt-5 text-md fs-10">
-                    <p class="text-gray-600">
-                        Don't have an account?
-                        <a href="/register" class="font-bold">Sign up</a>
-                        .
-                    </p>
-                    <!-- <p>
-                        <a class="font-bold" href="{{ route('password.request') }}">Forgot password?</a>
-                        .
-                    </p> -->
+                <div class="col-12 d-flex justify-content-start mt-3">
+                    <div class="text-center text-md fs-10">
+                        <p class="text-gray-600">
+                            Belum punya akun?
+                            <router-link :to="{ name: 'mregister' }" class="font-bold">Daftar</router-link>
+                            .
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>

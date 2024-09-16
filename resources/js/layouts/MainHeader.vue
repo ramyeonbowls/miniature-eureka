@@ -51,7 +51,7 @@
                 <ul>
                     <li class="menu-item ">
                         <router-link to="/" class='menu-link'>
-                            <span> Home</span>
+                            <span> Beranda</span>
                         </router-link>
                     </li>
                     <li class="menu-item ">
@@ -59,27 +59,17 @@
                             <span> Koleksi Buku</span>
                         </router-link>
                     </li>
-                    <!-- <li class="menu-item ">
-                        <router-link to="/baca-buku" class='menu-link'>
-                            <span> Baca Buku</span>
-                        </router-link>
-                    </li> -->
-                    <!-- <li class="menu-item ">
-                        <router-link to="/view-buku" class='menu-link'>
-                            <span> View Buku</span>
-                        </router-link>
-                    </li> -->
                     <template v-if="!isAuthenticated">
                         <li class="menu-item ">
                             <router-link to="/mlogin" class='menu-link'>
-                                <span> Login</span>
+                                <span> Masuk</span>
                             </router-link>
                         </li>
                     </template>
                     <template v-else>
                         <li class="menu-item">
                             <a class="dropdown-item menu-link" href="javascript:void(0);" @click.prevent="logout">
-                                <span> Logout</span>
+                                <span> Keluar</span>
                             </a>
                         </li>
                     </template>

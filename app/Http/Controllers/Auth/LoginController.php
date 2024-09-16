@@ -49,7 +49,7 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
         if ($request->has('from') && $request->input('from') != 'member') {
-            return redirect('/home');
+            return redirect('/admin');
         }
 
         return redirect()->intended($this->redirectTo);
