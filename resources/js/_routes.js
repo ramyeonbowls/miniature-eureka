@@ -18,22 +18,32 @@ const _routes = [
     {
         path: '/koleksi-buku',
         name: 'koleksi_buku',
-        component: () => import(/* webpackChunkName: "usr/buku" */ './components/member/Book.vue'),
+        component: () => import(/* webpackChunkName: "usr/book" */ './components/member/Book.vue'),
     },
     {
         path: '/baca-buku',
         name: 'baca_buku',
-        component: () => import(/* webpackChunkName: "usr/buku" */ './components/member/ReadBook.vue'),
+        component: () => import(/* webpackChunkName: "usr/readbook" */ './components/member/ReadBook.vue'),
     },
     {
         path: '/detail-buku/:idb',
         name: 'detail_buku',
-        component: () => import(/* webpackChunkName: "usr/buku" */ './components/member/ViewBook.vue'),
+        component: () => import(/* webpackChunkName: "usr/viewbook" */ './components/member/ViewBook.vue'),
     },
     {
         path: '/appreader',
         name: 'appreader',
-        component: () => import(/* webpackChunkName: "usr/buku" */ './components/member/AppReader.vue'),
+        component: () => import(/* webpackChunkName: "usr/appreader" */ './components/member/AppReader.vue'),
+    },
+    {
+        path: '/mregister',
+        name: 'mregister',
+        component: () => import(/* webpackChunkName: "usr/mregister" */ './components/member/FormRegister.vue'),
+    },
+    {
+        path: '/rent-book',
+        name: 'rent_book',
+        component: () => import(/* webpackChunkName: "usr/book" */ './components/member/Book.vue'),
     },
 ]
 
