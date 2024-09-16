@@ -117,7 +117,7 @@
                                     loop
                                 >
                                     <swiper-slide v-for="(item, index) in buku_populer" :key="index" class="col-md-3 col-6">
-                                        <router-link :to="{ name: 'detail_buku', params: { idb: item.isbn } }">
+                                        <router-link :to="{ name: 'detail-buku', params: { idb: item.isbn } }">
                                             <div class="card">
                                                 <div class="product-image">
                                                     <img :src="item.image" class="img-fluid" :alt="item.alt">

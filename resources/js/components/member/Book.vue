@@ -31,14 +31,14 @@
                     <div class="row row-cols-2 row-cols-md-5">
                         <template v-for="(group, groupIndex) in paginatedBuku" :key="groupIndex">
                             <div v-for="buku in group" :key="buku.id" class="col">
-                                <router-link :to="{ name: 'detail_buku', params: { idb: buku.isbn } }">
-                                    <div class="card h-100">
+                                <router-link :to="{ name: 'detail-buku', params: { idb: buku.isbn } }">
+                                    <div class="card">
                                         <div class="card-content">
                                             <div class="product-image">
                                                 <img :src="buku.image" :alt="buku.alt" class="img-fluid">
                                             </div>
                                             <div class="card-body pt-0">
-                                                {{ buku.writer }}
+                                                <p class="card-title mb-0">{{ buku.writer }}</p>
                                                 <a href="#">
                                                     <h6 class="card-title mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="buku.title">{{ buku.title }}</h6>
                                                 </a>

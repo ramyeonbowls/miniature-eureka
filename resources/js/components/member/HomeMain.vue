@@ -39,7 +39,7 @@
             <div class="col-12 col-xl-9">
                 <div class="row row-cols-2 row-cols-md-4">
                     <div v-for="buku in buku_populer" :key="buku.id" class="col mt-3">
-                        <router-link :to="{ name: 'detail_buku', params: { idb: buku.isbn } }">
+                        <router-link :to="{ name: 'detail-buku', params: { idb: buku.isbn } }">
                             <div class="card h-100 mb-0">
                                 <div class="card-content">
                                     <div class="product-image mt-3 mb-0 pb-0">
@@ -80,7 +80,7 @@
                                     loop
                                 >
                                     <swiper-slide v-for="(item, index) in buku" :key="index" class="col-md-3 col-6">
-                                        <router-link :to="{ name: 'detail_buku', params: { idb: item.isbn } }">
+                                        <router-link :to="{ name: 'detail-buku', params: { idb: item.isbn } }">
                                             <div class="card">
                                                 <div class="product-image">
                                                     <img :src="item.image" class="img-fluid" :alt="item.alt">

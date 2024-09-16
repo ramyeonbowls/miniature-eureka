@@ -123,7 +123,7 @@ export default {
 
         searchBooks() {
             if(this.searchQuery!=''){
-                this.$router.push({ name: 'koleksi_buku', query: { search: this.searchQuery } });
+                this.$router.push({ name: 'koleksi-buku', query: { search: this.searchQuery } });
                 this.searchQuery = '';
                 const closeButton = document.getElementById('close-search');
                 closeButton.click();
