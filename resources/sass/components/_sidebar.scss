@@ -108,7 +108,7 @@
                     }
                 }
                 >.sidebar-link {
-                    background-color: $primary;
+                    background-color: $orange;
                     span {
                         color: #fff;
                     }
@@ -143,7 +143,7 @@
                 &.active {
                     position:relative;
                     & > a {
-                        color: $primary;
+                        color: $orange;
                         font-weight: bold;
                     }
                 }

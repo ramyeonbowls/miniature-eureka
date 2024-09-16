@@ -48,7 +48,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/403', 'forbidden')->name('forbidden');
             Route::get('/{any}', 'index')
                 ->where('any', '.*')
-                ->name('catch-all')
+                ->name('catch-all-admin')
                 ->middleware(['activated.user']);
         });
 
@@ -57,4 +57,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 Route::get('/{any}', [App\Http\Controllers\MainController::class, 'index'])
     ->where('any', '.*')
-    ->name('catch-all');
+    ->name('catch-all')
+    ->middleware('auth.role');

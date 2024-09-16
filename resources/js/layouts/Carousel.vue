@@ -9,7 +9,7 @@
 						</div>
 						<div class="card-body">
 							<a href="#">
-								<h7 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="slide.title">{{ slide.title }}</h7>
+								<p class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="slide.title">{{ slide.title }}</p>
 							</a>
 						</div>
 					</div>
