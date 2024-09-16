@@ -6,22 +6,26 @@
                     <i class="bi bi-justify fs-3"></i>
                 </a>
 
-                <div class="col-md-2 col-2">
-                    <div class="logo-header">
+                <div class="col-md-1 col-2 col-lg-1">
+                    <div class="logo-header d-block d-sm-block d-xl-none">
                         <a href="/">
-                            <img src="/images/logo/logo_01.png" height="40px" class="mobile-logo" alt="Logo">
-                            <img src="/images/logo/logo_03.png" height="50px" class="desktop-logo" alt="Logo">
+                            <img src="/images/logo/logo_small.png" height="40px" class="mobile-logo" alt="Logo">
+                        </a>
+                    </div>
+                    <div class="logo-header d-none d-xl-block d-lg-none">
+                        <a href="/">
+                            <img src="/images/logo/logo.png" height="50px" class="desktop-logo" alt="Logo">
                         </a>
                     </div>
                 </div>
 
-                <div class="col-md-8 col-8 d-flex justify-content-center">
+                <div class="col-md-7 col-8 col-lg-8 d-flex justify-content-center">
                     <div class="header-title">
                         <h3 class="header-title">PERPUSTAKAAN DIGITAL GINESIA</h3>
                     </div>
                 </div>
 
-                <div class="col-md-2 col-2">
+                <div class="col-md-3 col-2 col-lg-2">
                     <div class="d-none d-md-block d-xl-block">
                         <div class="form-group position-relative has-icon-right">
                             <input type="text" class="form-control rounded-pill" placeholder="Cari Judul, Penulis" v-model="searchQuery" @keypress.enter="searchBooks">
@@ -88,38 +92,6 @@
     </header>
 </template>
 
-<style scoped>
-.logo-header img.mobile-logo {
-    display: none;
-}
-.header-title {
-    font-size: 25px;
-    margin: 0px 0px 0px;
-    font-family: 'Libre Franklin';
-    font-weight: 800;
-    color: #5271FF;
-}
-.icon-day
-.icon-night {
-    display: block;
-}
-@media (max-width: 767.98px) {
-    .logo-header img.desktop-logo {
-        display: none;
-    }
-    .logo-header img.mobile-logo {
-        display: block;
-    }
-    .header-title {
-        font-size: 1rem;
-    }
-    .icon-day
-    .icon-night {
-        display: none;
-    }
-}
-</style>
-
 <script>
 import "~@fontsource/libre-franklin";
 import "~@fontsource/libre-franklin/900.css";
@@ -154,7 +126,7 @@ export default {
 
         searchBooks() {
             if(this.searchQuery!=''){
-                this.$router.push({ name: 'koleksi_buku', query: { search: this.searchQuery } });
+                this.$router.push({ name: 'koleksi-buku', query: { search: this.searchQuery } });
                 this.searchQuery = '';
             }
         },
@@ -163,3 +135,19 @@ export default {
     computed: {},
 }
 </script>
+
+<style scoped>
+.header-title {
+    font-size: 25px;
+    margin: 0px 0px 0px;
+    font-family: 'Libre Franklin';
+    font-weight: 800;
+    color: #5271FF;
+}
+
+@media (max-width: 999px) {
+    .header-title {
+        font-size: 1rem;
+    }
+}
+</style>

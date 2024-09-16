@@ -6,12 +6,12 @@
                     <div class="card h-100">
                         <div class="card-body">
                             <div class="card-content text-center mb-2">
-                                <img :src="detail.image" class="img-fluid" :alt="detail.title" height="80%" width="80%">
+                                <img :src="detail.image" class="img-fluid img-detail" :alt="detail.title" height="80%" width="80%">
                             </div>
-                            <div class="buttons">
-                                <button class="btn btn-light-primary mr-2" @click="bacaBuku">Baca</button>
+                            <div class="buttons mt-3">
+                                <button class="btn btn-primary me-2" @click="bacaBuku">Baca</button>
                                 <template v-if="isAuthenticated">
-                                    <button class="btn btn-light-primary ml-2">Pinjam</button>
+                                    <button class="btn btn-secondary me-2">Pinjam</button>
                                 </template>
                             </div>
                         </div>
@@ -117,7 +117,7 @@
                                     loop
                                 >
                                     <swiper-slide v-for="(item, index) in buku_populer" :key="index" class="col-md-3 col-6">
-                                        <router-link :to="{ name: 'detail_buku', params: { idb: item.isbn } }">
+                                        <router-link :to="{ name: 'detail-buku', params: { idb: item.isbn } }">
                                             <div class="card">
                                                 <div class="product-image">
                                                     <img :src="item.image" class="img-fluid" :alt="item.alt">
@@ -143,14 +143,6 @@
         </section>
     </div>
 </template>
-
-<style>
-.sticky-section {
-  position: sticky;
-  top: 150px;
-  text-align: -webkit-center;
-}
-</style>
 
 <script>
 import { Swiper, SwiperSlide } from 'swiper/vue';
@@ -263,6 +255,7 @@ export default {
 
         async getDetail() {
             try {
+                let loader = this.$loading.show();
                 axios.get('/getDetail', {
                     params:{
                         id: this.idb
@@ -270,11 +263,14 @@ export default {
                 })
                 .then((response) => {
                     this.detail = response.data;
+                    loader.hide();
                 })
                 .catch((e) => {
+                    loader.hide();
                     console.error(e);
                 });
             } catch (e) {
+                loader.hide();
                 console.error(e);
             }
         },
@@ -315,3 +311,16 @@ export default {
     }
 };
 </script>
+
+<style scoped>
+.sticky-section {
+  position: sticky;
+  top: 150px;
+  text-align: -webkit-center;
+}
+@media (max-width: 999px) {
+    .img-detail {
+        width: 50%;
+    }
+}
+</style>

@@ -17,17 +17,17 @@ const _routes = [
     },
     {
         path: '/koleksi-buku',
-        name: 'koleksi_buku',
+        name: 'koleksi-buku',
         component: () => import(/* webpackChunkName: "usr/book" */ './components/member/Book.vue'),
     },
     {
         path: '/baca-buku',
-        name: 'baca_buku',
+        name: 'baca-buku',
         component: () => import(/* webpackChunkName: "usr/readbook" */ './components/member/ReadBook.vue'),
     },
     {
         path: '/detail-buku/:idb',
-        name: 'detail_buku',
+        name: 'detail-buku',
         component: () => import(/* webpackChunkName: "usr/viewbook" */ './components/member/ViewBook.vue'),
     },
     {
@@ -42,7 +42,7 @@ const _routes = [
     },
     {
         path: '/rent-book',
-        name: 'rent_book',
+        name: 'rent-book',
         component: () => import(/* webpackChunkName: "usr/book" */ './components/member/Book.vue'),
     },
 ]
