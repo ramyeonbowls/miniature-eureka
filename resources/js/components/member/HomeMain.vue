@@ -30,7 +30,7 @@
                 <h2>BUKU POPULER</h2>
             </div>
             <div class="col-xl-3 d-none d-xl-block">
-                <div class="card mt-3" style="height: 835px;">
+                <div class="card mt-3" style="height: 786px;">
                     <div class="card-body background-populer">
                         &nbsp;
                     </div>
@@ -42,13 +42,13 @@
                         <router-link :to="{ name: 'detail_buku', params: { idb: buku.isbn } }">
                             <div class="card h-100 mb-0">
                                 <div class="card-content">
-                                    <div class="product-image mt-3">
+                                    <div class="product-image mt-3 mb-0 pb-0">
                                         <img :src="buku.image" :alt="buku.alt" class="img-fluid">
                                     </div>
-                                    <div class="card-body mt-0 mb-0">
-                                        <p>{{ buku.writer }}</p>
+                                    <div class="card-body mt-0 mb-0 mx-0 px-2">
+                                        <p class="card-title mb-0">{{ buku.writer }}</p>
                                         <a href="#">
-                                            <div class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="buku.title">{{ buku.title }}</div>
+                                            <div data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="buku.title">{{ buku.title }}</div>
                                         </a>
                                     </div>
                                 </div>
@@ -58,7 +58,7 @@
                 </div>
             </div>
         </section>
-        <section class="row">
+        <section class="row mt-4">
             <div class="col-12 col-lg-12">
                 <div class="card">
                     <div class="row mb-2 py-0 px-0 mx-0 my-0">
