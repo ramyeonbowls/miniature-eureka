@@ -204,7 +204,7 @@
                                 loop
                             >
                                 <swiper-slide v-for="(value, index) in frasa" :key="index">
-                                    <div class="card" style="height: 340px;">
+                                    <div class="card" style="height: 350px;">
                                         <div class="d-flex justify-content-center align-items-center flex-column mt-3">
                                             <div class="avatar">
                                                 <img src="/images/faces/1.jpg" style="height: 90px; width:90px;">

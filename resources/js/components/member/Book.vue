@@ -32,7 +32,7 @@
                         <template v-for="(group, groupIndex) in paginatedBuku" :key="groupIndex">
                             <div v-for="buku in group" :key="buku.id" class="col">
                                 <router-link :to="{ name: 'detail_buku', params: { idb: buku.isbn } }">
-                                    <div class="card">
+                                    <div class="card h-100">
                                         <div class="card-content">
                                             <div class="product-image">
                                                 <img :src="buku.image" :alt="buku.alt" class="img-fluid">
