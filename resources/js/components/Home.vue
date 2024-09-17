@@ -16,7 +16,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                        <h6 class="text-muted font-semibold">Data Visitor</h6>
+                                        <h6 class="text-muted font-semibold">Data Pengunjung</h6>
                                         <h6 class="font-extrabold mb-0">112.000</h6>
                                     </div>
                                 </div>
@@ -50,7 +50,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                        <h6 class="text-muted font-semibold">Data Members</h6>
+                                        <h6 class="text-muted font-semibold">Data Member</h6>
                                         <h6 class="font-extrabold mb-0">1000</h6>
                                     </div>
                                 </div>
@@ -121,7 +121,7 @@
                     <div class="col-12 col-xl-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Growth Member</h4>
+                                <h4>pertumbuhan Member</h4>
                             </div>
                             <div class="card-body">
                                 <div id="area"></div>
@@ -131,16 +131,16 @@
                     <div class="col-12 col-xl-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Top 10 Member Read Books</h4>
+                                <h4>Top 10 Member Baca Buku</h4>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-striped" id="table_member">
                                         <thead>
                                             <tr>
-                                                <th>Photo</th>
-                                                <th>Name</th>
-                                                <th>Total Hours</th>
+                                                <th>Foto</th>
+                                                <th>Nama</th>
+                                                <th>Total Jam</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -151,7 +151,7 @@
                     <div class="col-12 col-xl-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Top 10 Read Books</h4>
+                                <h4>Top 10 Buku Dibaca</h4>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -382,8 +382,9 @@ export default {
             let formattedDate = date.toLocaleDateString('en-US', options)
             let year = date.getFullYear()
             let month = date.getMonth() + 1
-            let totalDaysInMonth = new Date(year, month, 0).getDate()
-            let days = Array.from({ length: totalDaysInMonth }, (_, i) => (i + 1).toString())
+            let totalDaysInMonth = 7
+            let days = Array.from({ length: totalDaysInMonth }, (_, i) => (i + 1).toString());
+            
 
             var optionsReadDaily = {
                 series: [
@@ -392,6 +393,10 @@ export default {
                         data: days.map(() => Math.floor(Math.random() * 10)),
                     },
                 ],
+                title: {
+                    text: formattedDate,
+                    align: "center"
+                },
                 chart: {
                     type: 'bar',
                     height: 350,
@@ -435,9 +440,9 @@ export default {
                     categories: days,
                 },
                 yaxis: {
-                    title: {
-                        text: formattedDate,
-                    },
+                    // title: {
+                    //     text: formattedDate,
+                    // },
                 },
                 fill: {
                     opacity: 1,
@@ -461,6 +466,10 @@ export default {
                         data: days.map(() => Math.floor(Math.random() * 10)),
                     },
                 ],
+                title: {
+                    text: formattedDate,
+                    align: "center"
+                },
                 chart: {
                     type: 'bar',
                     height: 350,
@@ -504,9 +513,9 @@ export default {
                     categories: days,
                 },
                 yaxis: {
-                    title: {
-                        text: formattedDate,
-                    },
+                    // title: {
+                    //     text: formattedDate,
+                    // },
                 },
                 fill: {
                     opacity: 1,
