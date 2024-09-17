@@ -29,33 +29,31 @@
             <div class="divider divider-left-center mb-0">
                 <h2>BUKU POPULER</h2>
             </div>
-            <div class="row equal-height">
-                <div class="col-xl-3 d-none d-xl-block">
-                    <div class="card h-100">
-                        <div class="card-body background-populer">
-                            &nbsp;
-                        </div>
+            <div class="col-xl-3 d-none d-xl-block mb-1 mt-3">
+                <div class="card h-100">
+                    <div class="card-body background-populer">
+                        &nbsp;
                     </div>
                 </div>
-                <div class="col-12 col-xl-9">
-                    <div class="row row-cols-2 row-cols-md-4">
-                        <div v-for="(buku, i) in buku_populer" :key="i" :class="i > 3 ? 'col mt-3' : 'col'">
-                            <router-link :to="{ name: 'detail-buku', params: { idb: buku.isbn } }">
-                                <div class="card h-100 mb-0">
-                                    <div class="card-content">
-                                        <div class="product-image mt-3 mb-0 pb-0">
-                                            <img :src="buku.image" :alt="buku.alt" class="img-fluid">
-                                        </div>
-                                        <div class="card-body mt-0 mb-0 mx-0 px-2">
-                                            <p class="card-title mb-0">{{ buku.writer }}</p>
-                                            <a href="#">
-                                            <div data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="buku.title">{{ buku.title }}</div>
-                                            </a>
-                                        </div>
+            </div>
+            <div class="col-12 col-xl-9">
+                <div class="row row-cols-2 row-cols-md-4">
+                    <div v-for="(buku, i) in buku_populer" :key="i" class="col mt-3">
+                        <router-link :to="{ name: 'detail-buku', params: { idb: buku.isbn } }">
+                            <div class="card h-100 mb-0">
+                                <div class="card-content">
+                                    <div class="product-image mt-3 mb-0 pb-0">
+                                        <img :src="buku.image" :alt="buku.alt" class="img-fluid">
+                                    </div>
+                                    <div class="card-body mt-0 mb-0 mx-0 px-2">
+                                        <p class="card-title mb-0">{{ buku.writer }}</p>
+                                        <a href="#">
+                                        <div data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="buku.title">{{ buku.title }}</div>
+                                        </a>
                                     </div>
                                 </div>
-                            </router-link>
-                        </div>
+                            </div>
+                        </router-link>
                     </div>
                 </div>
             </div>
@@ -369,6 +367,102 @@
                 </div>
             </div>
         </section>
+        <section class="row mt-4">
+            <div class="col-12 col-lg-12">
+                <div class="row mb-3">
+                    <div class="col-8 text-start pt-3">
+                        <h2>TITIK FOKUS</h2>
+                    </div>
+                    <div class="col-4 text-end pt-3">
+                        <button class="btn btn-primary btn-sm">Lihat Semua</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <swiper
+                        :modules="modules"
+                        :slides-per-view="2"
+                        :space-between="20"
+                        :breakpoints="swiperBreakpointswawasan"
+                        navigation
+                        :scrollbar="{ draggable: true }"
+                        @swiper="onSwiper"
+                        @slideChange="onSlideChange"
+                        class="swiper-container"
+                        loop
+                    >
+                        <swiper-slide v-for="(value, index) in titik_fokus" :key="index">
+                            <div class="card h-100">
+                                <div class="img-wrapper">
+                                    <img :src="value.image" class="d-block w-100 gambar-kotak">
+                                </div>
+                                <div class="card-body pb-0">
+                                    <a href="#">
+                                        <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="value.title">
+                                            {{ value.title }}
+                                        </h5>
+                                    </a>
+                                    <!-- <small class="text-muted">Oleh <strong> {{ value.author }}</strong></small> -->
+                                    <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="value.content">
+                                        {{ value.content }}
+                                    </p>
+                                    <a href="#">
+                                        <i class="fa fa-angle-double-right"></i> <h6>Lanjutkan Membaca </h6>
+                                    </a>
+                                </div>
+                            </div>
+                        </swiper-slide>
+                    </swiper>
+                </div>
+            </div>
+        </section>
+        <section class="row mt-4">
+            <div class="col-12 col-lg-12">
+                <div class="row mb-3">
+                    <div class="col-8 text-start pt-3">
+                        <h2>HUMORIA</h2>
+                    </div>
+                    <div class="col-4 text-end pt-3">
+                        <button class="btn btn-primary btn-sm">Lihat Semua</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <swiper
+                        :modules="modules"
+                        :slides-per-view="2"
+                        :space-between="20"
+                        :breakpoints="swiperBreakpointswawasan"
+                        navigation
+                        :scrollbar="{ draggable: true }"
+                        @swiper="onSwiper"
+                        @slideChange="onSlideChange"
+                        class="swiper-container"
+                        loop
+                    >
+                        <swiper-slide v-for="(value, index) in humoria" :key="index">
+                            <div class="card h-100">
+                                <div class="img-wrapper">
+                                    <img :src="value.image" class="d-block w-100 gambar-kotak">
+                                </div>
+                                <div class="card-body pb-0">
+                                    <a href="#">
+                                        <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="value.title">
+                                            {{ value.title }}
+                                        </h5>
+                                    </a>
+                                    <!-- <small class="text-muted">Oleh <strong> {{ value.author }}</strong></small> -->
+                                    <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="value.content">
+                                        {{ value.content }}
+                                    </p>
+                                    <a href="#">
+                                        <i class="fa fa-angle-double-right"></i> <h6>Lanjutkan Membaca </h6>
+                                    </a>
+                                </div>
+                            </div>
+                        </swiper-slide>
+                    </swiper>
+                </div>
+            </div>
+        </section>
     </div>
 </template>
 
@@ -517,7 +611,7 @@ export default {
                 },
                 {
                     "id": 2,
-                    "title": "Teknologi Energi Terbarukan: Solusi untuk Masa Depan yang Berkelanjutan",
+                    "title": "Pramoedya Ananta Toer: Suara Perjuangan dalam Gelap",
                     "content": "Pramoedya Ananta Toer, lahir pada 6 Februari 1925 di Blora, Jawa Tengah, adalah salah satu penulis terbesar Indonesia yang dikenal dengan karya-karya yang berani dan penuh dengan kritik sosial. Pramoedya adalah seorang penulis yang tidak hanya menciptakan karya sastra tetapi juga terlibat aktif dalam perjuangan politik dan sosial di Indonesia.<br>Salah satu karya terbaiknya, Bumi Manusia, adalah bagian dari tetralogi Buru Quartet yang menggambarkan kehidupan dan perjuangan masyarakat Indonesia selama periode kolonial Belanda. Karya ini tidak hanya mengeksplorasi isu-isu sosial dan politik tetapi juga menghadirkan karakter-karakter yang kuat dan kompleks.<br>Selama masa hidupnya, Pramoedya mengalami berbagai tantangan politik, termasuk penahanan oleh pemerintah Orde Baru. Meskipun mengalami penahanan dan penganiayaan, ia tetap berdiri teguh dengan prinsip-prinsipnya dan terus menulis. Pramoedya Ananta Toer meninggal pada 30 April 2006, tetapi warisan sastra dan semangat perjuangannya terus hidup melalui karya-karyanya yang mempengaruhi pembaca dan penulis di seluruh dunia.",
                     "image": '/images/faces/2.jpg'
                 },
@@ -526,6 +620,46 @@ export default {
                     "title": "J.K. Rowling: Dari Keringat hingga Keajaiban Dunia Harry Potter",
                     "content": "J.K. Rowling, lahir sebagai Joanne Rowling pada 31 Juli 1965 di Yate, Gloucestershire, Inggris, adalah penulis yang mengubah dunia sastra anak-anak dengan seri Harry Potter. Sebelum mencapai kesuksesan besar, Rowling menghadapi tantangan besar dalam hidupnya, termasuk kehidupan sebagai ibu tunggal yang berjuang untuk bertahan hidup.<br>Kisah Harry Potter, yang pertama kali diterbitkan pada tahun 1997, tidak hanya menjadi fenomena global tetapi juga melahirkan dunia magis yang dicintai oleh jutaan pembaca di seluruh dunia. Kesuksesan buku ini membawa Rowling dari keadaan ekonomi yang sulit menuju status miliarder dan ikon budaya global.<br>Selain menulis, Rowling juga aktif dalam berbagai kegiatan amal melalui lembaga filantropi yang didirikannya. Karya-karya lanjutan dalam dunia Harry Potter, serta buku-buku dewasa seperti The Casual Vacancy, menunjukkan kemampuannya untuk melintasi genre dan mempengaruhi berbagai kalangan pembaca. J.K. Rowling tetap menjadi salah satu penulis paling berpengaruh di era modern, dan warisan Harry Potter-nya terus berkembang.",
                     "image": '/images/faces/3.jpg'
+                }
+            ],
+            titik_fokus: [
+                {
+                    "id": 1,
+                    "title": "Kesehatan Mental di Era Digital: Menjaga Keseimbangan di Dunia Maya",
+                    "content": "Di tengah perkembangan teknologi yang pesat, kita sering kali lupa bahwa kesehatan mental tidak kalah pentingnya dibandingkan kesehatan fisik. Era digital membawa berbagai kemudahan, tetapi juga tantangan baru bagi kesejahteraan mental kita. Dengan meningkatnya penggunaan media sosial dan teknologi, tekanan untuk selalu terhubung dan tampil sempurna sering kali menyebabkan stres dan kecemasan.<br>Menjaga keseimbangan dalam dunia maya memerlukan kesadaran dan usaha yang sadar. Ini berarti membatasi waktu layar, menetapkan batasan yang sehat dalam berinteraksi di media sosial, dan mencari dukungan ketika merasa kewalahan. Selain itu, penting untuk kembali ke aktivitas yang dapat meredakan stres seperti olahraga, meditasi, atau hobi yang menyenangkan.<br>Dalam dunia yang semakin terhubung, kesehatan mental harus menjadi prioritas utama. Menjaga keseimbangan di dunia maya bukan hanya tentang menghindari dampak negatif, tetapi juga tentang menciptakan ruang untuk pemulihan dan pertumbuhan pribadi. Hanya dengan cara ini kita dapat menikmati manfaat teknologi tanpa mengorbankan kesejahteraan mental kita.",
+                    "image": '/images/news/titik-fokus1.png'
+                },
+                {
+                    "id": 2,
+                    "title": "Pariwisata Berkelanjutan: Mengapa Kita Perlu Berpikir Kembali Tentang Liburan Kita",
+                    "content": "Pariwisata berkelanjutan bukanlah konsep baru, tetapi semakin relevan dalam era di mana dampak lingkungan dan sosial dari perjalanan semakin terlihat. Ketika kita merencanakan liburan, sering kali kita hanya fokus pada destinasi dan pengalaman tanpa mempertimbangkan dampaknya terhadap lingkungan dan komunitas lokal.<br>Pariwisata berkelanjutan menekankan pada prinsip-prinsip seperti pengurangan jejak karbon, dukungan untuk ekonomi lokal, dan pelestarian budaya serta lingkungan. Ini bukan hanya tentang memilih akomodasi ramah lingkungan, tetapi juga tentang memahami dan menghormati budaya lokal, serta berpartisipasi dalam kegiatan yang memberi manfaat langsung bagi masyarakat.<br>Dengan menjadi wisatawan yang lebih sadar dan bertanggung jawab, kita dapat membantu menjaga keindahan destinasi yang kita kunjungi dan memastikan bahwa pariwisata terus memberikan manfaat positif bagi semua pihak. Saatnya untuk berpikir kembali tentang liburan kita dan menjadikannya sebagai pengalaman yang tidak hanya memuaskan tetapi juga berkelanjutan.",
+                    "image": '/images/news/titik-fokus2.png'
+                },
+                {
+                    "id": 3,
+                    "title": "Mengejar Impian di Tengah Ketidakpastian: Berani Mengambil Langkah Pertama",
+                    "content": "Mengikuti impian sering kali tampak seperti perjalanan yang menakutkan, terutama ketika dunia di sekitar kita penuh dengan ketidakpastian. Namun, inilah saatnya untuk berani mengambil langkah pertama menuju tujuan pribadi kita, meskipun jalan yang ditempuh mungkin tidak selalu jelas.<br<Ketidakpastian adalah bagian dari proses, dan ketakutan akan kegagalan sering kali menjadi penghalang terbesar. Namun, penting untuk diingat bahwa setiap langkah kecil menuju impian kita adalah kemajuan. Mengambil risiko, meski terkadang menakutkan, membuka peluang baru dan membawa kita lebih dekat kepada pencapaian yang kita impikan.<br>Dengan menetapkan tujuan yang realistis, mencari dukungan, dan tetap fleksibel dalam menghadapi perubahan, kita dapat menghadapi ketidakpastian dengan lebih percaya diri. Mengejar impian bukan hanya tentang mencapai tujuan akhir, tetapi juga tentang perjalanan yang membentuk kita dan memberikan makna dalam hidup. Saatnya untuk melangkah maju dan mengubah ketidakpastian menjadi kesempatan. ",
+                    "image": '/images/news/titik-fokus3.png'
+                }
+            ],
+            humoria: [
+                {
+                    "id": 1,
+                    "title": "Ujian di Kafe",
+                    "content": "Seorang mahasiswa sedang belajar di kafe sambil meminum kopi. Dia merasa stres karena ujian yang mendekat. Temannya datang dan bertanya, “Kenapa wajahmu kayak mau meledak?” Mahasiswa itu menjawab sambil menghela napas, “Ujian, bro! Rasanya kayak minum kopi tanpa gula, pahit banget!” Temannya tertawa, “Aduh, jangan khawatir. Kan ada trik baru, bawa kopi ke ruang ujian. Kalau ujian susah, minum kopinya dulu. Setidaknya, rasa pahitnya kebagi dua!”",
+                    "image": '/images/news/humoria1.png'
+                },
+                {
+                    "id": 2,
+                    "title": "Kartu Kredit dan Diskon",
+                    "content": "Pak Budi baru saja menerima tagihan kartu kreditnya dan mengeluh kepada temannya di warung kopi. “Duh, tagihan kartu kredit saya makin lama makin bikin pusing!”Temannya bertanya, “Kenapa, Pak Budi?” Pak Budi menjawab sambil tertawa, “Karena setiap kali belanja, saya selalu cek diskon. Eh, sekarang diskonnya malah bikin tagihan saya lebih banyak! Mungkin ini diskon ‘khusus’ buat saya supaya tetap bersemangat bayar tagihan!”",
+                    "image": '/images/news/humoria2.png'
+                },
+                {
+                    "id": 3,
+                    "title": "Sentuhan Magis di Dapur: Kue Coklat yang Tak Pernah Mengecewakan",
+                    "content": "Di sebuah kompleks perumahan, Bu Nani sedang sibuk memasak di dapur. Dia baru saja mencoba resep baru yang dia temukan di internet, yaitu kue coklat yang katanya super lezat. Sementara itu, tetangganya, Bu Tini, datang berkunjung untuk bertanya bagaimana cara membuat kue yang sama. Bu Tini melihat Bu Nani dengan penuh semangat dan bertanya, “Bu Nani, kok bisa kue ini jadi kelihatan begitu enak? Rahasianya apa?” Bu Nani dengan bangga menjawab, “Oh, itu rahasianya adalah resep dari internet! Saya mengikuti semua langkahnya dengan teliti.” Sambil mencicipi adonan kue, Bu Tini bertanya lagi, “Iya, tapi ada yang berbeda deh dari kue saya, kenapa ya?” Bu Nani dengan ceria menjelaskan, “Gampang, Bu Tini. Kalau resepnya bilang ‘panggang dalam oven 30 menit’, saya tambahkan sedikit waktu ekstra karena anak-anak suka kue yang ‘lebih gosong’! Jadi, saya panggang lagi sedikit lebih lama supaya lebih crunchy!” Bu Tini penasaran dan bertanya, “Jadi, kalau saya mau kue saya lebih enak, saya harus panggang lebih lama?” Bu Nani menjawab sambil tertawa, “Bukan hanya lebih lama, tapi juga sedikit ‘praktekin’! Misalnya, setiap kali saya lewat dapur, saya sapa ovennya, ‘Halo, oven! Kerja bagus, ya!’ Dan itu memberi semangat pada kue untuk lebih bersemangat!” Bu Tini terkejut dan bertanya, “Jadi kue bisa lebih enak karena kita ngomong sama oven?”",
+                    "image": '/images/news/humoria3.png'
                 }
             ],
             swiperBreakpoints: {
