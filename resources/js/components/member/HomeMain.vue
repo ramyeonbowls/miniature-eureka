@@ -76,6 +76,7 @@
                                     :scrollbar="{ draggable: true }"
                                     @swiper="onSwiper"
                                     @slideChange="onSlideChange"
+                                    :autoplay= "{ delay: 3000 }"
                                     class="swiper-container"
                                     loop
                                 >
@@ -129,9 +130,9 @@
                                             Merayakan Hari Literasi Internasional 2024: Menyongsong Masa Depan Melalui Kekuatan Membaca
                                         </h5>
                                     </a>
-                                    <small class="text-muted">By <strong> John Doe</strong> |  Post on Jan 8, 2013</small>
+                                    <small class="text-muted">By <strong> Abdurrahman</strong> |  17 September 2024</small>
                                     <p class="m-top-sm m-bottom-sm mt-2">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eros nibh, viverra a dui a, gravida varius velit. Nunc vel tempor nisi. Aenean id pellentesque mi, non placerat mi. Integer luctus accumsan tellus. Vivamus quis elit sit amet nibh lacinia suscipit eu quis purus. Vivamus tristique est non ipsum dapibus lacinia sed nec metus.
+                                        Pada 8 September 2024, dunia akan merayakan Hari Literasi Internasional, sebuah hari yang didedikasikan untuk merayakan pentingnya literasi dalam kehidupan kita dan mendorong upaya untuk meningkatkan tingkat literasi di seluruh dunia. Hari ini bukan hanya momen untuk menghargai kemampuan membaca dan menulis, tetapi juga kesempatan untuk merenungkan dampak positif yang dapat ditimbulkan oleh literasi terhadap individu dan masyarakat.
                                     </p>
                                     <a href="#">
                                         <i class="fa fa-angle-double-right"></i> <h6>Lanjutkan Membaca </h6>
@@ -142,31 +143,31 @@
                         <div class="col-lg-6">
                             <div class="media popular-post" style="height: 150px; max-height: 150px;">
                                 <a class="pull-left" href="#">
-                                    <img src="images/samples/architecture1.jpg" alt="Photo of Blog" style="max-width: 150px; max-height: 150px;">
+                                    <img src="images/news/tajuk-utama3.jpg" alt="Photo of Blog" style="max-width: 150px; max-height: 150px;">
                                 </a>
                                 <div class="media-body">
                                     <a href="#">
-                                        <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" title="Merayakan Hari Literasi Internasional 2024: Menyongsong Masa Depan Melalui Kekuatan Membaca">Merayakan Hari Literasi Internasional 2024: Menyongsong Masa Depan Melalui Kekuatan Membaca</h6>
+                                        <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" title="Revolusi Belajar: Sekolah Ramah Lingkungan Ciptakan Generasi Peduli Bumi">Revolusi Belajar: Sekolah Ramah Lingkungan Ciptakan Generasi Peduli Bumi</h6>
                                     </a>
                                 </div>
                             </div>
                             <div class="media popular-post" style="height: 150px; max-height: 150px;">
                                 <a class="pull-left" href="#">
-                                    <img src="images/samples/motorcycle.jpg" alt="Photo of Blog" style="max-width: 150px; max-height: 150px;">
+                                    <img src="images/news/tajuk-utama2.jpg" alt="Photo of Blog" style="max-width: 150px; max-height: 150px;">
+                                </a>
+                                <div class="media-body">
+                                    <a href="#">
+                                        <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" title="Perpustakaan Terapung Terbesar Berlabuh di Yordania">Perpustakaan Terapung Terbesar Berlabuh di Yordania</h6>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="media popular-post" style="height: 150px; max-height: 150px;">
+                                <a class="pull-left" href="#">
+                                    <img src="images/news/tajuk-utama1.jpg" alt="Photo of Blog" style="max-width: 150px; max-height: 150px;">
                                 </a>
                                 <div class="media-body">
                                     <a href="#">
                                         <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" title="Kampus Terbaik Dunia: Universitas-Inovasi yang Mendorong Masa Depan Pendidikan">Kampus Terbaik Dunia: Universitas-Inovasi yang Mendorong Masa Depan Pendidikan</h6>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="media popular-post" style="height: 150px; max-height: 150px;">
-                                <a class="pull-left" href="#">
-                                    <img src="images/samples/origami.jpg" alt="Photo of Blog" style="max-width: 150px; max-height: 150px;">
-                                </a>
-                                <div class="media-body">
-                                    <a href="#">
-                                        <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit.">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </h6>
                                     </a>
                                 </div>
                             </div>
@@ -200,6 +201,7 @@
                                 :scrollbar="{ draggable: true }"
                                 @swiper="onSwiper"
                                 @slideChange="onSlideChange"
+                                :autoplay= "{ delay: 4000 }"
                                 class="swiper-frasa col-md-10"
                                 loop
                             >
@@ -242,11 +244,12 @@
                         :scrollbar="{ draggable: true }"
                         @swiper="onSwiper"
                         @slideChange="onSlideChange"
+                        :autoplay= "{ delay: 4000 }"
                         class="swiper-container"
                         loop
                     >
                         <swiper-slide v-for="(value, index) in wawasan" :key="index">
-                            <div class="card h-100">
+                            <div class="card h-100 px-2">
                                 <div class="img-wrapper">
                                     <img :src="value.image" class="d-block w-100 gambar-kotak">
                                 </div>
@@ -290,11 +293,12 @@
                         :scrollbar="{ draggable: true }"
                         @swiper="onSwiper"
                         @slideChange="onSlideChange"
+                        :autoplay= "{ delay: 4000 }"
                         class="swiper-container"
                         loop
                     >
                         <swiper-slide v-for="(value, index) in review_buku" :key="index">
-                            <div class="card h-100">
+                            <div class="card h-100 px-2">
                                 <div class="img-wrapper">
                                     <img :src="value.image" class="d-block w-100 gambar-kotak">
                                 </div>
@@ -338,11 +342,12 @@
                         :scrollbar="{ draggable: true }"
                         @swiper="onSwiper"
                         @slideChange="onSlideChange"
+                        :autoplay= "{ delay: 4000 }"
                         class="swiper-container"
                         loop
                     >
                         <swiper-slide v-for="(value, index) in layar_penulis" :key="index">
-                            <div class="card h-100">
+                            <div class="card h-100 px-2">
                                 <div class="d-flex justify-content-center align-items-center flex-column mt-3">
                                     <div class="avatar">
                                         <img :src="value.image" style="height: 90px; width:90px;">
@@ -387,11 +392,12 @@
                         :scrollbar="{ draggable: true }"
                         @swiper="onSwiper"
                         @slideChange="onSlideChange"
+                        :autoplay= "{ delay: 4000 }"
                         class="swiper-container"
                         loop
                     >
                         <swiper-slide v-for="(value, index) in titik_fokus" :key="index">
-                            <div class="card h-100">
+                            <div class="card h-100 px-2">
                                 <div class="img-wrapper">
                                     <img :src="value.image" class="d-block w-100 gambar-kotak">
                                 </div>
@@ -435,11 +441,12 @@
                         :scrollbar="{ draggable: true }"
                         @swiper="onSwiper"
                         @slideChange="onSlideChange"
+                        :autoplay= "{ delay: 4000 }"
                         class="swiper-container"
                         loop
                     >
                         <swiper-slide v-for="(value, index) in humoria" :key="index">
-                            <div class="card h-100">
+                            <div class="card h-100 px-2">
                                 <div class="img-wrapper">
                                     <img :src="value.image" class="d-block w-100 gambar-kotak">
                                 </div>
@@ -468,7 +475,7 @@
 
 <script>
 import { Swiper, SwiperSlide } from 'swiper/vue';
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
+import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -496,7 +503,7 @@ export default {
         return {
             onSwiper,
             onSlideChange,
-            modules: [Navigation, Pagination, Scrollbar, A11y],
+            modules: [Navigation, Pagination, Autoplay, Scrollbar, A11y],
         };
     },
 
@@ -929,5 +936,27 @@ export default {
         .gambar-kotak {
             height: auto;
         }
+    }
+    :deep(.swiper-button-next),
+    :deep(.swiper-button-prev) {
+        width: 30px !important; /* Desired width */
+        height: 30px !important; /* Desired height */
+        background-color: rgba(0, 0, 0, 0.5); /* Custom background */
+        border-radius: 70%; /* Circular buttons */
+    }
+
+    :deep(.swiper-button-next::after),
+    :deep(.swiper-button-prev::after) {
+        font-size: 20px !important; /* Icon size */
+        color: white !important; /* Icon color */
+    }
+
+    /* Optional: Adjust button positioning */
+    :deep(.swiper-button-next) {
+        right: 10px; /* Adjust as needed */
+    }
+
+    :deep(.swiper-button-prev) {
+        left: 10px; /* Adjust as needed */
     }
 </style>
