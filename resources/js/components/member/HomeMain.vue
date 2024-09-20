@@ -61,47 +61,55 @@
         <section class="row mt-4">
             <div class="col-12 col-lg-12">
                 <div class="card">
-                    <div class="row mb-2 py-0 px-0 mx-0 my-0">
-                        <div class="divider divider-left-center">
-                            <h2>KOLEKSI BUKU</h2>
-                        </div>
-                        <div class="col-12">
-                            <div class="row">
-                                <swiper
-                                    :modules="modules"
-                                    :slides-per-view="6"
-                                    :space-between="0"
-                                    :breakpoints="swiperBreakpoints"
-                                    navigation
-                                    :scrollbar="{ draggable: true }"
-                                    @swiper="onSwiper"
-                                    @slideChange="onSlideChange"
-                                    :autoplay= "{ delay: 3000 }"
-                                    class="swiper-container"
-                                    loop
-                                >
-                                    <swiper-slide v-for="(item, index) in buku" :key="index" class="col-md-3 col-6">
-                                        <router-link :to="{ name: 'detail-buku', params: { idb: item.isbn } }">
-                                            <div class="card">
-                                                <div class="product-image">
-                                                    <img :src="item.image" class="img-fluid" :alt="item.alt">
-                                                </div>
-                                                <div class="card-body py-2">
-                                                    <a href="#">
-                                                        <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" 
-                                                        style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" 
-                                                            :title="item.title">
-                                                            {{ item.title }}
-                                                        </h6>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </router-link>
-                                    </swiper-slide>
-                                </swiper>
+                        <div class="row mb-3 px-3">
+                            <div class="col-7 text-start pt-3 pe-0">
+                                <h2>KOLEKSI BUKU</h2>
+                            </div>
+                            <div class="col-5 text-end pt-3">
+                                <router-link to="/koleksi-buku" class='menu-link'>
+                                    <button class="btn btn-primary btn-sm">Lihat Semua</button>
+                                </router-link>
                             </div>
                         </div>
-                    </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="row">
+                                    <swiper
+                                        :modules="modules"
+                                        :slides-per-view="6"
+                                        :space-between="0"
+                                        :breakpoints="swiperBreakpoints"
+                                        navigation
+                                        :scrollbar="{ draggable: true }"
+                                        @swiper="onSwiper"
+                                        @slideChange="onSlideChange"
+                                        :autoplay= "{ delay: 3000 }"
+                                        class="swiper-container"
+                                        loop
+                                    >
+                                        <swiper-slide v-for="(item, index) in buku" :key="index" class="col-md-3 col-6">
+                                            <router-link :to="{ name: 'detail-buku', params: { idb: item.isbn } }">
+                                                <div class="card">
+                                                    <div class="product-image">
+                                                        <img :src="item.image" class="img-fluid" :alt="item.alt">
+                                                    </div>
+                                                    <div class="card-body py-2">
+                                                        <p class="card-title mb-0">{{ item.writer }}</p>
+                                                        <a href="#">
+                                                            <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" 
+                                                            style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" 
+                                                                :title="item.title">
+                                                                {{ item.title }}
+                                                            </h6>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </router-link>
+                                        </swiper-slide>
+                                    </swiper>
+                                </div>
+                            </div>
+                        </div>
                 </div>
             </div>
         </section>
@@ -122,7 +130,7 @@
                                 <div class="panel-body mt-4">
                                     <div class="mb-3">
                                         <a href="#">
-                                            <img src="images/news/literasiday.png" class="img-fluid" alt="Photo of Blog">
+                                            <img src="images/news/literasiday.png" class="img-fluid rounded-3" alt="Photo of Blog">
                                         </a>
                                     </div>
                                     <a href="#">
@@ -143,7 +151,7 @@
                         <div class="col-lg-6">
                             <div class="media popular-post" style="height: 150px; max-height: 150px;">
                                 <a class="pull-left" href="#">
-                                    <img src="images/news/tajuk-utama3.jpg" alt="Photo of Blog" style="max-width: 150px; max-height: 150px;">
+                                    <img src="images/news/tajuk-utama3.jpg" alt="Photo of Blog" class="rounded-3" style="max-width: 150px; max-height: 150px;">
                                 </a>
                                 <div class="media-body">
                                     <a href="#">
@@ -153,7 +161,7 @@
                             </div>
                             <div class="media popular-post" style="height: 150px; max-height: 150px;">
                                 <a class="pull-left" href="#">
-                                    <img src="images/news/tajuk-utama2.jpg" alt="Photo of Blog" style="max-width: 150px; max-height: 150px;">
+                                    <img src="images/news/tajuk-utama2.jpg" alt="Photo of Blog" class="rounded-3" style="max-width: 150px; max-height: 150px;">
                                 </a>
                                 <div class="media-body">
                                     <a href="#">
@@ -163,7 +171,7 @@
                             </div>
                             <div class="media popular-post" style="height: 150px; max-height: 150px;">
                                 <a class="pull-left" href="#">
-                                    <img src="images/news/tajuk-utama1.jpg" alt="Photo of Blog" style="max-width: 150px; max-height: 150px;">
+                                    <img src="images/news/tajuk-utama1.jpg" alt="Photo of Blog" class="rounded-3" style="max-width: 150px; max-height: 150px;">
                                 </a>
                                 <div class="media-body">
                                     <a href="#">
@@ -251,7 +259,7 @@
                         <swiper-slide v-for="(value, index) in wawasan" :key="index">
                             <div class="card h-100 px-2">
                                 <div class="img-wrapper">
-                                    <img :src="value.image" class="d-block w-100 gambar-kotak">
+                                    <img :src="value.image" class="d-block w-100 gambar-kotak rounded-3">
                                 </div>
                                 <div class="card-body pb-0">
                                     <a href="#">
@@ -260,7 +268,7 @@
                                         </h5>
                                     </a>
                                     <!-- <small class="text-muted">By <strong> {{ value.author }}</strong> |  Post on {{ value.published_at }}</small> -->
-                                    <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="value.content">
+                                    <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
                                         {{ value.content }}
                                     </p>
                                     <a href="#">
@@ -309,7 +317,7 @@
                                         </h5>
                                     </a>
                                     <small class="text-muted">Oleh <strong> {{ value.author }}</strong></small>
-                                    <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="value.content">
+                                    <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
                                         {{ value.content }}
                                     </p>
                                     <a href="#">
@@ -359,7 +367,7 @@
                                             {{ value.title }}
                                         </h5>
                                     </a>
-                                    <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="value.content">
+                                    <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
                                         {{ value.content }}
                                     </p>
                                     <a href="#">
@@ -408,7 +416,7 @@
                                         </h5>
                                     </a>
                                     <!-- <small class="text-muted">Oleh <strong> {{ value.author }}</strong></small> -->
-                                    <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="value.content">
+                                    <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
                                         {{ value.content }}
                                     </p>
                                     <a href="#">
@@ -457,7 +465,7 @@
                                         </h5>
                                     </a>
                                     <!-- <small class="text-muted">Oleh <strong> {{ value.author }}</strong></small> -->
-                                    <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="value.content">
+                                    <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
                                         {{ value.content }}
                                     </p>
                                     <a href="#">
@@ -809,6 +817,28 @@ export default {
 </script>
 
 <style scoped>
+    :deep(.swiper-button-next),
+    :deep(.swiper-button-prev) {
+        width: 30px !important;
+        height: 30px !important;
+        background-color: rgba(255, 255, 255, 0.656);
+        border-radius: 70%;
+    }
+
+    :deep(.swiper-button-next::after),
+    :deep(.swiper-button-prev::after) {
+        font-size: 20px !important;
+        color: rgb(0, 0, 0) !important;
+    }
+
+    :deep(.swiper-button-next) {
+        right: 10px;
+    }
+
+    :deep(.swiper-button-prev) {
+        left: 10px;
+    }
+
     .testimonial-slider {
         background-color: #fab040;
         padding: 2em 2em 0em;
@@ -916,6 +946,11 @@ export default {
 
     /* Media Queries untuk Mobile View */
     @media (max-width: 999px) {
+        :deep(.swiper-button-next),
+        :deep(.swiper-button-prev) {
+            display: none;
+        }
+
         .product-image {
             height: auto;
             padding: 10px;
@@ -936,27 +971,5 @@ export default {
         .gambar-kotak {
             height: auto;
         }
-    }
-    :deep(.swiper-button-next),
-    :deep(.swiper-button-prev) {
-        width: 30px !important; /* Desired width */
-        height: 30px !important; /* Desired height */
-        background-color: rgba(0, 0, 0, 0.5); /* Custom background */
-        border-radius: 70%; /* Circular buttons */
-    }
-
-    :deep(.swiper-button-next::after),
-    :deep(.swiper-button-prev::after) {
-        font-size: 20px !important; /* Icon size */
-        color: white !important; /* Icon color */
-    }
-
-    /* Optional: Adjust button positioning */
-    :deep(.swiper-button-next) {
-        right: 10px; /* Adjust as needed */
-    }
-
-    :deep(.swiper-button-prev) {
-        left: 10px; /* Adjust as needed */
     }
 </style>

@@ -2,18 +2,18 @@
     <div class="page-content">
         <section class="row">
             <div class="divider divider-left-center">
-                <h2>Koleksi Buku</h2>
+                <h2>KOLEKSI BUKU</h2>
                 <div v-if="seeks">
-                    <p>Anda mencari: {{ seeks }}</p>
+                    <p>hasil pencarian buku dengan kata kunci <b>"{{ seeks }}"</b></p>
                 </div>
             </div>
             <div class="col-12 col-lg-3 mb-3">
                 <div class="accordion accordion-flush" id="accordionFlush">
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="flush-headingOne">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseCategory" aria-expanded="true" aria-controls="flush-collapseCategory"> Kategori </button>
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseCategory" aria-expanded="false" aria-controls="flush-collapseCategory"> Kategori </button>
                         </h2>
-                        <div id="flush-collapseCategory" class="accordion-collapse collapse show overflow-auto" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlush" style="max-height: 330px;">
+                        <div id="flush-collapseCategory" class="accordion-collapse collapse overflow-auto" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlush" style="max-height: 330px;">
                             <div class="accordion-body">
                                 <ul class="list-group">
                                     <li class="d-inline-block mb-1" v-for="cat in category" :key="cat.id">
