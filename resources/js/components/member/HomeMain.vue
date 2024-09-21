@@ -121,7 +121,9 @@
                             <h2>TAJUK UTAMA</h2>
                         </div>
                         <div class="col-5 text-end pt-3">
-                            <button class="btn btn-primary btn-sm">Lihat Semua</button>
+                            <router-link :to="{ name: 'artikel', params: { idart: 'tajuk-utama' } }">
+                                <button class="btn btn-primary btn-sm">Lihat Semua</button>
+                            </router-link>
                         </div>
                     </div>
                     <div class="row">
@@ -221,7 +223,9 @@
                         <h2>WAWASAN</h2>
                     </div>
                     <div class="col-6 text-end pt-3">
-                        <button class="btn btn-primary btn-sm">Lihat Semua</button>
+                        <router-link :to="{ name: 'artikel', params: { idart: 'wawasan' } }">
+                            <button class="btn btn-primary btn-sm">Lihat Semua</button>
+                        </router-link>
                     </div>
                 </div>
                 <div class="row">
