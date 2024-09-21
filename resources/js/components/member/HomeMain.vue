@@ -1,28 +1,28 @@
 <template>
     <div class="page-heading mb-0">
-        <div class="col-12 col-lg-12">
-            <div class="row">
-                <div class="col-12">
-                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner">
-                            <template v-if="banner.length>0">
+        <template v-if="banner.length>0">
+            <div class="col-12 col-lg-12">
+                <div class="row">
+                    <div class="col-12">
+                        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
                                 <div v-for="(item, index) in banner" :key="index" :class="['carousel-item', { 'active': index === 0 }]">
-                                    <img :src="item.image" class="d-block w-100" :alt="item.alt">
+                                    <img :src="item.image" class="d-block w-100" :alt="item.descriptiion">
                                 </div>
-                            </template>
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </a>
                         </div>
-                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </a>
                     </div>
                 </div>
             </div>
-        </div>
+        </template>
     </div>
     <div class="page-content">
         <section class="row mt-3">
@@ -61,55 +61,55 @@
         <section class="row mt-4">
             <div class="col-12 col-lg-12">
                 <div class="card">
-                        <div class="row mb-3 px-3">
-                            <div class="col-7 text-start pt-3 pe-0">
-                                <h2>KOLEKSI BUKU</h2>
-                            </div>
-                            <div class="col-5 text-end pt-3">
-                                <router-link to="/koleksi-buku" class='menu-link'>
-                                    <button class="btn btn-primary btn-sm">Lihat Semua</button>
-                                </router-link>
-                            </div>
+                    <div class="row mb-3 px-3">
+                        <div class="col-7 text-start pt-3 pe-0">
+                            <h2>KOLEKSI BUKU</h2>
                         </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="row">
-                                    <swiper
-                                        :modules="modules"
-                                        :slides-per-view="6"
-                                        :space-between="0"
-                                        :breakpoints="swiperBreakpoints"
-                                        navigation
-                                        :scrollbar="{ draggable: true }"
-                                        @swiper="onSwiper"
-                                        @slideChange="onSlideChange"
-                                        :autoplay= "{ delay: 3000 }"
-                                        class="swiper-container"
-                                        loop
-                                    >
-                                        <swiper-slide v-for="(item, index) in buku" :key="index" class="col-md-3 col-6">
-                                            <router-link :to="{ name: 'detail-buku', params: { idb: item.isbn } }">
-                                                <div class="card">
-                                                    <div class="product-image">
-                                                        <img :src="item.image" class="img-fluid" :alt="item.alt">
-                                                    </div>
-                                                    <div class="card-body py-2">
-                                                        <p class="card-title mb-0">{{ item.writer }}</p>
-                                                        <a href="#">
-                                                            <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" 
-                                                            style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" 
-                                                                :title="item.title">
-                                                                {{ item.title }}
-                                                            </h6>
-                                                        </a>
-                                                    </div>
+                        <div class="col-5 text-end pt-3">
+                            <router-link to="/koleksi-buku" class='menu-link'>
+                                <button class="btn btn-primary btn-sm">Lihat Semua</button>
+                            </router-link>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <swiper
+                                    :modules="modules"
+                                    :slides-per-view="6"
+                                    :space-between="0"
+                                    :breakpoints="swiperBreakpoints"
+                                    navigation
+                                    :scrollbar="{ draggable: true }"
+                                    @swiper="onSwiper"
+                                    @slideChange="onSlideChange"
+                                    :autoplay= "{ delay: 3000 }"
+                                    class="swiper-container"
+                                    loop
+                                >
+                                    <swiper-slide v-for="(item, index) in buku" :key="index" class="col-md-3 col-6">
+                                        <router-link :to="{ name: 'detail-buku', params: { idb: item.isbn } }">
+                                            <div class="card">
+                                                <div class="product-image">
+                                                    <img :src="item.image" class="img-fluid" :alt="item.alt">
                                                 </div>
-                                            </router-link>
-                                        </swiper-slide>
-                                    </swiper>
-                                </div>
+                                                <div class="card-body py-2">
+                                                    <p class="card-title mb-0">{{ item.writer }}</p>
+                                                    <a href="#">
+                                                        <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" 
+                                                        style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" 
+                                                            :title="item.title">
+                                                            {{ item.title }}
+                                                        </h6>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </router-link>
+                                    </swiper-slide>
+                                </swiper>
                             </div>
                         </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -126,7 +126,7 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-6">
-                            <div class="panel blog-container">
+                            <div v-if="mainNews" class="panel blog-container">
                                 <div class="panel-body mt-4">
                                     <div class="mb-3">
                                         <a href="#">
@@ -134,48 +134,30 @@
                                         </a>
                                     </div>
                                     <a href="#">
-                                        <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" title="Merayakan Hari Literasi Internasional 2024: Menyongsong Masa Depan Melalui Kekuatan Membaca">
-                                            Merayakan Hari Literasi Internasional 2024: Menyongsong Masa Depan Melalui Kekuatan Membaca
+                                        <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="mainNews.title">
+                                            {{ mainNews.title }}
                                         </h5>
                                     </a>
-                                    <small class="text-muted">By <strong> Abdurrahman</strong> |  17 September 2024</small>
-                                    <p class="m-top-sm m-bottom-sm mt-2">
-                                        Pada 8 September 2024, dunia akan merayakan Hari Literasi Internasional, sebuah hari yang didedikasikan untuk merayakan pentingnya literasi dalam kehidupan kita dan mendorong upaya untuk meningkatkan tingkat literasi di seluruh dunia. Hari ini bukan hanya momen untuk menghargai kemampuan membaca dan menulis, tetapi juga kesempatan untuk merenungkan dampak positif yang dapat ditimbulkan oleh literasi terhadap individu dan masyarakat.
+                                    <small class="text-muted">By <strong>{{ mainNews.author }}</strong> | {{ mainNews.published_at }}</small>
+                                    <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+                                        <span v-html="mainNews.content"></span>
                                     </p>
                                     <a href="#">
-                                        <i class="fa fa-angle-double-right"></i> <h6>Lanjutkan Membaca </h6>
+                                        <h6>Lanjutkan Membaca </h6>
                                     </a>
                                 </div>
                             </div>           
                         </div>
                         <div class="col-lg-6">
-                            <div class="media popular-post" style="height: 150px; max-height: 150px;">
-                                <a class="pull-left" href="#">
-                                    <img src="images/news/tajuk-utama3.jpg" alt="Photo of Blog" class="rounded-3" style="max-width: 150px; max-height: 150px;">
+                            <div v-for="newsItem in otherNews" :key="newsItem.id" class="media popular-post" style="height: 150px; max-height: 150px;">
+                                <a class="pull-left" :href="'#' + newsItem.id">
+                                    <img :src="newsItem.image" :alt="newsItem.title" class="rounded-3" style="max-width: 150px; max-height: 150px;">
                                 </a>
                                 <div class="media-body">
-                                    <a href="#">
-                                        <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" title="Revolusi Belajar: Sekolah Ramah Lingkungan Ciptakan Generasi Peduli Bumi">Revolusi Belajar: Sekolah Ramah Lingkungan Ciptakan Generasi Peduli Bumi</h6>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="media popular-post" style="height: 150px; max-height: 150px;">
-                                <a class="pull-left" href="#">
-                                    <img src="images/news/tajuk-utama2.jpg" alt="Photo of Blog" class="rounded-3" style="max-width: 150px; max-height: 150px;">
-                                </a>
-                                <div class="media-body">
-                                    <a href="#">
-                                        <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" title="Perpustakaan Terapung Terbesar Berlabuh di Yordania">Perpustakaan Terapung Terbesar Berlabuh di Yordania</h6>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="media popular-post" style="height: 150px; max-height: 150px;">
-                                <a class="pull-left" href="#">
-                                    <img src="images/news/tajuk-utama1.jpg" alt="Photo of Blog" class="rounded-3" style="max-width: 150px; max-height: 150px;">
-                                </a>
-                                <div class="media-body">
-                                    <a href="#">
-                                        <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" title="Kampus Terbaik Dunia: Universitas-Inovasi yang Mendorong Masa Depan Pendidikan">Kampus Terbaik Dunia: Universitas-Inovasi yang Mendorong Masa Depan Pendidikan</h6>
+                                    <a :href="'#' + newsItem.id">
+                                        <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="newsItem.title">
+                                            {{ newsItem.title }}
+                                        </h6>
                                     </a>
                                 </div>
                             </div>
@@ -269,10 +251,10 @@
                                     </a>
                                     <!-- <small class="text-muted">By <strong> {{ value.author }}</strong> |  Post on {{ value.published_at }}</small> -->
                                     <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
-                                        {{ value.content }}
+                                        <span v-html="value.content"></span>
                                     </p>
                                     <a href="#">
-                                        <i class="fa fa-angle-double-right"></i> <h6>Lanjutkan Membaca </h6>
+                                        <h6>Lanjutkan Membaca </h6>
                                     </a>
                                 </div>
                             </div>
@@ -318,10 +300,10 @@
                                     </a>
                                     <small class="text-muted">Oleh <strong> {{ value.author }}</strong></small>
                                     <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
-                                        {{ value.content }}
+                                        <span v-html="value.content"></span>
                                     </p>
                                     <a href="#">
-                                        <i class="fa fa-angle-double-right"></i> <h6>Lanjutkan Membaca </h6>
+                                        <h6>Lanjutkan Membaca </h6>
                                     </a>
                                 </div>
                             </div>
@@ -368,10 +350,10 @@
                                         </h5>
                                     </a>
                                     <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
-                                        {{ value.content }}
+                                        <span v-html="value.content"></span>
                                     </p>
                                     <a href="#">
-                                        <i class="fa fa-angle-double-right"></i> <h6>Lanjutkan Membaca </h6>
+                                        <h6>Lanjutkan Membaca </h6>
                                     </a>
                                 </div>
                             </div>
@@ -417,10 +399,10 @@
                                     </a>
                                     <!-- <small class="text-muted">Oleh <strong> {{ value.author }}</strong></small> -->
                                     <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
-                                        {{ value.content }}
+                                        <span v-html="value.content"></span>
                                     </p>
                                     <a href="#">
-                                        <i class="fa fa-angle-double-right"></i> <h6>Lanjutkan Membaca </h6>
+                                        <h6>Lanjutkan Membaca </h6>
                                     </a>
                                 </div>
                             </div>
@@ -466,10 +448,10 @@
                                     </a>
                                     <!-- <small class="text-muted">Oleh <strong> {{ value.author }}</strong></small> -->
                                     <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
-                                        {{ value.content }}
+                                        <span v-html="value.content"></span>
                                     </p>
                                     <a href="#">
-                                        <i class="fa fa-angle-double-right"></i> <h6>Lanjutkan Membaca </h6>
+                                        <h6>Lanjutkan Membaca </h6>
                                     </a>
                                 </div>
                             </div>
@@ -517,20 +499,7 @@ export default {
 
     data() {
         return {
-            banner: [
-                { 
-                    image: 'images/banner/banner1.png',
-                    alt: 'banner1'
-                },
-                { 
-                    image: 'images/banner/banner2.png',
-                    alt: 'banner2'
-                },
-                { 
-                    image: 'images/banner/banner3.png',
-                    alt: 'banner3'
-                }
-            ],
+            banner: [],
             buku_populer: [],
             buku: [],
             frasa: [
@@ -543,35 +512,35 @@ export default {
             news: [
                     {
                         "id": 1,
-                        "title": "Berita Pertama",
-                        "content": "Ini adalah konten berita pertama.",
-                        "author": "Penulis 1",
-                        "published_at": "2024-09-07T00:00:00Z",
-                        "image": '/images/news/images1.jpg'
+                        "title": "Merayakan Hari Literasi Internasional 2024: Menyongsong Masa Depan Melalui Kekuatan Membaca",
+                        "content": "Pada 8 September 2024, dunia akan merayakan Hari Literasi Internasional, sebuah hari yang didedikasikan untuk merayakan pentingnya literasi dalam kehidupan kita dan mendorong upaya untuk meningkatkan tingkat literasi di seluruh dunia. <br>Hari ini bukan hanya momen untuk menghargai kemampuan membaca dan menulis, tetapi juga kesempatan untuk merenungkan dampak positif yang dapat ditimbulkan oleh literasi terhadap individu dan masyarakat.<br>Literasi adalah fondasi dari perkembangan pribadi dan sosial. Melalui literasi, individu memperoleh keterampilan untuk memahami informasi, berkomunikasi secara efektif, dan berpartisipasi secara aktif dalam masyarakat. Keterampilan ini bukan hanya penting dalam konteks pendidikan formal, tetapi juga dalam kehidupan sehari-hari—mulai dari membaca tanda-tanda jalan hingga memahami instruksi medis atau berita terkini.<br>Hari Literasi Internasional 2024 mengusung tema <b>Membaca untuk Masa Depan: Mewujudkan Kesetaraan Melalui Literasi</b>. Tema ini menggarisbawahi peran literasi dalam menciptakan masa depan yang lebih inklusif dan setara. Literasi bukan hanya tentang membaca teks, tetapi juga tentang mengakses informasi yang penting untuk pengambilan keputusan yang berpengetahuan, mengurangi ketidaksetaraan, dan memberdayakan individu untuk mencapai potensi penuh mereka.<br>Untuk merayakan hari istimewa ini, berbagai kegiatan dapat dilakukan di tingkat lokal maupun global. Sekolah, perpustakaan, dan organisasi masyarakat dapat menyelenggarakan acara membaca, diskusi buku, atau workshop literasi yang mengajak peserta untuk terlibat aktif. Buku-buku yang merayakan keragaman dan inklusivitas juga dapat dipromosikan untuk memastikan bahwa setiap individu, tanpa memandang latar belakang, merasa terhubung dengan materi bacaan yang relevan dan bermanfaat.<br>Penting untuk diingat bahwa tantangan literasi tidak merata di seluruh dunia. Di beberapa daerah, akses ke pendidikan dan sumber daya literasi masih terbatas. Oleh karena itu, Hari Literasi Internasional juga merupakan waktu yang tepat untuk mendukung inisiatif-inisiatif yang bertujuan untuk mengatasi kesenjangan ini—baik melalui donasi, sukarelawan, atau penyebaran kesadaran tentang pentingnya literasi.<br>Mari kita semua merayakan Hari Literasi Internasional dengan tekad untuk memperluas akses terhadap pendidikan literasi dan berkomitmen untuk menciptakan dunia di mana setiap individu memiliki kesempatan untuk membaca, menulis, dan berkomunikasi dengan percaya diri. Dengan berbuat demikian, kita tidak hanya merayakan pencapaian literasi, tetapi juga berinvestasi dalam masa depan yang lebih cerdas, adil, dan terhubung.<br<Selamat Hari Literasi Internasional 2024! Mari kita terus menyemangati dan mendukung literasi di seluruh dunia, memastikan bahwa setiap orang memiliki kekuatan untuk menjelajahi dunia melalui kekuatan membaca.",
+                        "author": "Rahman",
+                        "published_at": "2024-09-07 00:00:00",
+                        "image": 'images/news/literasiday.png'
                     },
                     {
                         "id": 2,
-                        "title": "Berita Kedua",
+                        "title": "Revolusi Belajar: Sekolah Ramah Lingkungan Ciptakan Generasi Peduli Bumi",
                         "content": "Ini adalah konten berita kedua.",
                         "author": "Penulis 2",
-                        "published_at": "2024-09-06T00:00:00Z",
-                        "image": '/images/news/images1.jpg'
+                        "published_at": "2024-09-06 00:00:00",
+                        "image": 'images/news/tajuk-utama3.jpg'
                     },
                     {
                         "id": 3,
-                        "title": "Berita Ketiga",
+                        "title": "Perpustakaan Terapung Terbesar Berlabuh di Yordania",
                         "content": "Ini adalah konten berita ketiga.",
                         "author": "Penulis 3",
-                        "published_at": "2024-09-05T00:00:00Z",
-                        "image": '/images/news/images1.jpg'
+                        "published_at": "2024-09-05 00:00:00",
+                        "image": 'images/news/tajuk-utama2.jpg'
                     },
                     {
                         "id": 4,
-                        "title": "Berita Keempat",
+                        "title": "Kampus Terbaik Dunia: Universitas-Inovasi yang Mendorong Masa Depan Pendidikan",
                         "content": "Ini adalah konten berita keempat.",
                         "author": "Penulis 4",
-                        "published_at": "2024-09-04T00:00:00Z",
-                        "image": '/images/news/images1.jpg'
+                        "published_at": "2024-09-04 00:00:00",
+                        "image": 'images/news/tajuk-utama1.jpg'
                     }
             ],
             wawasan: [
@@ -759,6 +728,7 @@ export default {
     created(){
         this.getBukuPopuler();
         this.getBook();
+        this.getBanner();
     },
 
     mounted() {
@@ -769,6 +739,7 @@ export default {
         swiperPrev() {
             this.$refs.swiperFrasa.swiper.slidePrev();
         },
+
         swiperNext() {
             this.$refs.swiperFrasa.swiper.slideNext();
         },
@@ -786,7 +757,7 @@ export default {
                 console.error(e)
             });
         },
-        
+
         getBook() {
             this.buku = [];
 
@@ -799,19 +770,28 @@ export default {
                 console.error(e)
             });
         },
+
+        getBanner() {
+            this.buku = [];
+
+            window.axios
+            .get('/getBanner')
+            .then((response) => {
+                this.banner = response.data;
+            })
+            .catch((e) => {
+                console.error(e)
+            });
+        },
     },
 
-    computed:{
-        groupedBukuPopuler() {
-            const chunkSize = 4;
-            const grouped = [];
-
-            for (let i = 0; i < this.buku_populer.length; i += chunkSize) {
-                grouped.push(this.buku_populer.slice(i, i + chunkSize));
-            }
-
-            return grouped;
+    computed: {
+        mainNews() {
+            return this.news.length ? this.news[0] : null;
         },
+        otherNews() {
+            return this.news.slice(1);
+        }
     }
 };
 </script>
