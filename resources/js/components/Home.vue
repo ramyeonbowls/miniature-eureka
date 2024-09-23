@@ -439,11 +439,6 @@ export default {
                 xaxis: {
                     categories: days,
                 },
-                yaxis: {
-                    // title: {
-                    //     text: formattedDate,
-                    // },
-                },
                 fill: {
                     opacity: 1,
                 },
@@ -511,11 +506,6 @@ export default {
                 },
                 xaxis: {
                     categories: days,
-                },
-                yaxis: {
-                    // title: {
-                    //     text: formattedDate,
-                    // },
                 },
                 fill: {
                     opacity: 1,

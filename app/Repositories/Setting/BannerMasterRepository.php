@@ -20,7 +20,6 @@ class BannerMasterRepository
 				'a.description',
 				'a.file',
 				'a.disp_type',
-				'a.client_id',
 				'a.created_at',
 				'a.created_by',
 				'a.updated_at',
@@ -28,5 +27,26 @@ class BannerMasterRepository
 			)
 			->sharedLock()
 			->get();
+    }
+
+	/**
+     * @param object $data
+     * @return bool
+     */
+    public function store(object $data): bool
+    {
+        return DB::transaction(function () use ($data) {
+            return DB::table('tbanner')->insert([
+                'id' => $data->id,
+				'description' => $data->desc,
+				'file' => $data->file,
+				'disp_type' => $data->type,
+				'client_id' => '',
+				'created_at' => $data->create_date,
+				'created_by' => $data->create_by,
+				'updated_at' => $data->modified_date,
+				'updated_by' => $data->modified_by,
+            ]);
+        });
     }
 }

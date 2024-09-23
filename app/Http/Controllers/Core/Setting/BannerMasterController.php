@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers\Core\Setting;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Setting\StoreBannerMasterRequest;
-use App\Http\Requests\Setting\UpdateBannerMasterRequest;
 use App\Logs;
-use App\Services\Setting\BannerMasterService;
-use Carbon\Carbon;
 use Exception;
-use Illuminate\Http\JsonResponse;
+use Throwable;
+use Carbon\Carbon;
 use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Throwable;
+use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
+use App\Services\Setting\BannerMasterService;
+use App\Http\Requests\Setting\StoreBannerMasterRequest;
+use App\Http\Requests\Setting\UpdateBannerMasterRequest;
 
 class BannerMasterController extends Controller
 {
@@ -37,16 +38,25 @@ class BannerMasterController extends Controller
      * @return JsonResponse
      * @throws Exception
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
         $logs = new Logs(Arr::last(explode("\\", get_class())) . 'Log');
         $logs->write(__FUNCTION__, 'START');
 
-        $results = [];
+        $results['data'] = [];
+        $results['meta'] = [
+            'current_page' => 1,
+            'per_page' => 10,
+            'first_page' =>	1,
+            'last_page' => 1,
+            'total_pages' => 1,
+            'total' => 1
+        ];
+
         try {
             DB::enableQueryLog();
 
-            $results = $this->banner_service->get();
+            $results['data'] = $this->banner_service->get();
 
             $queries = DB::getQueryLog();
             for ($q = 0; $q < count($queries); $q++) {
@@ -58,16 +68,7 @@ class BannerMasterController extends Controller
         }
         $logs->write(__FUNCTION__, "STOP\r\n");
 
-        return DataTables::of($results)
-            ->escapeColumns()
-            ->editColumn('created_at', function ($value) {
-                return Carbon::parse($value->created_at)->toDateTimeString();
-            })
-            ->editColumn('updated_at', function ($value) {
-                return Carbon::parse($value->updated_at)->toDateTimeString();
-            })
-            ->addIndexColumn()
-            ->toJson();
+        return response()->json($results, 200);
     }
 
     /**
@@ -80,7 +81,7 @@ class BannerMasterController extends Controller
     {
         $validated = $request->validated();
 
-        /* $logs = new Logs(Arr::last(explode("\\", get_class())) . 'Log');
+        $logs = new Logs(Arr::last(explode("\\", get_class())) . 'Log');
         $logs->write(__FUNCTION__, 'START');
 
         $result['status'] = 200;
@@ -88,14 +89,14 @@ class BannerMasterController extends Controller
         try {
             DB::enableQueryLog();
             
-            if ($request->hasFile('menu_icon')) {
+            if ($request->hasFile('file')) {
                 try {
-                    $icon_file = $request->file('menu_icon')->getClientOriginalName();
-                    $extension = $request->file('menu_icon')->getClientOriginalExtension();
-                    $icon_name = (isset(request()->menu_id) ? request()->menu_id : $icon_file) . '-' . now('Asia/Jakarta')->format('YmdHis') . '-' . rand(100000, 999999) . '.' . $extension;
-                    $request->file('menu_icon')->storeAs('/public/banner', $icon_name);
+                    $banner_file = $request->file('file')->getClientOriginalName();
+                    $extension = $request->file('file')->getClientOriginalExtension();
+                    $banner_name = (isset(request()->file) ? request()->file : $banner_file) . '-' . now('Asia/Jakarta')->format('YmdHis') . '-' . rand(100000, 999999) . '.' . $extension;
+                    $request->file('file')->storeAs('/public/banner', $banner_name);
 
-                    $validated['menu_icon'] = '/storage/banner/'. $icon_name;
+                    $validated['file'] = '/storage/banner/'. $banner_name;
                 } catch (Throwable $th) {
                     $logs->write("ERROR", $th->getMessage());
                 }
@@ -121,7 +122,7 @@ class BannerMasterController extends Controller
         }
         $logs->write(__FUNCTION__, "STOP\r\n");
 
-        return response()->json($result['message'], $result['status']); */
+        return response()->json($result['message'], $result['status']);
     }
 
     /**

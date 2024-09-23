@@ -24,6 +24,7 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/js/main.js',
                 'resources/js/appreader.js',
+                'resources/js/form.js',
                 'resources/js/assets/js/initTheme.js',
                 'resources/js/assets/js/components/dark.js',
                 'resources/js/assets/js/components/sidebar.js',

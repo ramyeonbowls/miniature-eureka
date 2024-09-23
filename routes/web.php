@@ -7,8 +7,12 @@ Route::get('/', function () {
     return view('main');
 });
 
+Route::get('/form-register', function () {
+    return view('formregister');
+});
+
 Auth::routes([
-    'register' => true,
+    'register' => false,
     'verify' => true,
     'confirm' => true,
     'reset' => true
@@ -21,6 +25,7 @@ Route::get('/getDetail', [App\Http\Controllers\MainController::class, 'getDetail
 Route::get('/getCategory', [App\Http\Controllers\MainController::class, 'getCategory'])->name('getCategory');
 
 Route::get('/appreader', [App\Http\Controllers\BookController::class, 'index']);
+Route::apiResource('form-regis', App\Http\Controllers\FormRegisterController::class);
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware('activated.user')->group(function() {
