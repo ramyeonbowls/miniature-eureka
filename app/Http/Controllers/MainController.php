@@ -30,11 +30,6 @@ class MainController extends Controller
         return view('main');
     }
 
-    /**
-     * Show forbidden page.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function getInfo()
     {
         $user = auth()->user();
@@ -163,6 +158,23 @@ class MainController extends Controller
                 'a.id',
                 'a.description'
             ])
+            ->get();
+
+        return response()->json($results, 200);
+    }
+
+    public function getBanner()
+    {
+        $client_id = env('APP_CLIENT_ID') ?? 'pustakadigital'; 
+
+        $results = DB::table('tbanner as a')
+            ->select([
+                'a.id',
+                'a.description',
+                'a.file as image',
+            ])
+            ->where('a.client_id','=', $client_id)
+            ->orderBy('created_at', 'DESC')
             ->get();
 
         return response()->json($results, 200);

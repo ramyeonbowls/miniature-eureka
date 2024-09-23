@@ -26,7 +26,7 @@
                 </div>
 
                 <div class="col-md-3 col-2 col-lg-2">
-                    <div class="d-none d-md-block d-xl-block">
+                    <div class="d-none d-xl-block">
                         <div class="form-group position-relative has-icon-right">
                             <input type="text" class="form-control rounded-pill" placeholder="Cari Judul, Penulis" v-model="searchQuery" @keypress.enter="searchBooks">
                             <div class="form-control-icon">
@@ -62,7 +62,26 @@
                             </a>
                         </template>
                     </li>
-                    <li class="theme-toogle-mobile">
+                    <li class="menu-item has-sub">
+                        <a href="#" class="menu-link">
+                            <span> Artikel</span>
+                        </a>
+                        <div class="submenu ">
+                            <ul class="submenu-group">
+                                <li class="submenu-item">
+                                    <router-link :to="{ name: 'artikel', params: { idart: 'tajuk-utama' } }" class='submenu-link'>
+                                        <span> Tajuk Utama</span>
+                                    </router-link>
+                                </li>
+                                <li class="submenu-item">
+                                    <router-link :to="{ name: 'artikel', params: { idart: 'wawasan' } }" class='submenu-link'>
+                                        <span> Wawasan</span>
+                                    </router-link>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="theme-toogle">
                         <div class="theme-toggle d-flex gap-2 mt-2" style="color: #fab040;">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--system-uicons icon-day" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21">
                                 <g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">

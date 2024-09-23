@@ -1,8 +1,8 @@
 <template>
     <div class="page-content">
         <section class="row">
-            <div class="col-12 col-lg-4 mb-3">
-                <div class="sticky-section">
+            <div class="col-12 col-lg-4 card-cover">
+                <div class="sticky-section h-100">
                     <div class="card h-100">
                         <div class="card-body">
                             <div class="card-content text-center mb-2">
@@ -94,13 +94,13 @@
                 </div>
             </div>
         </section>
-        
-        <section class="row mt-5">
+
+        <section class="row mt-4">
             <div class="col-12 col-lg-12">
                 <div class="card">
                     <div class="row mb-2 py-0 px-0 mx-0 my-0">
                         <div class="divider divider-left-center">
-                            <h2>Buku Terpopuler</h2>
+                            <h2>BUKU TERPOPULER</h2>
                         </div>
                         <div class="col-12">
                             <div class="row">
@@ -113,6 +113,7 @@
                                     :scrollbar="{ draggable: true }"
                                     @swiper="onSwiper"
                                     @slideChange="onSlideChange"
+                                    :autoplay= "{ delay: 3000 }"
                                     class="swiper-container"
                                     loop
                                 >
@@ -123,6 +124,7 @@
                                                     <img :src="item.image" class="img-fluid" :alt="item.alt">
                                                 </div>
                                                 <div class="card-body py-2">
+                                                    <p class="card-title mb-0">{{ item.writer }}</p>
                                                     <a href="#">
                                                         <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" 
                                                         style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" 
@@ -313,14 +315,87 @@ export default {
 </script>
 
 <style scoped>
-.sticky-section {
-  position: sticky;
-  top: 150px;
-  text-align: -webkit-center;
-}
-@media (max-width: 999px) {
-    .img-detail {
-        width: 50%;
+    .sticky-section {
+        position: sticky;
+        text-align: -webkit-center;
     }
-}
+
+    .product-card {
+        width: 220px;
+        border-radius: 10px;
+        -webkit-box-shadow: 0px 0px 47px -20px rgba(0,0,0,1);
+        -moz-box-shadow: 0px 0px 47px -20px rgba(0,0,0,1);
+        box-shadow: 0px 0px 47px -20px rgba(0,0,0,1);
+        margin: 60px 0;
+        background-color: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .product-image {
+        max-height: 250px;
+        overflow: hidden;
+        position: relative;
+        padding: 0px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .product-image img {
+        width: 75%;
+        object-fit: cover;
+        transition: transform 0.5s;
+        border-radius: 10px;
+    }
+
+    .product-image:hover img {
+        transform: scale(1.1);
+    }
+
+    :deep(.swiper-button-next),
+    :deep(.swiper-button-prev) {
+        width: 30px !important;
+        height: 30px !important;
+        background-color: rgba(255, 255, 255, 0.656);
+        border-radius: 70%;
+    }
+
+    :deep(.swiper-button-next::after),
+    :deep(.swiper-button-prev::after) {
+        font-size: 20px !important;
+        color: rgb(0, 0, 0) !important;
+    }
+
+    :deep(.swiper-button-next) {
+        right: 10px;
+    }
+
+    :deep(.swiper-button-prev) {
+        left: 10px;
+    }
+
+    @media (max-width: 999px) {
+        .card-cover {
+            margin-bottom: 20px;
+        }
+        .img-detail {
+            width: 50%;
+        }
+
+        .product-image {
+            height: auto;
+            padding: 10px;
+        }
+
+        .product-image img {
+            width: 95%;
+        }
+
+        :deep(.swiper-button-next),
+        :deep(.swiper-button-prev) {
+            display: none;
+        }
+    }
 </style>
