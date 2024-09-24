@@ -8,7 +8,31 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div v-if="idart=='LP'" class="row">
+                    <div v-for="(data, i) in displayedContents" :key="i" class="col-12 col-lg-4 mb-2">
+                        <div class="card h-100 px-2">
+                            <div class="d-flex justify-content-center align-items-center flex-column mt-3">
+                                <div class="avatar">
+                                    <img :src="data.image" style="height: 90px; width:90px;">
+                                </div>
+                            </div>
+                            <div class="card-body pb-0">
+                                <a href="#">
+                                    <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="data.title">
+                                        {{ data.title }}
+                                    </h5>
+                                </a>
+                                <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+                                    <span v-html="data.content"></span>
+                                </p>
+                                <a href="#">
+                                    <h6>Lanjutkan Membaca </h6>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div v-else class="row">
                     <div v-for="(data, i) in displayedContents" :key="i" class="col-12 col-lg-4 mb-2">
                         <div class="card h-100 mb-0">
                             <div class="card-content d-flex flex-column">
