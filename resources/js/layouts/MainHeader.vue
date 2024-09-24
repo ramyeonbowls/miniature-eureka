@@ -50,6 +50,50 @@
                             <span> Koleksi Buku</span>
                         </router-link>
                     </li>
+                    <li class="menu-item has-sub">
+                        <a href="#" class="menu-link">
+                            <span> Artikel</span>
+                        </a>
+                        <div class="submenu ">
+                            <ul class="submenu-group">
+                                <li class="submenu-item">
+                                    <router-link :to="{ name: 'artikel', params: { idart: 'TU' } }" class='submenu-link'>
+                                        <span> Tajuk Utama</span>
+                                    </router-link>
+                                </li>
+                                <li class="submenu-item">
+                                    <router-link :to="{ name: 'artikel', params: { idart: 'WA' } }" class='submenu-link'>
+                                        <span> Wawasan</span>
+                                    </router-link>
+                                </li>
+                                <li class="submenu-item">
+                                    <router-link :to="{ name: 'artikel', params: { idart: 'FR' } }" class='submenu-link'>
+                                        <span> Frasa</span>
+                                    </router-link>
+                                </li>
+                                <li class="submenu-item">
+                                    <router-link :to="{ name: 'artikel', params: { idart: 'RB' } }" class='submenu-link'>
+                                        <span> Review Buku</span>
+                                    </router-link>
+                                </li>
+                                <li class="submenu-item">
+                                    <router-link :to="{ name: 'artikel', params: { idart: 'LP' } }" class='submenu-link'>
+                                        <span> Layar Penulis</span>
+                                    </router-link>
+                                </li>
+                                <li class="submenu-item">
+                                    <router-link :to="{ name: 'artikel', params: { idart: 'TF' } }" class='submenu-link'>
+                                        <span> Titik Fokus</span>
+                                    </router-link>
+                                </li>
+                                <li class="submenu-item">
+                                    <router-link :to="{ name: 'artikel', params: { idart: 'HU' } }" class='submenu-link'>
+                                        <span> Humoria</span>
+                                    </router-link>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
                     <li class="menu-item ">
                         <template v-if="!isAuthenticated">
                             <router-link to="/mlogin" class='menu-link'>
@@ -62,27 +106,8 @@
                             </a>
                         </template>
                     </li>
-                    <li class="menu-item has-sub">
-                        <a href="#" class="menu-link">
-                            <span> Artikel</span>
-                        </a>
-                        <div class="submenu ">
-                            <ul class="submenu-group">
-                                <li class="submenu-item">
-                                    <router-link :to="{ name: 'artikel', params: { idart: 'tajuk-utama' } }" class='submenu-link'>
-                                        <span> Tajuk Utama</span>
-                                    </router-link>
-                                </li>
-                                <li class="submenu-item">
-                                    <router-link :to="{ name: 'artikel', params: { idart: 'wawasan' } }" class='submenu-link'>
-                                        <span> Wawasan</span>
-                                    </router-link>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
                     <li class="theme-toogle">
-                        <div class="theme-toggle d-flex gap-2 mt-2" style="color: #fab040;">
+                        <div class="theme-toggle d-flex gap-2 mt-2" style="color: #ffffff;">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--system-uicons icon-day" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21">
                                 <g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M10.5 14.5c2.219 0 4-1.763 4-3.982a4.003 4.003 0 0 0-4-4.018c-2.219 0-4 1.781-4 4c0 2.219 1.781 4 4 4zM4.136 4.136L5.55 5.55m9.9 9.9l1.414 1.414M1.5 10.5h2m14 0h2M4.135 16.863L5.55 15.45m9.899-9.9l1.414-1.415M10.5 19.5v-2m0-14v-2" opacity=".3"></path>

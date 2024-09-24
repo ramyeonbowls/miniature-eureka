@@ -20,6 +20,7 @@ Route::get('/getBook', [App\Http\Controllers\MainController::class, 'getBook'])-
 Route::get('/getBanner', [App\Http\Controllers\MainController::class, 'getBanner'])->name('getBanner');
 Route::get('/getDetail', [App\Http\Controllers\MainController::class, 'getDetail'])->name('getDetail');
 Route::get('/getCategory', [App\Http\Controllers\MainController::class, 'getCategory'])->name('getCategory');
+Route::get('/getArticle', [App\Http\Controllers\MainController::class, 'getArticle'])->name('getArticle');
 
 Route::get('/appreader', [App\Http\Controllers\BookController::class, 'index']);
 

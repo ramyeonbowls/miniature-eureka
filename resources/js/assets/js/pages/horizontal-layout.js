@@ -25,6 +25,19 @@ function listener() {
             submenu.classList.toggle('active')
         })
     })
+    
+    let submenus = document.querySelectorAll('.submenu-item')
+    console.log(submenus);
+    
+    submenus.forEach((submenu) => {
+        submenu.querySelector('.submenu-link').addEventListener('click', (e) => {
+            let navbar = document.querySelector('.main-navbar');
+            if (navbar.classList.contains('active')) {
+                navbar.classList.remove('active');
+            }
+            e.preventDefault()
+        })
+    })
 
     // Three level menu event listener
     let submenuItems = document.querySelectorAll('.submenu-item.has-sub')

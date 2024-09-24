@@ -73,41 +73,39 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <div class="row">
-                                <swiper
-                                    :modules="modules"
-                                    :slides-per-view="6"
-                                    :space-between="0"
-                                    :breakpoints="swiperBreakpoints"
-                                    navigation
-                                    :scrollbar="{ draggable: true }"
-                                    @swiper="onSwiper"
-                                    @slideChange="onSlideChange"
-                                    :autoplay= "{ delay: 3000 }"
-                                    class="swiper-container"
-                                    loop
-                                >
-                                    <swiper-slide v-for="(item, index) in buku" :key="index" class="col-md-3 col-6">
-                                        <router-link :to="{ name: 'detail-buku', params: { idb: item.isbn } }">
-                                            <div class="card">
-                                                <div class="product-image">
-                                                    <img :src="item.image" class="img-fluid" :alt="item.alt">
-                                                </div>
-                                                <div class="card-body py-2">
-                                                    <p class="card-title mb-0">{{ item.writer }}</p>
-                                                    <a href="#">
-                                                        <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" 
-                                                        style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" 
-                                                            :title="item.title">
-                                                            {{ item.title }}
-                                                        </h6>
-                                                    </a>
-                                                </div>
+                            <swiper
+                                :modules="modules"
+                                :slides-per-view="6"
+                                :space-between="0"
+                                :breakpoints="swiperBreakpoints"
+                                navigation
+                                :scrollbar="{ draggable: true }"
+                                @swiper="onSwiper"
+                                @slideChange="onSlideChange"
+                                :autoplay= "{ delay: 3000 }"
+                                class="swiper-container"
+                                loop
+                            >
+                                <swiper-slide v-for="(item, index) in buku" :key="index" class="col-md-3 col-6">
+                                    <router-link :to="{ name: 'detail-buku', params: { idb: item.isbn } }">
+                                        <div class="card">
+                                            <div class="product-image">
+                                                <img :src="item.image" class="img-fluid" :alt="item.alt">
                                             </div>
-                                        </router-link>
-                                    </swiper-slide>
-                                </swiper>
-                            </div>
+                                            <div class="card-body py-2">
+                                                <p class="card-title mb-0">{{ item.writer }}</p>
+                                                <a href="#">
+                                                    <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" 
+                                                    style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" 
+                                                        :title="item.title">
+                                                        {{ item.title }}
+                                                    </h6>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </router-link>
+                                </swiper-slide>
+                            </swiper>
                         </div>
                     </div>
                 </div>
@@ -132,7 +130,7 @@
                                 <div class="panel-body mt-4">
                                     <div class="mb-3">
                                         <a href="#">
-                                            <img src="images/news/literasiday.png" class="img-fluid rounded-3" alt="Photo of Blog">
+                                            <img :src="mainNews.image" :alt="mainNews.title" src="images/news/literasiday.png" class="img-fluid rounded-3" alt="Photo of Blog">
                                         </a>
                                     </div>
                                     <a href="#">
@@ -294,7 +292,7 @@
                         <swiper-slide v-for="(value, index) in review_buku" :key="index">
                             <div class="card h-100 px-2">
                                 <div class="img-wrapper">
-                                    <img :src="value.image" class="d-block w-100 gambar-kotak">
+                                    <img :src="value.image" class="d-block w-100 gambar-kotak rounded-3">
                                 </div>
                                 <div class="card-body pb-0">
                                     <a href="#">
@@ -393,7 +391,7 @@
                         <swiper-slide v-for="(value, index) in titik_fokus" :key="index">
                             <div class="card h-100 px-2">
                                 <div class="img-wrapper">
-                                    <img :src="value.image" class="d-block w-100 gambar-kotak">
+                                    <img :src="value.image" class="d-block w-100 gambar-kotak rounded-3">
                                 </div>
                                 <div class="card-body pb-0">
                                     <a href="#">
@@ -442,7 +440,7 @@
                         <swiper-slide v-for="(value, index) in humoria" :key="index">
                             <div class="card h-100 px-2">
                                 <div class="img-wrapper">
-                                    <img :src="value.image" class="d-block w-100 gambar-kotak">
+                                    <img :src="value.image" class="d-block w-100 gambar-kotak rounded-3">
                                 </div>
                                 <div class="card-body pb-0">
                                     <a href="#">
