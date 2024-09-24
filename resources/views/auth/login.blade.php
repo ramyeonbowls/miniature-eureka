@@ -44,15 +44,19 @@
                     <button type="submit" class="btn btn-primary btn-block btn-md shadow-md mt-3">Masuk</button>
                 </form>
                 <div class="text-center mt-5 text-md fs-10">
-                    <!-- <p class="text-gray-600">
+                @if (Route::has('register'))
+                    <p class="text-gray-600">
                         Don't have an account?
                         <a href="{{ route('register') }}" class="font-bold">Sign up</a>
                         .
-                    </p> -->
+                    </p>
+                @endif
+                @if (Route::has('password.request'))
                     <p>
                         <a class="font-bold" href="{{ route('password.request') }}">Lupa Kata Sandi?</a>
                         .
                     </p>
+                @endif
                 </div>
             </div>
         </div>

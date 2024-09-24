@@ -25,4 +25,21 @@ class BannerMasterService
     {
         return new Collection($this->banner_repo->get($filter));
     }
+
+    /**
+     * @param object $data
+     * @return bool
+     */
+    public function store(object $data): bool
+    {
+        $datetime_now = Carbon::now("Asia/Jakarta");
+        $username = auth()->user()->email;
+
+        $data->create_by        = $username;
+        $data->modified_by      = $username;
+        $data->create_date      = $datetime_now;
+        $data->modified_date    = $datetime_now;
+
+        return $this->banner_repo->store($data);
+    }
 }
