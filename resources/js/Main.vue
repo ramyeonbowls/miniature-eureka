@@ -7,33 +7,33 @@
                 <router-view :isAuthenticated="isAuthenticated"></router-view>
             </div>
 
-            <nav class="navbar-dark navbar-expand d-block d-xs-block d-xl-none fixed-bottom" role="navigation" style="background-color: rgb(67, 94, 190)">
+            <nav class="navbar-dark navbar-expand d-block d-xs-block d-xl-none fixed-bottom" role="navigation" style="border-radius: 7px 7px 0 0 !important; background-color: rgb(67, 94, 190)">
                 <ul class="navbar-nav nav-justified pt-2">
                     <li class="nav-item">
                         <router-link to="/" class='menu-item'>
-                            <i class="bi bi-house"></i> Beranda
+                            <i class="bi bi-house"></i> <small style="font-size: 11px;">Beranda</small>
                         </router-link>
                     </li>
                     <li class="nav-item">
                         <div class='menu-item' data-bs-toggle="modal" data-bs-target="#search-modal">
-                            <i class="bi bi-search"></i> Cari
+                            <i class="bi bi-search"></i> <small style="font-size: 11px;">Cari</small>
                         </div>
                     </li>
                     <li class="nav-item">
                         <router-link to="/koleksi-buku" class='menu-item'>
-                            <i class="bi bi-book"></i> Koleksi
+                            <i class="bi bi-book"></i> <small style="font-size: 11px;">Koleksi</small>
                         </router-link>
                     </li>
                     <template v-if="isAuthenticated">
                         <li class="nav-item">
                             <router-link to="/rent-book" class='menu-item'>
-                                <i class="bi bi-bookmark"></i> Pinjaman
+                                <i class="bi bi-bookmark"></i> <small style="font-size: 11px;">Pinjaman</small>
                             </router-link>
                         </li>
                     </template>
                     <li class="nav-item">
                         <router-link to="/mlogin" class='menu-item'>
-                            <i class="bi bi-person"></i> Profil
+                            <i class="bi bi-person"></i> <small style="font-size: 11px;">Profil</small>
                         </router-link>
                     </li>
                 </ul>
@@ -149,7 +149,7 @@ export default {
     .menu-item {
         color: white;
         text-decoration: none;
-        padding: 0.1rem;
+        padding: 0.3rem;
         display: flex;
         justify-content: center;
         align-items: center;
