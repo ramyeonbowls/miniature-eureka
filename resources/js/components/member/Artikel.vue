@@ -45,7 +45,7 @@
                                             {{ data.title }}
                                         </h5>
                                     </a>
-                                    <div v-if="idart=='TU'">
+                                    <div v-if="idart=='TU' || idart=='RB'">
                                         <small class="text-muted">Oleh <strong>{{ data.author }}</strong> | {{ data.published_at }}</small>
                                     </div>
                                     <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
