@@ -40,7 +40,7 @@
                 <div class="row row-cols-2 row-cols-md-4">
                     <div v-for="(buku, i) in buku_populer" :key="i" class="col mt-3">
                         <router-link :to="{ name: 'detail-buku', params: { idb: buku.isbn } }">
-                            <div class="card h-100 mb-0">
+                            <div class="card h-100 mb-0 hover-shadow">
                                 <div class="card-content">
                                     <div class="product-image mt-3 mb-0 pb-0">
                                         <img :src="buku.image" :alt="buku.alt" class="img-fluid">
@@ -113,7 +113,7 @@
         </section>
         <section v-if="news.length>0" class="row">
             <div class="col-12 col-lg-12">
-                <div class="card py-2 px-4">
+                <div class="card py-2 px-4 hover-shadow">
                     <div class="row">
                         <div class="col-7 text-start pt-3 pe-0">
                             <h2>TAJUK UTAMA</h2>
@@ -168,7 +168,7 @@
         </section>
         <section  v-if="frasa.length>0" class="row">
             <div class="col-12 col-lg-12">
-                <div class="testimonial-slider">
+                <div class="testimonial-slider hover-shadow">
                     <div class="row">
                         <div class="col-md-2">
                             <div class="testimonial-title">
@@ -241,9 +241,9 @@
                         loop
                     >
                         <swiper-slide v-for="(value, index) in wawasan" :key="index">
-                            <div class="card h-100 px-2">
+                            <div class="card h-100 hover-shadow">
                                 <div class="img-wrapper">
-                                    <img :src="value.image" class="d-block w-100 gambar-kotak rounded-3">
+                                    <img :src="value.image" class="d-block w-100 gambar-kotak" style="border-radius: 5px 5px 0 0 !important;">
                                 </div>
                                 <div class="card-body pb-0">
                                     <a href="#">
@@ -291,9 +291,9 @@
                         loop
                     >
                         <swiper-slide v-for="(value, index) in review_buku" :key="index">
-                            <div class="card h-100 px-2">
+                            <div class="card h-100 hover-shadow">
                                 <div class="img-wrapper">
-                                    <img :src="value.image" class="d-block w-100 gambar-kotak rounded-3">
+                                    <img :src="value.image" class="d-block w-100 gambar-kotak" style="border-radius: 5px 5px 0 0 !important;">
                                 </div>
                                 <div class="card-body pb-0">
                                     <a href="#">
@@ -342,7 +342,7 @@
                         loop
                     >
                         <swiper-slide v-for="(value, index) in layar_penulis" :key="index">
-                            <div class="card h-100 px-2">
+                            <div class="card h-100 hover-shadow">
                                 <div class="d-flex justify-content-center align-items-center flex-column mt-3">
                                     <div class="avatar">
                                         <img :src="value.image" style="height: 90px; width:90px;">
@@ -394,9 +394,9 @@
                         loop
                     >
                         <swiper-slide v-for="(value, index) in titik_fokus" :key="index">
-                            <div class="card h-100 px-2">
+                            <div class="card h-100 hover-shadow">
                                 <div class="img-wrapper">
-                                    <img :src="value.image" class="d-block w-100 gambar-kotak rounded-3">
+                                    <img :src="value.image" class="d-block w-100 gambar-kotak" style="border-radius: 5px 5px 0 0 !important;">
                                 </div>
                                 <div class="card-body pb-0">
                                     <a href="#">
@@ -445,9 +445,9 @@
                         loop
                     >
                         <swiper-slide v-for="(value, index) in humoria" :key="index">
-                            <div class="card h-100 px-2">
+                            <div class="card h-100 hover-shadow">
                                 <div class="img-wrapper">
-                                    <img :src="value.image" class="d-block w-100 gambar-kotak rounded-3">
+                                    <img :src="value.image" class="d-block w-100 gambar-kotak" style="border-radius: 5px 5px 0 0 !important;">
                                 </div>
                                 <div class="card-body pb-0">
                                     <a href="#">
@@ -539,15 +539,15 @@ export default {
             swiperBreakpointsfrasa: {
                 320: {
                     slidesPerView: 1,
-                    spaceBetween: 10
+                    spaceBetween: 20
                 },
                 640: {
                     slidesPerView: 1,
-                    spaceBetween: 10
+                    spaceBetween: 20
                 },
                 768: {
                     slidesPerView: 2,
-                    spaceBetween: 10
+                    spaceBetween: 20
                 },
                 1024: {
                     slidesPerView: 2,
