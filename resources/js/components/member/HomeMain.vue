@@ -822,7 +822,7 @@ export default {
         height: 300px;
     }
 
-    @media (max-width: 1000px) {
+    @media (max-width: 999px) {
         :deep(.swiper-button-next),
         :deep(.swiper-button-prev) {
             display: none;
