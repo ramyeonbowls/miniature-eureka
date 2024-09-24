@@ -7,7 +7,7 @@
                 <router-view :isAuthenticated="isAuthenticated"></router-view>
             </div>
 
-            <nav class="navbar-dark bg-secondary navbar-expand d-block d-xs-block d-xl-none fixed-bottom" role="navigation">
+            <nav class="navbar-dark navbar-expand d-block d-xs-block d-xl-none fixed-bottom" role="navigation" style="background-color: rgb(67, 94, 190)">
                 <ul class="navbar-nav nav-justified pt-2">
                     <li class="nav-item">
                         <router-link to="/" class='menu-item'>

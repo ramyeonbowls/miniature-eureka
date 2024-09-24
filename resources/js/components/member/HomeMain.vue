@@ -138,7 +138,7 @@
                                             {{ mainNews.title }}
                                         </h5>
                                     </a>
-                                    <small class="text-muted">By <strong>{{ mainNews.author }}</strong> | {{ mainNews.published_at }}</small>
+                                    <small class="text-muted">Oleh <strong>{{ mainNews.author }}</strong> | {{ mainNews.published_at }}</small>
                                     <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
                                         <span v-html="mainNews.content"></span>
                                     </p>
@@ -251,7 +251,6 @@
                                             {{ value.title }}
                                         </h5>
                                     </a>
-                                    <!-- <small class="text-muted">By <strong> {{ value.author }}</strong> |  Post on {{ value.published_at }}</small> -->
                                     <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
                                         <span v-html="value.content"></span>
                                     </p>
@@ -823,8 +822,7 @@ export default {
         height: 300px;
     }
 
-    /* Media Queries untuk Mobile View */
-    @media (max-width: 999px) {
+    @media (max-width: 1000px) {
         :deep(.swiper-button-next),
         :deep(.swiper-button-prev) {
             display: none;
