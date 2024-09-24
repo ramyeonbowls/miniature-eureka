@@ -111,7 +111,7 @@
                 </div>
             </div>
         </section>
-        <section class="row">
+        <section v-if="news.length>0" class="row">
             <div class="col-12 col-lg-12">
                 <div class="card py-2 px-4">
                     <div class="row">
@@ -119,7 +119,7 @@
                             <h2>TAJUK UTAMA</h2>
                         </div>
                         <div class="col-5 text-end pt-3">
-                            <router-link :to="{ name: 'artikel', params: { idart: 'tajuk-utama' } }">
+                            <router-link :to="{ name: 'artikel', params: { idart: 'TU' } }">
                                 <button class="btn btn-primary btn-sm">Lihat Semua</button>
                             </router-link>
                         </div>
@@ -127,10 +127,10 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div v-if="mainNews" class="panel blog-container">
-                                <div class="panel-body mt-4">
+                                <div class="panel-body mt-3">
                                     <div class="mb-3">
                                         <a href="#">
-                                            <img :src="mainNews.image" :alt="mainNews.title" src="images/news/literasiday.png" class="img-fluid rounded-3" alt="Photo of Blog">
+                                            <img :src="mainNews.image" :alt="mainNews.title" class="img-fluid rounded-3" alt="Photo of Blog">
                                         </a>
                                     </div>
                                     <a href="#">
@@ -149,7 +149,7 @@
                             </div>           
                         </div>
                         <div class="col-lg-6">
-                            <div v-for="newsItem in otherNews" :key="newsItem.id" class="media popular-post" style="height: 150px; max-height: 150px;">
+                            <div v-for="newsItem in otherNews" :key="newsItem.id" class="media popular-post mt-0 mb-0" style="height: 150px; max-height: 150px;">
                                 <a class="pull-left" :href="'#' + newsItem.id">
                                     <img :src="newsItem.image" :alt="newsItem.title" class="rounded-3" style="max-width: 150px; max-height: 150px;">
                                 </a>
@@ -166,7 +166,7 @@
                 </div>
             </div>
         </section>
-        <section class="row">
+        <section  v-if="frasa.length>0" class="row">
             <div class="col-12 col-lg-12">
                 <div class="testimonial-slider">
                     <div class="row">
@@ -199,7 +199,7 @@
                                     <div class="card" style="height: 350px;">
                                         <div class="d-flex justify-content-center align-items-center flex-column mt-3">
                                             <div class="avatar">
-                                                <img src="/images/faces/1.jpg" style="height: 90px; width:90px;">
+                                                <img :src="value.image" style="height: 90px; width:90px;">
                                             </div>
                                         </div>
                                         <div class="card-body">
@@ -214,14 +214,14 @@
                 </div>
             </div>
         </section>
-        <section class="row mt-4">
+        <section v-if="wawasan.length>0" class="row mt-4">
             <div class="col-12 col-lg-12">
                 <div class="row mb-3">
                     <div class="col-6 text-start pt-3">
                         <h2>WAWASAN</h2>
                     </div>
                     <div class="col-6 text-end pt-3">
-                        <router-link :to="{ name: 'artikel', params: { idart: 'wawasan' } }">
+                        <router-link :to="{ name: 'artikel', params: { idart: 'WA' } }">
                             <button class="btn btn-primary btn-sm">Lihat Semua</button>
                         </router-link>
                     </div>
@@ -265,14 +265,16 @@
                 </div>
             </div>
         </section>
-        <section class="row mt-4">
+        <section v-if="review_buku.length>0" class="row mt-4">
             <div class="col-12 col-lg-12">
                 <div class="row mb-3">
                     <div class="col-8 text-start pt-3">
                         <h2>REVIEW BUKU</h2>
                     </div>
                     <div class="col-4 text-end pt-3">
-                        <button class="btn btn-primary btn-sm">Lihat Semua</button>
+                        <router-link :to="{ name: 'artikel', params: { idart: 'RB' } }">
+                            <button class="btn btn-primary btn-sm">Lihat Semua</button>
+                        </router-link>
                     </div>
                 </div>
                 <div class="row">
@@ -314,14 +316,16 @@
                 </div>
             </div>
         </section>
-        <section class="row mt-4">
+        <section v-if="layar_penulis.length>0" class="row mt-4">
             <div class="col-12 col-lg-12">
                 <div class="row mb-3">
                     <div class="col-8 text-start pt-3">
                         <h2>LAYAR PENULIS</h2>
                     </div>
                     <div class="col-4 text-end pt-3">
-                        <button class="btn btn-primary btn-sm">Lihat Semua</button>
+                        <router-link :to="{ name: 'artikel', params: { idart: 'LP' } }">
+                            <button class="btn btn-primary btn-sm">Lihat Semua</button>
+                        </router-link>
                     </div>
                 </div>
                 <div class="row">
@@ -364,14 +368,16 @@
                 </div>
             </div>
         </section>
-        <section class="row mt-4">
+        <section v-if="titik_fokus.length>0" class="row mt-4">
             <div class="col-12 col-lg-12">
                 <div class="row mb-3">
                     <div class="col-8 text-start pt-3">
                         <h2>TITIK FOKUS</h2>
                     </div>
                     <div class="col-4 text-end pt-3">
-                        <button class="btn btn-primary btn-sm">Lihat Semua</button>
+                        <router-link :to="{ name: 'artikel', params: { idart: 'TF' } }">
+                            <button class="btn btn-primary btn-sm">Lihat Semua</button>
+                        </router-link>
                     </div>
                 </div>
                 <div class="row">
@@ -413,14 +419,16 @@
                 </div>
             </div>
         </section>
-        <section class="row mt-4">
+        <section v-if="humoria.length>0" class="row mt-4">
             <div class="col-12 col-lg-12">
                 <div class="row mb-3">
                     <div class="col-8 text-start pt-3">
                         <h2>HUMORIA</h2>
                     </div>
                     <div class="col-4 text-end pt-3">
-                        <button class="btn btn-primary btn-sm">Lihat Semua</button>
+                        <router-link :to="{ name: 'artikel', params: { idart: 'HU' } }">
+                            <button class="btn btn-primary btn-sm">Lihat Semua</button>
+                        </router-link>
                     </div>
                 </div>
                 <div class="row">
@@ -504,150 +512,13 @@ export default {
             banner: [],
             buku_populer: [],
             buku: [],
-            frasa: [
-                {kata: "Literasi bukan hanya tentang membaca dan menulis, tetapi tentang memahami dan menciptakan dunia di sekitar kita.", by: "Anonim"},
-                {kata: "Membaca adalah kunci untuk membuka pintu pengetahuan dan kemungkinan yang tak terbatas. Setiap buku adalah jendela ke dunia baru.", by: "Oprah Winfrey"},
-                {kata: "Budaya literasi adalah fondasi untuk masa depan yang cerdas dan berdaya. Dalam setiap kata yang kita baca, kita membangun dunia yang lebih baik.", by: "Anonim"},
-                {kata: "Literasi adalah alat yang memberdayakan individu untuk mengejar impian mereka dan berkontribusi pada masyarakat. Semakin kita membaca, semakin besar kapasitas kita untuk bertindak.", by: "Nelson Mandela"},
-                {kata: "Setiap buku yang dibaca adalah sebuah petualangan yang dimulai. Budaya literasi adalah perjalanan tanpa akhir menuju pengetahuan dan pemahaman yang lebih dalam.", by: "Anonim"}
-            ],
-            news: [
-                    {
-                        "id": 1,
-                        "title": "Merayakan Hari Literasi Internasional 2024: Menyongsong Masa Depan Melalui Kekuatan Membaca",
-                        "content": "Pada 8 September 2024, dunia akan merayakan Hari Literasi Internasional, sebuah hari yang didedikasikan untuk merayakan pentingnya literasi dalam kehidupan kita dan mendorong upaya untuk meningkatkan tingkat literasi di seluruh dunia. <br>Hari ini bukan hanya momen untuk menghargai kemampuan membaca dan menulis, tetapi juga kesempatan untuk merenungkan dampak positif yang dapat ditimbulkan oleh literasi terhadap individu dan masyarakat.<br>Literasi adalah fondasi dari perkembangan pribadi dan sosial. Melalui literasi, individu memperoleh keterampilan untuk memahami informasi, berkomunikasi secara efektif, dan berpartisipasi secara aktif dalam masyarakat. Keterampilan ini bukan hanya penting dalam konteks pendidikan formal, tetapi juga dalam kehidupan sehari-hari—mulai dari membaca tanda-tanda jalan hingga memahami instruksi medis atau berita terkini.<br>Hari Literasi Internasional 2024 mengusung tema <b>Membaca untuk Masa Depan: Mewujudkan Kesetaraan Melalui Literasi</b>. Tema ini menggarisbawahi peran literasi dalam menciptakan masa depan yang lebih inklusif dan setara. Literasi bukan hanya tentang membaca teks, tetapi juga tentang mengakses informasi yang penting untuk pengambilan keputusan yang berpengetahuan, mengurangi ketidaksetaraan, dan memberdayakan individu untuk mencapai potensi penuh mereka.<br>Untuk merayakan hari istimewa ini, berbagai kegiatan dapat dilakukan di tingkat lokal maupun global. Sekolah, perpustakaan, dan organisasi masyarakat dapat menyelenggarakan acara membaca, diskusi buku, atau workshop literasi yang mengajak peserta untuk terlibat aktif. Buku-buku yang merayakan keragaman dan inklusivitas juga dapat dipromosikan untuk memastikan bahwa setiap individu, tanpa memandang latar belakang, merasa terhubung dengan materi bacaan yang relevan dan bermanfaat.<br>Penting untuk diingat bahwa tantangan literasi tidak merata di seluruh dunia. Di beberapa daerah, akses ke pendidikan dan sumber daya literasi masih terbatas. Oleh karena itu, Hari Literasi Internasional juga merupakan waktu yang tepat untuk mendukung inisiatif-inisiatif yang bertujuan untuk mengatasi kesenjangan ini—baik melalui donasi, sukarelawan, atau penyebaran kesadaran tentang pentingnya literasi.<br>Mari kita semua merayakan Hari Literasi Internasional dengan tekad untuk memperluas akses terhadap pendidikan literasi dan berkomitmen untuk menciptakan dunia di mana setiap individu memiliki kesempatan untuk membaca, menulis, dan berkomunikasi dengan percaya diri. Dengan berbuat demikian, kita tidak hanya merayakan pencapaian literasi, tetapi juga berinvestasi dalam masa depan yang lebih cerdas, adil, dan terhubung.<br<Selamat Hari Literasi Internasional 2024! Mari kita terus menyemangati dan mendukung literasi di seluruh dunia, memastikan bahwa setiap orang memiliki kekuatan untuk menjelajahi dunia melalui kekuatan membaca.",
-                        "author": "Rahman",
-                        "published_at": "2024-09-07 00:00:00",
-                        "image": 'images/news/literasiday.png'
-                    },
-                    {
-                        "id": 2,
-                        "title": "Revolusi Belajar: Sekolah Ramah Lingkungan Ciptakan Generasi Peduli Bumi",
-                        "content": "Ini adalah konten berita kedua.",
-                        "author": "Penulis 2",
-                        "published_at": "2024-09-06 00:00:00",
-                        "image": 'images/news/tajuk-utama3.jpg'
-                    },
-                    {
-                        "id": 3,
-                        "title": "Perpustakaan Terapung Terbesar Berlabuh di Yordania",
-                        "content": "Ini adalah konten berita ketiga.",
-                        "author": "Penulis 3",
-                        "published_at": "2024-09-05 00:00:00",
-                        "image": 'images/news/tajuk-utama2.jpg'
-                    },
-                    {
-                        "id": 4,
-                        "title": "Kampus Terbaik Dunia: Universitas-Inovasi yang Mendorong Masa Depan Pendidikan",
-                        "content": "Ini adalah konten berita keempat.",
-                        "author": "Penulis 4",
-                        "published_at": "2024-09-04 00:00:00",
-                        "image": 'images/news/tajuk-utama1.jpg'
-                    }
-            ],
-            wawasan: [
-                {
-                    "id": 1,
-                    "title": "Mengungkap Sejarah Singkat Internet: Dari ARPANET hingga Web 3.0",
-                    "content": "Internet, yang kini menjadi bagian tak terpisahkan dari kehidupan sehari-hari, memiliki sejarah panjang yang dimulai pada tahun 1960-an dengan proyek ARPANET. Proyek ini awalnya dikembangkan oleh Departemen Pertahanan Amerika Serikat untuk tujuan penelitian dan komunikasi. ARPANET adalah sistem jaringan pertama yang menggunakan teknik paket-switching, yang memungkinkan data dikirim dalam bentuk paket kecil yang dapat diatur ulang di tujuan. <br>Pada 1980-an, ARPANET berkembang menjadi jaringan yang lebih luas dengan penambahan protokol TCP/IP, yang merupakan fondasi dari internet modern. Pada tahun 1991, Tim Berners-Lee, seorang ilmuwan komputer asal Inggris, memperkenalkan World Wide Web (WWW) sebagai sistem hypertext yang mempermudah akses informasi melalui web browser. Saat ini, internet terus berkembang dengan munculnya Web 2.0 yang memperkenalkan interaksi sosial dan konten yang dihasilkan pengguna. Melangkah ke depan, Web 3.0 atau web semantik bertujuan untuk membuat internet lebih cerdas dengan memanfaatkan teknologi seperti kecerdasan buatan dan blockchain. Transformasi ini berpotensi mengubah cara kita berinteraksi dengan data dan informasi di dunia maya.",
-                    "image": '/images/news/wawasan1-sejarah-internet.png'
-                },
-                {
-                    "id": 2,
-                    "title": "Perubahan Iklim dan Dampaknya Terhadap Ekosistem Global",
-                    "content": "Perubahan iklim adalah fenomena global yang disebabkan oleh peningkatan konsentrasi gas rumah kaca di atmosfer, terutama karbon dioksida (CO₂), metana (CH₄), dan nitrogen oksida (NOₓ). Gas-gas ini terperangkap di atmosfer dan menyebabkan efek rumah kaca yang mengakibatkan pemanasan global.<br>Dampak perubahan iklim terhadap ekosistem sangat luas. Peningkatan suhu global menyebabkan pencairan es di kutub dan peningkatan permukaan laut, yang mengancam habitat spesies-spesies pesisir dan pulau-pulau kecil. Selain itu, perubahan pola curah hujan dan suhu mempengaruhi keseimbangan ekosistem, menyebabkan pergeseran habitat dan mengancam spesies yang tidak dapat beradaptasi dengan cepat.<br>Ekosistem terumbu karang, misalnya, mengalami pemutihan akibat suhu laut yang lebih tinggi, mengancam biodiversitas laut yang bergantung pada terumbu tersebut. Di darat, perubahan iklim meningkatkan risiko kebakaran hutan dan mengubah pola migrasi hewan. Upaya mitigasi termasuk pengurangan emisi gas rumah kaca, pelestarian habitat, dan adaptasi terhadap perubahan iklim sangat penting untuk melindungi keberagaman ekosistem dan menjaga keseimbangan planet.",
-                    "image": '/images/news/wawasan2-perubahan-iklim.png'
-                },
-                {
-                    "id": 3,
-                    "title": "Teknologi Energi Terbarukan: Solusi untuk Masa Depan yang Berkelanjutan",
-                    "content": "Teknologi energi terbarukan menawarkan solusi potensial untuk memenuhi kebutuhan energi global sambil mengurangi dampak lingkungan. Energi terbarukan mencakup berbagai sumber energi yang dapat diperbarui secara alami, seperti tenaga matahari, angin, hidro, dan biomassa.<br>Energi matahari, misalnya, menggunakan panel fotovoltaik untuk mengubah sinar matahari langsung menjadi listrik. Teknologi ini terus berkembang dengan peningkatan efisiensi dan penurunan biaya, menjadikannya pilihan yang semakin menarik untuk pembangkit energi. Energi angin memanfaatkan turbin untuk mengubah energi kinetik dari angin menjadi listrik, dan banyak negara telah meningkatkan kapasitas pembangkit tenaga angin mereka dalam beberapa tahun terakhir.<br>Energi hidro memanfaatkan aliran air dari bendungan atau aliran sungai untuk menghasilkan listrik. Meskipun dampaknya terhadap ekosistem lokal harus dipertimbangkan, teknologi ini tetap menjadi salah satu sumber energi terbarukan yang paling stabil. Biomassa, yang berasal dari bahan organik, dapat digunakan untuk menghasilkan energi dengan pembakaran atau proses biologis lainnya.<br>Pengembangan teknologi energi terbarukan tidak hanya mengurangi ketergantungan pada bahan bakar fosil tetapi juga berkontribusi pada pengurangan emisi karbon dan perubahan iklim. Inovasi dalam sektor ini terus berlanjut dengan penekanan pada efisiensi, penyimpanan energi, dan integrasi dalam jaringan energi global untuk memastikan masa depan yang lebih berkelanjutan.",
-                    "image": '/images/news/wawasan3-energy-terbarukan.png'
-                }
-            ],
-            review_buku: [
-                {
-                    "id": 1,
-                    "title": "Laskar Pelangi",
-                    "author": "Andrea Hirata",
-                    "content": "Andrea Hirata berhasil menghadirkan sebuah karya yang menyentuh hati dalam Laskar Pelangi, sebuah novel yang menceritakan kehidupan anak-anak dari desa terpencil di Belitung. Dengan gaya penulisan yang lincah dan penuh warna, Hirata mengajak pembaca menyelami dunia anak-anak yang penuh impian dan kesulitan.<br>Cerita ini berpusat pada Ikal dan teman-temannya, yang dikenal sebagai Laskar Pelangi, sekelompok anak-anak yang berjuang melawan kemiskinan dan kekurangan fasilitas pendidikan. Di balik perjalanan mereka yang penuh liku, terdapat pesan mendalam tentang kekuatan pendidikan dan persahabatan.<br>Hirata dengan cerdas menyoroti realitas sosial Indonesia sambil menyelipkan unsur humor dan harapan. Laskar Pelangi tidak hanya menawarkan hiburan tetapi juga refleksi mendalam tentang kehidupan, tekad, dan semangat untuk meraih mimpi. Ini adalah karya yang memadukan elemen lokal dengan universalitas yang membuatnya relevan bagi pembaca dari berbagai latar belakang.",
-                    "image": '/images/news/review-buku1-laskar-pelangi.png'
-                },
-                {
-                    "id": 2,
-                    "title": "Ayat-Ayat Cinta",
-                    "author": "oleh Habiburrahman El Shirazy",
-                    "content": "Ayat-Ayat Cinta karya Habiburrahman El Shirazy adalah sebuah novel yang menggali tema cinta dan agama dengan cara yang elegan dan mendalam. Dalam novel ini, Shirazy mengisahkan perjalanan cinta seorang mahasiswa Indonesia di Kairo, yang terjebak dalam konflik antara perasaan pribadi dan kewajiban religius.<br>Kisah ini mengikuti Fahri, seorang mahasiswa yang berjuang untuk menyeimbangkan antara cinta dan keyakinan dalam kehidupannya. Dengan latar belakang kota Kairo dan lingkungan akademis, Shirazy memberikan pembaca wawasan yang mendalam tentang budaya dan tradisi Islam melalui cerita cinta yang penuh intrik.<br>Ayat-Ayat Cinta berhasil menyentuh hati dengan narasi yang penuh emosi dan dialog yang reflektif. Buku ini tidak hanya menawarkan kisah cinta yang memikat tetapi juga membuka dialog tentang nilai-nilai agama dan moralitas dalam konteks modern. Dengan gaya penulisan yang puitis dan penuh makna, Shirazy menciptakan sebuah karya yang tak hanya menghibur tetapi juga memberikan pelajaran berharga tentang cinta dan iman.",
-                    "image": '/images/news/review-buku2-ayat-ayat-cinta.png'
-                },
-                {
-                    "id": 3,
-                    "title": "Garis Waktu",
-                    "author": "Fiersa Besari",
-                    "content": "Fiersa Besari, dikenal luas sebagai seorang penulis dan musisi, menyuguhkan sebuah karya yang menyentuh dalam Garis Waktu. Buku ini merupakan eksplorasi mendalam tentang kehidupan, cinta, dan perjalanan waktu melalui lensa seorang individu yang sedang mencari makna dalam kehidupan.<br>Garis Waktu membawa pembaca mengikuti perjalanan emosional tokoh utama, yang berusaha memahami berbagai peristiwa dan pengalaman hidup yang membentuk siapa dirinya. Dengan gaya penulisan yang sederhana namun penuh makna, Besari menghadirkan refleksi yang mendalam tentang cinta, kehilangan, dan harapan.<br>Novel ini dipenuhi dengan kutipan-kutipan yang resonan dan pencerahan pribadi, menjadikannya sebagai cerminan perjalanan hidup yang relatable bagi banyak orang. Garis Waktu adalah karya yang mengajak pembaca merenung dan meresapi setiap momen dalam kehidupan mereka sendiri, sambil menikmati narasi yang penuh kejujuran dan kedalaman emosional.",
-                    "image": '/images/news/review-buku3-garis-waktu.png'
-                }
-            ],
-            layar_penulis: [
-                {
-                    "id": 1,
-                    "title": "Buya Hamka: Sang Penulis dan Pembaharu Agama",
-                    "content": "Buya Hamka, lahir sebagai Haji Abdul Malik Karim Amrullah pada 17 Februari 1908 di Minangkabau, Sumatera Barat, adalah seorang penulis, ulama, dan cendekiawan yang memiliki pengaruh besar dalam literatur dan pemikiran Islam di Indonesia. Hamka dikenal tidak hanya karena karya sastra yang menggugah, tetapi juga kontribusinya yang signifikan dalam pembaharuan pemikiran agama.<br.Dengan latar belakang pendidikan yang kuat dan pengalaman luas, Hamka menulis berbagai karya yang meliputi novel, esai, dan tafsir Al-Qur’an. Karya monumentalnya, Tenggelamnya Kapal Van Der Wijck, menggambarkan dengan mendalam konflik sosial dan budaya masyarakat Minangkabau pada masa itu. Melalui tulisan-tulisannya, Hamka berhasil menggabungkan nilai-nilai agama dengan permasalahan sosial kontemporer, menjadikannya sebagai suara penting dalam sejarah intelektual Indonesia.<br>Selain sebagai penulis, Buya Hamka juga aktif dalam organisasi Islam dan pernah menjabat sebagai ketua Majelis Ulama Indonesia (MUI). Ia meninggal pada 24 Juli 1981, namun warisan pemikiran dan karya-karyanya terus menginspirasi generasi mendatang.",
-                    "image": '/images/faces/1.jpg'
-                },
-                {
-                    "id": 2,
-                    "title": "Pramoedya Ananta Toer: Suara Perjuangan dalam Gelap",
-                    "content": "Pramoedya Ananta Toer, lahir pada 6 Februari 1925 di Blora, Jawa Tengah, adalah salah satu penulis terbesar Indonesia yang dikenal dengan karya-karya yang berani dan penuh dengan kritik sosial. Pramoedya adalah seorang penulis yang tidak hanya menciptakan karya sastra tetapi juga terlibat aktif dalam perjuangan politik dan sosial di Indonesia.<br>Salah satu karya terbaiknya, Bumi Manusia, adalah bagian dari tetralogi Buru Quartet yang menggambarkan kehidupan dan perjuangan masyarakat Indonesia selama periode kolonial Belanda. Karya ini tidak hanya mengeksplorasi isu-isu sosial dan politik tetapi juga menghadirkan karakter-karakter yang kuat dan kompleks.<br>Selama masa hidupnya, Pramoedya mengalami berbagai tantangan politik, termasuk penahanan oleh pemerintah Orde Baru. Meskipun mengalami penahanan dan penganiayaan, ia tetap berdiri teguh dengan prinsip-prinsipnya dan terus menulis. Pramoedya Ananta Toer meninggal pada 30 April 2006, tetapi warisan sastra dan semangat perjuangannya terus hidup melalui karya-karyanya yang mempengaruhi pembaca dan penulis di seluruh dunia.",
-                    "image": '/images/faces/2.jpg'
-                },
-                {
-                    "id": 3,
-                    "title": "J.K. Rowling: Dari Keringat hingga Keajaiban Dunia Harry Potter",
-                    "content": "J.K. Rowling, lahir sebagai Joanne Rowling pada 31 Juli 1965 di Yate, Gloucestershire, Inggris, adalah penulis yang mengubah dunia sastra anak-anak dengan seri Harry Potter. Sebelum mencapai kesuksesan besar, Rowling menghadapi tantangan besar dalam hidupnya, termasuk kehidupan sebagai ibu tunggal yang berjuang untuk bertahan hidup.<br>Kisah Harry Potter, yang pertama kali diterbitkan pada tahun 1997, tidak hanya menjadi fenomena global tetapi juga melahirkan dunia magis yang dicintai oleh jutaan pembaca di seluruh dunia. Kesuksesan buku ini membawa Rowling dari keadaan ekonomi yang sulit menuju status miliarder dan ikon budaya global.<br>Selain menulis, Rowling juga aktif dalam berbagai kegiatan amal melalui lembaga filantropi yang didirikannya. Karya-karya lanjutan dalam dunia Harry Potter, serta buku-buku dewasa seperti The Casual Vacancy, menunjukkan kemampuannya untuk melintasi genre dan mempengaruhi berbagai kalangan pembaca. J.K. Rowling tetap menjadi salah satu penulis paling berpengaruh di era modern, dan warisan Harry Potter-nya terus berkembang.",
-                    "image": '/images/faces/3.jpg'
-                }
-            ],
-            titik_fokus: [
-                {
-                    "id": 1,
-                    "title": "Kesehatan Mental di Era Digital: Menjaga Keseimbangan di Dunia Maya",
-                    "content": "Di tengah perkembangan teknologi yang pesat, kita sering kali lupa bahwa kesehatan mental tidak kalah pentingnya dibandingkan kesehatan fisik. Era digital membawa berbagai kemudahan, tetapi juga tantangan baru bagi kesejahteraan mental kita. Dengan meningkatnya penggunaan media sosial dan teknologi, tekanan untuk selalu terhubung dan tampil sempurna sering kali menyebabkan stres dan kecemasan.<br>Menjaga keseimbangan dalam dunia maya memerlukan kesadaran dan usaha yang sadar. Ini berarti membatasi waktu layar, menetapkan batasan yang sehat dalam berinteraksi di media sosial, dan mencari dukungan ketika merasa kewalahan. Selain itu, penting untuk kembali ke aktivitas yang dapat meredakan stres seperti olahraga, meditasi, atau hobi yang menyenangkan.<br>Dalam dunia yang semakin terhubung, kesehatan mental harus menjadi prioritas utama. Menjaga keseimbangan di dunia maya bukan hanya tentang menghindari dampak negatif, tetapi juga tentang menciptakan ruang untuk pemulihan dan pertumbuhan pribadi. Hanya dengan cara ini kita dapat menikmati manfaat teknologi tanpa mengorbankan kesejahteraan mental kita.",
-                    "image": '/images/news/titik-fokus1.png'
-                },
-                {
-                    "id": 2,
-                    "title": "Pariwisata Berkelanjutan: Mengapa Kita Perlu Berpikir Kembali Tentang Liburan Kita",
-                    "content": "Pariwisata berkelanjutan bukanlah konsep baru, tetapi semakin relevan dalam era di mana dampak lingkungan dan sosial dari perjalanan semakin terlihat. Ketika kita merencanakan liburan, sering kali kita hanya fokus pada destinasi dan pengalaman tanpa mempertimbangkan dampaknya terhadap lingkungan dan komunitas lokal.<br>Pariwisata berkelanjutan menekankan pada prinsip-prinsip seperti pengurangan jejak karbon, dukungan untuk ekonomi lokal, dan pelestarian budaya serta lingkungan. Ini bukan hanya tentang memilih akomodasi ramah lingkungan, tetapi juga tentang memahami dan menghormati budaya lokal, serta berpartisipasi dalam kegiatan yang memberi manfaat langsung bagi masyarakat.<br>Dengan menjadi wisatawan yang lebih sadar dan bertanggung jawab, kita dapat membantu menjaga keindahan destinasi yang kita kunjungi dan memastikan bahwa pariwisata terus memberikan manfaat positif bagi semua pihak. Saatnya untuk berpikir kembali tentang liburan kita dan menjadikannya sebagai pengalaman yang tidak hanya memuaskan tetapi juga berkelanjutan.",
-                    "image": '/images/news/titik-fokus2.png'
-                },
-                {
-                    "id": 3,
-                    "title": "Mengejar Impian di Tengah Ketidakpastian: Berani Mengambil Langkah Pertama",
-                    "content": "Mengikuti impian sering kali tampak seperti perjalanan yang menakutkan, terutama ketika dunia di sekitar kita penuh dengan ketidakpastian. Namun, inilah saatnya untuk berani mengambil langkah pertama menuju tujuan pribadi kita, meskipun jalan yang ditempuh mungkin tidak selalu jelas.<br<Ketidakpastian adalah bagian dari proses, dan ketakutan akan kegagalan sering kali menjadi penghalang terbesar. Namun, penting untuk diingat bahwa setiap langkah kecil menuju impian kita adalah kemajuan. Mengambil risiko, meski terkadang menakutkan, membuka peluang baru dan membawa kita lebih dekat kepada pencapaian yang kita impikan.<br>Dengan menetapkan tujuan yang realistis, mencari dukungan, dan tetap fleksibel dalam menghadapi perubahan, kita dapat menghadapi ketidakpastian dengan lebih percaya diri. Mengejar impian bukan hanya tentang mencapai tujuan akhir, tetapi juga tentang perjalanan yang membentuk kita dan memberikan makna dalam hidup. Saatnya untuk melangkah maju dan mengubah ketidakpastian menjadi kesempatan. ",
-                    "image": '/images/news/titik-fokus3.png'
-                }
-            ],
-            humoria: [
-                {
-                    "id": 1,
-                    "title": "Ujian di Kafe",
-                    "content": "Seorang mahasiswa sedang belajar di kafe sambil meminum kopi. Dia merasa stres karena ujian yang mendekat. Temannya datang dan bertanya, “Kenapa wajahmu kayak mau meledak?” Mahasiswa itu menjawab sambil menghela napas, “Ujian, bro! Rasanya kayak minum kopi tanpa gula, pahit banget!” Temannya tertawa, “Aduh, jangan khawatir. Kan ada trik baru, bawa kopi ke ruang ujian. Kalau ujian susah, minum kopinya dulu. Setidaknya, rasa pahitnya kebagi dua!”",
-                    "image": '/images/news/humoria1.png'
-                },
-                {
-                    "id": 2,
-                    "title": "Kartu Kredit dan Diskon",
-                    "content": "Pak Budi baru saja menerima tagihan kartu kreditnya dan mengeluh kepada temannya di warung kopi. “Duh, tagihan kartu kredit saya makin lama makin bikin pusing!”Temannya bertanya, “Kenapa, Pak Budi?” Pak Budi menjawab sambil tertawa, “Karena setiap kali belanja, saya selalu cek diskon. Eh, sekarang diskonnya malah bikin tagihan saya lebih banyak! Mungkin ini diskon ‘khusus’ buat saya supaya tetap bersemangat bayar tagihan!”",
-                    "image": '/images/news/humoria2.png'
-                },
-                {
-                    "id": 3,
-                    "title": "Sentuhan Magis di Dapur: Kue Coklat yang Tak Pernah Mengecewakan",
-                    "content": "Di sebuah kompleks perumahan, Bu Nani sedang sibuk memasak di dapur. Dia baru saja mencoba resep baru yang dia temukan di internet, yaitu kue coklat yang katanya super lezat. Sementara itu, tetangganya, Bu Tini, datang berkunjung untuk bertanya bagaimana cara membuat kue yang sama. Bu Tini melihat Bu Nani dengan penuh semangat dan bertanya, “Bu Nani, kok bisa kue ini jadi kelihatan begitu enak? Rahasianya apa?” Bu Nani dengan bangga menjawab, “Oh, itu rahasianya adalah resep dari internet! Saya mengikuti semua langkahnya dengan teliti.” Sambil mencicipi adonan kue, Bu Tini bertanya lagi, “Iya, tapi ada yang berbeda deh dari kue saya, kenapa ya?” Bu Nani dengan ceria menjelaskan, “Gampang, Bu Tini. Kalau resepnya bilang ‘panggang dalam oven 30 menit’, saya tambahkan sedikit waktu ekstra karena anak-anak suka kue yang ‘lebih gosong’! Jadi, saya panggang lagi sedikit lebih lama supaya lebih crunchy!” Bu Tini penasaran dan bertanya, “Jadi, kalau saya mau kue saya lebih enak, saya harus panggang lebih lama?” Bu Nani menjawab sambil tertawa, “Bukan hanya lebih lama, tapi juga sedikit ‘praktekin’! Misalnya, setiap kali saya lewat dapur, saya sapa ovennya, ‘Halo, oven! Kerja bagus, ya!’ Dan itu memberi semangat pada kue untuk lebih bersemangat!” Bu Tini terkejut dan bertanya, “Jadi kue bisa lebih enak karena kita ngomong sama oven?”",
-                    "image": '/images/news/humoria3.png'
-                }
-            ],
+            news: [],
+            frasa: [],
+            wawasan: [],
+            review_buku: [],
+            layar_penulis: [],
+            titik_fokus: [],
+            humoria: [],
             swiperBreakpoints: {
                 320: {
                     slidesPerView: 2,
@@ -731,6 +602,7 @@ export default {
         this.getBukuPopuler();
         this.getBook();
         this.getBanner();
+        this.getAllArticle();
     },
 
     mounted() {
@@ -780,6 +652,31 @@ export default {
             .get('/getBanner')
             .then((response) => {
                 this.banner = response.data;
+            })
+            .catch((e) => {
+                console.error(e)
+            });
+        },
+        
+        getAllArticle() {
+            this.frasa          = [];
+            this.news           = [];
+            this.wawasan        = [];
+            this.review_buku    = [];
+            this.layar_penulis  = [];
+            this.titik_fokus    = [];
+            this.humoria        = [];
+
+            window.axios
+            .get('/getAllArticle')
+            .then((response) => {
+                this.frasa          = response.data.FR;
+                this.news           = response.data.TU;
+                this.wawasan        = response.data.WA;
+                this.review_buku    = response.data.RB;
+                this.layar_penulis  = response.data.LP;
+                this.titik_fokus    = response.data.TF;
+                this.humoria        = response.data.HU;
             })
             .catch((e) => {
                 console.error(e)

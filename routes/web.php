@@ -25,6 +25,7 @@ Route::get('/getBanner', [App\Http\Controllers\MainController::class, 'getBanner
 Route::get('/getDetail', [App\Http\Controllers\MainController::class, 'getDetail'])->name('getDetail');
 Route::get('/getCategory', [App\Http\Controllers\MainController::class, 'getCategory'])->name('getCategory');
 Route::get('/getArticle', [App\Http\Controllers\MainController::class, 'getArticle'])->name('getArticle');
+Route::get('/getAllArticle', [App\Http\Controllers\MainController::class, 'getAllArticle'])->name('getAllArticle');
 
 Route::get('/appreader', [App\Http\Controllers\BookController::class, 'index']);
 Route::apiResource('form-regis', App\Http\Controllers\FormRegisterController::class);

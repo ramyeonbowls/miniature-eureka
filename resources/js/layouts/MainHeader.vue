@@ -67,11 +67,6 @@
                                     </router-link>
                                 </li>
                                 <li class="submenu-item">
-                                    <router-link :to="{ name: 'artikel', params: { idart: 'FR' } }" class='submenu-link'>
-                                        <span> Frasa</span>
-                                    </router-link>
-                                </li>
-                                <li class="submenu-item">
                                     <router-link :to="{ name: 'artikel', params: { idart: 'RB' } }" class='submenu-link'>
                                         <span> Review Buku</span>
                                     </router-link>

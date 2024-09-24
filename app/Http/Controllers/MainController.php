@@ -214,4 +214,228 @@ class MainController extends Controller
 
         return response()->json($results, 200);
     }
+
+    public function getAllArticle()
+    {
+        $client_id = env('APP_CLIENT_ID') ?? 'pustakadigital'; 
+
+        $tajuk_utama = DB::table('tfitur as a')
+            ->select([
+                'a.id',
+                'a.title',
+                'a.description',
+                'a.author',
+                'a.file as image',
+                'a.created_at as published_at',
+                'a.category'
+            ])
+            ->where('a.client_id','=', $client_id)
+            ->where('a.category','=', 'TU')
+            ->where('a.flag_aktif','=', 'Y')
+            ->orderBy('created_at', 'DESC')
+            ->limit(4)
+            ->get()
+            ->map(function ($value) {
+                return [
+                    'id'            => $value->id,
+                    'title'         => $value->title,
+                    'content'       => $value->description,
+                    'author'        => $value->author,
+                    'published_at'  => $value->published_at,
+                    'category'      => $value->category,
+                    'image'         => (isset($value->image) && file_exists(public_path('/images/news/' . $value->image))) 
+                                    ? '/images/news/' . $value->image 
+                                    : '/images/news/default-news.jpg'
+                ];
+            });
+
+        $wawasan = DB::table('tfitur as a')
+            ->select([
+                'a.id',
+                'a.title',
+                'a.description',
+                'a.author',
+                'a.file as image',
+                'a.created_at as published_at',
+                'a.category'
+            ])
+            ->where('a.client_id','=', $client_id)
+            ->where('a.category','=', 'WA')
+            ->where('a.flag_aktif','=', 'Y')
+            ->orderBy('created_at', 'DESC')
+            ->limit(5)
+            ->get()
+            ->map(function ($value) {
+                return [
+                    'id'            => $value->id,
+                    'title'         => $value->title,
+                    'content'       => $value->description,
+                    'author'        => $value->author,
+                    'published_at'  => $value->published_at,
+                    'category'      => $value->category,
+                    'image'         => (isset($value->image) && file_exists(public_path('/images/news/' . $value->image))) 
+                                    ? '/images/news/' . $value->image 
+                                    : '/images/news/default-news.jpg'
+                ];
+            });
+
+        $frasa = DB::table('tfitur as a')
+            ->select([
+                'a.id',
+                'a.title',
+                'a.description',
+                'a.author',
+                'a.file as image',
+                'a.created_at as published_at',
+                'a.category'
+            ])
+            ->where('a.client_id','=', $client_id)
+            ->where('a.category','=', 'FR')
+            ->where('a.flag_aktif','=', 'Y')
+            ->orderBy('created_at', 'DESC')
+            ->get()
+            ->map(function ($value) {
+                return [
+                    'id'            => $value->id,
+                    'title'         => $value->title,
+                    'kata'          => $value->description,
+                    'by'            => $value->author,
+                    'published_at'  => $value->published_at,
+                    'category'      => $value->category,
+                    'image'         => (isset($value->image) && file_exists(public_path('/images/news/' . $value->image))) 
+                                    ? '/images/news/' . $value->image 
+                                    : '/images/news/anonim.jpg'
+                ];
+            });
+
+        $review_buku = DB::table('tfitur as a')
+            ->select([
+                'a.id',
+                'a.title',
+                'a.description',
+                'a.author',
+                'a.file as image',
+                'a.created_at as published_at',
+                'a.category'
+            ])
+            ->where('a.client_id','=', $client_id)
+            ->where('a.category','=', 'RB')
+            ->where('a.flag_aktif','=', 'Y')
+            ->orderBy('created_at', 'DESC')
+            ->limit(5)
+            ->get()
+            ->map(function ($value) {
+                return [
+                    'id'            => $value->id,
+                    'title'         => $value->title,
+                    'content'       => $value->description,
+                    'author'        => $value->author,
+                    'published_at'  => $value->published_at,
+                    'category'      => $value->category,
+                    'image'         => (isset($value->image) && file_exists(public_path('/images/news/' . $value->image))) 
+                                    ? '/images/news/' . $value->image 
+                                    : '/images/news/default-news.jpg'
+                ];
+            });
+
+        $layar_penulis = DB::table('tfitur as a')
+            ->select([
+                'a.id',
+                'a.title',
+                'a.description',
+                'a.author',
+                'a.file as image',
+                'a.created_at as published_at',
+                'a.category'
+            ])
+            ->where('a.client_id','=', $client_id)
+            ->where('a.category','=', 'LP')
+            ->where('a.flag_aktif','=', 'Y')
+            ->orderBy('created_at', 'DESC')
+            ->limit(5)
+            ->get()
+            ->map(function ($value) {
+                return [
+                    'id'            => $value->id,
+                    'title'         => $value->title,
+                    'content'       => $value->description,
+                    'author'        => $value->author,
+                    'published_at'  => $value->published_at,
+                    'category'      => $value->category,
+                    'image'         => (isset($value->image) && file_exists(public_path('/images/news/' . $value->image))) 
+                                    ? '/images/news/' . $value->image 
+                                    : '/images/news/default-news.jpg'
+                ];
+            });
+
+        $titik_fokus = DB::table('tfitur as a')
+            ->select([
+                'a.id',
+                'a.title',
+                'a.description',
+                'a.author',
+                'a.file as image',
+                'a.created_at as published_at',
+                'a.category'
+            ])
+            ->where('a.client_id','=', $client_id)
+            ->where('a.category','=', 'TF')
+            ->where('a.flag_aktif','=', 'Y')
+            ->orderBy('created_at', 'DESC')
+            ->limit(5)
+            ->get()
+            ->map(function ($value) {
+                return [
+                    'id'            => $value->id,
+                    'title'         => $value->title,
+                    'content'       => $value->description,
+                    'author'        => $value->author,
+                    'published_at'  => $value->published_at,
+                    'category'      => $value->category,
+                    'image'         => (isset($value->image) && file_exists(public_path('/images/news/' . $value->image))) 
+                                    ? '/images/news/' . $value->image 
+                                    : '/images/news/default-news.jpg'
+                ];
+            });
+
+        $humoria = DB::table('tfitur as a')
+            ->select([
+                'a.id',
+                'a.title',
+                'a.description',
+                'a.author',
+                'a.file as image',
+                'a.created_at as published_at',
+                'a.category'
+            ])
+            ->where('a.client_id','=', $client_id)
+            ->where('a.category','=', 'HU')
+            ->where('a.flag_aktif','=', 'Y')
+            ->orderBy('created_at', 'DESC')
+            ->limit(5)
+            ->get()
+            ->map(function ($value) {
+                return [
+                    'id'            => $value->id,
+                    'title'         => $value->title,
+                    'content'       => $value->description,
+                    'author'        => $value->author,
+                    'published_at'  => $value->published_at,
+                    'category'      => $value->category,
+                    'image'         => (isset($value->image) && file_exists(public_path('/images/news/' . $value->image))) 
+                                    ? '/images/news/' . $value->image 
+                                    : '/images/news/default-news.jpg'
+                ];
+            });
+
+        $results['TU'] = $tajuk_utama ?? [];
+        $results['WA'] = $wawasan ?? [];
+        $results['FR'] = $frasa ?? [];
+        $results['RB'] = $review_buku ?? [];
+        $results['LP'] = $layar_penulis ?? [];
+        $results['TF'] = $titik_fokus ?? [];
+        $results['HU'] = $humoria ?? [];
+
+        return response()->json($results, 200);
+    }
 }

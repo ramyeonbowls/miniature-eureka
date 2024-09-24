@@ -1,6 +1,5 @@
 <template>
     <div class="page-content">
-        <section class="row">
             <div class="col-12">
                 <div v-if="displayedContents <= 0" class="row">
                     <div class="card h-100">
@@ -8,21 +7,23 @@
                             Tidak Ada Data {{ (idart=='TU' ? 'Tajuk Utama' : (idart=='WA' ? 'Wawasan' : (idart=='FR' ? 'Frasa' : (idart=='RB' ? 'Review Buku' : (idart=='LP' ? 'Layar Penulis' : (idart=='TF' ? 'Titik Fokus' : 'Humoria')))))) }}
                         </div>
                     </div>
-                    
                 </div>
                 <div class="row">
                     <div v-for="(data, i) in displayedContents" :key="i" class="col-12 col-lg-4 mb-2">
-                        <div class="card h-100">
+                        <div class="card h-100 mb-0">
                             <div class="card-content d-flex flex-column">
-                                <div class="product-image mt-3 mb-0 pb-0">
+                                <div class="product-image mb-0 pb-0">
                                     <img :src="data.image" class="img-fluid rounded-3">
                                 </div>
-                                <div class="card-body mt-2 mb-0 mx-0 px-2 flex-grow-1">
+                                <div class="card-body mb-0 mx-0 px-2 flex-grow-1">
                                     <a href="#">
                                         <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="data.title">
                                             {{ data.title }}
                                         </h5>
                                     </a>
+                                    <div v-if="idart=='TU'">
+                                        <small class="text-muted">By <strong>{{ data.author }}</strong> | {{ data.published_at }}</small>
+                                    </div>
                                     <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
                                         <span v-html="data.content"></span>
                                     </p>
@@ -40,7 +41,6 @@
                     </div>
                 </div>
             </div>
-        </section>
     </div>
 </template>
 
