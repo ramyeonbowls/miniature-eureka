@@ -8,7 +8,7 @@
                     </div>
                     <div class="card-body">
                         <div class="card-title mb-3">
-                            <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="article[0].title">
+                            <h5>
                                 {{ article[0].title }}
                             </h5>
                             <div v-if="idart=='TU' || idart=='RB'">
