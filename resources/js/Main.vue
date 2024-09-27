@@ -38,7 +38,7 @@
                     </li>
                 </ul>
             </nav>
-            <footer>
+            <footer class="bottom-mobile">
                 <footerItems></footerItems>
             </footer>
         </div>
@@ -168,6 +168,12 @@ export default {
     .menu-item.active {
         color: white;
         border-bottom: 2px solid rgb(255, 255, 255);
+    }
+
+    @media (max-width: 1200px) {
+        .bottom-mobile {
+            margin-bottom: 45px;
+        }
     }
 
 </style>
