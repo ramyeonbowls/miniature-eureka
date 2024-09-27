@@ -29,7 +29,7 @@
             <div class="divider divider-left-center mb-0">
                 <h2>BUKU POPULER</h2>
             </div>
-            <div class="col-xl-3 d-none d-xl-block mb-1 mt-3">
+            <div class="col-xl-3 d-none d-xl-block mb-0 mt-3">
                 <div class="card h-100">
                     <div class="card-body background-populer">
                         &nbsp;
@@ -60,7 +60,7 @@
         </section>
         <section class="row mt-4">
             <div class="col-12 col-lg-12">
-                <div class="card">
+                <div class="card hover-shadow">
                     <div class="row mb-3 px-3">
                         <div class="col-7 text-start pt-3 pe-0">
                             <h2>KOLEKSI BUKU</h2>
@@ -836,7 +836,7 @@ export default {
         height: 300px;
     }
 
-    @media (max-width: 999px) {
+    @media (max-width: 1200px) {
         :deep(.swiper-button-next),
         :deep(.swiper-button-prev) {
             display: none;
@@ -848,7 +848,7 @@ export default {
         }
 
         .product-image img {
-            width: 95%;
+            width: 70%;
         }
 
         .card-title {

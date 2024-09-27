@@ -54,39 +54,41 @@
                         <a href="#" class="menu-link">
                             <span> Artikel</span>
                         </a>
-                        <div class="submenu ">
-                            <ul class="submenu-group">
-                                <li class="submenu-item">
-                                    <router-link :to="{ name: 'artikel', params: { idart: 'TU' } }" class='submenu-link'>
-                                        <span> Tajuk Utama</span>
-                                    </router-link>
-                                </li>
-                                <li class="submenu-item">
-                                    <router-link :to="{ name: 'artikel', params: { idart: 'WA' } }" class='submenu-link'>
-                                        <span> Wawasan</span>
-                                    </router-link>
-                                </li>
-                                <li class="submenu-item">
-                                    <router-link :to="{ name: 'artikel', params: { idart: 'RB' } }" class='submenu-link'>
-                                        <span> Review Buku</span>
-                                    </router-link>
-                                </li>
-                                <li class="submenu-item">
-                                    <router-link :to="{ name: 'artikel', params: { idart: 'LP' } }" class='submenu-link'>
-                                        <span> Layar Penulis</span>
-                                    </router-link>
-                                </li>
-                                <li class="submenu-item">
-                                    <router-link :to="{ name: 'artikel', params: { idart: 'TF' } }" class='submenu-link'>
-                                        <span> Titik Fokus</span>
-                                    </router-link>
-                                </li>
-                                <li class="submenu-item">
-                                    <router-link :to="{ name: 'artikel', params: { idart: 'HU' } }" class='submenu-link'>
-                                        <span> Humoria</span>
-                                    </router-link>
-                                </li>
-                            </ul>
+                        <div class="submenu">
+                            <div class="submenu-group-wrapper">
+                                <ul class="submenu-group">
+                                    <li class="submenu-item">
+                                        <router-link :to="{ name: 'artikel', params: { idart: 'TU' } }" class='submenu-link'>
+                                            <span> Tajuk Utama</span>
+                                        </router-link>
+                                    </li>
+                                    <li class="submenu-item">
+                                        <router-link :to="{ name: 'artikel', params: { idart: 'WA' } }" class='submenu-link'>
+                                            <span> Wawasan</span>
+                                        </router-link>
+                                    </li>
+                                    <li class="submenu-item">
+                                        <router-link :to="{ name: 'artikel', params: { idart: 'RB' } }" class='submenu-link'>
+                                            <span> Review Buku</span>
+                                        </router-link>
+                                    </li>
+                                    <li class="submenu-item">
+                                        <router-link :to="{ name: 'artikel', params: { idart: 'LP' } }" class='submenu-link'>
+                                            <span> Layar Penulis</span>
+                                        </router-link>
+                                    </li>
+                                    <li class="submenu-item">
+                                        <router-link :to="{ name: 'artikel', params: { idart: 'TF' } }" class='submenu-link'>
+                                            <span> Titik Fokus</span>
+                                        </router-link>
+                                    </li>
+                                    <li class="submenu-item">
+                                        <router-link :to="{ name: 'artikel', params: { idart: 'HU' } }" class='submenu-link'>
+                                            <span> Humoria</span>
+                                        </router-link>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </li>
                     <li class="menu-item ">
@@ -187,7 +189,7 @@ export default {
     color: #ffffff;
 }
 
-@media (max-width: 999px) {
+@media (max-width: 1200px) {
     .header-title {
         font-size: 1rem;
     }

@@ -376,7 +376,7 @@ export default {
         left: 10px;
     }
 
-    @media (max-width: 999px) {
+    @media (max-width: 1200px) {
         .card-cover {
             margin-bottom: 20px;
         }

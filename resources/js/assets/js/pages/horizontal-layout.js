@@ -1,9 +1,18 @@
-// Responsive burger btn onclick
 document.querySelector('.burger-btn').addEventListener('click', (e) => {
     e.preventDefault()
+    e.stopPropagation()
     let navbar = document.querySelector('.main-navbar')
 
     navbar.classList.toggle('active')
+})
+
+document.addEventListener('click', (e) => {
+    let navbar = document.querySelector('.main-navbar');
+    let burgerBtn = document.querySelector('.burger-btn');
+
+    if (!navbar.contains(e.target) && !burgerBtn.contains(e.target)) {
+        navbar.classList.remove('active');
+    }
 })
 
 window.onload = () => checkWindowSize()
@@ -12,8 +21,11 @@ window.addEventListener('resize', (event) => {
 })
 
 function checkWindowSize() {
-    if (window.innerWidth < 1200) listener()
-    if (window.innerWidth > 1200) document.querySelector('.main-navbar').style.display = ''
+    if (window.innerWidth < 1200) {
+        listener()
+    } else {
+        listenerLg()
+    }
 }
 
 function listener() {
@@ -27,7 +39,6 @@ function listener() {
     })
     
     let submenus = document.querySelectorAll('.submenu-item')
-    console.log(submenus);
     
     submenus.forEach((submenu) => {
         submenu.querySelector('.submenu-link').addEventListener('click', (e) => {
@@ -39,7 +50,6 @@ function listener() {
         })
     })
 
-    // Three level menu event listener
     let submenuItems = document.querySelectorAll('.submenu-item.has-sub')
 
     submenuItems.forEach((submenuItem) => {
@@ -57,5 +67,43 @@ function listener() {
                 navbar.classList.remove('active');
             }
         });
+    });
+}
+
+function listenerLg(){
+    document.querySelector('.main-navbar').style.display = ''
+    const menuItems = document.querySelectorAll('.menu-item');
+    
+    menuItems.forEach(item => {
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints;
+    
+        item.addEventListener('click', function() {
+            if (window.innerWidth > 1200) {
+                const submenu = this.querySelector('.submenu');
+    
+                if (submenu) {
+                    submenu.style.visibility = submenu.style.visibility === 'visible' ? 'hidden' : 'visible';
+                    submenu.style.opacity = submenu.style.opacity === '1' ? '0' : '1';
+                }
+            }
+        });
+    
+        if (!isTouchDevice) {
+            item.addEventListener('mouseover', function() {
+                const submenu = this.querySelector('.submenu');
+                if (submenu) {
+                    submenu.style.visibility = 'visible';
+                    submenu.style.opacity = '1';
+                }
+            });
+    
+            item.addEventListener('mouseout', function() {
+                const submenu = this.querySelector('.submenu');
+                if (submenu) {
+                    submenu.style.visibility = 'hidden';
+                    submenu.style.opacity = '0';
+                }
+            });
+        }
     });
 }

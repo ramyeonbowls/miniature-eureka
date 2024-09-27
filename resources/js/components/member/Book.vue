@@ -7,7 +7,7 @@
                     <p>hasil pencarian buku dengan kata kunci <b>"{{ seeks }}"</b></p>
                 </div>
             </div>
-            <div class="col-12 col-lg-3 mb-3">
+            <div class="col-12 col-xl-3 mb-3">
                 <div class="accordion accordion-flush" id="accordionFlush">
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="flush-headingOne">
@@ -26,14 +26,14 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-lg-9">
+            <div class="col-12 col-xl-9">
                 <template v-if="paginatedBuku.length > 0">
                     <div class="row row-cols-2 row-cols-md-5">
                         <template v-for="(group, groupIndex) in paginatedBuku" :key="groupIndex">
                             <div v-for="buku in group" :key="buku.id" class="col">
                                 <router-link :to="{ name: 'detail-buku', params: { idb: buku.isbn } }">
                                     <div class="card">
-                                        <div class="card-content">
+                                        <!-- <div class="card-content"> -->
                                             <div class="product-image">
                                                 <img :src="buku.image" :alt="buku.alt" class="img-fluid">
                                             </div>
@@ -43,7 +43,7 @@
                                                     <h6 class="card-title mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="buku.title">{{ buku.title }}</h6>
                                                 </a>
                                             </div>
-                                        </div>
+                                        <!-- </div> -->
                                     </div>
                                 </router-link>
                             </div>
@@ -225,18 +225,14 @@ export default {
     }
 
     /* Media Queries untuk Mobile View */
-    @media (max-width: 500px) {
+    @media (max-width: 1200px) {
         .product-image {
             height: auto;
             padding: 10px;
         }
 
         .product-image img {
-            width: 95%;
-        }
-
-        .card-title {
-            font-size: 12px;
+            width: 70%;
         }
     }
 </style>
