@@ -34,31 +34,30 @@
                 </div>
                 <div v-else class="row">
                     <div v-for="(data, i) in displayedContents" :key="i" class="col-12 col-lg-4 mb-2 mt-2">
-                        <div class="card h-100 mb-0 hover-shadow">
-                            <div class="card-content d-flex flex-column">
-                                <div class="product-image mb-0 pb-0">
-                                    <img :src="data.image" class="img-fluid" style="border-radius: 5px 5px 0 0 !important;">
-                                </div>
-                                <div class="card-body">
-                                    <div class="card-title">
-                                        <a href="#">
-                                            <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="data.title">
-                                                {{ data.title }}
-                                            </h5>
-                                        </a>
+                        <router-link :to="{ name: 'detail-artikel', params: { idart: idart, detail: data.id } }">
+                            <div class="card h-100 mb-0 hover-shadow">
+                                <div class="card-content d-flex flex-column">
+                                    <div class="product-image mb-0 pb-0">
+                                        <img :src="data.image" class="img-fluid" style="border-radius: 5px 5px 0 0 !important;">
                                     </div>
-                                    <div v-if="idart=='TU' || idart=='RB'">
-                                        <small class="text-muted">Oleh <strong>{{ data.author }}</strong> | {{ data.published_at }}</small>
+                                    <div class="card-body">
+                                        <div class="card-title">
+                                            <a href="#">
+                                                <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="data.title">
+                                                    {{ data.title }}
+                                                </h5>
+                                            </a>
+                                        </div>
+                                        <div v-if="idart=='TU' || idart=='RB'">
+                                            <small class="text-muted">Oleh <strong>{{ data.author }}</strong> | {{ data.published_at }}</small>
+                                        </div>
+                                        <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+                                            <span v-html="data.content"></span>
+                                        </p>
                                     </div>
-                                    <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
-                                        <span v-html="data.content"></span>
-                                    </p>
-                                    <a href="#">
-                                        <h6>Lanjutkan Membaca </h6>
-                                    </a>
                                 </div>
                             </div>
-                        </div>
+                        </router-link>
                     </div>
                 </div>
                 <div v-if="showLoadMore" class="divider">

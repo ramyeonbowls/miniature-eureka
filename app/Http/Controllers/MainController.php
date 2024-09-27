@@ -438,4 +438,41 @@ class MainController extends Controller
 
         return response()->json($results, 200);
     }
+
+    public function getDetailArticle(Request $request)
+    {
+        $category   = $request->category;
+        $id         = $request->id;
+        $client_id = env('APP_CLIENT_ID') ?? 'pustakadigital'; 
+
+        $results = DB::table('tfitur as a')
+            ->select([
+                'a.id',
+                'a.title',
+                'a.description',
+                'a.author',
+                'a.file as image',
+                'a.created_at as published_at',
+            ])
+            ->where('a.client_id','=', $client_id)
+            ->where('a.category','=', $category)
+            ->where('a.id','=', $id)
+            ->where('a.flag_aktif','=', 'Y')
+            ->orderBy('created_at', 'DESC')
+            ->get()
+            ->map(function ($value) {
+                return [
+                    'id'            => $value->id,
+                    'title'         => $value->title,
+                    'content'       => $value->description,
+                    'author'        => $value->author,
+                    'published_at'  => $value->published_at,
+                    'image'         => (isset($value->image) && file_exists(public_path('/images/news/' . $value->image))) 
+                                    ? '/images/news/' . $value->image 
+                                    : '/images/news/default-news.jpg'
+                ];
+            });
+
+        return response()->json($results, 200);
+    }
 }

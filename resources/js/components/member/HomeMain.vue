@@ -127,39 +127,43 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div v-if="mainNews" class="panel blog-container">
-                                <div class="panel-body mt-3">
-                                    <div class="mb-3">
+                                <router-link :to="{ name: 'detail-artikel', params: { idart: 'TU', detail: mainNews.id } }">
+                                    <div class="panel-body mt-3">
+                                        <div class="mb-3">
+                                            <a href="#">
+                                                <img :src="mainNews.image" :alt="mainNews.title" class="img-fluid rounded-3" alt="Photo of Blog">
+                                            </a>
+                                        </div>
                                         <a href="#">
-                                            <img :src="mainNews.image" :alt="mainNews.title" class="img-fluid rounded-3" alt="Photo of Blog">
+                                            <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="mainNews.title">
+                                                {{ mainNews.title }}
+                                            </h5>
+                                        </a>
+                                        <small class="text-muted">Oleh <strong>{{ mainNews.author }}</strong> | {{ mainNews.published_at }}</small>
+                                        <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+                                            <span v-html="mainNews.content"></span>
+                                        </p>
+                                        <a href="#">
+                                            <h6>Lanjutkan Membaca </h6>
                                         </a>
                                     </div>
-                                    <a href="#">
-                                        <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="mainNews.title">
-                                            {{ mainNews.title }}
-                                        </h5>
-                                    </a>
-                                    <small class="text-muted">Oleh <strong>{{ mainNews.author }}</strong> | {{ mainNews.published_at }}</small>
-                                    <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
-                                        <span v-html="mainNews.content"></span>
-                                    </p>
-                                    <a href="#">
-                                        <h6>Lanjutkan Membaca </h6>
-                                    </a>
-                                </div>
+                                </router-link>
                             </div>           
                         </div>
                         <div class="col-lg-6">
-                            <div v-for="newsItem in otherNews" :key="newsItem.id" class="media popular-post mt-0 mb-0" style="height: 150px; max-height: 150px;">
-                                <a class="pull-left" :href="'#' + newsItem.id">
-                                    <img :src="newsItem.image" :alt="newsItem.title" class="rounded-3" style="max-width: 150px; max-height: 150px;">
-                                </a>
-                                <div class="media-body">
-                                    <a :href="'#' + newsItem.id">
-                                        <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="newsItem.title">
-                                            {{ newsItem.title }}
-                                        </h6>
+                            <div v-for="newsItem in otherNews" :key="newsItem.id">
+                                <router-link :to="{ name: 'detail-artikel', params: { idart: 'TU', detail: newsItem.id } }" class="media popular-post mt-0 mb-0" style="height: 150px; max-height: 150px;">
+                                    <a class="pull-left" :href="'#' + newsItem.id">
+                                        <img :src="newsItem.image" :alt="newsItem.title" class="rounded-3" style="max-width: 150px; max-height: 150px;">
                                     </a>
-                                </div>
+                                    <div class="media-body">
+                                        <a :href="'#' + newsItem.id">
+                                            <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="newsItem.title">
+                                                {{ newsItem.title }}
+                                            </h6>
+                                        </a>
+                                    </div>
+                                </router-link>
                             </div>
                         </div>
                     </div>
@@ -241,24 +245,26 @@
                         loop
                     >
                         <swiper-slide v-for="(value, index) in wawasan" :key="index">
-                            <div class="card h-100 hover-shadow">
-                                <div class="img-wrapper">
-                                    <img :src="value.image" class="d-block w-100 gambar-kotak" style="border-radius: 5px 5px 0 0 !important;">
+                            <router-link :to="{ name: 'detail-artikel', params: { idart: 'WA', detail: value.id } }">
+                                <div class="card h-100 hover-shadow">
+                                    <div class="img-wrapper">
+                                        <img :src="value.image" class="d-block w-100 gambar-kotak" style="border-radius: 5px 5px 0 0 !important;">
+                                    </div>
+                                    <div class="card-body pb-0">
+                                        <a href="#">
+                                            <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="value.title">
+                                                {{ value.title }}
+                                            </h5>
+                                        </a>
+                                        <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+                                            <span v-html="value.content"></span>
+                                        </p>
+                                        <a href="#">
+                                            <h6>Lanjutkan Membaca </h6>
+                                        </a>
+                                    </div>
                                 </div>
-                                <div class="card-body pb-0">
-                                    <a href="#">
-                                        <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="value.title">
-                                            {{ value.title }}
-                                        </h5>
-                                    </a>
-                                    <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
-                                        <span v-html="value.content"></span>
-                                    </p>
-                                    <a href="#">
-                                        <h6>Lanjutkan Membaca </h6>
-                                    </a>
-                                </div>
-                            </div>
+                            </router-link>
                         </swiper-slide>
                     </swiper>
                 </div>
@@ -291,25 +297,27 @@
                         loop
                     >
                         <swiper-slide v-for="(value, index) in review_buku" :key="index">
-                            <div class="card h-100 hover-shadow">
-                                <div class="img-wrapper">
-                                    <img :src="value.image" class="d-block w-100 gambar-kotak" style="border-radius: 5px 5px 0 0 !important;">
+                            <router-link :to="{ name: 'detail-artikel', params: { idart: 'RB', detail: value.id } }">
+                                <div class="card h-100 hover-shadow">
+                                    <div class="img-wrapper">
+                                        <img :src="value.image" class="d-block w-100 gambar-kotak" style="border-radius: 5px 5px 0 0 !important;">
+                                    </div>
+                                    <div class="card-body pb-0">
+                                        <a href="#">
+                                            <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="value.title">
+                                                {{ value.title }}
+                                            </h5>
+                                        </a>
+                                        <small class="text-muted">Oleh <strong> {{ value.author }}</strong></small>
+                                        <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+                                            <span v-html="value.content"></span>
+                                        </p>
+                                        <a href="#">
+                                            <h6>Lanjutkan Membaca </h6>
+                                        </a>
+                                    </div>
                                 </div>
-                                <div class="card-body pb-0">
-                                    <a href="#">
-                                        <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="value.title">
-                                            {{ value.title }}
-                                        </h5>
-                                    </a>
-                                    <small class="text-muted">Oleh <strong> {{ value.author }}</strong></small>
-                                    <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
-                                        <span v-html="value.content"></span>
-                                    </p>
-                                    <a href="#">
-                                        <h6>Lanjutkan Membaca </h6>
-                                    </a>
-                                </div>
-                            </div>
+                            </router-link>
                         </swiper-slide>
                     </swiper>
                 </div>
@@ -342,26 +350,28 @@
                         loop
                     >
                         <swiper-slide v-for="(value, index) in layar_penulis" :key="index">
-                            <div class="card h-100 hover-shadow">
-                                <div class="d-flex justify-content-center align-items-center flex-column mt-3">
-                                    <div class="avatar">
-                                        <img :src="value.image" style="height: 90px; width:90px;">
+                            <router-link :to="{ name: 'detail-artikel', params: { idart: 'LP', detail: value.id } }">
+                                <div class="card h-100 hover-shadow">
+                                    <div class="d-flex justify-content-center align-items-center flex-column mt-3">
+                                        <div class="avatar">
+                                            <img :src="value.image" style="height: 90px; width:90px;">
+                                        </div>
+                                    </div>
+                                    <div class="card-body pb-0">
+                                        <a href="#">
+                                            <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="value.title">
+                                                {{ value.title }}
+                                            </h5>
+                                        </a>
+                                        <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+                                            <span v-html="value.content"></span>
+                                        </p>
+                                        <a href="#">
+                                            <h6>Lanjutkan Membaca </h6>
+                                        </a>
                                     </div>
                                 </div>
-                                <div class="card-body pb-0">
-                                    <a href="#">
-                                        <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="value.title">
-                                            {{ value.title }}
-                                        </h5>
-                                    </a>
-                                    <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
-                                        <span v-html="value.content"></span>
-                                    </p>
-                                    <a href="#">
-                                        <h6>Lanjutkan Membaca </h6>
-                                    </a>
-                                </div>
-                            </div>
+                            </router-link>
                         </swiper-slide>
                     </swiper>
                 </div>
@@ -394,25 +404,27 @@
                         loop
                     >
                         <swiper-slide v-for="(value, index) in titik_fokus" :key="index">
-                            <div class="card h-100 hover-shadow">
-                                <div class="img-wrapper">
-                                    <img :src="value.image" class="d-block w-100 gambar-kotak" style="border-radius: 5px 5px 0 0 !important;">
+                            <router-link :to="{ name: 'detail-artikel', params: { idart: 'TF', detail: value.id } }">
+                                <div class="card h-100 hover-shadow">
+                                    <div class="img-wrapper">
+                                        <img :src="value.image" class="d-block w-100 gambar-kotak" style="border-radius: 5px 5px 0 0 !important;">
+                                    </div>
+                                    <div class="card-body pb-0">
+                                        <a href="#">
+                                            <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="value.title">
+                                                {{ value.title }}
+                                            </h5>
+                                        </a>
+                                        <!-- <small class="text-muted">Oleh <strong> {{ value.author }}</strong></small> -->
+                                        <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+                                            <span v-html="value.content"></span>
+                                        </p>
+                                        <a href="#">
+                                            <h6>Lanjutkan Membaca </h6>
+                                        </a>
+                                    </div>
                                 </div>
-                                <div class="card-body pb-0">
-                                    <a href="#">
-                                        <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="value.title">
-                                            {{ value.title }}
-                                        </h5>
-                                    </a>
-                                    <!-- <small class="text-muted">Oleh <strong> {{ value.author }}</strong></small> -->
-                                    <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
-                                        <span v-html="value.content"></span>
-                                    </p>
-                                    <a href="#">
-                                        <h6>Lanjutkan Membaca </h6>
-                                    </a>
-                                </div>
-                            </div>
+                            </router-link>
                         </swiper-slide>
                     </swiper>
                 </div>
@@ -445,25 +457,27 @@
                         loop
                     >
                         <swiper-slide v-for="(value, index) in humoria" :key="index">
-                            <div class="card h-100 hover-shadow">
-                                <div class="img-wrapper">
-                                    <img :src="value.image" class="d-block w-100 gambar-kotak" style="border-radius: 5px 5px 0 0 !important;">
+                            <router-link :to="{ name: 'detail-artikel', params: { idart: 'HU', detail: value.id } }">
+                                <div class="card h-100 hover-shadow">
+                                    <div class="img-wrapper">
+                                        <img :src="value.image" class="d-block w-100 gambar-kotak" style="border-radius: 5px 5px 0 0 !important;">
+                                    </div>
+                                    <div class="card-body pb-0">
+                                        <a href="#">
+                                            <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="value.title">
+                                                {{ value.title }}
+                                            </h5>
+                                        </a>
+                                        <!-- <small class="text-muted">Oleh <strong> {{ value.author }}</strong></small> -->
+                                        <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+                                            <span v-html="value.content"></span>
+                                        </p>
+                                        <a href="#">
+                                            <h6>Lanjutkan Membaca </h6>
+                                        </a>
+                                    </div>
                                 </div>
-                                <div class="card-body pb-0">
-                                    <a href="#">
-                                        <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="value.title">
-                                            {{ value.title }}
-                                        </h5>
-                                    </a>
-                                    <!-- <small class="text-muted">Oleh <strong> {{ value.author }}</strong></small> -->
-                                    <p class="m-top-sm m-bottom-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
-                                        <span v-html="value.content"></span>
-                                    </p>
-                                    <a href="#">
-                                        <h6>Lanjutkan Membaca </h6>
-                                    </a>
-                                </div>
-                            </div>
+                            </router-link>
                         </swiper-slide>
                     </swiper>
                 </div>

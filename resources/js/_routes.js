@@ -50,6 +50,11 @@ const _routes = [
         name: 'artikel',
         component: () => import(/* webpackChunkName: "usr/artikel" */ './components/member/Artikel.vue'),
     },
+    {
+        path: '/detail-artikel/:idart/:detail',
+        name: 'detail-artikel',
+        component: () => import(/* webpackChunkName: "usr/detailartikel" */ './components/member/DetailArtikel.vue'),
+    },
 ]
 
 export default _routes
