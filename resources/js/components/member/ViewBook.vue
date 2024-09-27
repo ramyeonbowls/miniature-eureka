@@ -293,6 +293,23 @@ export default {
             this.idb = this.$route.params.idb;
             await this.getDetail();
             await this.getBukuPopuler();
+
+            this.initializeSubMenu();
+            this.activeTab = 'sinopsis';
+        },
+
+        initializeSubMenu() {
+            let submenus = document.querySelectorAll('.submenu-item')
+    
+            submenus.forEach((submenu) => {
+                submenu.querySelector('.submenu-link').addEventListener('click', (e) => {
+                    let navbar = document.querySelector('.main-navbar');
+                    if (navbar.classList.contains('active')) {
+                        navbar.classList.remove('active');
+                    }
+                    e.preventDefault()
+                })
+            })
         }
     },
 
