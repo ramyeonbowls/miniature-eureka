@@ -390,7 +390,7 @@ export default {
         }
 
         .product-image img {
-            width: 95%;
+            width: 70%;
         }
 
         :deep(.swiper-button-next),

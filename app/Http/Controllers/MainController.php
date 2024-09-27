@@ -95,6 +95,7 @@ class MainController extends Controller
             ])
             ->when($parameter != '', function($query) use ($parameter) {
 				$query->where('a.writer', 'LIKE', '%' . $parameter . '%')
+                    ->orWhere('a.isbn', 'LIKE', '%' . $parameter . '%')
                     ->orWhere('a.title', 'LIKE', '%' . $parameter . '%');
 			})
             ->when(count($category)>0, function($query) use ($category) {

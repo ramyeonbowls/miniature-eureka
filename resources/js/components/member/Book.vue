@@ -33,7 +33,7 @@
                             <div v-for="buku in group" :key="buku.id" class="col">
                                 <router-link :to="{ name: 'detail-buku', params: { idb: buku.isbn } }">
                                     <div class="card">
-                                        <!-- <div class="card-content"> -->
+                                        <div class="card-content">
                                             <div class="product-image">
                                                 <img :src="buku.image" :alt="buku.alt" class="img-fluid">
                                             </div>
@@ -43,7 +43,7 @@
                                                     <h6 class="card-title mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="buku.title">{{ buku.title }}</h6>
                                                 </a>
                                             </div>
-                                        <!-- </div> -->
+                                        </div>
                                     </div>
                                 </router-link>
                             </div>

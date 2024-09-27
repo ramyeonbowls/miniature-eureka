@@ -241,7 +241,7 @@
                         @swiper="onSwiper"
                         @slideChange="onSlideChange"
                         :autoplay= "{ delay: 4000 }"
-                        class="swiper-container"
+                        class="swiper-container px-2"
                         loop
                     >
                         <swiper-slide v-for="(value, index) in wawasan" :key="index">
@@ -293,7 +293,7 @@
                         @swiper="onSwiper"
                         @slideChange="onSlideChange"
                         :autoplay= "{ delay: 4000 }"
-                        class="swiper-container"
+                        class="swiper-container px-2"
                         loop
                     >
                         <swiper-slide v-for="(value, index) in review_buku" :key="index">
@@ -346,7 +346,7 @@
                         @swiper="onSwiper"
                         @slideChange="onSlideChange"
                         :autoplay= "{ delay: 4000 }"
-                        class="swiper-container"
+                        class="swiper-container px-2"
                         loop
                     >
                         <swiper-slide v-for="(value, index) in layar_penulis" :key="index">
@@ -400,7 +400,7 @@
                         @swiper="onSwiper"
                         @slideChange="onSlideChange"
                         :autoplay= "{ delay: 4000 }"
-                        class="swiper-container"
+                        class="swiper-container px-2"
                         loop
                     >
                         <swiper-slide v-for="(value, index) in titik_fokus" :key="index">
@@ -453,7 +453,7 @@
                         @swiper="onSwiper"
                         @slideChange="onSlideChange"
                         :autoplay= "{ delay: 4000 }"
-                        class="swiper-container"
+                        class="swiper-container px-2"
                         loop
                     >
                         <swiper-slide v-for="(value, index) in humoria" :key="index">

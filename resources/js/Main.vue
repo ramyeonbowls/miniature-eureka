@@ -55,7 +55,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group position-relative has-icon-right">
-                            <input type="text" class="form-control rounded-pill" placeholder="Cari Judul, Penulis" v-model="searchQuery" @keypress.enter="searchBooks">
+                            <input type="text" class="form-control rounded-pill" placeholder="Cari Judul, Penulis, ISBN" v-model="searchQuery" @keypress.enter="searchBooks">
                             <div class="form-control-icon">
                                 <i class="bi bi-search" @click="searchBooks"></i>
                             </div>
