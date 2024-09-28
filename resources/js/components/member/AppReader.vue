@@ -5,25 +5,24 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-center align-items-center position-relative">
                         <!-- Zoom Level Selector -->
-                        <div class="zoom-selector">
-                            <select id="zoom" v-model="zoom" @change="renderPage">
-                                <option value="0.25">25%</option>
-                                <option value="0.5">50%</option>
-                                <option value="0.75">75%</option>
-                                <option value="1">100%</option>
-                                <option value="1.5">150%</option>
-                                <option value="2">200%</option>
-                            </select>
-                        </div>
                         
                         <!-- Floating Pagination -->
-                        <nav aria-label="Page navigation" class="pagination-float">
+                        <nav aria-label="Page navigation example" class="pagination-float">
                             <ul class="pagination pagination-primary justify-content-center">
-                                <li class="page-item"><a class="page-link" href="javascript:void(0);" @click="prevPage">Prev</a></li>
-                                <li class="page-item"><a class="page-link disabled" href="javascript:void(0);">{{ currentPage }}</a></li>
-                                <li class="page-item"><a class="page-link disabled" href="javascript:void(0);">/</a></li>
-                                <li class="page-item"><a class="page-link disabled" href="javascript:void(0);">{{ totalPages }}</a></li>
-                                <li class="page-item"><a class="page-link" href="javascript:void(0);" @click="nextPage">Next</a></li>
+                                <li class="page-item"><a style="background-color: #435ebe; color: white;" class="page-link" href="javascript:void(0);" @click="prevPage">Prev</a></li>
+                                <li class="page-item"><a style="background-color: #435ebe; color: white;" class="page-link disabled" href="javascript:void(0);">{{ currentPage }}</a></li>
+                                <li class="page-item"><a style="background-color: #435ebe; color: white;" class="page-link disabled" href="javascript:void(0);">/</a></li>
+                                <li class="page-item"><a style="background-color: #435ebe; color: white;" class="page-link disabled" href="javascript:void(0);">{{ totalPages }}</a></li>
+                                <li class="page-item"><a style="background-color: #435ebe; color: white;" class="page-link" href="javascript:void(0);" @click="nextPage">Next</a></li>
+                                <li class="page-item">
+                                    <select id="zoom" v-model="zoom" @change="renderPage" class="page-link h-100" style="background-color: #435ebe; color: white;">
+                                        <option value="0.25">25%</option>
+                                        <option value="0.5">50%</option>
+                                        <option value="0.75">75%</option>
+                                        <option value="1">100%</option>
+                                        <option value="1.5">150%</option>
+                                        <option value="2">200%</option>
+                                    </select></li>
                             </ul>
                         </nav>
                         
@@ -39,6 +38,9 @@
             </div>
         </div>
     </section>
+    <div class="no-print">
+        <p class="text-center">This content Cannot printing.</p>
+    </div>
 </template>
 
 <script setup>
@@ -155,6 +157,31 @@ const hideTooltip = () => {
     showTooltip.value = false
 }
 
+const disableRightClick = (event) => {
+    event.preventDefault();
+}
+
+const preventCopy = (event) => {
+    if (event.ctrlKey && event.key === 'c') {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+    }
+}
+
+const preventSave = (event) => {
+    if (event.ctrlKey && event.key === 's') {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+    }
+}
+
+const preventPrint = (event) => {
+    if (event.ctrlKey && event.key === 'p') {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+    }
+}
+
 onMounted(() => {
     document.addEventListener('selectionchange', handleTextSelection)
     document.addEventListener('click', hideTooltip)
@@ -163,6 +190,10 @@ onMounted(() => {
     pdfCanvas.value.addEventListener('touchstart', handleTouchStart)
     pdfCanvas.value.addEventListener('touchmove', handleTouchMove)
     pdfCanvas.value.addEventListener('touchend', handleTouchEnd)
+    document.addEventListener('keydown', preventSave)
+    document.addEventListener('keydown', preventPrint)
+    document.addEventListener('keydown', preventCopy)
+    document.addEventListener('contextmenu', disableRightClick)
 })
 
 onUnmounted(() => {
@@ -173,6 +204,10 @@ onUnmounted(() => {
     pdfCanvas.value.removeEventListener('touchstart', handleTouchStart)
     pdfCanvas.value.removeEventListener('touchmove', handleTouchMove)
     pdfCanvas.value.removeEventListener('touchend', handleTouchEnd)
+    document.removeEventListener('keydown', preventSave)
+    document.removeEventListener('keydown', preventPrint)
+    document.removeEventListener('keydown', preventCopy)
+    document.removeEventListener('contextmenu', disableRightClick)
 })
 </script>
 
@@ -208,5 +243,19 @@ onUnmounted(() => {
 }
 .zoom-selector:hover {
     opacity: 0.7; /* Fully visible on hover */
+}
+
+.no-print {
+    display: none !important;
+}
+@media print {
+    .section {
+        display: none !important; /* Hide all elements */
+    }
+
+    /* Optionally, show specific elements */
+    .no-print {
+        display: block !important;
+    }
 }
 </style>

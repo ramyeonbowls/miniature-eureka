@@ -38,7 +38,7 @@ class BookController extends Controller
      */
     public function getBook(Request $request)
     {
-        $filePath = 'public/logo/encrypt.gns';
+        $filePath = 'private/pdf/encrypt.gns';
 
         $filename = explode('.', basename($filePath))[0];
 

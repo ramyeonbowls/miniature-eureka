@@ -42,7 +42,7 @@ class EncryptPDFCommand extends Command
                 $encryptedContent = encrypt($fileContent);
 
                 // Store the encrypted Content on Storage
-                Storage::put('public/logo/encrypt.gns', $encryptedContent);
+                Storage::put('private/pdf/encrypt.gns', $encryptedContent);
             }
         } else {
             $this->error("Folder tidak ditemukan atau bukan folder yang valid.");
