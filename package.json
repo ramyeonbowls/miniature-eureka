@@ -57,6 +57,7 @@
         "jsvectormap": "^1.6.0",
         "parsleyjs": "^2.9.2",
         "pdfjs-dist": "^4.6.82",
+        "pdfjs-viewer-element": "^2.6.5",
         "perfect-scrollbar": "^1.5.5",
         "quill": "^2.0.2",
         "rater-js": "^1.0.1",

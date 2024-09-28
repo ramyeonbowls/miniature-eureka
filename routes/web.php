@@ -28,8 +28,10 @@ Route::get('/getArticle', [App\Http\Controllers\MainController::class, 'getArtic
 Route::get('/getAllArticle', [App\Http\Controllers\MainController::class, 'getAllArticle'])->name('getAllArticle');
 Route::get('/getDetailArticle', [App\Http\Controllers\MainController::class, 'getDetailArticle'])->name('getDetailArticle');
 
-Route::get('/appreader', [App\Http\Controllers\BookController::class, 'index']);
+Route::get('/appreader', [App\Http\Controllers\BookController::class, 'index'])->name('appreader');
+Route::get('/book-pdf', [App\Http\Controllers\BookController::class, 'getBook'])->name('book-pdf');
 Route::apiResource('form-regis', App\Http\Controllers\FormRegisterController::class);
+Route::get('/agreement-letter', [App\Http\Controllers\FormRegisterController::class, 'exportPDF'])->name('agreement-letter');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware('activated.user')->group(function() {

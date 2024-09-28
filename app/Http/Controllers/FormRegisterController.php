@@ -11,7 +11,9 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Register\StoreFormRegisterRequest;
 
@@ -34,9 +36,24 @@ class FormRegisterController extends Controller
      * @return JsonResponse
      * @throws Exception
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request)
     {
-        return response()->json($request, 200);
+        $filePath = 'public/logo/encrypt.gns';
+
+        $encryptedContents = Storage::get($filePath);
+        $decryptedContents = Crypt::decrypt($encryptedContents);
+        return response()->make($decryptedContents, 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="decrypted-file.pdf"'
+        ]);
+
+        /* return response()->make($decryptedContent, 200, [
+            'Cache-Control'         => 'must-revalidate, post-check=0, pre-check=0',
+            'Content-Type'          => Storage::mimeType($filePath),
+            'Content-Length'        => Storage::size($filePath),
+            'Content-Disposition'   => 'attachment; filename="' . basename($filePath) . '"',
+            'Pragma'                => 'public',
+        ]); */
     }
 
     /**
@@ -398,5 +415,15 @@ class FormRegisterController extends Controller
     public function destroy(string $id): JsonResponse
     {
         return response()->json($id, 200);
+    }
+
+    public function exportPDF(Request $request)
+    {
+        $logs = new Logs(Arr::last(explode("\\", get_class())) . 'Log');
+        $logs->write(__FUNCTION__, 'START');
+
+        return view('pdf.agreement_letter');
+
+        $logs->write(__FUNCTION__, "STOP\r\n");
     }
 }

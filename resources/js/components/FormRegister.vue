@@ -664,6 +664,16 @@ export default {
                                     title: "Register",
                                     text: response.data,
                                     icon: response.status === 201 ? 'success' : 'error',
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                    showCloseButton: false,
+                                    showCancelButton: true,
+                                    confirmButtonText: '<i class="bi bi-printer-fill"></i> Print',
+                                    cancelButtonText: '<i class="bi bi-x-circle-fill"></i> Cancel'
+                                }).then((result) => {
+                                    if(result.value) {
+                                        window.open('/agreement-letter?uuid='+ response.uuid + "_blank");
+                                    }
                                 });
                             })
                             .catch((e) => {
