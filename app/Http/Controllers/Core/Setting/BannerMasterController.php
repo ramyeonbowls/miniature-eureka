@@ -94,7 +94,7 @@ class BannerMasterController extends Controller
                     $banner_file = $request->file('file')->getClientOriginalName();
                     $extension = $request->file('file')->getClientOriginalExtension();
                     $banner_name = explode('.', str_replace(' ', '', $banner_file))[0] . '-' . now('Asia/Jakarta')->format('YmdHis') . '-' . rand(100000, 999999) . '.' . $extension;
-                    $request->file('file')->storeAs('/public/banner', $banner_name);
+                    $request->file('file')->storeAs('/public/images/banner', $banner_name);
 
                     $validated['file'] = $banner_name;
                 } catch (Throwable $th) {
@@ -160,7 +160,7 @@ class BannerMasterController extends Controller
                     $banner_file = $request->file('file')->getClientOriginalName();
                     $extension = $request->file('file')->getClientOriginalExtension();
                     $banner_name = explode('.', str_replace(' ', '', $banner_file))[0] . '-' . now('Asia/Jakarta')->format('YmdHis') . '-' . rand(100000, 999999) . '.' . $extension;
-                    $request->file('file')->storeAs('/public/banner', $banner_name);
+                    $request->file('file')->storeAs('/public/images/banner', $banner_name);
 
                     $validated['file'] = $banner_name;
                 } catch (Throwable $th) {

@@ -61,7 +61,7 @@
                                                                             <label for="id">ID <span class="text-danger">*</span></label>
                                                                         </div>
                                                                         <div class="col-md-8 form-group">
-                                                                            <Field type="text" :disabled="form.edit" id="id" v-model="form.field.id" class="form-control" name="id" />
+                                                                            <Field type="text" :disabled="true" id="id" v-model="form.field.id" class="form-control" name="id" />
                                                                             <ErrorMessage name="id" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
                                                                         </div>
                                                                         <div class="col-md-4">
@@ -137,10 +137,7 @@
 
 <script>
 import { Form as VeeForm, Field, ErrorMessage } from 'vee-validate'
-import Choices from 'choices.js'
-import 'choices.js/public/assets/styles/choices.min.css'
-import * as FilePond from 'filepond'
-import 'filepond/dist/filepond.min.css'
+import { v4 as uuidv4 } from 'uuid';
 
 let table
 export default {
@@ -205,7 +202,7 @@ export default {
                 {
                     data: "file",
                     render: function(data, type, row) {
-                        return '<img src="/storage/banner/' + data + '" class="thumbnail" data-large="/storage/banner/' + data + '" alt="Image" style="width: 50px; cursor: pointer;" />';
+                        return '<img src="/storage/images/banner/' + data + '" class="thumbnail" data-large="/storage/images/banner/' + data + '" alt="Image" style="width: 50px; cursor: pointer;" />';
                     }
                 },
                 { data: "disp_type" },
@@ -294,6 +291,7 @@ export default {
             this.form.edit = false
 
             this.clearForm()
+            this.form.field.id = uuidv4();
         },
 
         edit() {

@@ -68,6 +68,7 @@
         "swiper": "^11.1.12",
         "tinymce": "^7.3.0",
         "toastify-js": "^1.12.0",
+        "uuid": "^10.0.0",
         "vee-validate": "^4.13.2",
         "vue-filepond": "^7.0.4",
         "vue-flatpickr-component": "^11.0.5",
