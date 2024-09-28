@@ -160,7 +160,9 @@ export default {
 
     methods: {
         logout() {
+            let loader = this.$loading.show();
             window.axios.post('/logout').then((e) => {
+                loader.hide();
                 window.location = '/'
             })
         },
