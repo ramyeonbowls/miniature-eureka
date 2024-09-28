@@ -29,20 +29,22 @@
                         </ul>
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade" :class="!form.new && !form.edit ? 'show active' : ''" id="data" role="tabpanel" aria-labelledby="data-tab">
-                                <table class="table table-striped" id="data_rst">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Keterangan</th>
-                                            <th>File</th>
-                                            <th>Display</th>
-                                            <th>dibuat oleh</th>
-                                            <th>dibuat pada</th>
-                                            <th>diperbarui oleh</th>
-                                            <th>diperbarui pada</th>
-                                        </tr>
-                                    </thead>
-                                </table>
+                                <div class="table-responsive">
+                                    <table class="table table-striped" id="data_rst">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Keterangan</th>
+                                                <th>File</th>
+                                                <th>Display</th>
+                                                <th>dibuat oleh</th>
+                                                <th>dibuat pada</th>
+                                                <th>diperbarui oleh</th>
+                                                <th>diperbarui pada</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
                             </div>
                             <div class="tab-pane fade" :class="form.new || form.edit ? 'show active' : ''" id="form" role="tabpanel" aria-labelledby="form-tab">
                                 <section id="basic-horizontal-layouts">
@@ -59,7 +61,7 @@
                                                                             <label for="id">ID <span class="text-danger">*</span></label>
                                                                         </div>
                                                                         <div class="col-md-8 form-group">
-                                                                            <Field type="text" id="id" v-model="form.field.id" class="form-control" name="id" />
+                                                                            <Field type="text" :disabled="form.edit" id="id" v-model="form.field.id" class="form-control" name="id" />
                                                                             <ErrorMessage name="id" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
                                                                         </div>
                                                                         <div class="col-md-4">
@@ -70,23 +72,25 @@
                                                                             <ErrorMessage name="desc" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
                                                                         </div>
                                                                         <div class="col-md-4">
-                                                                            <label for="file_type">Jenis file <span class="text-danger">*</span></label>
+                                                                            <label for="type">Jenis file <span class="text-danger">*</span></label>
                                                                         </div>
                                                                         <div class="col-md-8 form-group">
-                                                                            <Field as="select" id="file_type" v-model="form.field.type"  class="form-control" name="file_type">
+                                                                            <Field as="select" id="type" v-model="form.field.type"  class="form-control" name="type">
                                                                                 <option value="">--</option>
                                                                                 <option value="web">Web</option>
                                                                                 <option value="mobile">Mobile</option>
                                                                             </Field>
-                                                                            <ErrorMessage name="file_type" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
+                                                                            <ErrorMessage name="type" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
                                                                         </div>
                                                                         <div class="col-md-4">
                                                                             <label for="file">File <span class="text-danger">*</span></label>
                                                                         </div>
                                                                         <div class="col-md-8 form-group">
-                                                                            <Field type="file" ref="banner_files" id="file" name="file" class="basic-filepond1" />
+                                                                            <Field name="file">
+                                                                                <input type="file" ref="banner_files" id="file" name="file" @change="onChangeIcon" accept=".png,.jpg,.jpeg" />
+                                                                            </Field>
                                                                             <ErrorMessage name="file" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
-                                                                            <small class="text-muted">Max. size: 100 kb (50x50 pixels)<br>File types: png, jpg, jpeg</small>
+                                                                            <br><small v-if="form.field.type == 'web' || form.field.type == ''" class="text-muted">Max. size: 1500 kb (1300x500 pixels)<br>File types: png, jpg, jpeg</small><small v-else class="text-muted">Max. size: 1500 kb (390x400 pixels)<br>File types: png, jpg, jpeg</small>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -105,6 +109,30 @@
             </div>
         </div>
     </section>
+
+    <!-- Modal for Image Preview -->
+    <div class="modal fade text-left" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="imageModalLabel">Preview</h4>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <i data-feather="x"></i>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <img id="modalImage" src="" class="img-fluid" alt="Preview" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                        <i class="bx bx-x d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Close</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal for Image Preview -->
 </template>
 
 <script>
@@ -157,6 +185,7 @@ export default {
         this.__MENU()
         this.$root.web_access_log()
 
+        let _row = this
         table = $('#data_rst').DataTable({
             paging: true,
             pagingType: 'full_numbers',
@@ -173,7 +202,12 @@ export default {
             columns: [
                 { data: "id" },
                 { data: "description" },
-                { data: "file" },
+                {
+                    data: "file",
+                    render: function(data, type, row) {
+                        return '<img src="/storage/banner/' + data + '" class="thumbnail" data-large="/storage/banner/' + data + '" alt="Image" style="width: 50px; cursor: pointer;" />';
+                    }
+                },
                 { data: "disp_type" },
                 { data: "created_by" },
                 { data: "created_at", class: "text-center" },
@@ -186,7 +220,7 @@ export default {
                 searchPlaceholder: "Search..",
                 info: '<span class="fs-sm">Showing _START_ to _END_ of _TOTAL_ entries</span>',
                 infoEmpty: '<span class="fs-sm">Showing 0 to 0 of 0 entries</span>',
-                infoFiltered: '<span class="fs-sm">(filtered from _MAX_ total entries)</span>',
+                infoFiltered: '<span class="fs-sm">(filtered from _MENU_ total entries)</span>',
                 zeroRecords: '<span class="fs-sm">No Data</span>',
                 paginate: {
                     first: '<i class="bi bi-chevron-double-left"></i>',
@@ -196,15 +230,30 @@ export default {
                 }
             }
         });
+        window.$('#data_rst tbody').on('click', 'tr', function () {
+            _row.selected = [];
 
-        FilePond.create(document.querySelector('.basic-filepond1'), {
-            credits: null,
-            allowImagePreview: false,
-            allowMultiple: false,
-            allowFileEncode: false,
-            required: false,
-            storeAsFile: true,
-        })
+            if ( window.$(this).hasClass('selected') ) {
+                window.$(this).removeClass('selected');
+            } else {
+                table.$('tr.selected').removeClass('selected');
+                window.$(this).addClass('selected');
+
+                if (table.rows('.selected').data().length > 0) {
+                    _row.selected.push(table.rows('.selected').data()[0]);
+                }
+            }
+        });
+        window.$('#data_rst tbody').on('click', '.thumbnail', function () {
+            // Get the large image URL from data attribute
+            var largeImageUrl = $(this).data('large');
+            
+            // Set the large image URL in the modal
+            $('#modalImage').attr('src', largeImageUrl);
+            
+            // Show the modal
+            new bootstrap.Modal(document.getElementById('imageModal')).show()
+        });
     },
 
     methods: {
@@ -236,33 +285,77 @@ export default {
             this.$refs.banner_files.value = '';
         },
 
+        async onChangeIcon(e) {
+            this.form.field.file = this.$refs.banner_files.files[0];
+        },
+
         create() {
             this.form.new = true
             this.form.edit = false
+
+            this.clearForm()
         },
 
         edit() {
-            this.form.new = false
-            this.form.edit = true
+            if (this.selected.length > 0) {
+                this.form.new = false
+                this.form.edit = true
+                this.submitted = false
+
+                this.form.field.id = this.selected[0].id
+                this.form.field.desc = this.selected[0].description
+                this.form.field.type = this.selected[0].disp_type
+                this.form.field.file = ''
+                this.form.field.current_file = this.selected[0].file
+            } else {
+                this.$swal({
+                    toast: true,
+                    icon: 'warning',
+                    text: 'No row selected!'
+                });
+            }
         },
 
         destroy() {
-            this.$swal({
-                icon: 'question',
-                text: 'Are you sure you will delete this data?',
-                showCancelButton: true,
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                confirmButtonText: '<i class="bi bi-trash-fill"></i> Delete',
-                cancelButtonText: '<i class="bi bi-x-square-fill"></i> Cancel',
-                buttonsStyling: false,
-                customClass: {
-                    confirmButton: 'btn btn-sm btn-danger me-2',
-                    cancelButton: 'btn btn-sm btn-secondary',
-                },
-            }).then((result) => {
-                this.cancel()
-            })
+            if(this.selected.length > 0) {
+                this.$swal({
+                    icon: 'question',
+                    text: 'Are you sure you will delete this data?',
+                    showCancelButton: true,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    confirmButtonText: '<i class="bi bi-trash-fill"></i> Delete',
+                    cancelButtonText: '<i class="bi bi-x-square-fill"></i> Cancel',
+                    buttonsStyling: false,
+                    customClass: {
+                        confirmButton: 'btn btn-sm btn-danger me-2',
+                        cancelButton: 'btn btn-sm btn-secondary',
+                    },
+                }).then((result) => {
+                    if (result.value) {
+                        let loader = this.$loading.show();
+
+                        window.axios.delete('/setting/banner-mst/'+ this.selected[0].id +'?menufn='+ this.$route.name)
+                            .then(response => {
+                                loader.hide();
+                                this.selected = [];
+                                table.ajax.reload();
+
+                                this.$swal({
+                                    toast: true,
+                                    icon: 'success',
+                                    html: response.data
+                                });
+                            })
+                    }
+                })
+            } else {
+                this.$swal({
+                    toast: true,
+                    icon: 'warning',
+                    text: 'No row selected!'
+                });
+            }
         },
 
         submit() {
@@ -275,16 +368,21 @@ export default {
 
                         let loader = this.$loading.show();
                         if(this.form.new) {
-                            window.axios.post('/setting/banner-mst?menu_fn='+ this.$route.name, this.form.field)
+                            let form_data = new FormData();
+                            Object.keys(this.form.field).forEach(value => {
+                                form_data.append(value, this.form.field[value]);
+                            });
+                            
+                            window.axios.post('/setting/banner-mst?menu_fn='+ this.$route.name, form_data)
                                 .then((response) => {
                                     loader.hide();
-                                    this.close();
+                                    this.cancel();
 
                                     this.$swal({
                                         toast: true,
                                         position: 'top',
-                                        icon: response.data.success ? 'success' : 'error',
-                                        html: response.data.message
+                                        icon: response.status === 201 ? 'success' : 'info',
+                                        html: response.data
                                     });
                                 })
                                 .catch((e) => {
@@ -296,16 +394,22 @@ export default {
                                     }
                                 });
                         } else {
-                            window.axios.put('/setting/banner-mst/'+ this.form.field.type +'?menu_fn='+ this.$route.name, this.form.field)
+                            let form_data = new FormData();
+                            form_data.append('_method', 'PUT');
+                            Object.keys(this.form.field).forEach(value => {
+                                form_data.append(value, this.form.field[value]);
+                            });
+
+                            window.axios.post('/setting/banner-mst/'+ this.form.field.id +'?menu_fn='+ this.$route.name, form_data)
                                 .then((response) => {
                                     loader.hide();
-                                    this.close();
+                                    this.cancel();
 
                                     this.$swal({
                                         toast: true,
                                         position: 'top',
-                                        icon: response.data.success ? 'success' : 'error',
-                                        html: response.data.message
+                                        icon: response.status === 201 ? 'success' : 'info',
+                                        html: response.data
                                     });
                                 })
                                 .catch((e) => {
@@ -327,6 +431,12 @@ export default {
         cancel() {
             this.form.new = false
             this.form.edit = false
+            this.form.submitted = false
+
+            this.selected = []
+            this.clearForm()
+            this.$refs.form.resetForm()
+            table.ajax.reload(null, false)
         },
     },
 

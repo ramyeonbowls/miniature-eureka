@@ -49,4 +49,41 @@ class BannerMasterRepository
             ]);
         });
     }
+	
+	/**
+     * @param object $data
+     * @param string $id
+     * @return bool
+     */
+    public function update(object $data, string $id): bool
+    {
+        return DB::transaction(function () use ($data, $id) {
+            return DB::table('tbanner')->where('id', $id)
+                ->update([
+                    'description' => $data->desc,
+                    'file' => $data->file,
+                    'disp_type' => $data->type,
+                    'client_id' => '',
+                    'updated_at' => $data->modified_date,
+                    'updated_by' => $data->modified_by
+                ]);
+        });
+    }
+
+    /**
+     * @param string $id
+     * @return mixed
+     */
+    public function delete(string $id)
+    {
+        return DB::transaction(function () use ($id) {
+            $banner = DB::table('tbanner')
+                ->where('id', $id);
+
+            $banner_file = $banner->first();
+            @unlink(storage_path('app/public/banner/'.$banner_file->file));
+
+            return $banner->delete();
+        });
+    }
 }

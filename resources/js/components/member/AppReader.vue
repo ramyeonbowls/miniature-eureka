@@ -69,7 +69,7 @@ watch(() => route.query.pdfToken, (newId, oldId) => {
         loadDecryptedPdf(newId)
     }
 )
-
+ 
 // Fetch and render the PDF
 const loadDecryptedPdf = async (id) => {
     try {

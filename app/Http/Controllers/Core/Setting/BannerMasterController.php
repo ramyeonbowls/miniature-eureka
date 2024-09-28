@@ -43,20 +43,11 @@ class BannerMasterController extends Controller
         $logs = new Logs(Arr::last(explode("\\", get_class())) . 'Log');
         $logs->write(__FUNCTION__, 'START');
 
-        $results['data'] = [];
-        $results['meta'] = [
-            'current_page' => 1,
-            'per_page' => 10,
-            'first_page' =>	1,
-            'last_page' => 1,
-            'total_pages' => 1,
-            'total' => 1
-        ];
-
+        $results = [];
         try {
             DB::enableQueryLog();
 
-            $results['data'] = $this->banner_service->get();
+            $results = $this->banner_service->get();
 
             $queries = DB::getQueryLog();
             for ($q = 0; $q < count($queries); $q++) {
@@ -68,7 +59,16 @@ class BannerMasterController extends Controller
         }
         $logs->write(__FUNCTION__, "STOP\r\n");
 
-        return response()->json($results, 200);
+        return DataTables::of($results)
+            ->escapeColumns()
+            ->editColumn('created_at', function ($value) {
+                return Carbon::parse($value->created_at)->toDateTimeString();
+            })
+            ->editColumn('updated_at', function ($value) {
+                return Carbon::parse($value->updated_at)->toDateTimeString();
+            })
+            ->addIndexColumn()
+            ->toJson();
     }
 
     /**
@@ -93,10 +93,10 @@ class BannerMasterController extends Controller
                 try {
                     $banner_file = $request->file('file')->getClientOriginalName();
                     $extension = $request->file('file')->getClientOriginalExtension();
-                    $banner_name = (isset(request()->file) ? request()->file : $banner_file) . '-' . now('Asia/Jakarta')->format('YmdHis') . '-' . rand(100000, 999999) . '.' . $extension;
+                    $banner_name = explode('.', str_replace(' ', '', $banner_file))[0] . '-' . now('Asia/Jakarta')->format('YmdHis') . '-' . rand(100000, 999999) . '.' . $extension;
                     $request->file('file')->storeAs('/public/banner', $banner_name);
 
-                    $validated['file'] = '/storage/banner/'. $banner_name;
+                    $validated['file'] = $banner_name;
                 } catch (Throwable $th) {
                     $logs->write("ERROR", $th->getMessage());
                 }
@@ -127,25 +127,103 @@ class BannerMasterController extends Controller
 
     /**
      * Display the specified resource.
+     *
+     * @return JsonResponse
+     * @throws Exception
      */
-    public function show(string $id)
+    public function show(string $id): JsonResponse
     {
-        //
+        return response()->json($id, 200);
     }
 
     /**
      * Update the specified resource in storage.
+     *
+     * @param UpdateBannerMasterRequest $request
+     * @param string $id
+     * @return JsonResponse
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateBannerMasterRequest $request, string $id): JsonResponse
     {
-        //
+        $validated = $request->validated();
+
+        $logs = new Logs(Arr::last(explode("\\", get_class())) . 'Log');
+        $logs->write(__FUNCTION__, 'START');
+
+        $result['status'] = 200;
+        $result['message'] = '';
+        try {
+            DB::enableQueryLog();
+
+            if ($request->hasFile('file')) {
+                try {
+                    $banner_file = $request->file('file')->getClientOriginalName();
+                    $extension = $request->file('file')->getClientOriginalExtension();
+                    $banner_name = explode('.', str_replace(' ', '', $banner_file))[0] . '-' . now('Asia/Jakarta')->format('YmdHis') . '-' . rand(100000, 999999) . '.' . $extension;
+                    $request->file('file')->storeAs('/public/banner', $banner_name);
+
+                    $validated['file'] = $banner_name;
+                } catch (Throwable $th) {
+                    $logs->write("ERROR", $th->getMessage());
+                }
+            }
+
+            $updated = $this->banner_service->update((object)$validated, $id);
+            if ($updated) {
+                $logs->write("INFO", "Successfully updated");
+
+                $result['status'] = 201;
+                $result['message'] = "Successfully updated.";
+            }
+
+            $queries = DB::getQueryLog();
+            for ($q = 0; $q < count($queries); $q++) {
+                $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+                $logs->write('SQL', $queries[$q]['query']);
+            }
+        } catch (Throwable $th) {
+            $logs->write("ERROR", $th->getMessage());
+
+            $result['message'] = "Failed updated.<br>" . $th->getMessage();
+        }
+
+        return response()->json($result['message'], $result['status']);
     }
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @param  string  $id
+     * @return JsonResponse
      */
-    public function destroy(string $id)
+    public function destroy(string $id): JsonResponse
     {
-        //
+        $logs = new Logs(Arr::last(explode("\\", get_class())) . 'Log');
+        $logs->write(__FUNCTION__, 'START');
+
+        $result['status'] = 200;
+        $result['message'] = '';
+        try {
+            DB::enableQueryLog();
+
+            $deleted = $this->banner_service->delete($id);
+
+            $queries = DB::getQueryLog();
+            for ($q = 0; $q < count($queries); $q++) {
+                $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+                $logs->write('SQL', $queries[$q]['query']);
+            }
+
+            if ($deleted) {
+                $result['message'] = 'Successfully deleted';
+            }
+        } catch (Throwable $th) {
+            $logs->write("ERROR", $th->getMessage());
+
+            $result['message'] = 'Failed delete.<br>' . $th->getMessage();
+        }
+        $logs->write(__FUNCTION__, "STOP\r\n");
+
+        return response()->json($result['message'], $result['status']);
     }
 }
