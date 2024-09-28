@@ -37,6 +37,21 @@
                 </div>
             </div>
         </div>
+        <loading
+            :active="isLoading" 
+            :can-cancel="false"
+            :is-full-page="true"
+            :duration="0"
+            :overlay="true"
+            :spinner="true"
+            :color="'#8080ff'"
+            :background-color="'#111111'"
+            :width="110"
+            :height="110"
+            :opacity="0.4"
+            :z-index="1999"
+            text="'Mohon Tunggu'"
+        />
     </section>
     <div class="no-print">
         <p class="text-center">This content Cannot printing.</p>
@@ -47,6 +62,8 @@
 import { ref, watch, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import * as pdfjsLib from 'pdfjs-dist'
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/css/index.css'
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = new URL('pdfjs-dist/build/pdf.worker.mjs', import.meta.url).toString()
 
@@ -55,6 +72,7 @@ const pdfCanvas = ref(null)
 const currentPage = ref(1)
 const totalPages = ref(1)
 const zoom = ref(1)
+const isLoading = ref(false)
 
 const showTooltip = ref(false)
 const tooltipX = ref(0)
@@ -74,6 +92,7 @@ watch(() => route.query.pdfToken, (newId, oldId) => {
 
 // Fetch and render the PDF
 const loadDecryptedPdf = async (id) => {
+    isLoading.value = true
     try {
         const response = await window.axios.get('/book-pdf', {
             responseType: 'blob',
@@ -88,24 +107,31 @@ const loadDecryptedPdf = async (id) => {
         renderPage()
     } catch (error) {
         console.error('Error fetching PDF:', error)
+    } finally {
+        isLoading.value = false
     }
 }
 
 // Render the current page
 const renderPage = async () => {
-    const page = await pdfDocument.getPage(currentPage.value)
-    const viewport = page.getViewport({ scale: zoom.value })
-    const canvas = pdfCanvas.value
-    const context = canvas.getContext('2d')
+    try{
+        // loading.show()
+        const page = await pdfDocument.getPage(currentPage.value)
+        const viewport = page.getViewport({ scale: zoom.value })
+        const canvas = pdfCanvas.value
+        const context = canvas.getContext('2d')
 
-    canvas.height = viewport.height
-    canvas.width = viewport.width
+        canvas.height = viewport.height
+        canvas.width = viewport.width
 
-    const renderContext = {
-        canvasContext: context,
-        viewport: viewport
+        const renderContext = {
+            canvasContext: context,
+            viewport: viewport
+        }
+        await page.render(renderContext).promise
+    } finally {
+        // loading.hide()
     }
-    await page.render(renderContext).promise
 }
 
 const prevPage = () => {
@@ -182,6 +208,15 @@ const preventPrint = (event) => {
     }
 }
 
+const handleArrowKey = (event) => {
+    if (event.key === 'ArrowRight') {
+        nextPage()
+    }
+    if (event.key === 'ArrowLeft') {
+        prevPage()
+    }
+}
+
 onMounted(() => {
     document.addEventListener('selectionchange', handleTextSelection)
     document.addEventListener('click', hideTooltip)
@@ -193,6 +228,7 @@ onMounted(() => {
     document.addEventListener('keydown', preventSave)
     document.addEventListener('keydown', preventPrint)
     document.addEventListener('keydown', preventCopy)
+    document.addEventListener('keydown', handleArrowKey)
     document.addEventListener('contextmenu', disableRightClick)
 })
 
@@ -207,6 +243,7 @@ onUnmounted(() => {
     document.removeEventListener('keydown', preventSave)
     document.removeEventListener('keydown', preventPrint)
     document.removeEventListener('keydown', preventCopy)
+    document.removeEventListener('keydown', handleArrowKey)
     document.removeEventListener('contextmenu', disableRightClick)
 })
 </script>
@@ -248,6 +285,22 @@ onUnmounted(() => {
 .no-print {
     display: none !important;
 }
+
+.logo-overlay {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Full height of the overlay */
+}
+
+.spinner-logo {
+    width: 80px; /* Adjust logo size */
+    height: auto; /* Maintain aspect ratio */
+    position: absolute; /* Position it in the center */
+    z-index: 10; /* Ensure logo is above the spinner */
+}
+
 @media print {
     .section {
         display: none !important; /* Hide all elements */

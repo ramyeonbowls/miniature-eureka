@@ -4,7 +4,44 @@
             <div class="col-12 col-lg-12">
                 <div class="row">
                     <div class="col-12">
-                        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                        <!-- Web Carousel -->
+                <div id="webCarousel" class="carousel slide d-none d-xl-block d-lg-none" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div v-for="(item, index) in banner.filter(item => item.display === 'web')" 
+                             :key="index" 
+                             :class="['carousel-item', { 'active': index === 0 }]">
+                            <img :src="item.image" class="d-block w-100" :alt="item.description" style="max-height: 500px;">
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#webCarousel" role="button" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#webCarousel" role="button" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </a>
+                </div>
+
+                <!-- Mobile Carousel -->
+                <div id="mobileCarousel" class="carousel slide d-block d-sm-block d-xl-none" data-bs-ride="carousel" v-if="banner.some(item => item.display === 'mobile')">
+                    <div class="carousel-inner">
+                        <div v-for="(item, index) in banner.filter(item => item.display === 'mobile')" 
+                             :key="index" 
+                             :class="['carousel-item', { 'active': index === 0 }]">
+                            <img :src="item.image" class="d-block w-100" :alt="item.description" style="max-height: 400px;">
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#mobileCarousel" role="button" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#mobileCarousel" role="button" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </a>
+                </div>
+                        <!-- <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                             <div class="carousel-inner">
                                 <div v-for="(item, index) in banner" :key="index" :class="['carousel-item', { 'active': index === 0 }]">
                                     <img :src="item.image" class="d-block w-100" :alt="item.descriptiion">
@@ -18,7 +55,7 @@
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Next</span>
                             </a>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

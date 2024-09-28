@@ -173,10 +173,21 @@ class MainController extends Controller
                 'a.id',
                 'a.description',
                 'a.file as image',
+                'a.disp_type'
             ])
             ->where('a.client_id','=', $client_id)
             ->orderBy('created_at', 'DESC')
-            ->get();
+            ->get()
+            ->map(function ($value) {
+                return [
+                    'id'            => $value->id,
+                    'description'   => $value->description,
+                    'display'       => $value->disp_type,
+                    'image'         => (isset($value->image) && file_exists(public_path('/images/banner/' . $value->image))) 
+                                    ? '/images/banner/' . $value->image 
+                                    : '/images/banner/banner1.jpg'
+                ];
+            });
 
         return response()->json($results, 200);
     }
