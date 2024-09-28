@@ -36,13 +36,14 @@ class EncryptPDFCommand extends Command
                 $this->info($file);
 
                 // Get file content in memory
-                $fileContent = Storage::get('public/pdf/5 Manfaat Daun Pandan yang Populer di Masyarakat.pdf');
+                $fileContent = Storage::get('public/pdf/'.basename($file));
 
                 // Encrypt the File Content
                 $encryptedContent = encrypt($fileContent);
 
                 // Store the encrypted Content on Storage
-                Storage::put('private/pdf/encrypt.gns', $encryptedContent);
+                $filename = explode('.', basename($file))[0];
+                Storage::put('private/pdf/'.$filename.'.gns', $encryptedContent);
             }
         } else {
             $this->error("Folder tidak ditemukan atau bukan folder yang valid.");
