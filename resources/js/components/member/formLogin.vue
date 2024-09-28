@@ -66,14 +66,17 @@ export default {
     methods: {
         async handleLogin() {
             try {
+                let loader = this.$loading.show();
                 const response = await axios.post('/login', {
                     _token: this.csrfToken,
                     email: this.email,
                     password: this.password,
                     from: 'member'
                 });
+                loader.hide();
                 window.location.href = '/';
             } catch (error) {
+                loader.hide();
                 if (error.response && error.response.status === 422) {
                     this.errors = error.response.data.errors || {};
                 } else {

@@ -5,25 +5,24 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-center align-items-center position-relative">
                         <!-- Zoom Level Selector -->
-                        <div class="zoom-selector">
-                            <select id="zoom" v-model="zoom" @change="renderPage">
-                                <option value="0.25">25%</option>
-                                <option value="0.5">50%</option>
-                                <option value="0.75">75%</option>
-                                <option value="1">100%</option>
-                                <option value="1.5">150%</option>
-                                <option value="2">200%</option>
-                            </select>
-                        </div>
                         
                         <!-- Floating Pagination -->
-                        <nav aria-label="Page navigation" class="pagination-float">
+                        <nav aria-label="Page navigation example" class="pagination-float">
                             <ul class="pagination pagination-primary justify-content-center">
-                                <li class="page-item"><a class="page-link" href="javascript:void(0);" @click="prevPage">Prev</a></li>
-                                <li class="page-item"><a class="page-link disabled" href="javascript:void(0);">{{ currentPage }}</a></li>
-                                <li class="page-item"><a class="page-link disabled" href="javascript:void(0);">/</a></li>
-                                <li class="page-item"><a class="page-link disabled" href="javascript:void(0);">{{ totalPages }}</a></li>
-                                <li class="page-item"><a class="page-link" href="javascript:void(0);" @click="nextPage">Next</a></li>
+                                <li class="page-item"><a style="background-color: #435ebe; color: white;" class="page-link" href="javascript:void(0);" @click="prevPage">Prev</a></li>
+                                <li class="page-item"><a style="background-color: #435ebe; color: white;" class="page-link disabled" href="javascript:void(0);">{{ currentPage }}</a></li>
+                                <li class="page-item"><a style="background-color: #435ebe; color: white;" class="page-link disabled" href="javascript:void(0);">/</a></li>
+                                <li class="page-item"><a style="background-color: #435ebe; color: white;" class="page-link disabled" href="javascript:void(0);">{{ totalPages }}</a></li>
+                                <li class="page-item"><a style="background-color: #435ebe; color: white;" class="page-link" href="javascript:void(0);" @click="nextPage">Next</a></li>
+                                <li class="page-item">
+                                    <select id="zoom" v-model="zoom" @change="renderPage" class="page-link h-100" style="background-color: #435ebe; color: white;">
+                                        <option value="0.25">25%</option>
+                                        <option value="0.5">50%</option>
+                                        <option value="0.75">75%</option>
+                                        <option value="1">100%</option>
+                                        <option value="1.5">150%</option>
+                                        <option value="2">200%</option>
+                                    </select></li>
                             </ul>
                         </nav>
                         
@@ -38,13 +37,33 @@
                 </div>
             </div>
         </div>
+        <loading
+            :active="isLoading" 
+            :can-cancel="false"
+            :is-full-page="true"
+            :duration="0"
+            :overlay="true"
+            :spinner="true"
+            :color="'#8080ff'"
+            :background-color="'#111111'"
+            :width="110"
+            :height="110"
+            :opacity="0.4"
+            :z-index="1999"
+            text="'Mohon Tunggu'"
+        />
     </section>
+    <div class="no-print">
+        <p class="text-center">This content Cannot printing.</p>
+    </div>
 </template>
 
 <script setup>
 import { ref, watch, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import * as pdfjsLib from 'pdfjs-dist'
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/css/index.css'
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = new URL('pdfjs-dist/build/pdf.worker.mjs', import.meta.url).toString()
 
@@ -53,6 +72,7 @@ const pdfCanvas = ref(null)
 const currentPage = ref(1)
 const totalPages = ref(1)
 const zoom = ref(1)
+const isLoading = ref(false)
 
 const showTooltip = ref(false)
 const tooltipX = ref(0)
@@ -72,6 +92,7 @@ watch(() => route.query.pdfToken, (newId, oldId) => {
  
 // Fetch and render the PDF
 const loadDecryptedPdf = async (id) => {
+    isLoading.value = true
     try {
         const response = await window.axios.get('/book-pdf', {
             responseType: 'blob',
@@ -86,24 +107,31 @@ const loadDecryptedPdf = async (id) => {
         renderPage()
     } catch (error) {
         console.error('Error fetching PDF:', error)
+    } finally {
+        isLoading.value = false
     }
 }
 
 // Render the current page
 const renderPage = async () => {
-    const page = await pdfDocument.getPage(currentPage.value)
-    const viewport = page.getViewport({ scale: zoom.value })
-    const canvas = pdfCanvas.value
-    const context = canvas.getContext('2d')
+    try{
+        // loading.show()
+        const page = await pdfDocument.getPage(currentPage.value)
+        const viewport = page.getViewport({ scale: zoom.value })
+        const canvas = pdfCanvas.value
+        const context = canvas.getContext('2d')
 
-    canvas.height = viewport.height
-    canvas.width = viewport.width
+        canvas.height = viewport.height
+        canvas.width = viewport.width
 
-    const renderContext = {
-        canvasContext: context,
-        viewport: viewport
+        const renderContext = {
+            canvasContext: context,
+            viewport: viewport
+        }
+        await page.render(renderContext).promise
+    } finally {
+        // loading.hide()
     }
-    await page.render(renderContext).promise
 }
 
 const prevPage = () => {
@@ -155,6 +183,40 @@ const hideTooltip = () => {
     showTooltip.value = false
 }
 
+const disableRightClick = (event) => {
+    event.preventDefault();
+}
+
+const preventCopy = (event) => {
+    if (event.ctrlKey && event.key === 'c') {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+    }
+}
+
+const preventSave = (event) => {
+    if (event.ctrlKey && event.key === 's') {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+    }
+}
+
+const preventPrint = (event) => {
+    if (event.ctrlKey && event.key === 'p') {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+    }
+}
+
+const handleArrowKey = (event) => {
+    if (event.key === 'ArrowRight') {
+        nextPage()
+    }
+    if (event.key === 'ArrowLeft') {
+        prevPage()
+    }
+}
+
 onMounted(() => {
     document.addEventListener('selectionchange', handleTextSelection)
     document.addEventListener('click', hideTooltip)
@@ -163,6 +225,11 @@ onMounted(() => {
     pdfCanvas.value.addEventListener('touchstart', handleTouchStart)
     pdfCanvas.value.addEventListener('touchmove', handleTouchMove)
     pdfCanvas.value.addEventListener('touchend', handleTouchEnd)
+    document.addEventListener('keydown', preventSave)
+    document.addEventListener('keydown', preventPrint)
+    document.addEventListener('keydown', preventCopy)
+    document.addEventListener('keydown', handleArrowKey)
+    document.addEventListener('contextmenu', disableRightClick)
 })
 
 onUnmounted(() => {
@@ -173,6 +240,11 @@ onUnmounted(() => {
     pdfCanvas.value.removeEventListener('touchstart', handleTouchStart)
     pdfCanvas.value.removeEventListener('touchmove', handleTouchMove)
     pdfCanvas.value.removeEventListener('touchend', handleTouchEnd)
+    document.removeEventListener('keydown', preventSave)
+    document.removeEventListener('keydown', preventPrint)
+    document.removeEventListener('keydown', preventCopy)
+    document.removeEventListener('keydown', handleArrowKey)
+    document.removeEventListener('contextmenu', disableRightClick)
 })
 </script>
 
@@ -208,5 +280,35 @@ onUnmounted(() => {
 }
 .zoom-selector:hover {
     opacity: 0.7; /* Fully visible on hover */
+}
+
+.no-print {
+    display: none !important;
+}
+
+.logo-overlay {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Full height of the overlay */
+}
+
+.spinner-logo {
+    width: 80px; /* Adjust logo size */
+    height: auto; /* Maintain aspect ratio */
+    position: absolute; /* Position it in the center */
+    z-index: 10; /* Ensure logo is above the spinner */
+}
+
+@media print {
+    .section {
+        display: none !important; /* Hide all elements */
+    }
+
+    /* Optionally, show specific elements */
+    .no-print {
+        display: block !important;
+    }
 }
 </style>
