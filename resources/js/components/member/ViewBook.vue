@@ -277,13 +277,32 @@ export default {
                 .catch((e) => {
                     loader.hide();
                     this.$swal({
-                        // title: "Register",
-                        text: e.response.data.message,
-                        icon: 'error',
-                        allowOutsideClick: false,
-                        allowEscapeKey: false,
-                        showCloseButton: false,
-                        showCancelButton: false
+                        title: e.response.data.message,
+                        text: "Silahkan verifikasi email, jika klik Kirim Email jika ingin kirim ulang email verifikasi",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Kirim Email',
+                        cancelButtonText: 'Tutup'
+                    })
+                    .then(async (result) => {
+                        if (result.isConfirmed) {
+                            try {
+                                // Send a request to resend the verification email
+                                const response = await window.axios.post('/email/resend');
+                                this.$swal({
+                                    title: 'Email Terkirim!',
+                                    text: response.data.message,
+                                    icon: 'success'
+                                });
+                            } catch (error) {
+                                // Handle error if the resend fails
+                                this.$swal({
+                                    title: 'Gagal!',
+                                    text: error.response.data.message || 'Terjadi kesalahan saat mengirim email.',
+                                    icon: 'error'
+                                });
+                            }
+                        }
                     });
                 });
             }

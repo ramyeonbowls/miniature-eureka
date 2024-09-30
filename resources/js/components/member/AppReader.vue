@@ -84,8 +84,11 @@ let touchStartX = 0
 let touchEndX = 0
 
 const route = useRoute()
+let datenow = ref('')
+let book_id = ref(route.query.pdfToken)
 
 watch(() => route.query.pdfToken, (newId, oldId) => {
+        book_id.value = newId
         loadDecryptedPdf(newId)
     }
 )
@@ -100,6 +103,8 @@ const loadDecryptedPdf = async (id) => {
                 token: id,
             },
         })
+        if (book_id.value) SendLastRead('N')
+
         const fileURL = URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }))
         pdfUrl.value = fileURL
         pdfDocument = await pdfjsLib.getDocument(fileURL).promise
@@ -115,7 +120,6 @@ const loadDecryptedPdf = async (id) => {
 // Render the current page
 const renderPage = async () => {
     try{
-        // loading.show()
         const page = await pdfDocument.getPage(currentPage.value)
         const viewport = page.getViewport({ scale: zoom.value })
         const canvas = pdfCanvas.value
@@ -130,7 +134,7 @@ const renderPage = async () => {
         }
         await page.render(renderContext).promise
     } finally {
-        // loading.hide()
+
     }
 }
 
@@ -217,6 +221,46 @@ const handleArrowKey = (event) => {
     }
 }
 
+const getCurrentDateTime = () => {
+    const currentDateTime = new Date()
+    const year = currentDateTime.getFullYear()
+    const month = String(currentDateTime.getMonth() + 1).padStart(2, '0')
+    const day = String(currentDateTime.getDate()).padStart(2, '0')
+    const hours = String(currentDateTime.getHours()).padStart(2, '0')
+    const minutes = String(currentDateTime.getMinutes()).padStart(2, '0')
+    const seconds = String(currentDateTime.getSeconds()).padStart(2, '0')
+
+    datenow = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
+  
+}
+
+const SendLastRead = async (param) => {
+    try {
+        await window.axios.post('/LastRead', {
+            start: datenow,
+            token: book_id.value,
+            active: param
+        });
+    } catch (error) {
+        console.error('Error sending request:', error);
+    }
+}
+
+const SendLastReadSync = (param) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "/LastRead", false);
+    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhr.send(JSON.stringify({
+        start: datenow,
+        token: book_id.value,
+        active: param
+    }));
+}
+
+const handleBeforeUnload = async (event) => {
+    await SendLastReadSync('Y')
+}
+
 onMounted(() => {
     document.addEventListener('selectionchange', handleTextSelection)
     document.addEventListener('click', hideTooltip)
@@ -230,6 +274,10 @@ onMounted(() => {
     document.addEventListener('keydown', preventCopy)
     document.addEventListener('keydown', handleArrowKey)
     document.addEventListener('contextmenu', disableRightClick)
+    
+    getCurrentDateTime()
+    setInterval(() => SendLastRead('N'), 300000)
+    window.addEventListener('beforeunload', handleBeforeUnload)
 })
 
 onUnmounted(() => {
@@ -245,6 +293,8 @@ onUnmounted(() => {
     document.removeEventListener('keydown', preventCopy)
     document.removeEventListener('keydown', handleArrowKey)
     document.removeEventListener('contextmenu', disableRightClick)
+
+    window.removeEventListener('beforeunload', handleBeforeUnload)
 })
 </script>
 

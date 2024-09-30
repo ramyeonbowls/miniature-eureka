@@ -65,6 +65,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
         
         Route::group(['middleware' => ['role.user:member']], function () {
+            Route::post('/LastRead', [App\Http\Controllers\BookController::class, 'LastRead'])->name('LastRead');
             Route::get('/ReadCheck', [App\Http\Controllers\BookController::class, 'ReadCheck'])->name('ReadCheck');
             Route::get('/appreader', [App\Http\Controllers\BookController::class, 'index'])->name('appreader');
             Route::get('/book-pdf', [App\Http\Controllers\BookController::class, 'getBook'])->name('book-pdf');

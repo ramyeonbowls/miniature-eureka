@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Logs;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
@@ -89,5 +90,59 @@ class BookController extends Controller
             'code' => '0',
             'message' => 'Anda Belum Cukup Usia Untuk membaca Buku Ini!',
         ], 200);
+    }
+    
+    public function LastRead(Request $request)
+    {
+        $user = auth()->user();
+        // $logs = new Logs( Arr::last(explode("\\", get_class())) );
+        // $logs->write(__FUNCTION__, "START");
+        // DB::enableQueryLog();
+
+        $existingRecord = DB::table('ttrx_read')
+            ->where('book_id', $request->token)
+            ->where('user_id', $user->id)
+            ->where('start_read', $request->start)
+            ->first();
+
+        if ($existingRecord) {
+            $ttrx = DB::table('ttrx_read')
+                ->where('book_id', $request->token)
+                ->update([
+                    'end_read'      => Carbon::now(),
+                    'flag_end'      => $request->active,
+                    'updated_at'    => Carbon::now()
+                ]);
+        } else {
+            $ttrx = DB::table('ttrx_read')
+                ->insert([
+                    'book_id'       => $request->token,
+                    'start_read'    => $request->start,
+                    'user_id'       => $user->id,
+                    'client_id'     => $this->client_id,
+                    'flag_end'      => $request->active,
+                    'end_read'      => Carbon::now(),
+                    'created_at'    => Carbon::now()
+                ]);
+        }
+
+        // $queries = DB::getQueryLog();
+        // for($q = 0; $q < count($queries); $q++) {
+        //     $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
+        //     $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+        //     $logs->write('SQL', $sql);
+        // }
+
+        if($ttrx){
+            return response()->json([
+                'code' => '1',
+                'message' => 'Ok!',
+            ], 200);
+        }else{
+            return response()->json([
+                'code' => '0',
+                'message' => 'Failed!',
+            ], 200);
+        }
     }
 }
