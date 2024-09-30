@@ -275,7 +275,16 @@ export default {
                     }
                 })
                 .catch((e) => {
-                    console.error(e)
+                    loader.hide();
+                    this.$swal({
+                        // title: "Register",
+                        text: e.response.data.message,
+                        icon: 'error',
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        showCloseButton: false,
+                        showCancelButton: false
+                    });
                 });
             }
         },
