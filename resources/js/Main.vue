@@ -7,7 +7,7 @@
                 <router-view :isAuthenticated="isAuthenticated"></router-view>
             </div>
 
-            <nav class="navbar-dark navbar-expand d-block d-xs-block d-xl-none fixed-bottom" role="navigation" style="border-radius: 7px 7px 0 0 !important; background-color: rgb(67, 94, 190)">
+            <nav class="navbar-dark navbar-expand d-block d-xs-block d-xl-none fixed-bottom" role="navigation" style="border-radius: 10px 10px 0 0 !important; background-color: #fab040;">
                 <ul class="navbar-nav nav-justified pt-2">
                     <li class="nav-item">
                         <router-link to="/" class='menu-item'>
@@ -147,7 +147,7 @@ export default {
     }
 
     .menu-item {
-        color: white;
+        color: rgb(255, 255, 255);
         text-decoration: none;
         padding: 0.3rem;
         display: flex;
@@ -166,7 +166,7 @@ export default {
     }
 
     .menu-item.active {
-        color: white;
+        color: rgb(255, 255, 255);
         border-bottom: 2px solid rgb(255, 255, 255);
     }
 
