@@ -78,7 +78,7 @@ class BookController extends Controller
             $birthdayC  = Carbon::parse($birthday);
             $age        = $birthdayC->diffInYears(Carbon::now());
 
-        if($age >= 50){
+        if($age >= $request->age){
             return response()->json([
                'code' => '1',
                'message' => 'Ok',
