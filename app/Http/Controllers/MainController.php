@@ -19,7 +19,7 @@ class MainController extends Controller
     public function __construct()
     {
       //   $this->middleware('auth');
-      $this->client_id = env('APP_CLIENT_ID', '');
+      $this->client_id = config('app.client_id', '');
     }
 
     /**
