@@ -46,7 +46,7 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
-        $this->client_id = env('APP_CLIENT_ID', '');
+        $this->client_id = config('app.client_id', '');
     }
 
     /**

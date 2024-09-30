@@ -242,7 +242,7 @@ class MainController extends Controller
     public function getCategory()
     {
         $results = DB::table('tmapping_book as a')
-        ->select('b.category_id', 'c.description')
+        ->select('c.id', 'c.description')
         ->join('tbook as b', function ($join) {
             $join->on('a.book_id', '=', 'b.book_id')
             ->on('a.isbn', '=', 'b.isbn');
