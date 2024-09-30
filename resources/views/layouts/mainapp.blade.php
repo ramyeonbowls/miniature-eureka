@@ -6,7 +6,7 @@
 
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}" />
-        <meta property="og:site_name" content="Pustaka DIgital Ginesia">
+        <meta property="og:site_name" content="Pustaka Digital Ginesia">
         <meta property="og:title" content="Perpustakaan Digital Ginesia" />
         <meta property="og:description" content="Aplikasi Perpustakaan Digital Berbasis Website" />
         <meta property="og:image" itemprop="image" content="{{ env('APP_URL') }}/images/logo/favicon.png" />

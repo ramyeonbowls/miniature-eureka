@@ -32,7 +32,7 @@
                         <div class="form-group">
                             <label for="no-hp-column">No. HP</label>
                             <div class="form-group position-relative has-icon-left mb-4">
-                                <input type="text" id="phoneNumberInput" class="form-control form-control-md" placeholder="No. Handphone" maxlength="15" required v-model="phone" />
+                                <input type="text" id="phoneNumberInput" class="form-control form-control-md" placeholder="No. Handphone" maxlength="15" required v-model="phone" @input="filterInput($event, 'phone')" />
                                 <div class="form-control-icon">
                                     <i class="bi bi-phone"></i>
                                 </div>
@@ -42,11 +42,34 @@
                     <div class="col-md-6 col-12">
                         <div class="form-group">
                             <label for="jenis-kelamin-floating">Jenis Kelamin</label>
-                            <select class="form-select" id="jenkel" v-model="jenkel" required>
+                            <select class="form-select" id="gender" v-model="gender" required>
                                 <option value="">--</option>
                                 <option value="L">Laki - Laki</option>
                                 <option value="P">Perempuan</option>
                             </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <div class="form-group">
+                            <label for="tanggal-lahir">Tanggal Lahir</label>
+                            <div class="form-group position-relative has-icon-left mb-4">
+                                <Flatpickr v-model="birthday" class="form-control flatpickr-range" :config="configdate" placeholder="Select date.." required></Flatpickr>
+                                <div class="form-control-icon">
+                                    <i class="bi bi-calendar3"></i>
+                                </div>
+                                <span v-if="errors.isBirthdayValid" class="text-danger">{{ errors.isBirthdayValid[0] }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <div class="form-group">
+                            <label for="nik">NIK</label>
+                            <div class="form-group position-relative has-icon-left mb-4">
+                                <input type="text" id="nikInput" class="form-control form-control-md" placeholder="Nomor Induk Kependudukan" maxlength="20" v-model="nik" @input="filterInput($event, 'nik')" />
+                                <div class="form-control-icon">
+                                    <i class="bi bi-credit-card"></i>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6 col-12">
@@ -102,18 +125,18 @@ export default {
             password: '',
             passwordConfirm: '',
             phone: '',
-            jenkel: '',
+            gender: '',
+            birthday: '',
+            nik: '',
             errors: {},
             csrfToken: '',
+            configdate: {
+                dateFormat: 'j F Y',
+            },
         };
     },
     mounted() {
         this.csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
-        $(document).ready(function () {
-            $('#phoneNumberInput').on('input', function() {
-                this.value = this.value.replace(/\D/g, '');
-            });
-        });
     },
     watch: {
         password(newValue, oldValue) {
@@ -138,31 +161,67 @@ export default {
         }
     },
     methods: {
+        filterInput(event, param) {
+            if(param=='nik'){
+                this.nik = event.target.value.replace(/\D/g, '');
+            }else if(param=='phone'){
+                this.phone = event.target.value.replace(/\D/g, '');
+            }
+        },
+
         async handleRegister() {
             if (this.password !== this.passwordConfirm) {
                 this.errors.passwordConfirm = ['Kata sandi tidak sesuai!'];
                 return;
             }
-
-            try {
-                const response = await axios.post('/register', {
-                    _token: this.csrfToken,
-                    name: this.name,
-                    email: this.email,
-                    password: this.password,
-                    phone: this.phone,
-                    jenkel: this.jenkel,
-                    'password_confirmation': this.passwordConfirm,
-                    role: 'member'
-                });
-                window.location.href = '/';
-            } catch (error) {
-                if (error.response && error.response.status === 422) {
-                    this.errors = error.response.data.errors || {};
-                } else {
-                    console.error('An unknown error occurred:', error);
-                }
+            
+            if (this.birthday == '') {
+                this.errors.isBirthdayValid = ['Pilih Tanggal Lahir'];
+                console.log(this.errors.isBirthdayValid);
+                
+                return;
             }
+
+            let loader = this.$loading.show();
+            await axios.post('/mregist', {
+                _token: this.csrfToken,
+                name: this.name,
+                email: this.email,
+                password: this.password,
+                phone: this.phone,
+                gender: this.gender,
+                nik: this.nik,
+                birthday: this.birthday,
+                'password_confirmation': this.passwordConfirm,
+                role: 'member'
+            })
+            .then((response) => {
+                loader.hide();
+                this.$swal({
+                    title: "Register",
+                    text: response.data,
+                    icon: response.status === 201 ? 'success' : 'error',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    showCloseButton: false,
+                    showCancelButton: false
+                }).then((result) => {
+                    window.location = '/mlogin'
+                });
+            })
+            .catch(error => {
+                let err = (error.response.data.message ? error.response.data.message : (error.response.data) ? error.response.data : error.message);
+                loader.hide();
+                this.$swal({
+                    title: "Register",
+                    text: err,
+                    icon: 'error',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    showCloseButton: false,
+                    showCancelButton: false
+                });
+            });
         }
     }
 };

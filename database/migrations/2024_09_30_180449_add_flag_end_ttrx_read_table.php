@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('tmapping_book', function (Blueprint $table) {
-            $table->dropPrimary();
+        Schema::table('ttrx_read', function (Blueprint $table) {
             $table->string('book_id', 50);
-            $table->primary(['book_id','client_id', 'isbn']);
+            $table->string('flag_end', 1)->default('N');
         });
     }
 
@@ -23,10 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('tmapping_book', function (Blueprint $table) {
-            $table->dropPrimary();
-            $table->dropColumn('book_id');
-            $table->primary(['client_id', 'isbn']);
+        Schema::table('ttrx_read', function (Blueprint $table) {
+            $table->dropColumn(['book_id', 'flag_end']);
         });
     }
 };

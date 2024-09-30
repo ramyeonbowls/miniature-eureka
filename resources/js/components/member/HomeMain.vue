@@ -5,57 +5,42 @@
                 <div class="row">
                     <div class="col-12">
                         <!-- Web Carousel -->
-                <div id="webCarousel" class="carousel slide d-none d-xl-block d-lg-none" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        <div v-for="(item, index) in banner.filter(item => item.display === 'web')" 
-                             :key="index" 
-                             :class="['carousel-item', { 'active': index === 0 }]">
-                            <img :src="item.image" class="d-block w-100" :alt="item.description" style="max-height: 500px;">
-                        </div>
-                    </div>
-                    <a class="carousel-control-prev" href="#webCarousel" role="button" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#webCarousel" role="button" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </a>
-                </div>
-
-                <!-- Mobile Carousel -->
-                <div id="mobileCarousel" class="carousel slide d-block d-sm-block d-xl-none" data-bs-ride="carousel" v-if="banner.some(item => item.display === 'mobile')">
-                    <div class="carousel-inner">
-                        <div v-for="(item, index) in banner.filter(item => item.display === 'mobile')" 
-                             :key="index" 
-                             :class="['carousel-item', { 'active': index === 0 }]">
-                            <img :src="item.image" class="d-block w-100" :alt="item.description" style="max-height: 400px;">
-                        </div>
-                    </div>
-                    <a class="carousel-control-prev" href="#mobileCarousel" role="button" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#mobileCarousel" role="button" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </a>
-                </div>
-                        <!-- <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                        <div id="webCarousel" class="carousel slide d-none d-xl-block d-lg-none" data-bs-ride="carousel">
                             <div class="carousel-inner">
-                                <div v-for="(item, index) in banner" :key="index" :class="['carousel-item', { 'active': index === 0 }]">
-                                    <img :src="item.image" class="d-block w-100" :alt="item.descriptiion">
+                                <div v-for="(item, index) in banner.filter(item => item.display === 'web')" 
+                                    :key="index" 
+                                    :class="['carousel-item', { 'active': index === 0 }]">
+                                    <img :src="item.image" class="d-block w-100" :alt="item.description" style="max-height: 500px;">
                                 </div>
                             </div>
-                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
+                            <a class="carousel-control-prev" href="#webCarousel" role="button" data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Previous</span>
                             </a>
-                            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
+                            <a class="carousel-control-next" href="#webCarousel" role="button" data-bs-slide="next">
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Next</span>
                             </a>
-                        </div> -->
+                        </div>
+
+                        <!-- Mobile Carousel -->
+                        <div id="mobileCarousel" class="carousel slide d-block d-sm-block d-xl-none" data-bs-ride="carousel" data-bs-interval="5000" v-if="banner.some(item => item.display === 'mobile')">
+                            <div class="carousel-inner">
+                                <div v-for="(item, index) in banner.filter(item => item.display === 'mobile')" 
+                                    :key="index" 
+                                    :class="['carousel-item', { 'active': index === 0 }]">
+                                    <img :src="item.image" class="d-block w-100" :alt="item.description" style="max-height: 400px;">
+                                </div>
+                            </div>
+                            <a class="carousel-control-prev" href="#mobileCarousel" role="button" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#mobileCarousel" role="button" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -80,12 +65,12 @@
                             <div class="card h-100 mb-0 hover-shadow">
                                 <div class="card-content">
                                     <div class="product-image mt-3 mb-0 pb-0">
-                                        <img :src="buku.image" :alt="buku.alt" class="img-fluid">
+                                        <img :src="buku.image" :alt="buku.title" class="img-fluid">
                                     </div>
                                     <div class="card-body mt-0 mb-0 mx-0 px-2">
                                         <p class="card-title mb-0">{{ buku.writer }}</p>
                                         <a href="#">
-                                        <div data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="buku.title">{{ buku.title }}</div>
+                                            <div data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="buku.title">{{ buku.title }}</div>
                                         </a>
                                     </div>
                                 </div>
@@ -127,7 +112,7 @@
                                     <router-link :to="{ name: 'detail-buku', params: { idb: item.isbn } }">
                                         <div class="card">
                                             <div class="product-image">
-                                                <img :src="item.image" class="img-fluid" :alt="item.alt">
+                                                <img :src="item.image" class="img-fluid" :alt="item.title">
                                             </div>
                                             <div class="card-body py-2">
                                                 <p class="card-title mb-0">{{ item.writer }}</p>

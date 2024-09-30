@@ -15,6 +15,8 @@ import { LoadingPlugin } from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
 import VueSweetalert2 from 'vue-sweetalert2'
 import 'sweetalert2/dist/sweetalert2.min.css'
+import 'flatpickr/dist/flatpickr.css'
+import Flatpickr from 'vue-flatpickr-component'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -60,6 +62,7 @@ featherIcons.replace()
 
 const appUser = createApp(Main)
 
+appUser.component('Flatpickr', Flatpickr)
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

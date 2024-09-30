@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Logs;
+use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,9 +17,11 @@ class BookController extends Controller
      *
      * @return void
      */
+    protected $client_id = '';
     public function __construct()
     {
-      //   $this->middleware('auth');
+        $this->middleware('auth');
+        $this->client_id = env('APP_CLIENT_ID', '');
     }
 
     /**
@@ -38,10 +41,17 @@ class BookController extends Controller
      */
     public function getBook(Request $request)
     {
-        $token = str_replace('%20', ' ', $request->token);
-        $token = str_replace('pdf', 'gns', $token);
-        $filePath = 'private/pdf/'.$token;
+        $book = DB::table('tmapping_book as a')
+            ->select([
+                'b.filename'
+            ])
+            ->join('tbook as b', 'a.isbn', '=', 'b.isbn')
+            ->where('a.client_id', $this->client_id)
+            ->where('a.book_id', $request->token)
+            ->get();
+        $file = $book[0]->filename;
 
+        $filePath = 'private/pdf/'.$file;
         $filename = explode('.', basename($filePath))[0];
 
         $encryptedContents = Storage::get($filePath);
@@ -52,18 +62,32 @@ class BookController extends Controller
         ]);
     }
 
-    public function getInfo()
+    public function ReadCheck(Request $request)
     {
         $user = auth()->user();
 
-        if($user && $user->role == 'member'){
+        $attr = DB::table('tattr_member as a')
+            ->select([
+                'a.birthday',
+            ])
+            ->where('a.client_id', $this->client_id)
+            ->where('a.id', $user->id)
+            ->get();
+        
+            $birthday   = $attr[0]->birthday ?? Carbon::now();
+            $birthdayC  = Carbon::parse($birthday);
+            $age        = $birthdayC->diffInYears(Carbon::now());
+
+        if($age >= 50){
             return response()->json([
-               'name' => $user->name,
+               'code' => '1',
+               'message' => 'Ok',
             ], 200);
         }
 
         return response()->json([
-            'name' => '',
+            'code' => '0',
+            'message' => 'Anda Belum Cukup Usia Untuk membaca Buku Ini!',
         ], 200);
     }
 }

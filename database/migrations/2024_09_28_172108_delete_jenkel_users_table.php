@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tmapping_book', function (Blueprint $table) {
-            $table->string('client_id');
-            $table->string('isbn');
-            $table->integer('copy')->nullable();
-            $table->primary(['client_id', 'isbn']);
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn(['jenkel', 'phone']);
         });
     }
 
@@ -25,6 +21,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tmapping_book');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('phone', 15)->nullable();
+            $table->string('jenkel', 1)->nullable();
+        });
     }
 };

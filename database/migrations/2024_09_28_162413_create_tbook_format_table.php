@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tmapping_book', function (Blueprint $table) {
-            $table->string('client_id');
-            $table->string('isbn');
-            $table->integer('copy')->nullable();
-            $table->primary(['client_id', 'isbn']);
+        Schema::create('tbook_format', function (Blueprint $table) {
+            $table->string('book_format_id', 25)->primary();
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tmapping_book');
+        Schema::dropIfExists('tbook_format');
     }
 };

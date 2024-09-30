@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use App\Logs;
+use Carbon\Carbon;
 use App\Models\User;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
@@ -70,9 +77,56 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'role' => $data['role'],
-            'phone' => $data['phone'],
-            'jenkel' => $data['jenkel'],
             'client_id' => $this->client_id,
         ]);
+    }
+
+    public function mregist(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        // Begin transaction
+        \DB::beginTransaction();
+        $logs = new Logs( Arr::last(explode("\\", get_class())) );
+        $logs->write(__FUNCTION__, "START");
+        DB::enableQueryLog();
+
+        try {
+            $user = $this->create($request->all());
+
+            $birthday = Carbon::parse($request->birthday)->format('Y-m-d');
+            $attr = DB::table('tattr_member')
+                    ->insert([
+                        'id'            => $user->id,
+                        'client_id'     => $this->client_id,
+                        'nik'           => $request->nik,
+                        'phone'         => $request->phone,
+                        'birthday'      => $birthday,
+                        'gender'        => $request->gender,
+                        'created_at'     => Carbon::now()
+                    ]);
+
+            $queries = DB::getQueryLog();
+            for($q = 0; $q < count($queries); $q++) {
+                $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
+                $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+                $logs->write('SQL', $sql);
+            }
+
+            $logs->write(__FUNCTION__, "STOP\r\n");
+            \DB::commit();
+
+            event(new Registered($user));
+
+            $user->sendEmailVerificationNotification();
+
+            return response()->json('Registration successful! Please verify your email address.', 201);
+        } catch (\Exception $e) {
+            $logs->write('error', $e);
+            $logs->write(__FUNCTION__, "STOP\r\n");
+            \DB::rollBack();
+
+            return response()->json('Registration failed! Please try again.', 500);
+        }
     }
 }

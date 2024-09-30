@@ -53,13 +53,19 @@
                                 <div class="form-group">
                                     <div class="comment-body">
                                     <div class="comment-profileName mb-0">Copy </div>
-                                    <div class="comment-time mt-0">2/2</div>
+                                    <div class="comment-time mt-0">{{ detail.remaining }}/{{ detail.copy }}</div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="comment-body">
                                     <div class="comment-profileName mb-0">Jumlah Halaman </div>
                                     <div class="comment-time mt-0">{{ detail.page }}</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="comment-body">
+                                    <div class="comment-profileName mb-0">Kategori </div>
+                                    <div class="comment-time mt-0">{{ detail.category }}</div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -80,6 +86,12 @@
                                     <div class="comment-body">
                                     <div class="comment-profileName mb-0">Tahun Terbit </div>
                                     <div class="comment-time mt-0">{{ detail.year }}</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="comment-body">
+                                    <div class="comment-profileName mb-0">Batas Umur </div>
+                                    <div class="comment-time mt-0">{{ detail.age }} Tahun</div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -231,14 +243,40 @@ export default {
             if(!this.isAuthenticated){
                 this.$router.push('/mlogin');
             }else{
-                // this.$router.push({ name: 'appreader', query: { pdfToken: encodeURIComponent(this.detail.filename) } });
-                const routeData = this.$router.resolve({
-                    name: 'appreader',
-                    query: { pdfToken: encodeURIComponent(this.detail.filename) }
+                let loader = this.$loading.show();
+                window.axios
+                .get('/ReadCheck', {
+                    params:{
+                        age: this.age
+                    }
+                })
+                .then((response) => {
+                    if(response.data.code == 1){
+                        // this.$router.push({ name: 'appreader', query: { pdfToken: encodeURIComponent(this.detail.book_id) } });
+                        const routeData = this.$router.resolve({
+                            name: 'appreader',
+                            query: { pdfToken: encodeURIComponent(this.detail.book_id) }
+                        });
+                        loader.hide();
+                        // console.log('Route URL:', routeData.href);
+                        // window.open(routeData.href, '_blank');
+                        window.location.assign(routeData.href);
+                    }else{
+                        loader.hide();
+                        this.$swal({
+                            // title: "Register",
+                            text: response.data.message,
+                            icon: 'error',
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            showCloseButton: false,
+                            showCancelButton: false
+                        });
+                    }
+                })
+                .catch((e) => {
+                    console.error(e)
                 });
-                // console.log('Route URL:', routeData.href);
-                // window.open(routeData.href, '_blank');
-                window.location.assign(routeData.href);
             }
         },
 

@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return view('main');
@@ -11,13 +13,26 @@ Route::get('/form-register', function () {
     return view('formregister');
 });
 
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])
+    ->middleware(['signed', 'throttle:6,1'])
+    ->name('verification.verify');
+
+Route::post('/email/resend', [VerificationController::class, 'resend'])
+    ->middleware(['auth', 'throttle:6,1'])
+    ->name('verification.resend');
+
 Auth::routes([
-    'register' => false,
+    'register' => true,
     'verify' => true,
     'confirm' => true,
     'reset' => true
 ]);
 
+Route::post('/mregist', [App\Http\Controllers\Auth\RegisterController::class, 'mregist'])->name('mregist');
 Route::get('/getInfo', [App\Http\Controllers\MainController::class, 'getInfo'])->name('getInfo');
 Route::get('/getBukuPopuler', [App\Http\Controllers\MainController::class, 'getBukuPopuler'])->name('getBukuPopuler');
 Route::get('/getBook', [App\Http\Controllers\MainController::class, 'getBook'])->name('getBook');
@@ -28,8 +43,6 @@ Route::get('/getArticle', [App\Http\Controllers\MainController::class, 'getArtic
 Route::get('/getAllArticle', [App\Http\Controllers\MainController::class, 'getAllArticle'])->name('getAllArticle');
 Route::get('/getDetailArticle', [App\Http\Controllers\MainController::class, 'getDetailArticle'])->name('getDetailArticle');
 
-Route::get('/appreader', [App\Http\Controllers\BookController::class, 'index'])->name('appreader');
-Route::get('/book-pdf', [App\Http\Controllers\BookController::class, 'getBook'])->name('book-pdf');
 Route::apiResource('form-regis', App\Http\Controllers\FormRegisterController::class);
 Route::get('/agreement-letter', [App\Http\Controllers\FormRegisterController::class, 'exportPDF'])->name('agreement-letter');
 
@@ -52,7 +65,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
         
         Route::group(['middleware' => ['role.user:member']], function () {
-            
+            Route::get('/ReadCheck', [App\Http\Controllers\BookController::class, 'ReadCheck'])->name('ReadCheck');
+            Route::get('/appreader', [App\Http\Controllers\BookController::class, 'index'])->name('appreader');
+            Route::get('/book-pdf', [App\Http\Controllers\BookController::class, 'getBook'])->name('book-pdf');
         });
 
         Route::controller(App\Http\Controllers\HomeController::class)->group(function () {

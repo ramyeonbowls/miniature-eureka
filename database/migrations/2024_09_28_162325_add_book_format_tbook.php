@@ -12,9 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('tbook', function (Blueprint $table) {
-            $table->dropPrimary();
-            $table->string('book_id', 50)->nullable();
-            $table->primary(['book_id', 'isbn']);
+            $table->string('book_format_id', 25)->nullable();
+            $table->integer('age')->default(0);
         });
     }
 
@@ -24,9 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('tbook', function (Blueprint $table) {
-            $table->dropPrimary();
-            $table->dropColumn('book_id');
-            $table->primary(['isbn']);
+            $table->dropColumn(['book_format_id', 'age']);
         });
     }
 };

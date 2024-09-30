@@ -65,8 +65,8 @@ export default {
 
     methods: {
         async handleLogin() {
+            let loader = this.$loading.show();
             try {
-                let loader = this.$loading.show();
                 const response = await axios.post('/login', {
                     _token: this.csrfToken,
                     email: this.email,
