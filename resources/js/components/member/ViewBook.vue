@@ -6,12 +6,12 @@
                     <div class="card h-100">
                         <div class="card-body">
                             <div class="card-content text-center mb-2">
-                                <img :src="detail.image" class="img-fluid img-detail" :alt="detail.title" height="80%" width="80%">
+                                <img :src="detail.image" class="img-fluid img-detail" :alt="detail.title" height="80%" width="80%" style="border-radius: 10px 10px 10px 10px !important;">
                             </div>
                             <div class="buttons mt-3">
-                                <button class="btn btn-primary me-2" @click="bacaBuku">Baca</button>
+                                <button class="btn btn-primary btn-lg me-2" @click="bacaBuku"><i class="bi bi-book-fill"></i> Baca</button>
                                 <template v-if="isAuthenticated">
-                                    <button class="btn btn-secondary me-2">Pinjam</button>
+                                    <button class="btn btn-warning text-white btn-lg me-2"><i class="bi bi-bookmarks"></i> Pinjam</button>
                                 </template>
                             </div>
                         </div>
@@ -464,7 +464,7 @@ export default {
             margin-bottom: 20px;
         }
         .img-detail {
-            width: 50%;
+            width: 70%;
         }
 
         .product-image {

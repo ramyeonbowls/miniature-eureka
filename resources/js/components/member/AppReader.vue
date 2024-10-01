@@ -330,7 +330,7 @@ onUnmounted(() => {
 .pagination-float {
     position: absolute;
     z-index: 10;
-    bottom: -10px;
+    bottom: -80px;
     left: 50%;
     transform: translateX(-50%);
     opacity: 0.3; /* Makes the pagination transparent */
@@ -387,6 +387,16 @@ onUnmounted(() => {
     /* Optionally, show specific elements */
     .no-print {
         display: block !important;
+    }
+}
+
+@media (max-width: 1200px) {
+    .pagination-float {
+        position: absolute;
+        z-index: 10;
+        bottom: -80px;
+        left: 50%;
+        opacity: 0.7;
     }
 }
 </style>

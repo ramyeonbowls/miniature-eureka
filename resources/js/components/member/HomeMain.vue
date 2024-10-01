@@ -635,7 +635,7 @@ export default {
 
     created(){
         this.getBukuPopuler();
-        this.getBook();
+        this.getNewCollection();
         this.getBanner();
         this.getAllArticle();
     },
@@ -667,11 +667,11 @@ export default {
             });
         },
 
-        getBook() {
+        getNewCollection() {
             this.buku = [];
 
             window.axios
-            .get('/getBook')
+            .get('/getNewCollection')
             .then((response) => {
                 this.buku = response.data;
             })

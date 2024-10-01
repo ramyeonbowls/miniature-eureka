@@ -175,6 +175,55 @@ class MainController extends Controller
         return response()->json($results, 200);
     }
     
+    public function getNewCollection()
+    {
+        $results = DB::table('tmapping_book as a')
+            ->select([
+                'b.book_id',
+                'a.copy',
+                'b.isbn',
+                'b.title',
+                'b.sinopsis',
+                'b.cover as image',
+                'b.writer',
+                'b.age',
+                'c.description as category'
+            ])
+            ->join('tbook as b', function($join) {
+                $join->on('a.book_id', '=', 'b.book_id')
+                    ->on('a.isbn', '=', 'b.isbn');
+            })
+            ->join('tbook_category as c', function($join) {
+                $join->on('b.category_id', '=', 'c.id');
+            })
+            ->where('a.client_id', '=', $this->client_id)
+            ->limit(10)
+            ->orderBy('a.created_at', 'asc')
+            ->get()
+            ->map(function ($value) {
+                return [
+                    'isbn'     => $value->isbn,
+                    'title'    => $value->title,
+                    'sinopsis' => $value->sinopsis,
+                    'image'    => (isset($value->image) && file_exists(public_path('/images/cover/' . $value->image))) 
+                                    ? '/images/cover/' . $value->image 
+                                    : '/images/cover/default-cover.jpg',
+                    'writer'   => $value->writer
+                ];
+            });
+
+        // $queries = DB::getQueryLog();
+        // for($q = 0; $q < count($queries); $q++) {
+        //     $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
+        //     $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+        //     $logs->write('SQL', $sql);
+        // }
+
+        // $logs->write(__FUNCTION__, "STOP\r\n");
+
+        return response()->json($results, 200);
+    }
+    
     public function getDetail(Request $request)
     {
         $isbn = $request->id;
