@@ -270,16 +270,14 @@ const SendLastReadSync = (param) => {
     }
 }
 
+const handleUnload = () => {
+    SendLastReadSync('Y');
+};
+
 const handleBeforeUnload = (event) => {
     event.preventDefault();
-    event.returnValue = 'Apakah Anda Suda Selesai Membaca?';
+    event.returnValue = '';
 }
-
-const handleVisibilityChange = () => {
-    if (window.visibilityState === 'hidden') {
-        SendLastReadSync('Y');
-    }
-};
 
 const handlePageHide = (event) => {
     if (!event.persisted) {
@@ -304,8 +302,8 @@ onMounted(() => {
     getCurrentDateTime()
     setInterval(() => SendLastRead('N'), 300000)
     window.addEventListener('beforeunload', handleBeforeUnload)
+    window.addEventListener('unload', handleUnload)
     window.addEventListener('pagehide', handlePageHide)
-    window.addEventListener('visibilitychange', handleVisibilityChange)
 })
 
 onUnmounted(() => {
@@ -323,8 +321,8 @@ onUnmounted(() => {
     document.removeEventListener('contextmenu', disableRightClick)
 
     window.removeEventListener('beforeunload', handleBeforeUnload)
+    window.removeEventListener('unload', handleUnload)
     window.removeEventListener('pagehide', handlePageHide)
-    window.removeEventListener('visibilitychange', handleVisibilityChange)
 })
 </script>
 
