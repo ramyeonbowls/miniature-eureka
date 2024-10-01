@@ -46,7 +46,7 @@ class BookController extends Controller
             ->select([
                 'b.filename'
             ])
-            ->join('tbook as b', 'a.isbn', '=', 'b.isbn')
+            ->join('tbook as b', 'a.book_id', '=', 'b.book_id')
             ->where('a.client_id', $this->client_id)
             ->where('a.book_id', $request->token)
             ->get();

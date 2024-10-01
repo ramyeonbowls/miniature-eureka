@@ -53,7 +53,7 @@ class MainController extends Controller
         $dibacaBooksQuery = DB::table('ttrx_read as a')
             ->select([
                 'b.book_id',
-                'a.isbn',
+                'b.isbn',
                 'b.title',
                 'b.sinopsis',
                 'b.cover as image',
@@ -61,9 +61,16 @@ class MainController extends Controller
                 DB::raw('SUM(TIMESTAMPDIFF(SECOND, a.start_read, a.end_read)) as total_seconds'),
                 DB::raw('SEC_TO_TIME(SUM(TIMESTAMPDIFF(SECOND, a.start_read, a.end_read))) as total_time')
             ])
-            ->join('tbook as b', 'a.isbn', '=', 'b.isbn')
+            ->join('tbook as b', 'a.book_id', '=', 'b.book_id')
             ->where('a.client_id', $this->client_id)
-            ->groupBy('a.isbn')
+            ->groupBy([
+                'b.book_id',
+                'b.isbn',
+                'b.title',
+                'b.sinopsis',
+                'b.cover',
+                'b.writer'
+            ])
             ->orderBy('total_seconds', 'desc')
             ->limit(8);
 
@@ -71,7 +78,7 @@ class MainController extends Controller
         $results        = $dibacaBooksQuery;
 
         if ($dibacaBooks->count() < 8) {
-            $readIsbns = $dibacaBooks->pluck('isbn')->toArray();
+            $readIsbns = $dibacaBooks->pluck('book_id')->toArray();
 
             $remainingBooks = DB::table('tmapping_book as a')
                 ->select([
@@ -85,11 +92,10 @@ class MainController extends Controller
                     DB::raw('0 as total_time')
                 ])
                 ->join('tbook as b', function($join) {
-                    $join->on('a.book_id', '=', 'b.book_id')
-                        ->on('a.isbn', '=', 'b.isbn');
+                    $join->on('a.book_id', '=', 'b.book_id');
                 })
                 ->where('a.client_id', '=', $this->client_id)
-                ->whereNotIn('b.isbn', $readIsbns)
+                ->whereNotIn('b.book_id', $readIsbns)
                 ->limit(8 - $dibacaBooks->count());
 
             $results = $results->unionAll($remainingBooks);
@@ -135,8 +141,7 @@ class MainController extends Controller
                 'c.description as category'
             ])
             ->join('tbook as b', function($join) {
-                $join->on('a.book_id', '=', 'b.book_id')
-                    ->on('a.isbn', '=', 'b.isbn');
+                $join->on('a.book_id', '=', 'b.book_id');
             })
             ->join('tbook_category as c', function($join) {
                 $join->on('b.category_id', '=', 'c.id');
@@ -190,8 +195,7 @@ class MainController extends Controller
                 'c.description as category'
             ])
             ->join('tbook as b', function($join) {
-                $join->on('a.book_id', '=', 'b.book_id')
-                    ->on('a.isbn', '=', 'b.isbn');
+                $join->on('a.book_id', '=', 'b.book_id');
             })
             ->join('tbook_category as c', function($join) {
                 $join->on('b.category_id', '=', 'c.id');
@@ -248,8 +252,7 @@ class MainController extends Controller
                 DB::raw("CASE WHEN COUNT(DISTINCT d.book_id) > 0 THEN a.copy - COUNT(DISTINCT d.book_id) ELSE a.copy END as remaining")
             ])
             ->join('tbook as b', function($join) {
-                $join->on('a.book_id', '=', 'b.book_id')
-                    ->on('a.isbn', '=', 'b.isbn');
+                $join->on('a.book_id', '=', 'b.book_id');
             })
             ->join('tbook_category as c', function($join) {
                 $join->on('b.category_id', '=', 'c.id');
@@ -258,7 +261,7 @@ class MainController extends Controller
                 $join->on('b.book_id', '=', 'd.book_id');
             })
             ->where('a.client_id', '=', $this->client_id)
-            ->where('a.isbn', '=', $isbn)
+            ->where('b.isbn', '=', $isbn)
             ->groupBy([
                 'b.book_id',
                 'a.copy',
@@ -295,8 +298,7 @@ class MainController extends Controller
         $results = DB::table('tmapping_book as a')
         ->select('c.id', 'c.description')
         ->join('tbook as b', function ($join) {
-            $join->on('a.book_id', '=', 'b.book_id')
-            ->on('a.isbn', '=', 'b.isbn');
+            $join->on('a.book_id', '=', 'b.book_id');
         })
         ->join('tbook_category as c', 'b.category_id', '=', 'c.id')
         ->where('a.client_id', '=', $this->client_id)

@@ -9,9 +9,9 @@
                                 <img :src="detail.image" class="img-fluid img-detail" :alt="detail.title" height="80%" width="80%" style="border-radius: 10px 10px 10px 10px !important;">
                             </div>
                             <div class="buttons mt-3">
-                                <button class="btn btn-primary btn-lg me-2" @click="bacaBuku"><i class="bi bi-book-fill"></i> Baca</button>
+                                <button class="btn btn-primary btn-md me-2" @click="bacaBuku"><i class="bi bi-book-fill"></i> Baca</button>
                                 <template v-if="isAuthenticated">
-                                    <button class="btn btn-warning text-white btn-lg me-2"><i class="bi bi-bookmarks"></i> Pinjam</button>
+                                    <button class="btn btn-warning text-white btn-md me-2"><i class="bi bi-bookmarks"></i> Pinjam</button>
                                 </template>
                             </div>
                         </div>
