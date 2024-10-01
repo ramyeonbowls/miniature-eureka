@@ -131,7 +131,8 @@ export default {
             errors: {},
             csrfToken: '',
             configdate: {
-                dateFormat: 'j F Y',
+                dateFormat: 'Y-m-d',
+                disableMobile: true
             },
         };
     },
@@ -177,8 +178,6 @@ export default {
             
             if (this.birthday == '') {
                 this.errors.isBirthdayValid = ['Pilih Tanggal Lahir'];
-                console.log(this.errors.isBirthdayValid);
-                
                 return;
             }
 

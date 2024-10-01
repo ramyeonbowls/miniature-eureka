@@ -626,44 +626,4 @@ class MainController extends Controller
 
         return response()->json($results, 200);
     }
-
-    public function getProfile()
-    {
-        $user = auth()->user();
-
-        if($user && $user->role == 'member'){
-            $attr = DB::table('tattr_member as a')
-                ->select([
-                    'a.birthday',
-                    'a.nik',
-                    'a.gender',
-                    'a.phone',
-                    'a.photo',
-                ])
-                ->where('a.client_id', $this->client_id)
-                ->where('a.id', $user->id)
-                ->get();
-            $birthday = Carbon::parse($attr[0]->birthday)->translatedFormat('j F Y');
-
-            return response()->json([
-               'name'               => $user->name,
-               'email'              => $user->email,
-               'phone'              => $attr[0]->phone,
-               'gender'             => $attr[0]->gender,
-               'birthday'           => $birthday,
-               'nik'                => $attr[0]->nik,
-               'photo'              => $attr[0]->photo
-            ], 200);
-        }
-
-        return response()->json([
-            'name'               => '',
-            'email'              => '',
-            'phone'              => '',
-            'gender'             => '',
-            'birthday'           => '',
-            'nik'                => '',
-            'photo'              => ''
-        ], 200);
-    }
 }

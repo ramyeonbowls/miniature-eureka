@@ -87,33 +87,33 @@ class RegisterController extends Controller
 
         // Begin transaction
         \DB::beginTransaction();
-        $logs = new Logs( Arr::last(explode("\\", get_class())) );
-        $logs->write(__FUNCTION__, "START");
-        DB::enableQueryLog();
+        // $logs = new Logs( Arr::last(explode("\\", get_class())) );
+        // $logs->write(__FUNCTION__, "START");
+        // DB::enableQueryLog();
 
         try {
             $user = $this->create($request->all());
 
-            $birthday = Carbon::parse($request->birthday)->format('Y-m-d');
+            // $birthday = Carbon::parse($request->birthday)->format('Y-m-d');
             $attr = DB::table('tattr_member')
                     ->insert([
                         'id'            => $user->id,
                         'client_id'     => $this->client_id,
                         'nik'           => $request->nik,
                         'phone'         => $request->phone,
-                        'birthday'      => $birthday,
+                        'birthday'      => $request->birthday,
                         'gender'        => $request->gender,
                         'created_at'     => Carbon::now()
                     ]);
 
-            $queries = DB::getQueryLog();
-            for($q = 0; $q < count($queries); $q++) {
-                $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
-                $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
-                $logs->write('SQL', $sql);
-            }
+            // $queries = DB::getQueryLog();
+            // for($q = 0; $q < count($queries); $q++) {
+            //     $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
+            //     $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+            //     $logs->write('SQL', $sql);
+            // }
 
-            $logs->write(__FUNCTION__, "STOP\r\n");
+            // $logs->write(__FUNCTION__, "STOP\r\n");
             \DB::commit();
 
             event(new Registered($user));
@@ -122,8 +122,8 @@ class RegisterController extends Controller
 
             return response()->json('Registration successful! Please verify your email address.', 201);
         } catch (\Exception $e) {
-            $logs->write('error', $e);
-            $logs->write(__FUNCTION__, "STOP\r\n");
+            // $logs->write('error', $e);
+            // $logs->write(__FUNCTION__, "STOP\r\n");
             \DB::rollBack();
 
             return response()->json('Registration failed! Please try again.', 500);

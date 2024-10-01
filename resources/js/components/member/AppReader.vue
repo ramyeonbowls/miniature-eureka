@@ -275,15 +275,8 @@ const handleUnload = () => {
 };
 
 const handleBeforeUnload = (event) => {
-    event.preventDefault();
-    event.returnValue = '';
+    SendLastReadSync('Y');
 }
-
-const handlePageHide = (event) => {
-    if (!event.persisted) {
-        SendLastReadSync('Y');
-    }
-};
 
 onMounted(() => {
     document.addEventListener('selectionchange', handleTextSelection)
@@ -303,7 +296,6 @@ onMounted(() => {
     setInterval(() => SendLastRead('N'), 300000)
     window.addEventListener('beforeunload', handleBeforeUnload)
     window.addEventListener('unload', handleUnload)
-    window.addEventListener('pagehide', handlePageHide)
 })
 
 onUnmounted(() => {
@@ -322,7 +314,6 @@ onUnmounted(() => {
 
     window.removeEventListener('beforeunload', handleBeforeUnload)
     window.removeEventListener('unload', handleUnload)
-    window.removeEventListener('pagehide', handlePageHide)
 })
 </script>
 

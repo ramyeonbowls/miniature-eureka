@@ -97,9 +97,9 @@ class BookController extends Controller
     {
         Carbon::setLocale('id');
         $user = auth()->user();
-        $logs = new Logs( Arr::last(explode("\\", get_class())) );
-        $logs->write(__FUNCTION__, "START");
-        DB::enableQueryLog();
+        // $logs = new Logs( Arr::last(explode("\\", get_class())) );
+        // $logs->write(__FUNCTION__, "START");
+        // DB::enableQueryLog();
 
         $existingRecord = DB::table('ttrx_read')
             ->where('book_id', $request->token)
@@ -132,13 +132,13 @@ class BookController extends Controller
                 ]);
         }
 
-        $queries = DB::getQueryLog();
-        for($q = 0; $q < count($queries); $q++) {
-            $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
-            $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
-            $logs->write('SQL', $sql);
-        }
-        $logs->write(__FUNCTION__, "STOP\r\n");
+        // $queries = DB::getQueryLog();
+        // for($q = 0; $q < count($queries); $q++) {
+        //     $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
+        //     $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+        //     $logs->write('SQL', $sql);
+        // }
+        // $logs->write(__FUNCTION__, "STOP\r\n");
 
         if($ttrx){
             return response()->json([

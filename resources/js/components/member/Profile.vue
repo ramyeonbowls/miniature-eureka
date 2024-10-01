@@ -13,10 +13,20 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-center align-items-center flex-column">
-                                <div class="avatar avatar-2xl">
-                                    <img src="/images/faces/2.jpg" alt="Avatar">
+                                <div id="AvatarFileUpload">
+                                    <div class="selected-image-holder">
+                                        <img :src="user.avatar">
+                                    </div>
+
+                                    <div class="avatar-selector">
+                                        <a href="#" class="avatar-selector-btn">
+                                            <i class="bi bi-camera-fill"></i>
+                                        </a>
+                                        <input type="file" accept=".jpg, .png" name="avatar">
+                                    </div>
                                 </div>
                                 <h3 class="mt-3">{{ user.name }}</h3>
+                                <button  v-if="!user.verified" class="btn btn-primary" @click="SendVerification">Kirim Email Verifikasi</button>
                             </div>
                         </div>
                     </div>
@@ -41,7 +51,7 @@
                                         <div class="form-group">
                                             <label for="email-column">Email</label>
                                             <div class="form-group position-relative has-icon-left mb-4">
-                                                <input type="text" class="form-control form-control-md" :class="{'is-invalid': errors.email}" placeholder="Email" v-model="user.email" required readonly/>
+                                                <input type="text" class="form-control form-control-md" :class="{'is-invalid': errors.email}" placeholder="Email" v-model="user.email" required :readonly="user.verified"/>
                                                 <div class="form-control-icon">
                                                     <i class="bi bi-envelope"></i>
                                                 </div>
@@ -152,12 +162,14 @@ export default {
                 phone: '',
                 gender: '',
                 birthday: '',
-                nik: ''
+                nik: '',
+                avatar: ''
             },
             errors: {},
             csrfToken: '',
             configdate: {
-                dateFormat: 'j F Y',
+                dateFormat: 'Y-m-d',
+                disableMobile: true
             },
         };
     },
@@ -165,9 +177,95 @@ export default {
     mounted() {
         this.csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
         this.getProfile();
+        this.uploadImage()
     },
 
     methods: {
+        async SendVerification(){
+            let loader = this.$loading.show();
+            try {
+                const response = await window.axios.post('/email/resend');
+                this.$swal({
+                    title: 'Email Terkirim!',
+                    text: response.data.message,
+                    icon: 'success'
+                });
+                loader.hide();
+            } catch (error) {
+                loader.hide();
+                this.$swal({
+                    title: 'Gagal!',
+                    text: error.response.data.message || 'Terjadi kesalahan saat mengirim email.',
+                    icon: 'error'
+                });
+            }
+        },
+
+        async handleUpdateProfile() {
+            if(this.user.password!=''){
+                if (this.user.password !== this.user.passwordConfirm) {
+                    this.errors.passwordConfirm = ['Kata sandi tidak sesuai!'];
+                    return;
+                }
+            }
+            
+            if (this.user.birthday == '') {
+                this.errors.isBirthdayValid = ['Pilih Tanggal Lahir'];
+                return;
+            }
+
+            let form_data = new FormData();
+            Object.keys(this.user).forEach(value => {
+                form_data.append(value, this.user[value]);
+            });
+
+            if (this.user.avatar) {
+                form_data.append('avatar', this.user.avatar);
+            }
+
+            let loader = this.$loading.show();
+            await axios.post('/UpdateProfile', form_data)
+            .then((response) => {
+                loader.hide();
+                this.$swal({
+                    title: "Update Profile",
+                    text: response.data,
+                    icon: response.status === 201 ? 'success' : 'error',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    showCloseButton: false,
+                    showCancelButton: false
+                }).then((result) => {
+                    this.getProfile();
+                });
+            })
+            .catch(error => {
+                loader.hide();
+                if (error.response && error.response.status === 400) {
+                    this.errors = error.response.data.errors;
+                    let errorMessages = '';
+
+                    for (let key in this.errors) {
+                        if (this.errors.hasOwnProperty(key)) {
+                            errorMessages += `${this.errors[key][0]}\n`;
+                        }
+                    }
+
+                    this.$swal({
+                        icon: 'error',
+                        title: 'Kesalahan',
+                        text: errorMessages,
+                    });
+                } else {
+                    this.$swal({
+                        icon: 'error',
+                        title: 'Kesalahan',
+                        text: 'Terjadi kesalahan, silakan coba lagi nanti.',
+                    });
+                }
+            });
+        },
+
         getProfile() {
             this.user = {
                 name: '',
@@ -177,14 +275,18 @@ export default {
                 phone: '',
                 gender: '',
                 birthday: '',
-                nik: ''
+                nik: '',
+                avatar: ''
             };
 
+            let loader = this.$loading.show();
             axios.get('/getProfile')
             .then((response) => {
                 this.user = response.data;
+                loader.hide();
             })
             .catch((e) => {
+                loader.hide();
                 console.error(e)
             });
         },
@@ -196,6 +298,28 @@ export default {
                 this.user.phone = event.target.value.replace(/\D/g, '');
             }
         },
+
+        uploadImage(){
+            const avatarFileUpload = document.getElementById('AvatarFileUpload')
+            const imageViewer = avatarFileUpload.querySelector('.selected-image-holder>img')
+            const imageSelector = avatarFileUpload.querySelector('.avatar-selector-btn')
+            const imageInput = avatarFileUpload.querySelector('input[name="avatar"]')
+
+            imageSelector.addEventListener('click', e => {
+                e.preventDefault()
+                imageInput.click()
+            })
+
+            imageInput.addEventListener('change', e => {
+                var reader = new FileReader();
+                reader.onload = function(){
+                    imageViewer.src = reader.result;
+                };
+
+                this.user.avatar = e.target.files[0];
+                reader.readAsDataURL(e.target.files[0]);
+            })
+        }
     },
 
     watch: {
@@ -222,3 +346,57 @@ export default {
     }
 };
 </script>
+<style>
+div#AvatarFileUpload {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    background: #f9f9f9;
+    border: 3px solid #bbb;
+    border-radius: 50% 50%;
+    margin: auto;
+}
+/* Image Preview Wrapper and Container */
+div#AvatarFileUpload > .selected-image-holder{
+    width: 100%;
+    height: 100%;
+    border-radius: 50% 50%;
+ 
+}
+div#AvatarFileUpload > .selected-image-holder{
+    width: 100%;
+    overflow: hidden;
+}
+div#AvatarFileUpload > .selected-image-holder>img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-fit: center center;
+}
+ 
+/* Image Selector to Browse Image to Upload */
+div#AvatarFileUpload > .avatar-selector{
+    position: absolute;
+    bottom: 8px;
+    right: 19%;
+    width: 20px;
+    height: 20px;
+}
+div#AvatarFileUpload > .avatar-selector input[type="file"]{
+    display: none;
+}
+div#AvatarFileUpload > .avatar-selector > .avatar-selector-btn{
+    width: 100%;
+    height: 100%;
+    background: #f5f5f59e;
+    padding: 5px 7px;
+    border-radius: 50% 50%;
+}
+div#AvatarFileUpload > .avatar-selector > .avatar-selector-btn>img{
+    width: 100%;
+    height: 100%;
+    object-fit: scale-down;
+    object-position: center center;
+    z-index: 2;
+}
+</style>
