@@ -65,6 +65,7 @@ class BookController extends Controller
 
     public function ReadCheck(Request $request)
     {
+        Carbon::setLocale('id');
         $user = auth()->user();
 
         $attr = DB::table('tattr_member as a')
@@ -75,9 +76,9 @@ class BookController extends Controller
             ->where('a.id', $user->id)
             ->get();
         
-            $birthday   = $attr[0]->birthday ?? Carbon::now();
+            $birthday   = $attr[0]->birthday ?? Carbon::now('Asia/Jakarta');
             $birthdayC  = Carbon::parse($birthday);
-            $age        = $birthdayC->diffInYears(Carbon::now());
+            $age        = $birthdayC->diffInYears(Carbon::now('Asia/Jakarta'));
 
         if($age >= $request->age){
             return response()->json([
@@ -94,24 +95,29 @@ class BookController extends Controller
     
     public function LastRead(Request $request)
     {
+        Carbon::setLocale('id');
         $user = auth()->user();
-        // $logs = new Logs( Arr::last(explode("\\", get_class())) );
-        // $logs->write(__FUNCTION__, "START");
-        // DB::enableQueryLog();
+        $logs = new Logs( Arr::last(explode("\\", get_class())) );
+        $logs->write(__FUNCTION__, "START");
+        DB::enableQueryLog();
 
         $existingRecord = DB::table('ttrx_read')
             ->where('book_id', $request->token)
             ->where('user_id', $user->id)
             ->where('start_read', $request->start)
+            ->where('client_id', $this->client_id)
             ->first();
 
         if ($existingRecord) {
             $ttrx = DB::table('ttrx_read')
                 ->where('book_id', $request->token)
+                ->where('user_id', $user->id)
+                ->where('start_read', $request->start)
+                ->where('client_id', $this->client_id)
                 ->update([
-                    'end_read'      => Carbon::now(),
+                    'end_read'      => Carbon::now('Asia/Jakarta'),
                     'flag_end'      => $request->active,
-                    'updated_at'    => Carbon::now()
+                    'updated_at'    => Carbon::now('Asia/Jakarta')
                 ]);
         } else {
             $ttrx = DB::table('ttrx_read')
@@ -121,17 +127,18 @@ class BookController extends Controller
                     'user_id'       => $user->id,
                     'client_id'     => $this->client_id,
                     'flag_end'      => $request->active,
-                    'end_read'      => Carbon::now(),
-                    'created_at'    => Carbon::now()
+                    'end_read'      => Carbon::now('Asia/Jakarta'),
+                    'created_at'    => Carbon::now('Asia/Jakarta')
                 ]);
         }
 
-        // $queries = DB::getQueryLog();
-        // for($q = 0; $q < count($queries); $q++) {
-        //     $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
-        //     $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
-        //     $logs->write('SQL', $sql);
-        // }
+        $queries = DB::getQueryLog();
+        for($q = 0; $q < count($queries); $q++) {
+            $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
+            $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+            $logs->write('SQL', $sql);
+        }
+        $logs->write(__FUNCTION__, "STOP\r\n");
 
         if($ttrx){
             return response()->json([

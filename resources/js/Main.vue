@@ -7,7 +7,8 @@
                 <router-view :isAuthenticated="isAuthenticated"></router-view>
             </div>
 
-            <nav class="navbar-dark navbar-expand d-block d-xs-block d-xl-none fixed-bottom" role="navigation" style="border-radius: 10px 10px 0 0 !important; background-color: #fab040;">
+            <nav class="navbar-dark navbar-expand d-block d-xs-block d-xl-none fixed-bottom" role="navigation" style="border-radius: 10px 10px 0 0 !important;  background: rgb(21,47,74);
+background: linear-gradient(180deg, rgba(21,47,74,1) 0%, rgba(69,62,190,1) 100%); ">
                 <ul class="navbar-nav nav-justified pt-2">
                     <li class="nav-item">
                         <router-link to="/" class='menu-item'>
@@ -32,7 +33,7 @@
                         </li>
                     </template>
                     <li class="nav-item">
-                        <router-link to="/mlogin" class='menu-item'>
+                        <router-link to="/profile" class='menu-item'>
                             <i class="bi bi-person"></i> <small style="font-size: 11px;">Profil</small>
                         </router-link>
                     </li>

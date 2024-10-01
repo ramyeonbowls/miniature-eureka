@@ -42,6 +42,7 @@ Route::get('/getCategory', [App\Http\Controllers\MainController::class, 'getCate
 Route::get('/getArticle', [App\Http\Controllers\MainController::class, 'getArticle'])->name('getArticle');
 Route::get('/getAllArticle', [App\Http\Controllers\MainController::class, 'getAllArticle'])->name('getAllArticle');
 Route::get('/getDetailArticle', [App\Http\Controllers\MainController::class, 'getDetailArticle'])->name('getDetailArticle');
+Route::get('/getProfile', [App\Http\Controllers\MainController::class, 'getProfile'])->name('getProfile');
 
 Route::apiResource('form-regis', App\Http\Controllers\FormRegisterController::class);
 Route::get('/agreement-letter', [App\Http\Controllers\FormRegisterController::class, 'exportPDF'])->name('agreement-letter');

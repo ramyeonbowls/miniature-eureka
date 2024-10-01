@@ -231,7 +231,6 @@ const getCurrentDateTime = () => {
     const seconds = String(currentDateTime.getSeconds()).padStart(2, '0')
 
     datenow = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
-  
 }
 
 const SendLastRead = async (param) => {
@@ -246,20 +245,47 @@ const SendLastRead = async (param) => {
     }
 }
 
-const SendLastReadSync = (param) => {
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", "/LastRead", false);
-    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    xhr.send(JSON.stringify({
-        start: datenow,
-        token: book_id.value,
-        active: param
-    }));
+const getCsrfToken = () => {
+    return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 }
 
-const handleBeforeUnload = async (event) => {
-    await SendLastReadSync('Y')
+const SendLastReadSync = (param) => {
+    const csrfToken = getCsrfToken();
+    const data = JSON.stringify({
+        start: datenow,
+        token: book_id.value,
+        active: param,
+        _token: csrfToken
+    });
+
+    if (navigator.sendBeacon) {
+        const blob = new Blob([data], { type: 'application/json' });
+        navigator.sendBeacon("/LastRead", blob);
+    } else {
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "/LastRead", false);
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
+        xhr.send(data);
+    }
 }
+
+const handleBeforeUnload = (event) => {
+    event.preventDefault();
+    event.returnValue = 'Apakah Anda Suda Selesai Membaca?';
+}
+
+const handleVisibilityChange = () => {
+    if (window.visibilityState === 'hidden') {
+        SendLastReadSync('Y');
+    }
+};
+
+const handlePageHide = (event) => {
+    if (!event.persisted) {
+        SendLastReadSync('Y');
+    }
+};
 
 onMounted(() => {
     document.addEventListener('selectionchange', handleTextSelection)
@@ -278,6 +304,8 @@ onMounted(() => {
     getCurrentDateTime()
     setInterval(() => SendLastRead('N'), 300000)
     window.addEventListener('beforeunload', handleBeforeUnload)
+    window.addEventListener('pagehide', handlePageHide)
+    window.addEventListener('visibilitychange', handleVisibilityChange)
 })
 
 onUnmounted(() => {
@@ -295,6 +323,8 @@ onUnmounted(() => {
     document.removeEventListener('contextmenu', disableRightClick)
 
     window.removeEventListener('beforeunload', handleBeforeUnload)
+    window.removeEventListener('pagehide', handlePageHide)
+    window.removeEventListener('visibilitychange', handleVisibilityChange)
 })
 </script>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Logs;
+use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -64,12 +65,12 @@ class MainController extends Controller
             ->where('a.client_id', $this->client_id)
             ->groupBy('a.isbn')
             ->orderBy('total_seconds', 'desc')
-            ->limit(10);
+            ->limit(8);
 
         $dibacaBooks    = $dibacaBooksQuery->get();
         $results        = $dibacaBooksQuery;
 
-        if ($dibacaBooks->count() < 10) {
+        if ($dibacaBooks->count() < 8) {
             $readIsbns = $dibacaBooks->pluck('isbn')->toArray();
 
             $remainingBooks = DB::table('tmapping_book as a')
@@ -89,7 +90,7 @@ class MainController extends Controller
                 })
                 ->where('a.client_id', '=', $this->client_id)
                 ->whereNotIn('b.isbn', $readIsbns)
-                ->limit(10 - $dibacaBooks->count());
+                ->limit(8 - $dibacaBooks->count());
 
             $results = $results->unionAll($remainingBooks);
         }
@@ -178,9 +179,9 @@ class MainController extends Controller
     {
         $isbn = $request->id;
 
-        // $logs = new Logs( Arr::last(explode("\\", get_class())) );
-        // $logs->write(__FUNCTION__, "START");
-        // DB::enableQueryLog();
+        $logs = new Logs( Arr::last(explode("\\", get_class())) );
+        $logs->write(__FUNCTION__, "START");
+        DB::enableQueryLog();
 
         $results = DB::table('tmapping_book as a')
             ->select([
@@ -195,7 +196,7 @@ class MainController extends Controller
                 'c.description as category',
                 'b.year',
                 'b.page',
-                DB::raw("CASE WHEN COUNT(DISTINCT d.isbn) > 0 THEN a.copy - COUNT(DISTINCT d.isbn) ELSE a.copy END as remaining")
+                DB::raw("CASE WHEN COUNT(DISTINCT d.book_id) > 0 THEN a.copy - COUNT(DISTINCT d.book_id) ELSE a.copy END as remaining")
             ])
             ->join('tbook as b', function($join) {
                 $join->on('a.book_id', '=', 'b.book_id')
@@ -204,8 +205,8 @@ class MainController extends Controller
             ->join('tbook_category as c', function($join) {
                 $join->on('b.category_id', '=', 'c.id');
             })
-            ->leftJoin(DB::raw("(SELECT isbn, COUNT(DISTINCT isbn) as dibaca FROM ttrx_read WHERE client_id = '".$this->client_id."' AND flag_end = 'Y' GROUP BY isbn) as d"), function($join) {
-                $join->on('b.isbn', '=', 'd.isbn');
+            ->leftJoin(DB::raw("(SELECT book_id, COUNT(DISTINCT book_id) as dibaca FROM ttrx_read WHERE client_id = '".$this->client_id."' AND flag_end != 'Y' GROUP BY book_id) as d"), function($join) {
+                $join->on('b.book_id', '=', 'd.book_id');
             })
             ->where('a.client_id', '=', $this->client_id)
             ->where('a.isbn', '=', $isbn)
@@ -228,14 +229,14 @@ class MainController extends Controller
             $results->image = (isset($results->image) && file_exists(public_path('/images/cover/' . $results->image))) ? "/images/cover/" . $results->image : '/images/cover/default-cover.jpg';
         }
 
-        // $queries = DB::getQueryLog();
-        // for($q = 0; $q < count($queries); $q++) {
-        //     $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
-        //     $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
-        //     $logs->write('SQL', $sql);
-        // }
+        $queries = DB::getQueryLog();
+        for($q = 0; $q < count($queries); $q++) {
+            $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
+            $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+            $logs->write('SQL', $sql);
+        }
 
-        // $logs->write(__FUNCTION__, "STOP\r\n");
+        $logs->write(__FUNCTION__, "STOP\r\n");
 
         return response()->json($results, 200);
     }
@@ -573,5 +574,45 @@ class MainController extends Controller
             });
 
         return response()->json($results, 200);
+    }
+
+    public function getProfile()
+    {
+        $user = auth()->user();
+
+        if($user && $user->role == 'member'){
+            $attr = DB::table('tattr_member as a')
+                ->select([
+                    'a.birthday',
+                    'a.nik',
+                    'a.gender',
+                    'a.phone',
+                    'a.photo',
+                ])
+                ->where('a.client_id', $this->client_id)
+                ->where('a.id', $user->id)
+                ->get();
+            $birthday = Carbon::parse($attr[0]->birthday)->translatedFormat('j F Y');
+
+            return response()->json([
+               'name'               => $user->name,
+               'email'              => $user->email,
+               'phone'              => $attr[0]->phone,
+               'gender'             => $attr[0]->gender,
+               'birthday'           => $birthday,
+               'nik'                => $attr[0]->nik,
+               'photo'              => $attr[0]->photo
+            ], 200);
+        }
+
+        return response()->json([
+            'name'               => '',
+            'email'              => '',
+            'phone'              => '',
+            'gender'             => '',
+            'birthday'           => '',
+            'nik'                => '',
+            'photo'              => ''
+        ], 200);
     }
 }

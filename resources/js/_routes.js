@@ -55,6 +55,11 @@ const _routes = [
         name: 'detail-artikel',
         component: () => import(/* webpackChunkName: "usr/detailartikel" */ './components/member/DetailArtikel.vue'),
     },
+    {
+        path: '/profile',
+        name: 'profile',
+        component: () => import(/* webpackChunkName: "usr/profile" */ './components/member/Profile.vue'),
+    },
 ]
 
 export default _routes
