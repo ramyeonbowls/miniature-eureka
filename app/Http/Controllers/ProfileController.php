@@ -33,6 +33,9 @@ class ProfileController extends Controller
     {
         Carbon::setLocale('id');
         $user = auth()->user();
+        $logs = new Logs( Arr::last(explode("\\", get_class())) );
+        $logs->write(__FUNCTION__, "START");
+        DB::enableQueryLog();
 
         if($user && $user->role == 'member'){
             $attr = DB::table('tattr_member as a')
@@ -47,7 +50,14 @@ class ProfileController extends Controller
                 ->where('a.id', $user->id)
                 ->get();
 
-            // $birthday = Carbon::parse($attr[0]->birthday)->translatedFormat('j F Y');
+            $queries = DB::getQueryLog();
+            for($q = 0; $q < count($queries); $q++) {
+                $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
+                $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+                $logs->write('SQL', $sql);
+            }
+    
+            $logs->write(__FUNCTION__, "STOP\r\n");
 
             return response()->json([
                'name'               => $user->name,
