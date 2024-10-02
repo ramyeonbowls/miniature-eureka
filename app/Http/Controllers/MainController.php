@@ -38,13 +38,23 @@ class MainController extends Controller
         $user = auth()->user();
 
         if($user && $user->role == 'member'){
+            $attr = DB::table('tattr_member as a')
+                ->select([
+                    'a.photo as avatar',
+                ])
+                ->where('a.client_id', $this->client_id)
+                ->where('a.id', $user->id)
+                ->get();
+
             return response()->json([
-               'name' => $user->name,
+               'name'   => $user->name,
+               'avatar' => (isset($attr[0]->avatar) && file_exists(public_path('/storage/images/profile/' . $attr[0]->avatar)) ? '/storage/images/profile/' . $attr[0]->avatar : '/storage/images/profile/default.jpg')
             ], 200);
         }
 
         return response()->json([
             'name' => '',
+            'avatar' => ''
         ], 200);
     }
     
@@ -232,9 +242,9 @@ class MainController extends Controller
     {
         $isbn = $request->id;
 
-        $logs = new Logs( Arr::last(explode("\\", get_class())) );
-        $logs->write(__FUNCTION__, "START");
-        DB::enableQueryLog();
+        // $logs = new Logs( Arr::last(explode("\\", get_class())) );
+        // $logs->write(__FUNCTION__, "START");
+        // DB::enableQueryLog();
 
         $results = DB::table('tmapping_book as a')
             ->select([
@@ -281,14 +291,14 @@ class MainController extends Controller
             $results->image = (isset($results->image) && file_exists(public_path('/images/cover/' . $results->image))) ? "/images/cover/" . $results->image : '/images/cover/default-cover.jpg';
         }
 
-        $queries = DB::getQueryLog();
-        for($q = 0; $q < count($queries); $q++) {
-            $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
-            $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
-            $logs->write('SQL', $sql);
-        }
+        // $queries = DB::getQueryLog();
+        // for($q = 0; $q < count($queries); $q++) {
+        //     $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
+        //     $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+        //     $logs->write('SQL', $sql);
+        // }
 
-        $logs->write(__FUNCTION__, "STOP\r\n");
+        // $logs->write(__FUNCTION__, "STOP\r\n");
 
         return response()->json($results, 200);
     }
@@ -623,6 +633,18 @@ class MainController extends Controller
                                     : '/images/news/default-news.jpg'
                 ];
             });
+
+        return response()->json($results, 200);
+    }
+
+    public function getAppInfo()
+    {
+        $results = DB::table('tclient as a')
+            ->select([
+                'a.application_name',
+            ])
+            ->where('a.client_id','=', $this->client_id)
+            ->get();
 
         return response()->json($results, 200);
     }

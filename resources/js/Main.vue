@@ -1,7 +1,7 @@
 <template>
     <div id="app-usr">
         <div id="main" class="layout-horizontal">
-            <headerItems :isAuthenticated="isAuthenticated"></headerItems>
+            <headerItems :isAuthenticated="isAuthenticated" :name="user.name" :avatar="user.avatar" :appname="appname"></headerItems>
         
             <div class="content-wrapper container">
                 <router-view :isAuthenticated="isAuthenticated"></router-view>
@@ -55,7 +55,7 @@
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel33">Cari </h4>
+                        <h4 class="modal-title" id="myModalLabel33">Cari</h4>
                         <button type="button" id="close-search" class="close" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -88,6 +88,7 @@ export default {
     data() {
         return {
             user: {},
+            appname: '',
             searchQuery: '',
             isAuthenticated: false,
         }
@@ -95,6 +96,7 @@ export default {
 
     mounted() {
         this.getInfo();
+        this.getAppInfo();
         
         document.addEventListener('DOMContentLoaded', () => {
             let loader = this.$loading.show()
@@ -122,6 +124,18 @@ export default {
                 if(response.data.name!=''){
                     this.isAuthenticated = true;
                 }
+            })
+            .catch((e) => {
+                console.error(e)
+            });
+        },
+
+        getAppInfo() {
+            this.appname = '';
+
+            axios.get('/getAppInfo')
+            .then((response) => {
+                this.appname = response.data[0].application_name;
             })
             .catch((e) => {
                 console.error(e)

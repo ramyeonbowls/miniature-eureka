@@ -21,25 +21,50 @@
 
                 <div class="col-md-7 col-8 col-lg-8 d-flex justify-content-center">
                     <div class="header-title">
-                        <h3 class="header-title">PERPUSTAKAAN DIGITAL GINESIA</h3>
+                        <h3 class="header-title">{{ appname }}</h3>
                     </div>
                 </div>
 
-                <div class="col-md-3 col-2 col-lg-2">
-                    <div class="d-none d-xl-block">
-                        <div class="form-group position-relative has-icon-right">
-                            <input type="text" class="form-control rounded-pill" placeholder="Cari Judul, Penulis, ISBN" v-model="searchQuery" @keypress.enter="searchBooks">
-                            <div class="form-control-icon">
-                                <i class="bi bi-search" @click="searchBooks"></i>
+                <div class="col-md-3 col-2 col-lg-2 d-block d-xl-none">
+                </div>
+                
+                <div class="header-top-right d-none d-xl-block">
+                    <div class="dropdown">
+                        <template v-if="isAuthenticated">
+                            <a href="#" id="topbarUserDropdown" class="user-dropdown d-flex align-items-center dropend dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <div class="avatar avatar-md2">
+                                        <img :src="avatar">
+                                    </div>
+                                    <div class="text">
+                                        <h6 class="user-dropdown-name">{{ name }}</h6>
+                                        <p class="user-dropdown-status text-sm text-muted">Member</p>
+                                    </div>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end shadow-lg" aria-labelledby="topbarUserDropdown" style="">
+                                <li><a class="dropdown-item" href="/profile">Profil Saya</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click.prevent="logout">Keluar</a>
+                                </li>
+                            </ul>
+                        </template>
+                        <template v-else>
+                            <div class="user-dropdown d-flex align-items-center dropend">
+                                <router-link :to="{ name: 'mlogin' }" class="font-bold">
+                                    <button class="custom-button log me-1">Masuk</button>
+                                </router-link>
+                                <router-link :to="{ name: 'mregister' }" class="font-bold">
+                                    <button class="custom-button reg me-1">Daftar</button>
+                                </router-link>
                             </div>
-                        </div>
+                        </template>
                     </div>
                 </div>
             </div>
         </div>
-        <nav class="main-navbar">
+        <nav class="main-navbar pt-3 pb-1">
             <div class="container">
-                <ul>
+                <ul style="font-weight: bold;">
                     <li class="menu-item ">
                         <router-link to="/" class='menu-link'>
                             <span> Beranda</span>
@@ -91,18 +116,21 @@
                             </div>
                         </div>
                     </li>
-                    <li class="menu-item ">
-                        <template v-if="!isAuthenticated">
-                            <router-link to="/mlogin" class='menu-link'>
-                                <span> Masuk</span>
-                            </router-link>
-                        </template>
-                        <template v-else>
-                            <a class="dropdown-item menu-link" href="javascript:void(0);" @click.prevent="logout">
+                    <template v-if="isAuthenticated">
+                        <li class="menu-item d-block d-xs-block d-xl-none">
+                            <a class="dropdown-item menu-link" href="javascript:void(0);" @click.prevent="logout" style="font-weight: bold;">
                                 <span> Keluar</span>
                             </a>
-                        </template>
-                    </li>
+                        </li>
+                    </template>
+                    <div class="d-none d-xl-block" style="margin-left: 580px;">
+                        <div class="form-group position-relative has-icon-right">
+                            <input type="text" class="form-control rounded-pill" placeholder="Cari Judul, Penulis, ISBN" v-model="searchQuery" @keypress.enter="searchBooks">
+                            <div class="form-control-icon">
+                                <i class="bi bi-search" @click="searchBooks"></i>
+                            </div>
+                        </div>
+                    </div>
                     <li class="theme-toogle">
                         <div class="theme-toggle d-flex gap-2 mt-2 svg-color">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--system-uicons icon-day" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21">
@@ -145,11 +173,24 @@ export default {
         isAuthenticated: {
             type: Boolean,
             required: true
+        },
+        name: {
+            type: String,
+            required: true
+        },
+        avatar: {
+            type: String,
+            required: true
+        },
+        appname: {
+            type: String,
+            required: true
         }
     },
 
     data() {
         return {
+            user: {},
             searchQuery: ''
         }
     },
@@ -180,6 +221,38 @@ export default {
 </script>
 
 <style scoped>
+.custom-button {
+  cursor: pointer;
+  border: 0;
+  border-radius: 4px;
+  font-weight: 600;
+  margin: 0 10px;
+  width: 150px;
+  padding: 10px 0;
+  box-shadow: 0 0 20px rgba(104, 85, 224, 0.2);
+  transition: 0.4s;
+}
+.reg {
+  color: white;
+  background-color: #435ebe;
+}
+
+.log {
+  color: rgb(104, 85, 224);
+  background-color: rgba(255, 255, 255, 1);
+  border: 1px solid #435ebe;
+}
+
+.log:hover {
+  color: white;
+  box-shadow: 0 0 20px rgba(104, 85, 224, 0.6);
+  background-color: #435ebe;
+}
+.reg:hover {
+  color: #ffffff;
+  box-shadow: 0 0 20px #dec7a3;
+  background-color: #fab040;
+}
 .header-title {
     font-size: 25px;
     margin: 0px 0px 0px;

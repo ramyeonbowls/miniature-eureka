@@ -33,9 +33,9 @@ class ProfileController extends Controller
     {
         Carbon::setLocale('id');
         $user = auth()->user();
-        $logs = new Logs( Arr::last(explode("\\", get_class())) );
-        $logs->write(__FUNCTION__, "START");
-        DB::enableQueryLog();
+        // $logs = new Logs(Arr::last(explode("\\", get_class())) . 'Log');
+        // $logs->write(__FUNCTION__, "START");
+        // DB::enableQueryLog();
 
         if($user && $user->role == 'member'){
             $attr = DB::table('tattr_member as a')
@@ -50,23 +50,23 @@ class ProfileController extends Controller
                 ->where('a.id', $user->id)
                 ->get();
 
-            $queries = DB::getQueryLog();
-            for($q = 0; $q < count($queries); $q++) {
-                $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
-                $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
-                $logs->write('SQL', $sql);
-            }
+            // $queries = DB::getQueryLog();
+            // for($q = 0; $q < count($queries); $q++) {
+            //     $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
+            //     $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+            //     $logs->write('SQL', $sql);
+            // }
     
-            $logs->write(__FUNCTION__, "STOP\r\n");
+            // $logs->write(__FUNCTION__, "STOP\r\n");
 
             return response()->json([
                'name'               => $user->name,
                'email'              => $user->email,
                'verified'           => ($user->email_verified_at != '') ? true : false,
-               'phone'              => $attr[0]->phone,
-               'gender'             => $attr[0]->gender,
-               'birthday'           => $attr[0]->birthday,
-               'nik'                => $attr[0]->nik,
+               'phone'              => $attr[0]->phone ?? '',
+               'gender'             => $attr[0]->gender ?? '',
+               'birthday'           => $attr[0]->birthday ?? '',
+               'nik'                => $attr[0]->nik ?? '',
                'avatar'             => (isset($attr[0]->avatar) && file_exists(public_path('/storage/images/profile/' . $attr[0]->avatar)) ? '/storage/images/profile/' . $attr[0]->avatar : '/storage/images/profile/default.jpg')
             ], 200);
         }
