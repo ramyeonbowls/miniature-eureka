@@ -3,7 +3,7 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
-                    <h3>Account Profile</h3>
+                    <h3>Profil Akun</h3>
                 </div>
             </div>
         </div>
@@ -22,7 +22,7 @@
                                         <a href="#" class="avatar-selector-btn">
                                             <i class="bi bi-camera-fill"></i>
                                         </a>
-                                        <input type="file" accept=".jpg, .png" name="avatar">
+                                        <input type="file" accept=".jpg" name="avatar">
                                     </div>
                                 </div>
                                 <h3 class="mt-3">{{ user.name }}</h3>
@@ -283,6 +283,8 @@ export default {
             axios.get('/getProfile')
             .then((response) => {
                 this.user = response.data;
+                this.user.password = '';
+                this.user.passwordConfirm = '';
                 loader.hide();
             })
             .catch((e) => {
@@ -311,14 +313,37 @@ export default {
             })
 
             imageInput.addEventListener('change', e => {
+                const file = e.target.files[0];
+
+                if (file.type !== 'image/jpeg') {
+                    this.$swal({
+                        icon: 'error',
+                        title: 'File Tidak Valid',
+                        text: 'Hanya file JPG yang diperbolehkan.',
+                    });
+                    e.target.value = '';
+                    return;
+                }
+
+                if (file.size > 1048576) {
+                    this.$swal({
+                        title: 'Gagal!',
+                        text: 'Ukuran file tidak boleh lebih dari 1MB.',
+                        icon: 'error'
+                    });
+
+                    e.target.value = '';
+                    return;
+                }
+
                 var reader = new FileReader();
                 reader.onload = function(){
                     imageViewer.src = reader.result;
                 };
 
-                this.user.avatar = e.target.files[0];
-                reader.readAsDataURL(e.target.files[0]);
-            })
+                this.user.avatar = file;
+                reader.readAsDataURL(file);
+            });
         }
     },
 

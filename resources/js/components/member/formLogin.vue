@@ -80,6 +80,7 @@ export default {
                 if (error.response && error.response.status === 422) {
                     this.errors = error.response.data.errors || {};
                 } else {
+                    this.errors = 'Terjadi error, silahkan refresh halaman';
                     console.error('An unknown error occurred:', error);
                 }
             }
