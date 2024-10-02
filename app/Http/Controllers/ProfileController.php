@@ -134,17 +134,22 @@ class ProfileController extends Controller
                 }
             }
 
+            $updateData = [
+                'nik'           => $request->nik,
+                'phone'         => $request->phone,
+                'birthday'      => $request->birthday,
+                'gender'        => $request->gender,
+                'updated_at'    => Carbon::now('Asia/Jakarta')
+            ];
+
+            if (!empty($avatar_name)) {
+                $updateData['photo'] = $avatar_name;
+            }
+
             $attr = DB::table('tattr_member')
                     ->where('id', $user->id)
                     ->where('client_id', $this->client_id)
-                    ->update([
-                        'nik'           => $request->nik,
-                        'phone'         => $request->phone,
-                        'birthday'      => $request->birthday,
-                        'gender'        => $request->gender,
-                        'photo'         => $avatar_name,
-                        'updated_at'    => Carbon::now('Asia/Jakarta')
-                    ]);
+                    ->update($updateData);
 
             if ($emailChanged) {
                 $user->sendEmailVerificationNotification();
