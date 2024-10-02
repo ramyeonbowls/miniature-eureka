@@ -120,19 +120,26 @@ const loadDecryptedPdf = async (id) => {
 // Render the current page
 const renderPage = async () => {
     try{
-        const page = await pdfDocument.getPage(currentPage.value)
-        const viewport = page.getViewport({ scale: zoom.value })
-        const canvas = pdfCanvas.value
-        const context = canvas.getContext('2d')
+        const page = await pdfDocument.getPage(currentPage.value);
+        const viewport = page.getViewport({ scale: zoom.value });
 
-        canvas.height = viewport.height
-        canvas.width = viewport.width
+        const canvas = pdfCanvas.value;
+        const context = canvas.getContext('2d');
+        
+        const outputScale = window.devicePixelRatio || 1;
+
+        canvas.width = Math.floor(viewport.width * outputScale);
+        canvas.height = Math.floor(viewport.height * outputScale);
+        canvas.style.width = Math.floor(viewport.width) + 'px';
+        canvas.style.height = Math.floor(viewport.height) + 'px';
+
+        context.scale(outputScale, outputScale);
 
         const renderContext = {
             canvasContext: context,
             viewport: viewport
-        }
-        await page.render(renderContext).promise
+        };
+        await page.render(renderContext).promise;
     } finally {
 
     }

@@ -117,7 +117,7 @@ class ProfileController extends Controller
                 try {
                     $avatar_file    = $request->file('avatar')->getClientOriginalName();
                     $extension      = $request->file('avatar')->getClientOriginalExtension();
-                    $avatar_name    = $user->id.'-'.$request->name.'.'. $extension;
+                    $avatar_name    = $this->client_id.'-'.$user->id.'.'. $extension;
                     $request->file('avatar')->storeAs('/public/images/profile', $avatar_name);
                 } catch (Throwable $th) {
                     $logs->write("ERROR", $th->getMessage());
