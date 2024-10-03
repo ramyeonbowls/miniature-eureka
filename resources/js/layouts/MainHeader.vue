@@ -21,7 +21,7 @@
 
                 <div class="col-md-7 col-8 col-lg-8 d-flex justify-content-center mx-2">
                     <div class="header-title">
-                        <h3 class="header-title">{{ appname }}</h3>
+                        <h4 class="header-title">{{ appname }}</h4>
                     </div>
                 </div>
 
@@ -254,7 +254,7 @@ export default {
   background-color: #fab040;
 }
 .header-title {
-    font-size: 25px;
+    font-size: 23px;
     margin: 0px 0px 0px;
     font-family: 'Libre Franklin';
     font-weight: 800;
