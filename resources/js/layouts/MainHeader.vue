@@ -62,7 +62,7 @@
                 </div>
             </div>
         </div>
-        <nav class="main-navbar pt-3 pb-1">
+        <nav class="main-navbar pt-3 pb-3">
             <div class="container">
                 <ul style="font-weight: bold;">
                     <li class="menu-item ">
@@ -123,7 +123,7 @@
                             </a>
                         </li>
                     </template>
-                    <div class="d-none d-xl-block" style="margin-left: 580px;">
+                    <div class="d-none d-xl-block" style="position: fixed; right: 8%;">
                         <div class="form-group position-relative has-icon-right">
                             <input type="text" class="form-control rounded-pill" placeholder="Cari Judul, Penulis, ISBN" v-model="searchQuery" @keypress.enter="searchBooks">
                             <div class="form-control-icon">
@@ -227,7 +227,7 @@ export default {
   border-radius: 4px;
   font-weight: 600;
   margin: 0 10px;
-  width: 150px;
+  width: 100px;
   padding: 10px 0;
   box-shadow: 0 0 20px rgba(104, 85, 224, 0.2);
   transition: 0.4s;
