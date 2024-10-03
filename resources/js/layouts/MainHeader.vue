@@ -19,7 +19,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-7 col-8 col-lg-8 d-flex justify-content-center">
+                <div class="col-md-7 col-8 col-lg-8 d-flex justify-content-center mx-2">
                     <div class="header-title">
                         <h3 class="header-title">{{ appname }}</h3>
                     </div>
