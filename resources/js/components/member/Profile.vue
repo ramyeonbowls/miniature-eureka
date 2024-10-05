@@ -177,7 +177,8 @@ export default {
     mounted() {
         this.csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
         this.getProfile();
-        this.uploadImage()
+        this.uploadImage();
+        this.initializeSubMenu();
     },
 
     methods: {
@@ -344,6 +345,20 @@ export default {
                 this.user.avatar = file;
                 reader.readAsDataURL(file);
             });
+        },
+
+        initializeSubMenu() {
+            let submenus = document.querySelectorAll('.submenu-item')
+    
+            submenus.forEach((submenu) => {
+                submenu.querySelector('.submenu-link').addEventListener('click', (e) => {
+                    let navbar = document.querySelector('.main-navbar');
+                    if (navbar.classList.contains('active')) {
+                        navbar.classList.remove('active');
+                    }
+                    e.preventDefault()
+                })
+            })
         }
     },
 

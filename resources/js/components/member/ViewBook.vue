@@ -11,7 +11,12 @@
                             <div class="buttons mt-3">
                                 <button class="btn btn-primary btn-md me-2" @click="bacaBuku"><i class="bi bi-book-fill"></i> Baca</button>
                                 <template v-if="isAuthenticated">
-                                    <button class="btn btn-warning text-white btn-md me-2"><i class="bi bi-bookmarks"></i> Pinjam</button>
+                                    <template v-if="detail.rent=='Y'">
+                                        <button class="btn btn-warning text-white btn-md me-2" @click="kembaliBuku"><i class="bi bi-bookmarks"></i> Kembalikan</button>
+                                    </template>
+                                    <template v-else>
+                                        <button class="btn btn-warning text-white btn-md me-2" @click="pinjamBuku"><i class="bi bi-bookmarks"></i> Pinjam</button>
+                                    </template>
                                 </template>
                             </div>
                         </div>
@@ -173,9 +178,6 @@ export default {
     },
 
     props: {
-        idb: {
-            required:true
-        },
         isAuthenticated: {
             type: Boolean,
             required: true
@@ -227,6 +229,7 @@ export default {
 
     created(){
         this.getBukuPopuler();
+        this.initializeSubMenu();
     },
 
     mounted() {
@@ -247,7 +250,8 @@ export default {
                 window.axios
                 .get('/ReadCheck', {
                     params:{
-                        age: this.age
+                        pdfToken: encodeURIComponent(this.detail.book_id),
+                        age: this.detail.age
                     }
                 })
                 .then((response) => {
@@ -264,9 +268,8 @@ export default {
                     }else{
                         loader.hide();
                         this.$swal({
-                            // title: "Register",
                             text: response.data.message,
-                            icon: 'error',
+                            icon: response.data.code=='2' ? 'warning' : 'error',
                             allowOutsideClick: false,
                             allowEscapeKey: false,
                             showCloseButton: false,
@@ -306,6 +309,97 @@ export default {
                     });
                 });
             }
+        },
+
+        pinjamBuku(){
+            let loader = this.$loading.show();
+            window.axios.post('/RentBook', {
+                pdfToken: encodeURIComponent(this.detail.book_id),
+                age: this.detail.age
+            })
+            .then((response) => {
+                loader.hide();
+                this.$swal({
+                    text: response.data.message,
+                    icon: response.data.code == 1 ? 'success' : 'error',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    showCloseButton: false,
+                    showCancelButton: false
+                }).then((result) => {
+                    location.reload(); 
+                });
+            })
+            .catch((e) => {
+                loader.hide();
+
+                if(e.response.data.message == 'Your email address is not verified.'){
+                    this.$swal({
+                        title: e.response.data.message,
+                        text: "Silahkan verifikasi email, jika klik Kirim Email jika ingin kirim ulang email verifikasi",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Kirim Email',
+                        cancelButtonText: 'Tutup'
+                    })
+                    .then(async (result) => {
+                        if (result.isConfirmed) {
+                            try {
+                                // Send a request to resend the verification email
+                                const response = await window.axios.post('/email/resend');
+                                this.$swal({
+                                    title: 'Email Terkirim!',
+                                    text: response.data.message,
+                                    icon: 'success'
+                                });
+                            } catch (error) {
+                                // Handle error if the resend fails
+                                this.$swal({
+                                    title: 'Gagal!',
+                                    text: error.response.data.message || 'Terjadi kesalahan saat mengirim email.',
+                                    icon: 'error'
+                                });
+                            }
+                        }
+                    });
+                }else{
+                    this.$swal({
+                        text: 'Terjadi kesalahan saat pinjam buku, silahkan coba kembali',
+                        icon: 'error',
+                        showCancelButton: false
+                    })
+                }
+                
+            });
+        },
+
+        kembaliBuku(){
+            let loader = this.$loading.show();
+            window.axios.post('/ReturnBook', {
+                pdfToken: encodeURIComponent(this.detail.book_id)
+            })
+            .then((response) => {
+                loader.hide();
+                this.$swal({
+                    text: response.data.message,
+                    icon: response.data.code == 1 ? 'success' : 'error',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    showCloseButton: false,
+                    showCancelButton: false
+                }).then((result) => {
+                    location.reload(); 
+                });
+            })
+            .catch((e) => {
+                loader.hide();
+                this.$swal({
+                    text: 'Terjadi kesalahan saat pinjam buku, silahkan coba kembali',
+                    icon: 'error',
+                    showCancelButton: false
+                })
+                
+            });
         },
 
         getBukuPopuler() {

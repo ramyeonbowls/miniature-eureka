@@ -21,11 +21,6 @@ const _routes = [
         component: () => import(/* webpackChunkName: "usr/book" */ './components/member/Book.vue'),
     },
     {
-        path: '/baca-buku',
-        name: 'baca-buku',
-        component: () => import(/* webpackChunkName: "usr/readbook" */ './components/member/ReadBook.vue'),
-    },
-    {
         path: '/detail-buku/:idb',
         name: 'detail-buku',
         component: () => import(/* webpackChunkName: "usr/viewbook" */ './components/member/ViewBook.vue'),

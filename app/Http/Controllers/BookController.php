@@ -67,6 +67,82 @@ class BookController extends Controller
     {
         Carbon::setLocale('id');
         $user = auth()->user();
+        // $logs = new Logs( Arr::last(explode("\\", get_class())) );
+        // $logs->write(__FUNCTION__, "START");
+        // DB::enableQueryLog();
+
+        $check_age  = $this->CheckAge($request);
+        $age        = json_decode($check_age->getContent(), true);
+
+        if($age['code'] == '0'){
+            return response()->json($age, 200);
+        }
+
+        $cek_stock = DB::table('tmapping_book as a')
+            ->select([
+                DB::raw("a.copy - IFNULL(d.total, 0) as remaining")
+            ])
+            ->leftJoin(DB::raw("(
+                    SELECT
+                        src.book_id,
+                        SUM(CASE WHEN src.total > 1 THEN 1 ELSE src.total END) AS total
+                    FROM (
+                        SELECT sr.book_id, COUNT(sr.book_id) AS total, sr.user_id
+                        FROM (
+                            SELECT book_id, user_id
+                            FROM ttrx_read
+                            WHERE
+                                client_id = '".$this->client_id."'
+                                AND flag_end != 'Y'
+                            
+                            UNION ALL
+                            
+                            SELECT book_id, user_id
+                            FROM trent_book
+                            WHERE
+                                client_id = '".$this->client_id."'
+                                AND flag_end != 'Y'
+                                AND user_id != '".$user->id."'
+                        ) sr
+                        group by sr.book_id, sr.user_id
+                    ) src
+                    GROUP BY src.book_id) as d"), function($join) {
+                $join->on('a.book_id', '=', 'd.book_id');
+            })
+            ->where('a.client_id', '=', $this->client_id)
+            ->where('a.book_id', '=', $request->pdfToken)
+            ->first();
+
+        // $queries = DB::getQueryLog();
+        // for($q = 0; $q < count($queries); $q++) {
+        //     $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
+        //     $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+        //     $logs->write('SQL', $sql);
+        // }
+        // $logs->write(__FUNCTION__, "STOP\r\n");    
+
+        if($cek_stock->remaining > 0){
+            return response()->json([
+                'code' => '1',
+                'message' => 'Ok',
+            ], 200);
+        }else{
+            return response()->json([
+                'code' => '2',
+                'message' => 'Stok buku sudah habis, silahkan tunggu!',
+            ], 200);
+        }
+
+        return response()->json([
+            'code' => '0',
+            'message' => 'Terjadi kesalahan silahkan dicoba kembali!',
+        ], 200);
+    }
+    
+    public function CheckAge(Request $request)
+    {
+        Carbon::setLocale('id');
+        $user = auth()->user();
 
         $attr = DB::table('tattr_member as a')
             ->select([
@@ -88,7 +164,7 @@ class BookController extends Controller
         }
 
         return response()->json([
-            'code' => '0',
+            'code' => '2',
             'message' => 'Anda Belum Cukup Usia Untuk membaca Buku Ini!',
         ], 200);
     }
@@ -151,5 +227,102 @@ class BookController extends Controller
                 'message' => 'Failed!',
             ], 200);
         }
+    }
+
+    public function RentBook(Request $request)
+    {
+        Carbon::setLocale('id');
+        $user = auth()->user();
+        $logs = new Logs( Arr::last(explode("\\", get_class())) );
+        $logs->write(__FUNCTION__, "START");
+        DB::enableQueryLog();
+
+        $rent_day = 3;
+        try {
+            $rent_days  = DB::select("SELECT `value` FROM tparameter WHERE `name`='rent_book';");
+            $rent_day   = $rent_days ? (int) $rent_days[0]->value : 3;
+        } catch (\PDOException $e) {
+            $logs->write("ERROR PARAMETER='rent_book'", $e->getMessage() ."\n");
+        }
+
+        $check_age  = $this->CheckAge($request);
+        $age        = json_decode($check_age->getContent(), true);
+
+        if($age['code'] == '0'){
+            return response()->json($age, 200);
+        }
+
+        $now        = Carbon::now('Asia/Jakarta');
+        $date       = $now->format('Y-m-d');
+        $end_date   = $now->addDays($rent_day);
+        $rent       = DB::table('trent_book')
+                    ->insert([
+                        'client_id'     => $this->client_id,
+                        'user_id'       => $user->id,
+                        'book_id'       => $request->pdfToken,
+                        'start_date'    => $date,
+                        'end_date'      => $end_date,
+                        'flag_end'      => 'N',
+                        'created_at'    => Carbon::now('Asia/Jakarta')
+                    ]);
+
+        $queries = DB::getQueryLog();
+        for($q = 0; $q < count($queries); $q++) {
+            $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
+            $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+            $logs->write('SQL', $sql);
+        }
+        $logs->write(__FUNCTION__, "STOP\r\n");
+
+        if($rent){
+            return response()->json([
+               'code' => '1',
+               'message' => 'Berhasil Pinjam Buku!',
+            ], 200);
+        }
+
+        return response()->json([
+            'code' => '0',
+            'message' => 'Gagal Bisa Pinjam Buku!',
+        ], 200);
+    }
+
+    public function ReturnBook(Request $request)
+    {
+        Carbon::setLocale('id');
+        $user = auth()->user();
+        $logs = new Logs( Arr::last(explode("\\", get_class())) );
+        $logs->write(__FUNCTION__, "START");
+        DB::enableQueryLog();
+
+        $now        = Carbon::now('Asia/Jakarta');
+        $date       = $now->format('Y-m-d');
+        $return     = DB::table('trent_book')
+                    ->where('user_id', $user->id)
+                    ->where('client_id', $this->client_id)
+                    ->update([
+                        'flag_end'  => 'Y',
+                        'updated_at' => $now
+                    ]);
+
+        $queries = DB::getQueryLog();
+        for($q = 0; $q < count($queries); $q++) {
+            $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
+            $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+            $logs->write('SQL', $sql);
+        }
+        $logs->write(__FUNCTION__, "STOP\r\n");
+
+        if($return){
+            return response()->json([
+               'code' => '1',
+               'message' => 'Berhasil Kembalikan Buku!',
+            ], 200);
+        }
+
+        return response()->json([
+            'code' => '0',
+            'message' => 'Gagal Kembalikan Buku!',
+        ], 200);
     }
 }

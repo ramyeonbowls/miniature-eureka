@@ -641,7 +641,7 @@ export default {
     },
 
     mounted() {
-        
+        this.initializeSubMenu();
     },
 
     methods: {
@@ -717,6 +717,20 @@ export default {
                 console.error(e)
             });
         },
+
+        initializeSubMenu() {
+            let submenus = document.querySelectorAll('.submenu-item')
+    
+            submenus.forEach((submenu) => {
+                submenu.querySelector('.submenu-link').addEventListener('click', (e) => {
+                    let navbar = document.querySelector('.main-navbar');
+                    if (navbar.classList.contains('active')) {
+                        navbar.classList.remove('active');
+                    }
+                    e.preventDefault()
+                })
+            })
+        }
     },
 
     computed: {

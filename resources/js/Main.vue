@@ -87,7 +87,10 @@ export default {
 
     data() {
         return {
-            user: {},
+            user: {
+                name: '',
+                avatar: ''
+            },
             appname: '',
             searchQuery: '',
             isAuthenticated: false,
@@ -97,6 +100,7 @@ export default {
     mounted() {
         this.getInfo();
         this.getAppInfo();
+        this.initializeSubMenu();
         
         document.addEventListener('DOMContentLoaded', () => {
             let loader = this.$loading.show()
@@ -115,7 +119,10 @@ export default {
 
     methods: {
         getInfo() {
-            this.user = {};
+            this.user = {
+                name: '',
+                avatar: ''
+            };
 
             axios.get('/getInfo')
             .then((response) => {
@@ -150,6 +157,20 @@ export default {
                 closeButton.click();
             }
         },
+
+        initializeSubMenu() {
+            let submenus = document.querySelectorAll('.submenu-item')
+    
+            submenus.forEach((submenu) => {
+                submenu.querySelector('.submenu-link').addEventListener('click', (e) => {
+                    let navbar = document.querySelector('.main-navbar');
+                    if (navbar.classList.contains('active')) {
+                        navbar.classList.remove('active');
+                    }
+                    e.preventDefault()
+                })
+            })
+        }
     },
 
     computed: {},
