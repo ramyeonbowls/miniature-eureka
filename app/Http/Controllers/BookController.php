@@ -318,7 +318,7 @@ class BookController extends Controller
             ])
             ->where('a.client_id', $this->client_id)
             ->where('a.user_id', $user->id)
-            ->where('a.flag_end', 'Y')
+            ->where('a.flag_end', 'N')
             ->get();
         
         $book   = $query_book[0]->total ?? $rent_book;
@@ -331,7 +331,7 @@ class BookController extends Controller
         // }
         // $logs->write(__FUNCTION__, "STOP\r\n");
 
-        if($book > $rent_book){
+        if($book < $rent_book){
             return response()->json([
                'code' => '1',
                'message' => 'Ok',
