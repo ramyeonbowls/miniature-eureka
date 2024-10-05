@@ -321,13 +321,15 @@ export default {
                 loader.hide();
                 this.$swal({
                     text: response.data.message,
-                    icon: response.data.code == 1 ? 'success' : 'error',
+                    icon: response.data.code == 1 ? 'success' : 'warning',
                     allowOutsideClick: false,
                     allowEscapeKey: false,
                     showCloseButton: false,
                     showCancelButton: false
                 }).then((result) => {
-                    location.reload(); 
+                    if(response.data.code == 1){
+                        location.reload(); 
+                    }
                 });
             })
             .catch((e) => {

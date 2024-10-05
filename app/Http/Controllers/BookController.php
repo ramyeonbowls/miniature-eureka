@@ -71,10 +71,10 @@ class BookController extends Controller
         // $logs->write(__FUNCTION__, "START");
         // DB::enableQueryLog();
 
-        $check_age  = $this->CheckAge($request);
+        $check_age  = $this->AgeCheck($request);
         $age        = json_decode($check_age->getContent(), true);
 
-        if($age['code'] == '0'){
+        if($age['code'] == '2'){
             return response()->json($age, 200);
         }
 
@@ -139,7 +139,7 @@ class BookController extends Controller
         ], 200);
     }
     
-    public function CheckAge(Request $request)
+    public function AgeCheck(Request $request)
     {
         Carbon::setLocale('id');
         $user = auth()->user();
@@ -245,16 +245,22 @@ class BookController extends Controller
             $logs->write("ERROR PARAMETER='rent_book'", $e->getMessage() ."\n");
         }
 
-        $check_age  = $this->CheckAge($request);
+        $check_age  = $this->AgeCheck($request);
         $age        = json_decode($check_age->getContent(), true);
 
-        if($age['code'] == '0'){
+        if($age['code'] == '2'){
             return response()->json($age, 200);
         }
+        
+        $check_book = $this->RentCheck();
+        $book       = json_decode($check_book->getContent(), true);
 
-        $now        = Carbon::now('Asia/Jakarta');
-        $date       = $now->format('Y-m-d');
-        $end_date   = $now->addDays($rent_day);
+        if($book['code'] == '2'){
+            return response()->json($book, 200);
+        }
+
+        $date       = Carbon::now('Asia/Jakarta');
+        $end_date   = $date->copy()->addDays(3);
         $rent       = DB::table('trent_book')
                     ->insert([
                         'client_id'     => $this->client_id,
@@ -284,6 +290,57 @@ class BookController extends Controller
         return response()->json([
             'code' => '0',
             'message' => 'Gagal Bisa Pinjam Buku!',
+        ], 200);
+    }
+
+    public function RentCheck()
+    {
+        Carbon::setLocale('id');
+        $user = auth()->user();
+        // $logs = new Logs( Arr::last(explode("\\", get_class())) );
+        // $logs->write(__FUNCTION__, "START");
+        // DB::enableQueryLog();
+
+        $rent_book = 3;
+        try {
+            $rent_books  = DB::select("SELECT `value` FROM tparameter WHERE `name`='maks_rent_book';");
+            $rent_book   = $rent_books ? (int) $rent_books[0]->value : 3;
+        } catch (\PDOException $e) {
+            $logs->write("ERROR PARAMETER='maks_rent_book'", $e->getMessage() ."\n");
+        }
+
+        $now        = Carbon::now('Asia/Jakarta');
+        $date       = $now->format('Y-m-d');
+        $end_date   = $now->addDays($rent_book);
+        $query_book = DB::table('trent_book as a')
+            ->select([
+                DB::raw("COUNT(DISTINCT book_id) AS total")
+            ])
+            ->where('a.client_id', $this->client_id)
+            ->where('a.user_id', $user->id)
+            ->where('a.flag_end', 'Y')
+            ->get();
+        
+        $book   = $query_book[0]->total ?? $rent_book;
+
+        // $queries = DB::getQueryLog();
+        // for($q = 0; $q < count($queries); $q++) {
+        //     $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
+        //     $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+        //     $logs->write('SQL', $sql);
+        // }
+        // $logs->write(__FUNCTION__, "STOP\r\n");
+
+        if($book > $rent_book){
+            return response()->json([
+               'code' => '1',
+               'message' => 'Ok',
+            ], 200);
+        }
+
+        return response()->json([
+            'code' => '2',
+            'message' => 'Kuota Pinjaman Buku Anda Sudah Habis!',
         ], 200);
     }
 

@@ -15,8 +15,8 @@ return new class extends Migration
             $table->string('client_id', 50);
             $table->bigInteger('user_id');
             $table->string('book_id', 50);
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->datetime('start_date');
+            $table->datetime('end_date');
             $table->string('flag_end', 1)->default('N');
             $table->timestamps();
 
