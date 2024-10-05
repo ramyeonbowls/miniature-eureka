@@ -243,9 +243,9 @@ class MainController extends Controller
         $isbn = $request->id;
         $user = auth()->user();
 
-        $logs = new Logs( Arr::last(explode("\\", get_class())) );
-        $logs->write(__FUNCTION__, "START");
-        DB::enableQueryLog();
+        // $logs = new Logs( Arr::last(explode("\\", get_class())) );
+        // $logs->write(__FUNCTION__, "START");
+        // DB::enableQueryLog();
 
         $query = DB::table('tmapping_book as a')
             ->select([
@@ -314,14 +314,13 @@ class MainController extends Controller
             $results->image = (isset($results->image) && file_exists(public_path('/images/cover/' . $results->image))) ? "/images/cover/" . $results->image : '/images/cover/default-cover.jpg';
         }
 
-        $queries = DB::getQueryLog();
-        for($q = 0; $q < count($queries); $q++) {
-            $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
-            $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
-            $logs->write('SQL', $sql);
-        }
-
-        $logs->write(__FUNCTION__, "STOP\r\n");
+        // $queries = DB::getQueryLog();
+        // for($q = 0; $q < count($queries); $q++) {
+        //     $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
+        //     $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+        //     $logs->write('SQL', $sql);
+        // }
+        // $logs->write(__FUNCTION__, "STOP\r\n");
 
         return response()->json($results, 200);
     }
