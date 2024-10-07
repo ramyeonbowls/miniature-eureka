@@ -8,7 +8,7 @@
                 <table class="table table-striped responsive-table" id="data_rst">
                     <thead>
                         <tr>
-                            <th>Nama Buku</th>
+                            <th>Judul Buku</th>
                             <th>Cover</th>
                             <th>Tanggal Pinjam</th>
                             <th>Tanggal Kembali</th>
@@ -35,7 +35,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
-                        <i class="bx bx-x d-block d-sm-none"></i>
+                        <span class="bx bx-x d-block d-sm-none">X</span>
                         <span class="d-none d-sm-block">Close</span>
                     </button>
                 </div>

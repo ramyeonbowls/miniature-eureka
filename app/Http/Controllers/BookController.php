@@ -407,6 +407,7 @@ class BookController extends Controller
                 ->join('tbook as b', 'a.book_id', '=', 'b.book_id')
                 ->where('a.client_id', $this->client_id)
                 ->where('a.user_id', $user->id)
+                ->orderBy('a.start_date', 'ASC')
                 ->get();
 
             // $queries = DB::getQueryLog();
