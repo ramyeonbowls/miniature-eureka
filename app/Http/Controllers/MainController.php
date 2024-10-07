@@ -118,9 +118,9 @@ class MainController extends Controller
                     'isbn'     => $value->isbn,
                     'title'    => $value->title,
                     'sinopsis' => $value->sinopsis,
-                    'image'    => (isset($value->image) && file_exists(public_path('/images/cover/' . $value->image))) 
-                                    ? '/images/cover/' . $value->image 
-                                    : '/images/cover/default-cover.jpg',
+                    'image'    => (isset($value->image) && file_exists(public_path('/storage/images/cover/' . $value->image))) 
+                                    ? '/storage/images/cover/' . $value->image 
+                                    : '/storage/images/cover/default-cover.jpg',
                     'writer'   => $value->writer
                 ];
             });
@@ -171,9 +171,9 @@ class MainController extends Controller
                     'isbn'     => $value->isbn,
                     'title'    => $value->title,
                     'sinopsis' => $value->sinopsis,
-                    'image'    => (isset($value->image) && file_exists(public_path('/images/cover/' . $value->image))) 
-                                    ? '/images/cover/' . $value->image 
-                                    : '/images/cover/default-cover.jpg',
+                    'image'    => (isset($value->image) && file_exists(public_path('/storage/images/cover/' . $value->image))) 
+                                    ? '/storage/images/cover/' . $value->image 
+                                    : '/storage/images/cover/default-cover.jpg',
                     'writer'   => $value->writer
                 ];
             });
@@ -219,9 +219,9 @@ class MainController extends Controller
                     'isbn'     => $value->isbn,
                     'title'    => $value->title,
                     'sinopsis' => $value->sinopsis,
-                    'image'    => (isset($value->image) && file_exists(public_path('/images/cover/' . $value->image))) 
-                                    ? '/images/cover/' . $value->image 
-                                    : '/images/cover/default-cover.jpg',
+                    'image'    => (isset($value->image) && file_exists(public_path('/storage/images/cover/' . $value->image))) 
+                                    ? '/storage/images/cover/' . $value->image 
+                                    : '/storage/images/cover/default-cover.jpg',
                     'writer'   => $value->writer
                 ];
             });
@@ -311,7 +311,7 @@ class MainController extends Controller
             ->first();
 
         if ($results) {
-            $results->image = (isset($results->image) && file_exists(public_path('/images/cover/' . $results->image))) ? "/images/cover/" . $results->image : '/images/cover/default-cover.jpg';
+            $results->image = (isset($results->image) && file_exists(public_path('/storage/images/cover/' . $results->image))) ? "/images/cover/" . $results->image : '/storage/images/cover/default-cover.jpg';
         }
 
         // $queries = DB::getQueryLog();
@@ -358,9 +358,9 @@ class MainController extends Controller
                     'id'            => $value->id,
                     'description'   => $value->description,
                     'display'       => $value->disp_type,
-                    'image'         => (isset($value->image) && file_exists(public_path('/images/banner/' . $value->image))) 
-                                    ? '/images/banner/' . $value->image 
-                                    : '/images/banner/banner1.jpg'
+                    'image'         => (isset($value->image) && file_exists(public_path('/storage/images/banner/' . $value->image))) 
+                                    ? '/storage/images/banner/' . $value->image 
+                                    : '/storage/images/banner/banner1.jpg'
                 ];
             });
 
@@ -392,9 +392,9 @@ class MainController extends Controller
                     'content'       => $value->description,
                     'author'        => $value->author,
                     'published_at'  => $value->published_at,
-                    'image'         => (isset($value->image) && file_exists(public_path('/images/news/' . $value->image))) 
-                                    ? '/images/news/' . $value->image 
-                                    : '/images/news/default-news.jpg'
+                    'image'         => (isset($value->image) && file_exists(public_path('/storage/images/news/' . $value->image))) 
+                                    ? '/storage/images/news/' . $value->image 
+                                    : '/storage/images/news/default-news.jpg'
                 ];
             });
 
@@ -427,9 +427,9 @@ class MainController extends Controller
                     'author'        => $value->author,
                     'published_at'  => $value->published_at,
                     'category'      => $value->category,
-                    'image'         => (isset($value->image) && file_exists(public_path('/images/news/' . $value->image))) 
-                                    ? '/images/news/' . $value->image 
-                                    : '/images/news/default-news.jpg'
+                    'image'         => (isset($value->image) && file_exists(public_path('/storage/images/news/' . $value->image))) 
+                                    ? '/storage/images/news/' . $value->image 
+                                    : '/storage/images/news/default-news.jpg'
                 ];
             });
 
@@ -457,9 +457,9 @@ class MainController extends Controller
                     'author'        => $value->author,
                     'published_at'  => $value->published_at,
                     'category'      => $value->category,
-                    'image'         => (isset($value->image) && file_exists(public_path('/images/news/' . $value->image))) 
-                                    ? '/images/news/' . $value->image 
-                                    : '/images/news/default-news.jpg'
+                    'image'         => (isset($value->image) && file_exists(public_path('/storage/images/news/' . $value->image))) 
+                                    ? '/storage/images/news/' . $value->image 
+                                    : '/storage/images/news/default-news.jpg'
                 ];
             });
 
@@ -486,9 +486,9 @@ class MainController extends Controller
                     'by'            => $value->author,
                     'published_at'  => $value->published_at,
                     'category'      => $value->category,
-                    'image'         => (isset($value->image) && file_exists(public_path('/images/news/' . $value->image))) 
-                                    ? '/images/news/' . $value->image 
-                                    : '/images/news/anonim.jpg'
+                    'image'         => (isset($value->image) && file_exists(public_path('/storage/images/news/' . $value->image))) 
+                                    ? '/storage/images/news/' . $value->image 
+                                    : '/storage/images/news/anonim.jpg'
                 ];
             });
 
@@ -516,9 +516,9 @@ class MainController extends Controller
                     'author'        => $value->author,
                     'published_at'  => $value->published_at,
                     'category'      => $value->category,
-                    'image'         => (isset($value->image) && file_exists(public_path('/images/news/' . $value->image))) 
-                                    ? '/images/news/' . $value->image 
-                                    : '/images/news/default-news.jpg'
+                    'image'         => (isset($value->image) && file_exists(public_path('/storage/images/news/' . $value->image))) 
+                                    ? '/storage/images/news/' . $value->image 
+                                    : '/storage/images/news/default-news.jpg'
                 ];
             });
 
@@ -546,9 +546,9 @@ class MainController extends Controller
                     'author'        => $value->author,
                     'published_at'  => $value->published_at,
                     'category'      => $value->category,
-                    'image'         => (isset($value->image) && file_exists(public_path('/images/news/' . $value->image))) 
-                                    ? '/images/news/' . $value->image 
-                                    : '/images/news/default-news.jpg'
+                    'image'         => (isset($value->image) && file_exists(public_path('/storage/images/news/' . $value->image))) 
+                                    ? '/storage/images/news/' . $value->image 
+                                    : '/storage/images/news/default-news.jpg'
                 ];
             });
 
@@ -576,9 +576,9 @@ class MainController extends Controller
                     'author'        => $value->author,
                     'published_at'  => $value->published_at,
                     'category'      => $value->category,
-                    'image'         => (isset($value->image) && file_exists(public_path('/images/news/' . $value->image))) 
-                                    ? '/images/news/' . $value->image 
-                                    : '/images/news/default-news.jpg'
+                    'image'         => (isset($value->image) && file_exists(public_path('/storage/images/news/' . $value->image))) 
+                                    ? '/storage/images/news/' . $value->image 
+                                    : '/storage/images/news/default-news.jpg'
                 ];
             });
 
@@ -606,9 +606,9 @@ class MainController extends Controller
                     'author'        => $value->author,
                     'published_at'  => $value->published_at,
                     'category'      => $value->category,
-                    'image'         => (isset($value->image) && file_exists(public_path('/images/news/' . $value->image))) 
-                                    ? '/images/news/' . $value->image 
-                                    : '/images/news/default-news.jpg'
+                    'image'         => (isset($value->image) && file_exists(public_path('/storage/images/news/' . $value->image))) 
+                                    ? '/storage/images/news/' . $value->image 
+                                    : '/storage/images/news/default-news.jpg'
                 ];
             });
 
@@ -650,9 +650,9 @@ class MainController extends Controller
                     'content'       => $value->description,
                     'author'        => $value->author,
                     'published_at'  => $value->published_at,
-                    'image'         => (isset($value->image) && file_exists(public_path('/images/news/' . $value->image))) 
-                                    ? '/images/news/' . $value->image 
-                                    : '/images/news/default-news.jpg'
+                    'image'         => (isset($value->image) && file_exists(public_path('/storage/images/news/' . $value->image))) 
+                                    ? '/storage/images/news/' . $value->image 
+                                    : '/storage/images/news/default-news.jpg'
                 ];
             });
 
