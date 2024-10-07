@@ -388,8 +388,8 @@ class BookController extends Controller
     public function RentHistory()
     {
         $user = auth()->user();
-        $logs = new Logs(Arr::last(explode("\\", get_class())) . 'Log');
-        $logs->write(__FUNCTION__, 'START');
+        // $logs = new Logs(Arr::last(explode("\\", get_class())) . 'Log');
+        // $logs->write(__FUNCTION__, 'START');
 
         $results = [];
         try {
@@ -409,15 +409,15 @@ class BookController extends Controller
                 ->where('a.user_id', $user->id)
                 ->get();
 
-            $queries = DB::getQueryLog();
-            for ($q = 0; $q < count($queries); $q++) {
-                $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
-                $logs->write('SQL', $queries[$q]['query']);
-            }
+            // $queries = DB::getQueryLog();
+            // for ($q = 0; $q < count($queries); $q++) {
+            //     $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+            //     $logs->write('SQL', $queries[$q]['query']);
+            // }
         } catch (Throwable $th) {
-            $logs->write("ERROR", $th->getMessage());
+            // $logs->write("ERROR", $th->getMessage());
         }
-        $logs->write(__FUNCTION__, "STOP\r\n");
+        // $logs->write(__FUNCTION__, "STOP\r\n");
 
         return DataTables::of($results)
             ->escapeColumns()
