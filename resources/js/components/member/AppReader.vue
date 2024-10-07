@@ -1,42 +1,39 @@
 <template>
     <section class="section">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex justify-content-center align-items-center position-relative">
-                        <!-- Zoom Level Selector -->
-                        
-                        <!-- Floating Pagination -->
-                        <nav aria-label="Page navigation example" class="pagination-float">
-                            <ul class="pagination pagination-primary justify-content-center">
-                                <li class="page-item"><a style="background-color: #435ebe; color: white;" class="page-link" href="javascript:void(0);" @click="prevPage">Prev</a></li>
-                                <li class="page-item"><a style="background-color: #435ebe; color: white;" class="page-link disabled" href="javascript:void(0);">{{ currentPage }}</a></li>
-                                <li class="page-item"><a style="background-color: #435ebe; color: white;" class="page-link disabled" href="javascript:void(0);">/</a></li>
-                                <li class="page-item"><a style="background-color: #435ebe; color: white;" class="page-link disabled" href="javascript:void(0);">{{ totalPages }}</a></li>
-                                <li class="page-item"><a style="background-color: #435ebe; color: white;" class="page-link" href="javascript:void(0);" @click="nextPage">Next</a></li>
-                                <li class="page-item">
-                                    <select id="zoom" v-model="zoom" @change="renderPage" class="page-link h-100" style="background-color: #435ebe; color: white;">
-                                        <option value="0.25">25%</option>
-                                        <option value="0.5">50%</option>
-                                        <option value="0.75">75%</option>
-                                        <option value="1">100%</option>
-                                        <option value="1.5">150%</option>
-                                        <option value="2">200%</option>
-                                    </select></li>
-                            </ul>
-                        </nav>
-                        
-                        <!-- PDF Viewer -->
-                        <canvas ref="pdfCanvas"></canvas>
-                        
-                        <!-- Tooltip -->
-                        <div v-if="showTooltip" class="tooltip" :style="{ top: tooltipY + 'px', left: tooltipX + 'px' }">
-                            <p>Click to copy</p>
-                        </div>
-                    </div>
-                </div>
+        <nav class="navbar py-2 d-flex justify-content-end" style="background-color: #435ebe; color: white;">
+            <button class="btn btn-outline-light" @click="SelesaiBaca">Selesai Baca</button>
+        </nav>
+
+        <div class="d-flex justify-content-center align-items-center position-relative">
+            <!-- Floating Pagination -->
+            <nav aria-label="Page navigation example" class="pagination-float">
+                <ul class="pagination pagination-primary justify-content-center">
+                    <li class="page-item"><a style="background-color: #435ebe; color: white;" class="page-link" href="javascript:void(0);" @click="prevPage">Prev</a></li>
+                    <li class="page-item"><a style="background-color: #435ebe; color: white;" class="page-link disabled" href="javascript:void(0);">{{ currentPage }}</a></li>
+                    <li class="page-item"><a style="background-color: #435ebe; color: white;" class="page-link disabled" href="javascript:void(0);">/</a></li>
+                    <li class="page-item"><a style="background-color: #435ebe; color: white;" class="page-link disabled" href="javascript:void(0);">{{ totalPages }}</a></li>
+                    <li class="page-item"><a style="background-color: #435ebe; color: white;" class="page-link" href="javascript:void(0);" @click="nextPage">Next</a></li>
+                    <li class="page-item">
+                        <select id="zoom" v-model="zoom" @change="renderPage" class="page-link h-100" style="background-color: #435ebe; color: white;">
+                            <option value="0.25">25%</option>
+                            <option value="0.5">50%</option>
+                            <option value="0.75">75%</option>
+                            <option value="1">100%</option>
+                            <option value="1.5">150%</option>
+                            <option value="2">200%</option>
+                        </select></li>
+                </ul>
+            </nav>
+            
+            <!-- PDF Viewer -->
+            <canvas ref="pdfCanvas"></canvas>
+            
+            <!-- Tooltip -->
+            <div v-if="showTooltip" class="tooltip" :style="{ top: tooltipY + 'px', left: tooltipX + 'px' }">
+                <p>Click to copy</p>
             </div>
         </div>
+
         <loading
             :active="isLoading" 
             :can-cancel="false"
@@ -275,6 +272,11 @@ const SendLastReadSync = (param) => {
         xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
         xhr.send(data);
     }
+}
+
+const SelesaiBaca = async () => {
+    await SendLastRead('Y');
+    window.location.href = '/';
 }
 
 const handleUnload = () => {
