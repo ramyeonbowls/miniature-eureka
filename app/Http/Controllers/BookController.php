@@ -272,7 +272,7 @@ class BookController extends Controller
         
         $cek    = $cek_rent[0]->book_id ?? '';
 
-        if($cek == ''){
+        if($cek != ''){
             return response()->json([
                 'code' => '2',
                 'message' => 'Anda Sudah Meminjam Buku Ini!',
