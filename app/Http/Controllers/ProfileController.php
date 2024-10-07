@@ -22,7 +22,7 @@ class ProfileController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-      $this->client_id = config('app.client_id', '');
+        $this->client_id = config('app.client_id', '');
     }
 
     /**
@@ -158,14 +158,14 @@ class ProfileController extends Controller
 
             \DB::commit();
 
-            // $queries = DB::getQueryLog();
-            // for($q = 0; $q < count($queries); $q++) {
-            //     $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
-            //     $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
-            //     $logs->write('SQL', $sql);
-            // }
+            $queries = DB::getQueryLog();
+            for($q = 0; $q < count($queries); $q++) {
+                $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
+                $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+                $logs->write('SQL', $sql);
+            }
 
-            // $logs->write(__FUNCTION__, "STOP\r\n");
+            $logs->write(__FUNCTION__, "STOP\r\n");
             return response()->json('Update profile successful!.', 201);
         } catch (\Exception $e) {
             $logs->write("ERROR", $e->getMessage());
