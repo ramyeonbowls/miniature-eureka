@@ -119,7 +119,7 @@
                     <template v-if="isAuthenticated">
                         <li class="menu-item ">
                             <router-link to="/history-pinjaman" class='menu-link'>
-                                <span> History Pinjaman</span>
+                                <span> Riwayat Pinjaman</span>
                             </router-link>
                         </li>
                         <li class="menu-item d-block d-xs-block d-xl-none">
