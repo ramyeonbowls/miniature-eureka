@@ -17,6 +17,8 @@ import VueSweetalert2 from 'vue-sweetalert2'
 import 'sweetalert2/dist/sweetalert2.min.css'
 import 'flatpickr/dist/flatpickr.css'
 import Flatpickr from 'vue-flatpickr-component'
+import 'datatables.net-bs5/css/dataTables.bootstrap5.css'
+import 'datatables.net-bs5'
 
 const router = createRouter({
     history: createWebHistory(),

@@ -117,6 +117,11 @@
                         </div>
                     </li>
                     <template v-if="isAuthenticated">
+                        <li class="menu-item ">
+                            <router-link to="/history-pinjaman" class='menu-link'>
+                                <span> History Pinjaman</span>
+                            </router-link>
+                        </li>
                         <li class="menu-item d-block d-xs-block d-xl-none">
                             <a class="dropdown-item menu-link" href="javascript:void(0);" @click.prevent="logout" style="font-weight: bold;">
                                 <span> Keluar</span>

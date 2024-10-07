@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
+use Yajra\DataTables\Facades\DataTables;
 
 class BookController extends Controller
 {
@@ -67,7 +68,7 @@ class BookController extends Controller
     {
         Carbon::setLocale('id');
         $user = auth()->user();
-        // $logs = new Logs( Arr::last(explode("\\", get_class())) );
+        // $logs = new Logs(Arr::last(explode("\\", get_class())) . 'Log');
         // $logs->write(__FUNCTION__, "START");
         // DB::enableQueryLog();
 
@@ -173,7 +174,7 @@ class BookController extends Controller
     {
         Carbon::setLocale('id');
         $user = auth()->user();
-        // $logs = new Logs( Arr::last(explode("\\", get_class())) );
+        // $logs = new Logs(Arr::last(explode("\\", get_class())) . 'Log');
         // $logs->write(__FUNCTION__, "START");
         // DB::enableQueryLog();
 
@@ -233,7 +234,7 @@ class BookController extends Controller
     {
         Carbon::setLocale('id');
         $user = auth()->user();
-        $logs = new Logs( Arr::last(explode("\\", get_class())) );
+        $logs = new Logs(Arr::last(explode("\\", get_class())) . 'Log');
         $logs->write(__FUNCTION__, "START");
         DB::enableQueryLog();
 
@@ -297,7 +298,7 @@ class BookController extends Controller
     {
         Carbon::setLocale('id');
         $user = auth()->user();
-        // $logs = new Logs( Arr::last(explode("\\", get_class())) );
+        // $logs = new Logs(Arr::last(explode("\\", get_class())) . 'Log');
         // $logs->write(__FUNCTION__, "START");
         // DB::enableQueryLog();
 
@@ -348,7 +349,7 @@ class BookController extends Controller
     {
         Carbon::setLocale('id');
         $user = auth()->user();
-        $logs = new Logs( Arr::last(explode("\\", get_class())) );
+        $logs = new Logs(Arr::last(explode("\\", get_class())) . 'Log');
         $logs->write(__FUNCTION__, "START");
         DB::enableQueryLog();
 
@@ -357,6 +358,7 @@ class BookController extends Controller
         $return     = DB::table('trent_book')
                     ->where('user_id', $user->id)
                     ->where('client_id', $this->client_id)
+                    ->where('book_id', $request->pdfToken)
                     ->update([
                         'flag_end'  => 'Y',
                         'updated_at' => $now
@@ -381,5 +383,51 @@ class BookController extends Controller
             'code' => '0',
             'message' => 'Gagal Kembalikan Buku!',
         ], 200);
+    }
+
+    public function RentHistory()
+    {
+        $user = auth()->user();
+        $logs = new Logs(Arr::last(explode("\\", get_class())) . 'Log');
+        $logs->write(__FUNCTION__, 'START');
+
+        $results = [];
+        try {
+            DB::enableQueryLog();
+
+            $results = DB::table('trent_book as a')
+                ->select([
+                    'a.book_id',
+                    'b.title',
+                    'a.start_date',
+                    'a.end_date',
+                    'a.flag_end',
+                    'b.cover'
+                ])
+                ->join('tbook as b', 'a.book_id', '=', 'b.book_id')
+                ->where('a.client_id', $this->client_id)
+                ->where('a.user_id', $user->id)
+                ->get();
+
+            $queries = DB::getQueryLog();
+            for ($q = 0; $q < count($queries); $q++) {
+                $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+                $logs->write('SQL', $queries[$q]['query']);
+            }
+        } catch (Throwable $th) {
+            $logs->write("ERROR", $th->getMessage());
+        }
+        $logs->write(__FUNCTION__, "STOP\r\n");
+
+        return DataTables::of($results)
+            ->escapeColumns()
+            ->editColumn('start_date', function ($value) {
+                return Carbon::parse($value->start_date)->toDateTimeString();
+            })
+            ->editColumn('end_date', function ($value) {
+                return Carbon::parse($value->end_date)->toDateTimeString();
+            })
+            ->addIndexColumn()
+            ->toJson();
     }
 }

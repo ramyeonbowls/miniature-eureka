@@ -26,7 +26,7 @@
                     </li>
                     <template v-if="isAuthenticated">
                         <li class="nav-item">
-                            <router-link to="/rent-book" class='menu-item'>
+                            <router-link to="/history-pinjaman" class='menu-item'>
                                 <i class="bi bi-bookmark"></i> <small style="font-size: 11px;">Pinjaman</small>
                             </router-link>
                         </li>

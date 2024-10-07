@@ -69,6 +69,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
         
         Route::group(['middleware' => ['role.user:member']], function () {
+            Route::get('/RentHistory', [App\Http\Controllers\BookController::class, 'RentHistory'])->name('RentHistory');
             Route::post('/ReturnBook', [App\Http\Controllers\BookController::class, 'ReturnBook'])->name('ReturnBook');
             Route::post('/RentBook', [App\Http\Controllers\BookController::class, 'RentBook'])->name('RentBook');
             Route::post('/LastRead', [App\Http\Controllers\BookController::class, 'LastRead'])->name('LastRead');

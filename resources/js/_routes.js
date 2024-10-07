@@ -55,6 +55,11 @@ const _routes = [
         name: 'profile',
         component: () => import(/* webpackChunkName: "usr/profile" */ './components/member/Profile.vue'),
     },
+    {
+        path: '/history-pinjaman',
+        name: 'history-pinjaman',
+        component: () => import(/* webpackChunkName: "usr/RentHistory" */ './components/member/RentHistory.vue'),
+    },
 ]
 
 export default _routes
