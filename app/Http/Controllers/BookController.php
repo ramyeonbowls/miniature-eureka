@@ -260,6 +260,25 @@ class BookController extends Controller
             return response()->json($book, 200);
         }
 
+        $cek_rent = DB::table('trent_book as a')
+            ->select([
+                'a.book_id',
+            ])
+            ->where('a.client_id', $this->client_id)
+            ->where('a.user_id', $user->id)
+            ->where('a.book_id', $request->pdfToken)
+            ->where('a.flag_end', 'N')
+            ->get();
+        
+        $cek    = $cek_rent[0]->book_id ?? '';
+
+        if($cek == ''){
+            return response()->json([
+                'code' => '2',
+                'message' => 'Anda Sudah Meminjam Buku Ini!',
+             ], 200);
+        }
+
         $date       = Carbon::now('Asia/Jakarta');
         $end_date   = $date->copy()->addDays(3);
         $rent       = DB::table('trent_book')
