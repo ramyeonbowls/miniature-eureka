@@ -1,7 +1,7 @@
 <template>
     <section class="section">
         <nav class="navbar py-2 d-flex justify-content-end" style="background-color: #435ebe; color: white;">
-            <button class="btn btn-outline-light" @click="SelesaiBaca">Selesai Baca</button>
+            <button class="btn btn-danger" @click="SelesaiBaca">Selesai Baca</button>
         </nav>
 
         <div class="d-flex justify-content-center align-items-center position-relative">
