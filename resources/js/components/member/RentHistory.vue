@@ -2,7 +2,7 @@
     <section class="section">
         <div class="card overflow-auto">
             <div class="card-header text-center">
-                <h5>History Pinjaman</h5>
+                <h2>Riwayat Peminjaman</h2>
             </div>
             <div class="card-body">
                 <table class="table table-striped responsive-table" id="data_rst">
