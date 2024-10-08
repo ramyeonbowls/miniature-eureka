@@ -311,7 +311,7 @@ class MainController extends Controller
             ->first();
 
         if ($results) {
-            $results->image = (isset($results->image) && file_exists(public_path('/storage/images/cover/' . $results->image))) ? "/images/cover/" . $results->image : '/storage/images/cover/default-cover.jpg';
+            $results->image = (isset($results->image) && file_exists(public_path('/storage/images/cover/' . $results->image))) ? "/storage/images/cover/" . $results->image : '/storage/images/cover/default-cover.jpg';
         }
 
         // $queries = DB::getQueryLog();
