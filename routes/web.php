@@ -64,6 +64,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::prefix('setting')->namespace('Setting')->group(function() {
                         Route::apiResource('banner-mst', BannerMasterController::class);
                     });
+                    
+                    Route::prefix('report')->namespace('Report')->group(function() {
+                        Route::apiResource('book-rpt', BookReportController::class);
+                    });
                 });
             }); 
         });

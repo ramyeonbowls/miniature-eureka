@@ -73,192 +73,49 @@
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-striped" id="table1">
+                    <table class="table table-striped" id="data_rst">
                         <thead>
                             <tr>
                                 <th>Cover</th>
                                 <th>Judul</th>
                                 <th>ISBN</th>
                                 <th>EISBN</th>
-                                <th>Thn. Penerbit</th>
+                                <th>Thn. Terbit</th>
                                 <th>Penulis</th>
                                 <th>Penerbit</th>
                                 <th>Kategori Buku</th>
                                 <th>Qty</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td><img src="https://via.placeholder.com/50x80" alt="Cover Buku 1" /></td>
-                                <td>Pemrograman Web Modern</td>
-                                <td>978-602-1234-56-7</td>
-                                <td>978-602-1234-56-8</td>
-                                <td>2021</td>
-                                <td>Rizky Maulana</td>
-                                <td>Pustaka Cendekia</td>
-                                <td>Teknologi</td>
-                                <td>20</td>
-                            </tr>
-                            <tr>
-                                <td><img src="https://via.placeholder.com/50x80" alt="Cover Buku 2" /></td>
-                                <td>Belajar Laravel untuk Pemula</td>
-                                <td>978-602-4321-78-9</td>
-                                <td>978-602-4321-78-0</td>
-                                <td>2020</td>
-                                <td>Faisal Rahman</td>
-                                <td>Gramedia</td>
-                                <td>Teknologi</td>
-                                <td>15</td>
-                            </tr>
-                            <tr>
-                                <td><img src="https://via.placeholder.com/50x80" alt="Cover Buku 3" /></td>
-                                <td>Data Science Fundamental</td>
-                                <td>978-602-9876-54-3</td>
-                                <td>978-602-9876-54-4</td>
-                                <td>2019</td>
-                                <td>Dewi Lestari</td>
-                                <td>Elex Media</td>
-                                <td>Sains</td>
-                                <td>30</td>
-                            </tr>
-                            <tr>
-                                <td><img src="https://via.placeholder.com/50x80" alt="Cover Buku 4" /></td>
-                                <td>Manajemen Waktu Efektif</td>
-                                <td>978-602-5567-89-0</td>
-                                <td>978-602-5567-89-1</td>
-                                <td>2018</td>
-                                <td>Yusuf Maulana</td>
-                                <td>Pustaka Inspirasi</td>
-                                <td>Manajemen</td>
-                                <td>25</td>
-                            </tr>
-                            <tr>
-                                <td><img src="https://via.placeholder.com/50x80" alt="Cover Buku 5" /></td>
-                                <td>Kreativitas Tanpa Batas</td>
-                                <td>978-602-4444-22-1</td>
-                                <td>978-602-4444-22-2</td>
-                                <td>2022</td>
-                                <td>Siti Nurhaliza</td>
-                                <td>Literasi Maju</td>
-                                <td>Pengembangan Diri</td>
-                                <td>10</td>
-                            </tr>
-                            <tr>
-                                <td><img src="https://via.placeholder.com/50x80" alt="Cover Buku 6" /></td>
-                                <td>Pengenalan Jaringan Komputer</td>
-                                <td>978-602-3333-11-0</td>
-                                <td>978-602-3333-11-1</td>
-                                <td>2020</td>
-                                <td>Fikri Ramadhan</td>
-                                <td>Erlangga</td>
-                                <td>Teknologi</td>
-                                <td>50</td>
-                            </tr>
-                            <tr>
-                                <td><img src="https://via.placeholder.com/50x80" alt="Cover Buku 7" /></td>
-                                <td>Teori Algoritma Modern</td>
-                                <td>978-602-2211-44-5</td>
-                                <td>978-602-2211-44-6</td>
-                                <td>2017</td>
-                                <td>Nadia Anggraeni</td>
-                                <td>Deepublish</td>
-                                <td>Teknologi</td>
-                                <td>12</td>
-                            </tr>
-                            <tr>
-                                <td><img src="https://via.placeholder.com/50x80" alt="Cover Buku 8" /></td>
-                                <td>Pemrograman Python untuk Data Science</td>
-                                <td>978-602-5432-99-7</td>
-                                <td>978-602-5432-99-8</td>
-                                <td>2021</td>
-                                <td>Ahmad Fauzan</td>
-                                <td>Indeks</td>
-                                <td>Teknologi</td>
-                                <td>18</td>
-                            </tr>
-                            <tr>
-                                <td><img src="https://via.placeholder.com/50x80" alt="Cover Buku 9" /></td>
-                                <td>Strategi Bisnis Digital</td>
-                                <td>978-602-1234-88-8</td>
-                                <td>978-602-1234-88-9</td>
-                                <td>2019</td>
-                                <td>Rahmawati Kusuma</td>
-                                <td>Pustaka Sejahtera</td>
-                                <td>Bisnis</td>
-                                <td>22</td>
-                            </tr>
-                            <tr>
-                                <td><img src="https://via.placeholder.com/50x80" alt="Cover Buku 10" /></td>
-                                <td>Desain Grafis dengan Adobe Illustrator</td>
-                                <td>978-602-1111-33-4</td>
-                                <td>978-602-1111-33-5</td>
-                                <td>2020</td>
-                                <td>Bayu Setiawan</td>
-                                <td>Literasi Cemerlang</td>
-                                <td>Desain</td>
-                                <td>17</td>
-                            </tr>
-                            <tr>
-                                <td><img src="https://via.placeholder.com/50x80" alt="Cover Buku 11" /></td>
-                                <td>Statistika Terapan untuk Bisnis</td>
-                                <td>978-602-6543-22-2</td>
-                                <td>978-602-6543-22-3</td>
-                                <td>2021</td>
-                                <td>Rina Puspitasari</td>
-                                <td>Elex Media</td>
-                                <td>Bisnis</td>
-                                <td>27</td>
-                            </tr>
-                            <tr>
-                                <td><img src="https://via.placeholder.com/50x80" alt="Cover Buku 12" /></td>
-                                <td>Pengantar Sistem Informasi</td>
-                                <td>978-602-9876-66-1</td>
-                                <td>978-602-9876-66-2</td>
-                                <td>2018</td>
-                                <td>Aditya Santoso</td>
-                                <td>Indeks</td>
-                                <td>Teknologi</td>
-                                <td>35</td>
-                            </tr>
-                            <tr>
-                                <td><img src="https://via.placeholder.com/50x80" alt="Cover Buku 13" /></td>
-                                <td>Pemrograman Java Lanjutan</td>
-                                <td>978-602-6543-88-7</td>
-                                <td>978-602-6543-88-8</td>
-                                <td>2017</td>
-                                <td>Farhan Abdul</td>
-                                <td>Pustaka Terdepan</td>
-                                <td>Teknologi</td>
-                                <td>40</td>
-                            </tr>
-                            <tr>
-                                <td><img src="https://via.placeholder.com/50x80" alt="Cover Buku 14" /></td>
-                                <td>Manajemen Keuangan Perusahaan</td>
-                                <td>978-602-9876-12-1</td>
-                                <td>978-602-9876-12-2</td>
-                                <td>2019</td>
-                                <td>Fitriani Mutia</td>
-                                <td>Gramedia</td>
-                                <td>Manajemen</td>
-                                <td>32</td>
-                            </tr>
-                            <tr>
-                                <td><img src="https://via.placeholder.com/50x80" alt="Cover Buku 15" /></td>
-                                <td>Keamanan Jaringan dan Sistem Informasi</td>
-                                <td>978-602-5432-78-8</td>
-                                <td>978-602-5432-78-9</td>
-                                <td>2020</td>
-                                <td>Rizky Putra</td>
-                                <td>Deepublish</td>
-                                <td>Teknologi</td>
-                                <td>45</td>
-                            </tr>
-                        </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Modal for Image Preview -->
+    <div class="modal fade text-left" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="imageModalLabel">Preview</h4>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <i data-feather="x"></i>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <img id="modalImage" src="" class="img-fluid" alt="Preview" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                        <span class="bx bx-x d-block d-sm-none">X</span>
+                        <span class="d-none d-sm-block">Close</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal for Image Preview -->
 </template>
 
 <script>
@@ -302,7 +159,61 @@ export default {
         this.__MENU()
         this.$root.web_access_log()
 
-        table = $('#table1').DataTable()
+        table = $('#data_rst').DataTable({
+            paging: true,
+            pagingType: 'full_numbers',
+            lengthMenu: [[10, 25, 50, 100, 500], [10, 25, 50, 100, 500]],
+            pageLength: 10,
+            processing: true,
+            serverSide: true,
+            deferRender: true,
+            stateSave: true,
+            select: true,
+            order: [[0, "asc"]],
+            ajax: "/report/book-rpt",
+            columns: [
+                {
+                    data: "cover",
+                    render: function(data, type, row) {
+                        return '<img src="/storage/images/cover/' + data + '" class="cover" data-large="/storage/images/cover/' + data + '" alt="Image" style="width: 50px; cursor: pointer;" />';
+                    }
+                },
+                { data: "title" },
+                { data: "isbn" },
+                { data: "eisbn" },
+                { data: "year" },
+                { data: "writer" },
+                { data: "publisher" },
+                { data: "category" },
+                { data: "qty" }
+            ],
+            language: {
+                lengthMenu: "_MENU_",
+                search: "_INPUT_",
+                searchPlaceholder: "Search..",
+                info: '<span class="fs-sm">Showing _START_ to _END_ of _TOTAL_ entries</span>',
+                infoEmpty: '<span class="fs-sm">Showing 0 to 0 of 0 entries</span>',
+                infoFiltered: '<span class="fs-sm">(filtered from _MENU_ total entries)</span>',
+                zeroRecords: '<span class="fs-sm">No Data</span>',
+                paginate: {
+                    first: '<i class="bi bi-chevron-double-left"></i>',
+                    previous: '<i class="bi bi-chevron-left"></i>',
+                    next: '<i class="bi bi-chevron-right"></i>',
+                    last: '<i class="bi bi-chevron-double-right"></i>'
+                }
+            }
+        });
+
+        window.$('#data_rst tbody').on('click', '.cover', function () {
+            // Get the large image URL from data attribute
+            var largeImageUrl = $(this).data('large');
+            
+            // Set the large image URL in the modal
+            $('#modalImage').attr('src', largeImageUrl);
+            
+            // Show the modal
+            new bootstrap.Modal(document.getElementById('imageModal')).show()
+        });
     },
 
     methods: {
