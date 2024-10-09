@@ -163,7 +163,7 @@ export default {
             paging: true,
             pagingType: 'full_numbers',
             lengthMenu: [[10, 25, 50, 100, 500], [10, 25, 50, 100, 500]],
-            pageLength: 10,
+            pageLength: 25,
             processing: true,
             serverSide: true,
             deferRender: true,

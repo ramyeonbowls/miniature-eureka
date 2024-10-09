@@ -59,6 +59,11 @@ class MemberMasterController extends Controller
 
         return DataTables::of($results)
             ->escapeColumns()
+            ->editColumn('photo', function ($value) {
+                $photo = isset($value->photo) ? public_path('/storage/images/profile/' . $value->photo) : null;
+                $photoUrl = $photo && file_exists($photo) ? '/storage/images/profile/' . $value->photo : '/storage/images/profile/default.jpg';
+                return $photoUrl;
+            })
             ->addIndexColumn()
             ->toJson();
     }

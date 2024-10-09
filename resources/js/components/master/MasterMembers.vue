@@ -248,7 +248,7 @@ export default {
                 {
                     data: "photo",
                     render: function(data, type, row) {
-                        return '<img src="/storage/images/profile/' + data + '" class="thumbnail" data-large="/storage/images/profile/' + data + '" alt="Image" style="width: 50px; cursor: pointer;" />';
+                        return '<img src="' + data + '" class="thumbnail" data-large="' + data + '" alt="Image" style="width: 50px; cursor: pointer;" />';
                     }
                 },
                 { data: "name" },
@@ -415,5 +415,14 @@ export default {
             return this.menu.permission.approve
         },
     },
+
+    beforeRouteLeave (to, from, next) {
+        if (table) {
+            table.destroy();
+            table = null;
+        }
+
+        next();
+    }
 }
 </script>
