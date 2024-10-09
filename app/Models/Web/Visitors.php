@@ -16,7 +16,7 @@ class Visitors extends Model
      * @var string
      */
     protected $table = 'tvisitors';
-    protected $primaryKey = ['client_id', 'date', 'visitor'];
+    protected $primaryKey = ['id', 'client_id', 'date', 'visitor'];
     public $incrementing = false;
 
     /**
