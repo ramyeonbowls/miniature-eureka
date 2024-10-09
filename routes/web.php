@@ -61,6 +61,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::namespace('App\Http\Controllers\Core')->group(function() {
                     Route::apiResource('web-access-log', WebAccessLogController::class);
     
+                    Route::prefix('master')->namespace('Master')->group(function() {
+                        Route::apiResource('member-mst', MemberMasterController::class);
+                    });
+
                     Route::prefix('setting')->namespace('Setting')->group(function() {
                         Route::apiResource('banner-mst', BannerMasterController::class);
                     });
