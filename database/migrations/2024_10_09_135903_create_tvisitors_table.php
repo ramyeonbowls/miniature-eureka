@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tvisitors', function (Blueprint $table) {
+            $table->string('id', 50);
             $table->string('client_id', 50);
             $table->date('date');
             $table->string('visitor');
@@ -22,8 +23,7 @@ return new class extends Migration
             $table->string('user_agent')->nullable();
             $table->timestamps();
 
-            $table->primary(['client_id', 'date', 'visitor'], 'PK_tvisitors');
-            $table->unique(['client_id', 'date', 'visitor']);
+            $table->primary(['id', 'client_id', 'date', 'visitor'], 'PK_tvisitors');
         });
     }
 

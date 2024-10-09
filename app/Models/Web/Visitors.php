@@ -25,6 +25,7 @@ class Visitors extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'client_id',
         'date',
         'visitor',

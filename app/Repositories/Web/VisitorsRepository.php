@@ -18,6 +18,7 @@ class VisitorsRepository
 		try {
 			Visitors::updateOrCreate(
 				[
+					'id' => $data->id,
 					'client_id' => $client_id,
 					'date' => $date,
 					'visitor' => $data->getClientIp(),

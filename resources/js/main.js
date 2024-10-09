@@ -19,6 +19,7 @@ import 'flatpickr/dist/flatpickr.css'
 import Flatpickr from 'vue-flatpickr-component'
 import 'datatables.net-bs5/css/dataTables.bootstrap5.css'
 import 'datatables.net-bs5'
+import { v4 as uuidv4 } from 'uuid';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -57,8 +58,15 @@ axios.defaults.withCredentials = true;
 featherIcons.replace()
 
 function logAccess() {
+    let uuid = localStorage.getItem('device_uuid');
+    if (!uuid) {
+        uuid = uuidv4();
+        localStorage.setItem('device_uuid', uuid);
+    }
+
     axios.post('/api/visit', {
-        url: window.location.href
+        url: window.location.href,
+        id: uuid
     });
 }
 
