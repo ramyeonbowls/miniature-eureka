@@ -56,6 +56,12 @@ axios.defaults.withCredentials = true;
 
 featherIcons.replace()
 
+function logAccess() {
+    axios.post('/api/visit', {
+        url: window.location.href
+    });
+}
+
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
  * registering components with the application instance so they are ready
@@ -65,6 +71,8 @@ featherIcons.replace()
 const appUser = createApp(Main)
 
 appUser.component('Flatpickr', Flatpickr)
+
+logAccess();
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
