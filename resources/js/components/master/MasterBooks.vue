@@ -84,7 +84,7 @@
                                 <th>Penulis</th>
                                 <th>Penerbit</th>
                                 <th>Kategori Buku</th>
-                                <th>Qty</th>
+                                <th>Copy</th>
                             </tr>
                         </thead>
                     </table>
@@ -261,5 +261,14 @@ export default {
             return this.menu.permission.approve
         },
     },
+
+    beforeRouteLeave (to, from, next) {
+        if (table) {
+            table.destroy();
+            table = null;
+        }
+
+        next();
+    }
 }
 </script>
