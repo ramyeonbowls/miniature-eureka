@@ -255,7 +255,16 @@ export default {
                 { data: "email" },
                 { data: "phone" },
                 { data: "birthday", class: "text-center" },
-                { data: "email_verified_at" },
+                {
+                    data: "email_verified_at",
+                    render: function(data, type, row) {
+                        if(data!='' && data!=null ){
+                            return '<span class="badge bg-success">Verifikasi</span>'
+                        }else{
+                            return '<span class="badge bg-danger">Belum Verifikasi</span>'
+                        }
+                    }
+                },
                 { data: "created_at", class: "text-center" }
             ],
             language: {
