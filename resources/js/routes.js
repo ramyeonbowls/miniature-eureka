@@ -89,6 +89,36 @@ const routes = [
         name: 'master_library_officers',
         component: () => import(/* webpackChunkName: "report/master_library_officers" */ './components/master/MasterLibraryOfficers.vue'),
     },
+    {
+        path: '/setting/tajuk-utama',
+        name: 'tajuk_utama',
+        component: () => import(/* webpackChunkName: "setting/tajuk_utama" */ './components/setting/TajukUtama.vue'),
+    },
+    {
+        path: '/setting/wawasan',
+        name: 'wawasan',
+        component: () => import(/* webpackChunkName: "setting/wawasan" */ './components/setting/Wawasan.vue'),
+    },
+    {
+        path: '/setting/review-buku',
+        name: 'review_buku',
+        component: () => import(/* webpackChunkName: "setting/review_buku" */ './components/setting/ReviewBuku.vue'),
+    },
+    {
+        path: '/setting/titik-fokus',
+        name: 'titik_fokus',
+        component: () => import(/* webpackChunkName: "setting/titik_fokus" */ './components/setting/TitikFokus.vue'),
+    },
+    {
+        path: '/setting/humoria',
+        name: 'humoria',
+        component: () => import(/* webpackChunkName: "setting/humoria" */ './components/setting/Humoria.vue'),
+    },
+    {
+        path: '/setting/layar-penulis',
+        name: 'layar_penulis',
+        component: () => import(/* webpackChunkName: "setting/layar_penulis" */ './components/setting/LayarPenulis.vue'),
+    },
 ]
 
 export default routes

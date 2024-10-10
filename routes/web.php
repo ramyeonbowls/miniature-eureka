@@ -67,6 +67,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
                     Route::prefix('setting')->namespace('Setting')->group(function() {
                         Route::apiResource('banner-mst', BannerMasterController::class);
+                        Route::apiResource('tajuk-utama-mst', TajukUtamaMasterController::class);
+                        Route::apiResource('wawasan-mst', WawasanMasterController::class);
+                        Route::apiResource('review-buku-mst', ReviewBukuMasterController::class);
+                        Route::apiResource('titik-fokus-mst', TitikFokusMasterController::class);
+                        Route::apiResource('humoria-mst', HumoriaMasterController::class);
+                        Route::apiResource('layar-penulis-mst', LayarPenulisMasterController::class);
                     });
                     
                     Route::prefix('report')->namespace('Report')->group(function() {

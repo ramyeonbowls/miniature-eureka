@@ -34,9 +34,9 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Keterangan</th>
+                                                <th>Judul</th>
+                                                <th>Aktif</th>
                                                 <th>File</th>
-                                                <th>Display</th>
                                                 <th>dibuat oleh</th>
                                                 <th>dibuat pada</th>
                                                 <th>diperbarui oleh</th>
@@ -49,7 +49,7 @@
                             <div class="tab-pane fade" :class="form.new || form.edit ? 'show active' : ''" id="form" role="tabpanel" aria-labelledby="form-tab">
                                 <section id="basic-horizontal-layouts">
                                     <div class="row match-height">
-                                        <div class="col-md-8 col-12">
+                                        <div class="col-12">
                                             <div class="card">
                                                 <div class="card-content">
                                                     <div class="card-body">
@@ -57,40 +57,55 @@
                                                             <form class="form form-horizontal" @submit.prevent="handleSubmit($event, submit)">
                                                                 <div class="form-body">
                                                                     <div class="row">
-                                                                        <div class="col-md-4">
+                                                                        <div class="col-md-2">
                                                                             <label for="id">ID <span class="text-danger">*</span></label>
                                                                         </div>
-                                                                        <div class="col-md-8 form-group">
+                                                                        <div class="col-md-10 form-group">
                                                                             <Field type="text" :disabled="true" id="id" v-model="form.field.id" class="form-control" name="id" />
                                                                             <ErrorMessage name="id" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
                                                                         </div>
-                                                                        <div class="col-md-4">
-                                                                            <label for="desc">Keterangan <span class="text-danger">*</span></label>
+                                                                        <div class="col-md-2">
+                                                                            <label for="desc">Judul <span class="text-danger">*</span></label>
                                                                         </div>
-                                                                        <div class="col-md-8 form-group">
-                                                                            <Field type="text" id="desc" v-model="form.field.desc" class="form-control" name="desc" />
-                                                                            <ErrorMessage name="desc" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
+                                                                        <div class="col-md-10 form-group">
+                                                                            <Field type="text" id="title" v-model="form.field.title" class="form-control" name="title" />
+                                                                            <ErrorMessage name="judul" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
                                                                         </div>
-                                                                        <div class="col-md-4">
-                                                                            <label for="type">Jenis file <span class="text-danger">*</span></label>
+                                                                        <div class="col-md-2">
+                                                                            <label for="desc">Konten <span class="text-danger">*</span></label>
                                                                         </div>
-                                                                        <div class="col-md-8 form-group">
-                                                                            <Field as="select" id="type" v-model="form.field.type"  class="form-control" name="type">
-                                                                                <option value="">--</option>
-                                                                                <option value="web">Web</option>
-                                                                                <option value="mobile">Mobile</option>
-                                                                            </Field>
-                                                                            <ErrorMessage name="type" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
+                                                                        <div class="col-md-10 form-group">
+                                                                            <div ref="editor" class="quill-editor" style=" height: 300px; margin-bottom: 1rem;"></div>
+                                                                            <input type="hidden" v-model="form.field.description" name="description" />
+                                                                            <ErrorMessage name="description" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
                                                                         </div>
-                                                                        <div class="col-md-4">
+                                                                        <!-- <div class="col-md-2">
+                                                                            <label for="desc">Penulis</label>
+                                                                        </div>
+                                                                        <div class="col-md-10 form-group">
+                                                                            <Field type="text" id="author" v-model="form.field.author" class="form-control" name="author" />
+                                                                            <ErrorMessage name="penulis" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
+                                                                        </div> -->
+                                                                        <div class="col-md-2">
+                                                                            <label for="type">Flag Aktif</label>
+                                                                        </div>
+                                                                        <div class="col-md-10 form-group">
+                                                                            <div class="form-check">
+                                                                                <div class="checkbox">
+                                                                                    <input type="checkbox" id="flag_aktif" class="form-check-input" v-model="form.field.flag_aktif">
+                                                                                    <label for="flag_aktif">Aktif</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-2">
                                                                             <label for="file">File <span class="text-danger">*</span></label>
                                                                         </div>
-                                                                        <div class="col-md-8 form-group">
+                                                                        <div class="col-md-10 form-group">
                                                                             <Field name="file">
-                                                                                <input type="file" ref="banner_files" id="file" name="file" @change="onChangeIcon" accept=".png,.jpg,.jpeg" />
+                                                                                <input type="file" ref="tajukutama_files" id="file" name="file" @change="onChangeIcon" accept=".png,.jpg,.jpeg" />
                                                                             </Field>
                                                                             <ErrorMessage name="file" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
-                                                                            <br><small v-if="form.field.type == 'web' || form.field.type == ''" class="text-muted">Max. size: 1500 kb (1300x500 pixels)<br>File types: png, jpg, jpeg</small><small v-else class="text-muted">Max. size: 1500 kb (390x400 pixels)<br>File types: png, jpg, jpeg</small>
+                                                                            <br><small class="text-muted">Max. size: 1500 kb (700x350 pixels)<br>File types: png, jpg, jpeg</small>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -138,6 +153,8 @@
 <script>
 import { Form as VeeForm, Field, ErrorMessage } from 'vee-validate'
 import { v4 as uuidv4 } from 'uuid';
+import Quill from 'quill';
+import 'quill/dist/quill.snow.css';
 
 let table
 export default {
@@ -169,12 +186,14 @@ export default {
                 edit: false,
                 field: {
                     id: '',
-                    desc: '',
-                    type: '',
+                    title: '',
+                    description: '',
+                    flag_aktif: true,
+                    author: '',
                     file: '',
                     current_file: '',
                 }
-            },
+            }
         }
     },
 
@@ -195,20 +214,20 @@ export default {
             select: true,
             rowId: 'extn',
             order: [[0, "asc"]],
-            ajax: "/setting/banner-mst",
+            ajax: "/setting/titik-fokus-mst",
             columns: [
                 { data: "id" },
-                { data: "description" },
+                { data: "title" },
+                { data: "flag_aktif" },
                 {
                     data: "file",
                     render: function(data, type, row) {
-                        return '<img src="/storage/images/banner/' + data + '" class="thumbnail" data-large="/storage/images/banner/' + data + '" alt="Image" style="width: 50px; cursor: pointer;" />';
+                        return '<img src="/storage/images/news/' + data + '" class="thumbnail" data-large="/storage/images/news/' + data + '" alt="Image" style="width: 50px; cursor: pointer;" />';
                     }
                 },
-                { data: "disp_type" },
                 { data: "created_by" },
                 { data: "created_at", class: "text-center" },
-                { data: "updated_by" },
+                { data: "update_by" },
                 { data: "updated_at", class: "text-center" }
             ],
             language: {
@@ -251,6 +270,29 @@ export default {
             // Show the modal
             new bootstrap.Modal(document.getElementById('imageModal')).show()
         });
+
+        this.quill = new Quill(this.$refs.editor, {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    ["bold", "italic", "underline", "strike"],
+                    [{ color: [] }, { background: [] }],
+                    [{ script: "super" }, { script: "sub" }],
+                    [
+                        { list: "ordered" },
+                        { indent: "-1" },
+                        { indent: "+1" },
+                    ],
+                    ["direction", { align: [] }],
+                    ["link"],
+                    ["clean"],
+                ],
+            },
+        });
+
+        this.quill.on('text-change', () => {
+            this.form.field.description = this.quill.root.innerHTML;
+        });
     },
 
     methods: {
@@ -273,17 +315,20 @@ export default {
         },
 
         clearForm() {
-            this.form.field.id = ''
-            this.form.field.desc = ''
-            this.form.field.type = ''
-            this.form.field.file = ''
-            this.form.field.current_file = ''
+            this.form.id            = ''
+            this.form.title         = ''
+            this.form.description   = ''
+            this.form.flag_aktif    = ''
+            this.form.author        = ''
+            this.form.file          = ''
+            this.form.current_file  = ''
 
-            this.$refs.banner_files.value = '';
+            this.$refs.tajukutama_files.value = '';
+            this.quill.setText('');
         },
 
         async onChangeIcon(e) {
-            this.form.field.file = this.$refs.banner_files.files[0];
+            this.form.field.file = this.$refs.tajukutama_files.files[0];
         },
 
         create() {
@@ -299,12 +344,16 @@ export default {
                 this.form.new = false
                 this.form.edit = true
                 this.submitted = false
+                let decodedHtml = this.decodeHtml(this.selected[0].description);
+                this.quill.clipboard.dangerouslyPasteHTML(decodedHtml)
 
-                this.form.field.id = this.selected[0].id
-                this.form.field.desc = this.selected[0].description
-                this.form.field.type = this.selected[0].disp_type
-                this.form.field.file = ''
-                this.form.field.current_file = this.selected[0].file
+                this.form.field.id              = this.selected[0].id
+                this.form.field.title           = this.selected[0].title
+                this.form.field.description     = this.selected[0].description
+                this.form.field.flag_aktif      = (this.selected[0].flag_aktif=='Y') ? true : false
+                this.form.field.author          = this.selected[0].author
+                this.form.field.file            = ''
+                this.form.field.current_file    = this.selected[0].file
             } else {
                 this.$swal({
                     toast: true,
@@ -312,6 +361,15 @@ export default {
                     text: 'No row selected!'
                 });
             }
+        },
+
+        decodeHtml(html) {
+            const txt = document.createElement('textarea');
+            txt.innerHTML = html
+            const decodedValue = txt.value
+            txt.remove();
+
+            return decodedValue;
         },
 
         destroy() {
@@ -333,7 +391,7 @@ export default {
                     if (result.value) {
                         let loader = this.$loading.show();
 
-                        window.axios.delete('/setting/banner-mst/'+ this.selected[0].id +'?menufn='+ this.$route.name)
+                        window.axios.delete('/setting/titik-fokus-mst/'+ this.selected[0].id +'?menufn='+ this.$route.name)
                             .then(response => {
                                 loader.hide();
                                 this.selected = [];
@@ -371,7 +429,7 @@ export default {
                                 form_data.append(value, this.form.field[value]);
                             });
                             
-                            window.axios.post('/setting/banner-mst?menu_fn='+ this.$route.name, form_data)
+                            window.axios.post('/setting/titik-fokus-mst?menu_fn='+ this.$route.name, form_data)
                                 .then((response) => {
                                     loader.hide();
                                     this.cancel();
@@ -398,7 +456,7 @@ export default {
                                 form_data.append(value, this.form.field[value]);
                             });
 
-                            window.axios.post('/setting/banner-mst/'+ this.form.field.id +'?menu_fn='+ this.$route.name, form_data)
+                            window.axios.post('/setting/titik-fokus-mst/'+ this.form.field.id +'?menu_fn='+ this.$route.name, form_data)
                                 .then((response) => {
                                     loader.hide();
                                     this.cancel();

@@ -20,6 +20,7 @@ import Flatpickr from 'vue-flatpickr-component'
 import 'datatables.net-bs5/css/dataTables.bootstrap5.css'
 import 'datatables.net-bs5'
 import { v4 as uuidv4 } from 'uuid';
+import 'quill/dist/quill.snow.css';
 
 const router = createRouter({
     history: createWebHistory(),
