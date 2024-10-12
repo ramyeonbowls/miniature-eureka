@@ -81,6 +81,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
                         Route::get('readbook-rpt', 'ReadBookController@index')->name('readbook-rpt');
                         Route::post('readbook-xls', 'ReadBookController@ExportXLS')->name('readbook-xls');
+                        Route::get('readbook-user-rpt', 'ReadBookUserController@index')->name('readbook-user-rpt');
+                        Route::post('readbook-user-xls', 'ReadBookUserController@ExportXLS')->name('readbook-user-xls');
                     });
                 });
             }); 

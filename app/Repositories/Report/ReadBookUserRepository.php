@@ -6,7 +6,7 @@ use App\Models\IconMenu\IconMenu;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 
-class ReadBookRepository 
+class ReadBookUserRepository 
 {
 	/**
      * @param array $filter
@@ -23,7 +23,8 @@ class ReadBookRepository
                 'c.provinsi_name',
                 'b.kabupaten_id',
                 'd.kabupaten_name',
-                DB::raw('COUNT(DISTINCT a.user_id) AS pembaca'),
+                'e.name',
+                DB::raw('COUNT(DISTINCT a.book_id) AS dibaca'),
                 DB::raw('SEC_TO_TIME(SUM(TIMESTAMPDIFF(SECOND, a.start_read, a.end_read))) AS durasi'),
                 DB::raw("CONCAT(
                     FLOOR(SUM(TIMESTAMPDIFF(SECOND, a.start_read, a.end_read)) / 3600), ' jam ',
@@ -54,7 +55,7 @@ class ReadBookRepository
             }, function ($query) use ($START_DATE) {
                 return $query->where(DB::raw('DATE(a.created_at)'), '=', $START_DATE);
             })
-            ->groupBy('b.provinsi_id', 'c.provinsi_name', 'b.kabupaten_id', 'd.kabupaten_name', 'b.instansi_name')
+            ->groupBy('b.provinsi_id', 'c.provinsi_name', 'b.kabupaten_id', 'd.kabupaten_name', 'e.name', 'b.instansi_name')
             ->sharedLock()
             ->get();
     }
