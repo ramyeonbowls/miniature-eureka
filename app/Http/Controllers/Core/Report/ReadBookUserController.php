@@ -13,7 +13,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\Report\ReadbookUserExport;
+use App\Exports\Report\ReadBookUserExport;
 use App\Services\Report\ReadBookUserService;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -149,6 +149,6 @@ class ReadBookUserController extends Controller
         }
         $logs->write(__FUNCTION__, "STOP\r\n");
 
-        return Excel::download(new ReadbookUserExport($results), 'Laporan_Baca_Buku.xlsx');
+        return Excel::download(new ReadBookUserExport($results), 'Laporan_Baca_Buku.xlsx');
     }
 }
