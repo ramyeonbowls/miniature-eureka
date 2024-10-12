@@ -25,6 +25,6 @@ class ReadBookService
      */
     public function get($filter)
     {
-        return new Collection($this->book_repo->get($filter, $this->client_id));
+        return new Collection($this->book_repo->get($filter));
     }
 }

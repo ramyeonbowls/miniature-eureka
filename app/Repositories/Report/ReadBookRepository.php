@@ -12,8 +12,9 @@ class ReadBookRepository
      * @param array $filter
      * @return Collection
      */
-    public function get($filter, $client_id): Collection
+    public function get($filter): Collection
     {
+        $client_id = $this->getClientID($filter);
         extract($filter);
 
         return DB::table('ttrx_read as a')
@@ -43,7 +44,6 @@ class ReadBookRepository
             ->where('a.client_id', '=', $client_id)
             ->where('b.provinsi_id', '=', $PROVINSI)
             ->where('b.kabupaten_id', '=', $KABUPATEN)
-            ->where('b.instansi_name', '=', $WL)
             ->when(!empty($END_DATE), function ($query) use ($START_DATE, $END_DATE) {
                 return $query->whereBetween(DB::raw('DATE(a.created_at)'), [$START_DATE, $END_DATE]);
             }, function ($query) use ($START_DATE) {
@@ -52,5 +52,21 @@ class ReadBookRepository
             ->groupBy('b.provinsi_id', 'c.provinsi_name', 'b.kabupaten_id', 'd.kabupaten_name', 'b.instansi_name')
             ->sharedLock()
             ->get();
+    }
+    
+    private function getClientID($filter)
+    {
+        extract($filter);
+
+        $query = DB::table('tclient as a')
+            ->select(
+                'a.client_id'
+            )
+            ->where('a.provinsi_id', '=', $PROVINSI)
+            ->where('a.kabupaten_id', '=', $KABUPATEN)
+            ->where('a.instansi_name', '=', $WL)
+            ->sharedLock()
+            ->get();
+        return $query[0]->client_id ?? '';
     }
 }

@@ -269,7 +269,7 @@ export default {
 
             if(this.filter.wl==''){
                 check = false
-                message += ' White List, '
+                message += ' White Label, '
             }
 
             if(this.filter.date==''){
@@ -313,7 +313,7 @@ export default {
 
             if(this.filter.wl==''){
                 check = false
-                message += ' White List, '
+                message += ' White Label, '
             }
 
             if(this.filter.date==''){
