@@ -349,7 +349,7 @@ export default {
 
                 this.form.field.id              = this.selected[0].id
                 this.form.field.title           = this.selected[0].title
-                this.form.field.description     = this.selected[0].description
+                this.form.field.description     = decodedHtml
                 this.form.field.flag_aktif      = (this.selected[0].flag_aktif=='Y') ? true : false
                 this.form.field.author          = this.selected[0].author
                 this.form.field.file            = ''

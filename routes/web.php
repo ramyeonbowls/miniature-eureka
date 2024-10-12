@@ -60,6 +60,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::middleware([App\Http\Middleware\IfRequestAjax::class])->group(function() {
                 Route::namespace('App\Http\Controllers\Core')->group(function() {
                     Route::apiResource('web-access-log', WebAccessLogController::class);
+                    Route::post('getOpt', 'OptionController@option')->name('getOpt');
     
                     Route::prefix('master')->namespace('Master')->group(function() {
                         Route::apiResource('member-mst', MemberMasterController::class);
@@ -77,6 +78,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     
                     Route::prefix('report')->namespace('Report')->group(function() {
                         Route::apiResource('book-rpt', BookReportController::class);
+
+                        Route::get('readbook-rpt', 'ReadBookController@index')->name('readbook-rpt');
+                        Route::post('readbook-xls', 'ReadBookController@ExportXLS')->name('readbook-xls');
                     });
                 });
             }); 
