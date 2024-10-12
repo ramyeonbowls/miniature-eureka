@@ -144,6 +144,7 @@ export default {
             lengthMenu: [[10, 25, 50, 100, 500], [10, 25, 50, 100, 500]],
             pageLength: 25,
             processing: true,
+            scrollX: true,
             ajax: "/report/readbook-rpt?nodata=yes",
             columns: [
                 { data: "wl_name", class: "text-center text-nowrap" },
