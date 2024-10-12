@@ -70,7 +70,7 @@
     <!-- filter modal -->
 
     <section class="section">
-        <div class="card">
+        <div class="card overflow-auto">
             <div class="card-header">
                 <div class="buttons">
                     <a href="#" class="btn icon icon-left btn-primary" data-bs-toggle="modal" data-bs-target="#border-less"><i class="bi bi-filter-square-fill"></i> Filter</a>
@@ -143,7 +143,6 @@ export default {
             lengthMenu: [[10, 25, 50, 100, 500], [10, 25, 50, 100, 500]],
             pageLength: 25,
             processing: true,
-            scrollX: true,
             ajax: "/report/readbook-content-rpt?nodata=yes",
             columns: [
                 { data: "wl_name", class: "text-center text-nowrap" },
