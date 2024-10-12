@@ -136,7 +136,6 @@ export default {
     mounted() {
         this.__MENU()
         this.$root.web_access_log()
-
         this.getProvinsi()
 
         table = $('#data_rst').DataTable({

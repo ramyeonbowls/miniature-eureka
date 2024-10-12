@@ -3,7 +3,7 @@
 
     <!-- filter modal -->
     <div class="modal fade text-left modal-borderless" id="border-less" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Filter</h5>
@@ -13,38 +13,36 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-12 col-12">
+                        <div class="col-md-6 col-6">
                             <div class="row">
                                 <div class="col-md-12 mb-12">
                                     <div class="form-group">
                                         <label for="basicSelect1" class="form-label">Provinsi</label>
-                                        <select class="form-select" id="basicSelect1">
-                                            <option>--</option>
-                                            <option>Jawa Barat</option>
-                                            <option>Jawa TengaH</option>
-                                            <option>DKI Jakarta</option>
+                                        <select class="form-select" id="basicSelect1" v-model="filter.provinsi" @change="getKabupaten">
+                                            <option value="">--</option>
+                                            <option v-for="(prov, key) in option.optProv" :key="key" :value="prov.provinsi_id">{{ prov.provinsi_id +" "+ prov.provinsi_name }}</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-12">
                                     <div class="form-group">
                                         <label for="basicSelect2" class="form-label">Kabupaten/Kota</label>
-                                        <select class="form-select" id="basicSelect2">
-                                            <option>--</option>
-                                            <option>Bandung</option>
-                                            <option>Jakarta Pusat</option>
-                                            <option>Semarang</option>
+                                        <select class="form-select" id="basicSelect2" v-model="filter.kabupaten" @change="getWhiteLabel">
+                                            <option value="">--</option>
+                                            <option v-for="(kab, key) in option.optKab" :key="key" :value="kab.kabupaten_id">{{ kab.kabupaten_id +" "+ kab.kabupaten_name }}</option>
                                         </select>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-6">
+                            <div class="row">
                                 <div class="col-md-12 mb-12">
                                     <div class="form-group">
                                         <label for="basicSelect3" class="form-label">White Label</label>
-                                        <select class="form-select" id="basicSelect3">
-                                            <option>--</option>
-                                            <option>Gramedia</option>
-                                            <option>Mizan</option>
-                                            <option>Erlangga</option>
+                                        <select class="form-select" id="basicSelect3" v-model="filter.wl">
+                                            <option value="">--</option>
+                                            <option v-for="(inst, key) in option.optWL" :key="key" :value="inst.instansi_name">{{ inst.instansi_name }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -59,9 +57,11 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary ms-1" data-bs-dismiss="modal">
-                        <i class="bx bx-check d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Proses Data</span>
+                    <button type="button" class="btn btn-primary ms-1" data-bs-dismiss="modal" @click="openExecute">
+                        <i class="bi bi-file-earmark-excel-fill"></i> Proses Data
+                    </button>
+                    <button type="button" class="btn btn-success ms-1" data-bs-dismiss="modal" @click="openXLS">
+                        <i class="bi bi-file-earmark-excel-fill"></i> Export
                     </button>
                 </div>
             </div>
@@ -74,11 +74,10 @@
             <div class="card-header">
                 <div class="buttons">
                     <a href="#" class="btn icon icon-left btn-primary" data-bs-toggle="modal" data-bs-target="#border-less"><i class="bi bi-filter-square-fill"></i> Filter</a>
-                    <a href="#" class="btn icon icon-left btn-success"><i class="bi bi-file-earmark-excel-fill"></i> Export</a>
                 </div>
             </div>
             <div class="card-body">
-                <table class="table table-striped" id="table1">
+                <table class="table table-striped" id="data_rst">
                     <thead>
                         <tr>
                             <th>Nama WL</th>
@@ -89,344 +88,6 @@
                             <th>Total Jam</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>Gramedia</td>
-                            <td>Jawa Barat</td>
-                            <td>Bandung</td>
-                            <td>Belajar Pemrograman</td>
-                            <td>23</td>
-                            <td>52</td>
-                        </tr>
-                        <tr>
-                            <td>Erlangga</td>
-                            <td>Jawa Timur</td>
-                            <td>Surabaya</td>
-                            <td>Matematika Dasar</td>
-                            <td>19</td>
-                            <td>43</td>
-                        </tr>
-                        <tr>
-                            <td>Visimedia</td>
-                            <td>Sumatera Utara</td>
-                            <td>Medan</td>
-                            <td>Sejarah Nusantara</td>
-                            <td>15</td>
-                            <td>35</td>
-                        </tr>
-                        <tr>
-                            <td>Mizan</td>
-                            <td>Jawa Tengah</td>
-                            <td>Semarang</td>
-                            <td>Pemikiran Islam</td>
-                            <td>18</td>
-                            <td>40</td>
-                        </tr>
-                        <tr>
-                            <td>Balai Pustaka</td>
-                            <td>DI Yogyakarta</td>
-                            <td>Sleman</td>
-                            <td>Sastra Klasik</td>
-                            <td>20</td>
-                            <td>45</td>
-                        </tr>
-                        <tr>
-                            <td>Penebar Swadaya</td>
-                            <td>Bali</td>
-                            <td>Denpasar</td>
-                            <td>Flora Indonesia</td>
-                            <td>22</td>
-                            <td>48</td>
-                        </tr>
-                        <tr>
-                            <td>Harfeey</td>
-                            <td>Kalimantan Timur</td>
-                            <td>Samarinda</td>
-                            <td>Petualangan di Hutan</td>
-                            <td>12</td>
-                            <td>28</td>
-                        </tr>
-                        <tr>
-                            <td>Zikrul</td>
-                            <td>Sulawesi Selatan</td>
-                            <td>Makassar</td>
-                            <td>Teknologi Modern</td>
-                            <td>25</td>
-                            <td>55</td>
-                        </tr>
-                        <tr>
-                            <td>Pustaka Utama</td>
-                            <td>Banten</td>
-                            <td>Tangerang</td>
-                            <td>Kewirausahaan</td>
-                            <td>14</td>
-                            <td>30</td>
-                        </tr>
-                        <tr>
-                            <td>Gramedia</td>
-                            <td>Jawa Barat</td>
-                            <td>Bekasi</td>
-                            <td>Sains Populer</td>
-                            <td>16</td>
-                            <td>33</td>
-                        </tr>
-                        <tr>
-                            <td>Erlangga</td>
-                            <td>Jawa Timur</td>
-                            <td>Malang</td>
-                            <td>Filsafat Hidup</td>
-                            <td>17</td>
-                            <td>39</td>
-                        </tr>
-                        <tr>
-                            <td>Visimedia</td>
-                            <td>Sumatera Selatan</td>
-                            <td>Palembang</td>
-                            <td>Psikologi Remaja</td>
-                            <td>13</td>
-                            <td>29</td>
-                        </tr>
-                        <tr>
-                            <td>Mizan</td>
-                            <td>Jawa Tengah</td>
-                            <td>Solo</td>
-                            <td>Sejarah Dunia</td>
-                            <td>21</td>
-                            <td>50</td>
-                        </tr>
-                        <tr>
-                            <td>Balai Pustaka</td>
-                            <td>Sumatera Barat</td>
-                            <td>Padang</td>
-                            <td>Legenda Lokal</td>
-                            <td>18</td>
-                            <td>41</td>
-                        </tr>
-                        <tr>
-                            <td>Penebar Swadaya</td>
-                            <td>Kalimantan Barat</td>
-                            <td>Pontianak</td>
-                            <td>Tanaman Obat</td>
-                            <td>15</td>
-                            <td>35</td>
-                        </tr>
-                        <tr>
-                            <td>Harfeey</td>
-                            <td>Jawa Barat</td>
-                            <td>Depok</td>
-                            <td>Kesehatan Alami</td>
-                            <td>19</td>
-                            <td>44</td>
-                        </tr>
-                        <tr>
-                            <td>Zikrul</td>
-                            <td>Sulawesi Utara</td>
-                            <td>Manado</td>
-                            <td>Pertanian Modern</td>
-                            <td>23</td>
-                            <td>52</td>
-                        </tr>
-                        <tr>
-                            <td>Pustaka Utama</td>
-                            <td>Jawa Timur</td>
-                            <td>Blitar</td>
-                            <td>Bisnis Digital</td>
-                            <td>20</td>
-                            <td>45</td>
-                        </tr>
-                        <tr>
-                            <td>Gramedia</td>
-                            <td>DKI Jakarta</td>
-                            <td>Jakarta</td>
-                            <td>Politik Indonesia</td>
-                            <td>24</td>
-                            <td>53</td>
-                        </tr>
-                        <tr>
-                            <td>Erlangga</td>
-                            <td>Bali</td>
-                            <td>Kuta</td>
-                            <td>Wisata Nusantara</td>
-                            <td>14</td>
-                            <td>31</td>
-                        </tr>
-                        <tr>
-                            <td>Visimedia</td>
-                            <td>Jawa Tengah</td>
-                            <td>Magelang</td>
-                            <td>Ekonomi Global</td>
-                            <td>17</td>
-                            <td>38</td>
-                        </tr>
-                        <tr>
-                            <td>Mizan</td>
-                            <td>Riau</td>
-                            <td>Pekanbaru</td>
-                            <td>Kesenian Tradisional</td>
-                            <td>19</td>
-                            <td>42</td>
-                        </tr>
-                        <tr>
-                            <td>Balai Pustaka</td>
-                            <td>Nusa Tenggara Timur</td>
-                            <td>Ende</td>
-                            <td>Geografi Indonesia</td>
-                            <td>18</td>
-                            <td>40</td>
-                        </tr>
-                        <tr>
-                            <td>Penebar Swadaya</td>
-                            <td>Kalimantan Tengah</td>
-                            <td>Palangkaraya</td>
-                            <td>Ilmu Sosial</td>
-                            <td>16</td>
-                            <td>34</td>
-                        </tr>
-                        <tr>
-                            <td>Harfeey</td>
-                            <td>Jawa Timur</td>
-                            <td>Kediri</td>
-                            <td>Teknologi Ramah Lingkungan</td>
-                            <td>22</td>
-                            <td>49</td>
-                        </tr>
-                        <tr>
-                            <td>Zikrul</td>
-                            <td>Sulawesi Tenggara</td>
-                            <td>Kendari</td>
-                            <td>Ekologi dan Lingkungan</td>
-                            <td>13</td>
-                            <td>29</td>
-                        </tr>
-                        <tr>
-                            <td>Pustaka Utama</td>
-                            <td>Kalimantan Timur</td>
-                            <td>Balikpapan</td>
-                            <td>Inovasi Teknologi</td>
-                            <td>20</td>
-                            <td>46</td>
-                        </tr>
-                        <tr>
-                            <td>Gramedia</td>
-                            <td>Jawa Barat</td>
-                            <td>Bandung</td>
-                            <td>Desain Grafis</td>
-                            <td>21</td>
-                            <td>48</td>
-                        </tr>
-                        <tr>
-                            <td>Erlangga</td>
-                            <td>Sumatera Barat</td>
-                            <td>Padang</td>
-                            <td>Pengetahuan Alam</td>
-                            <td>17</td>
-                            <td>37</td>
-                        </tr>
-                        <tr>
-                            <td>Visimedia</td>
-                            <td>Jawa Timur</td>
-                            <td>Banyuwangi</td>
-                            <td>Fotografi Digital</td>
-                            <td>14</td>
-                            <td>32</td>
-                        </tr>
-                        <tr>
-                            <td>Mizan</td>
-                            <td>Sulawesi Selatan</td>
-                            <td>Makassar</td>
-                            <td>Ekonomi Kreatif</td>
-                            <td>18</td>
-                            <td>41</td>
-                        </tr>
-                        <tr>
-                            <td>Balai Pustaka</td>
-                            <td>Bali</td>
-                            <td>Gianyar</td>
-                            <td>Seni Rupa Tradisional</td>
-                            <td>16</td>
-                            <td>34</td>
-                        </tr>
-                        <tr>
-                            <td>Penebar Swadaya</td>
-                            <td>Jawa Barat</td>
-                            <td>Bogor</td>
-                            <td>Pertanian Organik</td>
-                            <td>15</td>
-                            <td>36</td>
-                        </tr>
-                        <tr>
-                            <td>Harfeey</td>
-                            <td>Sumatera Utara</td>
-                            <td>Medan</td>
-                            <td>Kuliner Nusantara</td>
-                            <td>22</td>
-                            <td>50</td>
-                        </tr>
-                        <tr>
-                            <td>Zikrul</td>
-                            <td>Kalimantan Barat</td>
-                            <td>Sintang</td>
-                            <td>Teknologi Informasi</td>
-                            <td>18</td>
-                            <td>42</td>
-                        </tr>
-                        <tr>
-                            <td>Pustaka Utama</td>
-                            <td>Jawa Tengah</td>
-                            <td>Solo</td>
-                            <td>Perbankan Syariah</td>
-                            <td>20</td>
-                            <td>45</td>
-                        </tr>
-                        <tr>
-                            <td>Gramedia</td>
-                            <td>Jawa Timur</td>
-                            <td>Surabaya</td>
-                            <td>Analisis Data</td>
-                            <td>19</td>
-                            <td>44</td>
-                        </tr>
-                        <tr>
-                            <td>Erlangga</td>
-                            <td>Sulawesi Tengah</td>
-                            <td>Palu</td>
-                            <td>Ekonomi Makro</td>
-                            <td>16</td>
-                            <td>35</td>
-                        </tr>
-                        <tr>
-                            <td>Visimedia</td>
-                            <td>Kalimantan Timur</td>
-                            <td>Samarinda</td>
-                            <td>Ilmu Pengetahuan Alam</td>
-                            <td>13</td>
-                            <td>28</td>
-                        </tr>
-                        <tr>
-                            <td>Mizan</td>
-                            <td>Banten</td>
-                            <td>Serang</td>
-                            <td>Budaya Populer</td>
-                            <td>21</td>
-                            <td>47</td>
-                        </tr>
-                        <tr>
-                            <td>Balai Pustaka</td>
-                            <td>Jawa Barat</td>
-                            <td>Cirebon</td>
-                            <td>Sastra Dunia</td>
-                            <td>22</td>
-                            <td>51</td>
-                        </tr>
-                        <tr>
-                            <td>Penebar Swadaya</td>
-                            <td>Jawa Timur</td>
-                            <td>Sidoarjo</td>
-                            <td>Ekonomi Pembangunan</td>
-                            <td>23</td>
-                            <td>54</td>
-                        </tr>
-                    </tbody>
                 </table>
             </div>
         </div>
@@ -434,16 +95,8 @@
 </template>
 
 <script>
-import { Form as VeeForm, Field, ErrorMessage } from 'vee-validate'
-
 let table
 export default {
-    components: {
-        VeeForm,
-        Field,
-        ErrorMessage,
-    },
-
     data() {
         return {
             menu: {
@@ -460,12 +113,21 @@ export default {
             },
 
             configdate: {
-                dateFormat: 'F j, Y',
+                dateFormat: 'Y-m-d',
                 mode: 'range',
+            },
+
+            option: {
+                optProv: '',
+                optKab: '',
+                optWL: '',
             },
 
             filter: {
                 date: '',
+                provinsi: '',
+                kabupaten: '',
+                wl: '',
             },
         }
     },
@@ -473,8 +135,39 @@ export default {
     mounted() {
         this.__MENU()
         this.$root.web_access_log()
+        this.getProvinsi()
 
-        $('#table1').DataTable({})
+        table = $('#data_rst').DataTable({
+            paging: true,
+            pagingType: 'full_numbers',
+            lengthMenu: [[10, 25, 50, 100, 500], [10, 25, 50, 100, 500]],
+            pageLength: 25,
+            processing: true,
+            ajax: "/report/readbook-content-rpt?nodata=yes",
+            columns: [
+                { data: "wl_name", class: "text-center text-nowrap" },
+                { data: "provinsi_name", class: "text-center text-nowrap" },
+                { data: "kabupaten_name", class: "text-center text-nowrap" },
+                { data: "title", class: "text-center text-nowrap" },
+                { data: "pembaca", class: "text-center text-nowrap" },
+                { data: "durasi", class: "text-right" }
+            ],
+            language: {
+                lengthMenu: "_MENU_",
+                search: "_INPUT_",
+                searchPlaceholder: "Search..",
+                info: '<span class="fs-sm">Showing _START_ to _END_ of _TOTAL_ entries</span>',
+                infoEmpty: '<span class="fs-sm">Showing 0 to 0 of 0 entries</span>',
+                infoFiltered: '<span class="fs-sm">(filtered from _MENU_ total entries)</span>',
+                zeroRecords: '<span class="fs-sm">No Data</span>',
+                paginate: {
+                    first: '<i class="bi bi-chevron-double-left"></i>',
+                    previous: '<i class="bi bi-chevron-left"></i>',
+                    next: '<i class="bi bi-chevron-right"></i>',
+                    last: '<i class="bi bi-chevron-double-right"></i>'
+                }
+            }
+        })
     },
 
     methods: {
@@ -495,6 +188,178 @@ export default {
                     console.error(e)
                 })
         },
+
+        getProvinsi() {
+            this.option.optProv = '';
+            this.option.optKab  = '';
+            this.option.optWL   = '';
+
+            let loader = this.$loading.show()
+            window.axios.post('/getOpt', { 'opt': 'Provinsi'})
+            .then((response) => {
+                loader.hide()
+                this.option.optProv = response.data;
+
+                if(this.option.optProv.length == 1) {
+                    this.filter.provinsi = this.option.optProv[0]['provinsi_id'];
+                    this.getKabupaten();
+                }
+            })
+            .catch((e) => {
+                loader.hide()
+
+                console.error(e);
+            });
+        },
+
+        getKabupaten() {
+            this.option.optKab  = '';
+            this.option.optWL   = '';
+
+            window.axios.post('/getOpt', {
+                'opt': 'Kabupaten',
+                'PROVINSI': this.filter.provinsi
+            })
+            .then((response) => {
+                this.option.optKab = response.data;
+
+                if(this.option.optKab.length == 1) {
+                    this.filter.kabupaten = this.option.optKab[0]['kabupaten_id'];
+                    this.getWhiteLabel()
+                }
+            })
+            .catch((e) => {
+                console.error(e);
+            });
+        },
+
+        getWhiteLabel() {
+            this.option.optWL   = '';
+
+            window.axios.post('/getOpt', {
+                'opt': 'WhiteLabel',
+                'PROVINSI': this.filter.provinsi,
+                'KABUPATEN': this.filter.kabupaten
+            })
+            .then((response) => {
+                this.option.optWL = response.data;
+
+                if(this.option.optWL.length == 1) {
+                    this.filter.wl = this.option.optWL[0]['instansi_name'];
+                }
+            })
+            .catch((e) => {
+                console.error(e);
+            });
+        },
+
+        openExecute(){
+            let check = true
+            let message = ''
+
+            if(this.filter.provinsi==''){
+                check = false
+                message += ' Provinsi, '
+            }
+
+            if(this.filter.kabupaten==''){
+                check = false
+                message += ' Kabupaten, '
+            }
+
+            if(this.filter.wl==''){
+                check = false
+                message += ' White Label, '
+            }
+
+            if(this.filter.date==''){
+                check = false
+                message += ' Tanggal, '
+            }
+
+            if(!check){
+                this.$swal({
+                    toast: true,
+                    icon: 'warning',
+                    text: 'Silahkan Isi'+ message.slice(0, -2) +'!'
+                });
+            }else{
+                let start_date  = this.filter.date.split(' to ')[0] ?? ''
+                let end_date    = this.filter.date.split(' to ')[1] ?? ''
+
+                let urlParam = "PROVINSI="+ this.filter.provinsi; 
+                    urlParam += "&KABUPATEN="+ this.filter.kabupaten;
+                    urlParam += "&WL="+ this.filter.wl;
+                    urlParam += "&START_DATE="+ start_date; 
+                    urlParam += "&END_DATE="+ end_date; 
+
+                table.ajax.url("/report/readbook-content-rpt?menufn="+ this.$route.name +"&"+ urlParam ).load();
+            }
+        },
+
+        openXLS(){
+			let check = true
+            let message = ''
+
+            if(this.filter.provinsi==''){
+                check = false
+                message += ' Provinsi, '
+            }
+
+            if(this.filter.kabupaten==''){
+                check = false
+                message += ' Kabupaten, '
+            }
+
+            if(this.filter.wl==''){
+                check = false
+                message += ' White Label, '
+            }
+
+            if(this.filter.date==''){
+                check = false
+                message += ' Tanggal, '
+            }
+
+            if(!check){
+                this.$swal({
+                    toast: true,
+                    icon: 'warning',
+                    text: 'Silahkan Isi'+ message.slice(0, -2) +'!'
+                });
+            }else{
+                let loader      = this.$loading.show()
+                let start_date  = this.filter.date.split(' to ')[0] ?? ''
+                let end_date    = this.filter.date.split(' to ')[1] ?? ''
+
+                window.axios({
+                    url: '/report/readbook-content-xls',
+                    method: 'POST',
+                    responseType: 'blob',
+                    data: {
+                        PROVINSI: this.filter.provinsi,
+                        KABUPATEN: this.filter.kabupaten,
+                        WL: this.filter.wl,
+                        START_DATE: start_date,
+                        END_DATE: end_date
+                    }
+                })
+                .then((response) => {
+                    loader.hide()
+
+                    const url = window.URL.createObjectURL(new Blob([response.data]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', 'Laporan Baca Buku Content ' + this.filter.date + '.xlsx');
+                    document.body.appendChild(link);
+                    link.click();
+                })
+                .catch((e) => {
+                    console.error(e);
+                    loader.hide()
+                });
+            }
+		},
     },
 
     computed: {
@@ -522,5 +387,14 @@ export default {
             return this.menu.permission.approve
         },
     },
+
+    beforeRouteLeave (to, from, next) {
+        if (table) {
+            table.destroy();
+            table = null;
+        }
+
+        next();
+    }
 }
 </script>
