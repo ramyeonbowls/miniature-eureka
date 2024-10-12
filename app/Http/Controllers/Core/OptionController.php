@@ -215,9 +215,9 @@ class OptionController extends Controller
 
     public function WhiteLabel(Request $request)
     {
-        $logs = new Logs(Arr::last(explode("\\", get_class())) . 'Log');
-        $logs->write(__FUNCTION__, "START");
-        DB::enableQueryLog();
+        // $logs = new Logs(Arr::last(explode("\\", get_class())) . 'Log');
+        // $logs->write(__FUNCTION__, "START");
+        // DB::enableQueryLog();
 
         $results = [];
         $sql = DB::table('tclient as a')
@@ -230,14 +230,14 @@ class OptionController extends Controller
 
         $results = $sql->get();
 
-        $queries = DB::getQueryLog();
-        for($q = 0; $q < count($queries); $q++) {
-            $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
-            $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
-            $logs->write('SQL', $sql);
-        }
+        // $queries = DB::getQueryLog();
+        // for($q = 0; $q < count($queries); $q++) {
+        //     $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
+        //     $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+        //     $logs->write('SQL', $sql);
+        // }
 
-        $logs->write(__FUNCTION__, "STOP\r\n");
+        // $logs->write(__FUNCTION__, "STOP\r\n");
         
         return ($results);
     }

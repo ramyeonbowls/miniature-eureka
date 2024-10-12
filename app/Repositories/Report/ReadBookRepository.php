@@ -43,6 +43,7 @@ class ReadBookRepository
             ->where('a.client_id', '=', $client_id)
             ->where('b.provinsi_id', '=', $PROVINSI)
             ->where('b.kabupaten_id', '=', $KABUPATEN)
+            ->where('b.instansi_name', '=', $WL)
             ->when(!empty($END_DATE), function ($query) use ($START_DATE, $END_DATE) {
                 return $query->whereBetween(DB::raw('DATE(a.created_at)'), [$START_DATE, $END_DATE]);
             }, function ($query) use ($START_DATE) {
