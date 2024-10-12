@@ -55,8 +55,8 @@ class ReadBookContentExport implements WithCustomStartCell, WithHeadings, WithTi
             'Nama WL',
             'Provinsi',
             'Kab/Kota',
-            'Nama Pembaca',
-            'Jumlah Buku di Baca',
+            'Judul Buku',
+            'Jumlah Pembaca',
             'Total Jam'
         ];
     }
