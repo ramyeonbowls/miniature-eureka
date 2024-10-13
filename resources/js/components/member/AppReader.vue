@@ -292,11 +292,13 @@ const handleBeforeUnload = (event) => {
 
 // Function to show the SweetAlert2 popup
 const showInactivityPopup = () => {
+    console.log('inactive');
+    
     Swal.fire({
         title: 'Halo',
         text: 'Apakah Anda Masih Membaca Buku Ini?',
         icon: 'warning',
-        timer: 60000,
+        timer: 10000,
         showCancelButton: true,
         confirmButtonText: 'Ya',
         cancelButtonText: 'Tidak',
@@ -328,11 +330,13 @@ const showInactivityPopup = () => {
 // Function to reset the inactivity timer
 const resetInactivityTimer = () => {
     clearTimeout(timeout);
-    timeout = setTimeout(showInactivityPopup, 300000);
+    timeout = setTimeout(showInactivityPopup, 10000);
 }
 
 // Setup event listeners to reset the timer on activity
 const resetTimerOnActivity = () => {
+    console.log('active');
+    
     resetInactivityTimer();
 }
 
