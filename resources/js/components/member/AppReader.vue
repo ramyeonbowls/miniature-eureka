@@ -61,6 +61,7 @@ import { useRoute } from 'vue-router'
 import * as pdfjsLib from 'pdfjs-dist'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
+import Swal from 'sweetalert2'
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = new URL('pdfjs-dist/build/pdf.worker.mjs', import.meta.url).toString()
 
@@ -83,6 +84,8 @@ let touchEndX = 0
 const route = useRoute()
 let datenow = ref('')
 let book_id = ref(route.query.pdfToken)
+
+let timeout;
 
 watch(() => route.query.pdfToken, (newId, oldId) => {
         book_id.value = newId
@@ -287,6 +290,52 @@ const handleBeforeUnload = (event) => {
     SendLastReadSync('Y');
 }
 
+// Function to show the SweetAlert2 popup
+const showInactivityPopup = () => {
+    Swal.fire({
+        title: 'Halo',
+        text: 'Apakah Anda Masih Membaca Buku Ini?',
+        icon: 'warning',
+        timer: 60000,
+        showCancelButton: true,
+        confirmButtonText: 'Ya',
+        cancelButtonText: 'Tidak',
+        onOpen: () => {
+            const timerInterval = setInterval(() => {
+
+            }, 100);
+
+            Swal.getCancelButton().onclick = () => {
+                clearInterval(timerInterval);
+            };
+
+            Swal.getConfirmButton().onclick = () => {
+                clearInterval(timerInterval);
+                resetInactivityTimer();
+            };
+        }
+    }).then((result) => {
+        if (result.dismiss === Swal.DismissReason.timer) {
+            SelesaiBaca();
+        } else if (result.isConfirmed) {
+            resetInactivityTimer();
+        } else {
+            SelesaiBaca();
+        }
+    });
+}
+
+// Function to reset the inactivity timer
+const resetInactivityTimer = () => {
+    clearTimeout(timeout);
+    timeout = setTimeout(showInactivityPopup, 300000);
+}
+
+// Setup event listeners to reset the timer on activity
+const resetTimerOnActivity = () => {
+    resetInactivityTimer();
+}
+
 onMounted(() => {
     document.addEventListener('selectionchange', handleTextSelection)
     document.addEventListener('click', hideTooltip)
@@ -305,6 +354,11 @@ onMounted(() => {
     setInterval(() => SendLastRead('N'), 300000)
     window.addEventListener('beforeunload', handleBeforeUnload)
     window.addEventListener('unload', handleUnload)
+
+    document.addEventListener('mousemove', resetTimerOnActivity);
+    document.addEventListener('keydown', resetTimerOnActivity);
+    document.addEventListener('click', resetTimerOnActivity);
+    document.addEventListener('scroll', resetTimerOnActivity);
 })
 
 onUnmounted(() => {
@@ -323,6 +377,12 @@ onUnmounted(() => {
 
     window.removeEventListener('beforeunload', handleBeforeUnload)
     window.removeEventListener('unload', handleUnload)
+
+    clearTimeout(timeout);
+    document.removeEventListener('mousemove', resetTimerOnActivity);
+    document.removeEventListener('keydown', resetTimerOnActivity);
+    document.removeEventListener('click', resetTimerOnActivity);
+    document.removeEventListener('scroll', resetTimerOnActivity);
 })
 </script>
 
