@@ -315,13 +315,13 @@ export default {
         },
 
         clearForm() {
-            this.form.id            = ''
-            this.form.title         = ''
-            this.form.description   = ''
-            this.form.flag_aktif    = ''
-            this.form.author        = ''
-            this.form.file          = ''
-            this.form.current_file  = ''
+            this.form.field.id            = ''
+            this.form.field.title         = ''
+            this.form.field.description   = ''
+            this.form.field.flag_aktif    = ''
+            this.form.field.author        = ''
+            this.form.field.file          = ''
+            this.form.field.current_file  = ''
 
             this.$refs.tajukutama_files.value = '';
             this.quill.setText('');

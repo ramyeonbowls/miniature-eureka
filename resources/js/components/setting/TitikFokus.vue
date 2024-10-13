@@ -102,7 +102,7 @@
                                                                         </div>
                                                                         <div class="col-md-10 form-group">
                                                                             <Field name="file">
-                                                                                <input type="file" ref="tajukutama_files" id="file" name="file" @change="onChangeIcon" accept=".png,.jpg,.jpeg" />
+                                                                                <input type="file" ref="titikfokus_files" id="file" name="file" @change="onChangeIcon" accept=".png,.jpg,.jpeg" />
                                                                             </Field>
                                                                             <ErrorMessage name="file" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
                                                                             <br><small class="text-muted">Max. size: 1500 kb (700x350 pixels)<br>File types: png, jpg, jpeg</small>
@@ -315,20 +315,20 @@ export default {
         },
 
         clearForm() {
-            this.form.id            = ''
-            this.form.title         = ''
-            this.form.description   = ''
-            this.form.flag_aktif    = ''
-            this.form.author        = ''
-            this.form.file          = ''
-            this.form.current_file  = ''
+            this.form.field.id            = ''
+            this.form.field.title         = ''
+            this.form.field.description   = ''
+            this.form.field.flag_aktif    = ''
+            this.form.field.author        = ''
+            this.form.field.file          = ''
+            this.form.field.current_file  = ''
 
-            this.$refs.tajukutama_files.value = '';
+            this.$refs.titikfokus_files.value = '';
             this.quill.setText('');
         },
 
         async onChangeIcon(e) {
-            this.form.field.file = this.$refs.tajukutama_files.files[0];
+            this.form.field.file = this.$refs.titikfokus_files.files[0];
         },
 
         create() {

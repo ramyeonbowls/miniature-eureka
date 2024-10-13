@@ -34,7 +34,6 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Judul</th>
                                                 <th>Aktif</th>
                                                 <th>File</th>
                                                 <th>dibuat oleh</th>
@@ -64,28 +63,28 @@
                                                                             <Field type="text" :disabled="true" id="id" v-model="form.field.id" class="form-control" name="id" />
                                                                             <ErrorMessage name="id" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
                                                                         </div>
-                                                                        <div class="col-md-2">
+                                                                        <!-- <div class="col-md-2">
                                                                             <label for="desc">Judul <span class="text-danger">*</span></label>
                                                                         </div>
                                                                         <div class="col-md-10 form-group">
                                                                             <Field type="text" id="title" v-model="form.field.title" class="form-control" name="title" />
                                                                             <ErrorMessage name="judul" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
-                                                                        </div>
+                                                                        </div> -->
                                                                         <div class="col-md-2">
                                                                             <label for="desc">Konten <span class="text-danger">*</span></label>
                                                                         </div>
                                                                         <div class="col-md-10 form-group">
-                                                                            <div ref="editor" class="quill-editor" style=" height: 300px; margin-bottom: 1rem;"></div>
-                                                                            <input type="hidden" v-model="form.field.description" name="description" />
+                                                                            <textarea class="form-control" id="description" v-model="form.field.description" name="description" rows="3" maxlength="200"></textarea>
+                                                                            <br><small class="text-muted">{{ remainingCharacters }}/{{ maxLength }}</small>
                                                                             <ErrorMessage name="description" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
                                                                         </div>
-                                                                        <!-- <div class="col-md-2">
+                                                                        <div class="col-md-2">
                                                                             <label for="desc">Penulis</label>
                                                                         </div>
                                                                         <div class="col-md-10 form-group">
                                                                             <Field type="text" id="author" v-model="form.field.author" class="form-control" name="author" />
                                                                             <ErrorMessage name="penulis" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
-                                                                        </div> -->
+                                                                        </div>
                                                                         <div class="col-md-2">
                                                                             <label for="type">Flag Aktif</label>
                                                                         </div>
@@ -102,10 +101,10 @@
                                                                         </div>
                                                                         <div class="col-md-10 form-group">
                                                                             <Field name="file">
-                                                                                <input type="file" ref="wawasan_files" id="file" name="file" @change="onChangeIcon" accept=".png,.jpg,.jpeg" />
+                                                                                <input type="file" ref="frasa_files" id="file" name="file" @change="onChangeIcon" accept=".png,.jpg,.jpeg" />
                                                                             </Field>
                                                                             <ErrorMessage name="file" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
-                                                                            <br><small class="text-muted">Max. size: 1500 kb (700x350 pixels)<br>File types: png, jpg, jpeg</small>
+                                                                            <br><small class="text-muted">Max. size: 1500 kb (300x300 pixels)<br>File types: png, jpg, jpeg</small>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -153,8 +152,6 @@
 <script>
 import { Form as VeeForm, Field, ErrorMessage } from 'vee-validate'
 import { v4 as uuidv4 } from 'uuid';
-import Quill from 'quill';
-import 'quill/dist/quill.snow.css';
 
 let table
 export default {
@@ -193,7 +190,8 @@ export default {
                     file: '',
                     current_file: '',
                 }
-            }
+            },
+            maxLength: 200
         }
     },
 
@@ -214,10 +212,9 @@ export default {
             select: true,
             rowId: 'extn',
             order: [[0, "asc"]],
-            ajax: "/setting/wawasan-mst",
+            ajax: "/setting/frasa-mst",
             columns: [
                 { data: "id" },
-                { data: "title" },
                 { data: "flag_aktif" },
                 {
                     data: "file",
@@ -270,29 +267,6 @@ export default {
             // Show the modal
             new bootstrap.Modal(document.getElementById('imageModal')).show()
         });
-
-        this.quill = new Quill(this.$refs.editor, {
-            theme: 'snow',
-            modules: {
-                toolbar: [
-                    ["bold", "italic", "underline", "strike"],
-                    [{ color: [] }, { background: [] }],
-                    [{ script: "super" }, { script: "sub" }],
-                    [
-                        { list: "ordered" },
-                        { indent: "-1" },
-                        { indent: "+1" },
-                    ],
-                    ["direction", { align: [] }],
-                    ["link"],
-                    ["clean"],
-                ],
-            },
-        });
-
-        this.quill.on('text-change', () => {
-            this.form.field.description = this.quill.root.innerHTML;
-        });
     },
 
     methods: {
@@ -323,12 +297,11 @@ export default {
             this.form.field.file          = ''
             this.form.field.current_file  = ''
 
-            this.$refs.wawasan_files.value = '';
-            this.quill.setText('');
+            this.$refs.frasa_files.value = '';
         },
 
         async onChangeIcon(e) {
-            this.form.field.file = this.$refs.wawasan_files.files[0];
+            this.form.field.file = this.$refs.frasa_files.files[0];
         },
 
         create() {
@@ -344,12 +317,10 @@ export default {
                 this.form.new = false
                 this.form.edit = true
                 this.submitted = false
-                let decodedHtml = this.decodeHtml(this.selected[0].description);
-                this.quill.clipboard.dangerouslyPasteHTML(decodedHtml)
 
                 this.form.field.id              = this.selected[0].id
                 this.form.field.title           = this.selected[0].title
-                this.form.field.description     = decodedHtml
+                this.form.field.description     = this.selected[0].description
                 this.form.field.flag_aktif      = (this.selected[0].flag_aktif=='Y') ? true : false
                 this.form.field.author          = this.selected[0].author
                 this.form.field.file            = ''
@@ -361,15 +332,6 @@ export default {
                     text: 'No row selected!'
                 });
             }
-        },
-
-        decodeHtml(html) {
-            const txt = document.createElement('textarea');
-            txt.innerHTML = html
-            const decodedValue = txt.value
-            txt.remove();
-
-            return decodedValue;
         },
 
         destroy() {
@@ -391,7 +353,7 @@ export default {
                     if (result.value) {
                         let loader = this.$loading.show();
 
-                        window.axios.delete('/setting/wawasan-mst/'+ this.selected[0].id +'?menufn='+ this.$route.name)
+                        window.axios.delete('/setting/frasa-mst/'+ this.selected[0].id +'?menufn='+ this.$route.name)
                             .then(response => {
                                 loader.hide();
                                 this.selected = [];
@@ -429,7 +391,7 @@ export default {
                                 form_data.append(value, this.form.field[value]);
                             });
                             
-                            window.axios.post('/setting/wawasan-mst?menu_fn='+ this.$route.name, form_data)
+                            window.axios.post('/setting/frasa-mst?menu_fn='+ this.$route.name, form_data)
                                 .then((response) => {
                                     loader.hide();
                                     this.cancel();
@@ -456,7 +418,7 @@ export default {
                                 form_data.append(value, this.form.field[value]);
                             });
 
-                            window.axios.post('/setting/wawasan-mst/'+ this.form.field.id +'?menu_fn='+ this.$route.name, form_data)
+                            window.axios.post('/setting/frasa-mst/'+ this.form.field.id +'?menu_fn='+ this.$route.name, form_data)
                                 .then((response) => {
                                     loader.hide();
                                     this.cancel();
@@ -520,6 +482,10 @@ export default {
         aPermitted() {
             return this.menu.permission.approve
         },
+
+        remainingCharacters() {
+            return this.maxLength - this.form.field.description.length;
+        }
     },
 
     beforeRouteLeave (to, from, next) {

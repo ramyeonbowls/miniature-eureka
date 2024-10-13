@@ -119,6 +119,11 @@ const routes = [
         name: 'layar_penulis',
         component: () => import(/* webpackChunkName: "setting/layar_penulis" */ './components/setting/LayarPenulis.vue'),
     },
+    {
+        path: '/setting/frasa',
+        name: 'frasa',
+        component: () => import(/* webpackChunkName: "setting/frasa" */ './components/setting/Frasa.vue'),
+    },
 ]
 
 export default routes

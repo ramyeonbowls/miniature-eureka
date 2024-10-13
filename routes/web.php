@@ -75,6 +75,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                         Route::apiResource('titik-fokus-mst', TitikFokusMasterController::class);
                         Route::apiResource('humoria-mst', HumoriaMasterController::class);
                         Route::apiResource('layar-penulis-mst', LayarPenulisMasterController::class);
+                        Route::apiResource('frasa-mst', FrasaMasterController::class);
                     });
                     
                     Route::prefix('report')->namespace('Report')->group(function() {
