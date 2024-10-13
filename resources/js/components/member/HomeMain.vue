@@ -5,7 +5,7 @@
                 <div class="row">
                     <div class="col-12">
                         <!-- Web Carousel -->
-                        <div id="webCarousel" class="carousel slide d-none d-md-block" data-bs-ride="carousel">
+                        <div id="webCarousel" class="carousel slide d-none d-sm-block" data-bs-ride="carousel">
                             <div class="carousel-inner">
                                 <div v-for="(item, index) in banner.filter(item => item.display === 'web')" 
                                     :key="index" 
@@ -24,7 +24,7 @@
                         </div>
 
                         <!-- Mobile Carousel -->
-                        <div id="mobileCarousel" class="carousel slide d-block d-md-none" data-bs-ride="carousel" data-bs-interval="5000" v-if="banner.some(item => item.display === 'mobile')">
+                        <div id="mobileCarousel" class="carousel slide d-block d-sm-none" data-bs-ride="carousel" data-bs-interval="5000" v-if="banner.some(item => item.display === 'mobile')">
                             <div class="carousel-inner">
                                 <div v-for="(item, index) in banner.filter(item => item.display === 'mobile')" 
                                     :key="index" 
