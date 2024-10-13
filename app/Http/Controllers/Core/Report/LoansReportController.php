@@ -11,16 +11,15 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\Report\BookReportExport;
+use App\Exports\Report\LoansReportExport;
+use App\Services\Report\LoansReportService;
 use Yajra\DataTables\Facades\DataTables;
-use App\Services\Report\BookReportService;
 
-class BookReportController extends Controller
+class LoansReportController extends Controller
 {
-    private BookReportService $book_service;
+    private LoansReportService $loans_service;
 
     /**
      * Instantiate a new controller instance.
@@ -30,7 +29,7 @@ class BookReportController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->book_service = new BookReportService();
+        $this->loans_service = new LoansReportService();
     }
 
     /**
@@ -55,8 +54,11 @@ class BookReportController extends Controller
             $filter['PROVINSI']     = $request->PROVINSI ?? '';
             $filter['KABUPATEN']    = $request->KABUPATEN ?? '';
             $filter['WL']           = $request->WL ?? '';
+            $filter['START_DATE']   = $request->START_DATE ?? '';
+            $filter['END_DATE']     = $request->END_DATE ?? '';
+            $filter['STATUS']       = $request->STATUS ?? '';
 
-            $results = $this->book_service->get($filter);
+            $results = $this->loans_service->get($filter);
 
             $queries = DB::getQueryLog();
             for($q = 0; $q < count($queries); $q++) {
@@ -125,17 +127,19 @@ class BookReportController extends Controller
             $filter['PROVINSI']     = $request->PROVINSI ?? '';
             $filter['KABUPATEN']    = $request->KABUPATEN ?? '';
             $filter['WL']           = $request->WL ?? '';
+            $filter['START_DATE']   = $request->START_DATE ?? '';
+            $filter['END_DATE']     = $request->END_DATE ?? '';
+            $filter['STATUS']       = $request->STATUS ?? '';
 
-            $this->book_service->get($filter)->map(function($value, $i) use (&$results) {
+            $this->loans_service->get($filter)->map(function($value, $i) use (&$results) {
                 $results[$i]['wl_name']         = $value->wl_name;
                 $results[$i]['provinsi_name']   = $value->provinsi_name;
                 $results[$i]['kabupaten_name']  = $value->kabupaten_name;
-                $results[$i]['title']           = $value->title;
-                $results[$i]['publisher']       = $value->publisher;
-                $results[$i]['writer']          = $value->writer;
-    			$results[$i]['isbn']            = $value->isbn;
-    			$results[$i]['eisbn']           = $value->eisbn;
-    			$results[$i]['qty']             = $value->qty;
+    			$results[$i]['name']            = $value->name;
+    			$results[$i]['start_date']      = $value->start_date;
+    			$results[$i]['title']           = $value->title;
+    			$results[$i]['end_date']        = $value->end_date;
+    			$results[$i]['flag_end']        = ($value->flag_end=='Y') ? 'Dikembalikan' : "Dipinjam";
             });
         } catch (\Exception $e) {
             $logs->write("ERROR", $e->getMessage());
@@ -149,6 +153,6 @@ class BookReportController extends Controller
         }
         $logs->write(__FUNCTION__, "STOP\r\n");
 
-        return Excel::download(new BookReportExport($results), 'Laporan_Buku.xlsx');
+        return Excel::download(new LoansReportExport($results), 'Laporan_Baca_Buku.xlsx');
     }
 }

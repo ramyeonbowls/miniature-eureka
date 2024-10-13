@@ -170,7 +170,7 @@ export default {
             stateSave: true,
             select: true,
             order: [[0, "asc"]],
-            ajax: "/report/book-rpt",
+            ajax: "/master/book-mst",
             columns: [
                 {
                     data: "cover",

@@ -3,7 +3,7 @@
 
     <!-- filter modal -->
     <div class="modal fade text-left modal-borderless" id="border-less" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Filter</h5>
@@ -13,38 +13,36 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-12 col-12">
+                        <div class="col-md-6 col-6">
                             <div class="row">
                                 <div class="col-md-12 mb-12">
                                     <div class="form-group">
                                         <label for="basicSelect1" class="form-label">Provinsi</label>
-                                        <select class="form-select" id="basicSelect1">
-                                            <option>--</option>
-                                            <option>Jawa Barat</option>
-                                            <option>Jawa TengaH</option>
-                                            <option>DKI Jakarta</option>
+                                        <select class="form-select" id="basicSelect1" v-model="filter.provinsi" @change="getKabupaten">
+                                            <option value="">--</option>
+                                            <option v-for="(prov, key) in option.optProv" :key="key" :value="prov.provinsi_id">{{ prov.provinsi_id +" "+ prov.provinsi_name }}</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-12">
                                     <div class="form-group">
                                         <label for="basicSelect2" class="form-label">Kabupaten/Kota</label>
-                                        <select class="form-select" id="basicSelect2">
-                                            <option>--</option>
-                                            <option>Bandung</option>
-                                            <option>Jakarta Pusat</option>
-                                            <option>Semarang</option>
+                                        <select class="form-select" id="basicSelect2" v-model="filter.kabupaten" @change="getWhiteLabel">
+                                            <option value="">--</option>
+                                            <option v-for="(kab, key) in option.optKab" :key="key" :value="kab.kabupaten_id">{{ kab.kabupaten_id +" "+ kab.kabupaten_name }}</option>
                                         </select>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-6">
+                            <div class="row">
                                 <div class="col-md-12 mb-12">
                                     <div class="form-group">
                                         <label for="basicSelect3" class="form-label">White Label</label>
-                                        <select class="form-select" id="basicSelect3">
-                                            <option>--</option>
-                                            <option>Gramedia</option>
-                                            <option>Mizan</option>
-                                            <option>Erlangga</option>
+                                        <select class="form-select" id="basicSelect3" v-model="filter.wl">
+                                            <option value="">--</option>
+                                            <option v-for="(inst, key) in option.optWL" :key="key" :value="inst.instansi_name">{{ inst.instansi_name }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -59,9 +57,11 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary ms-1" data-bs-dismiss="modal">
-                        <i class="bx bx-check d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Proses Data</span>
+                    <button type="button" class="btn btn-primary ms-1" data-bs-dismiss="modal" @click="openExecute">
+                        <i class="bi bi-file-earmark-excel-fill"></i> Proses Data
+                    </button>
+                    <button type="button" class="btn btn-success ms-1" data-bs-dismiss="modal" @click="openXLS">
+                        <i class="bi bi-file-earmark-excel-fill"></i> Export
                     </button>
                 </div>
             </div>
@@ -70,85 +70,22 @@
     <!-- filter modal -->
 
     <section class="section">
-        <div class="card">
+        <div class="card overflow-auto">
             <div class="card-header">
                 <div class="buttons">
                     <a href="#" class="btn icon icon-left btn-primary" data-bs-toggle="modal" data-bs-target="#border-less"><i class="bi bi-filter-square-fill"></i> Filter</a>
-                    <a href="#" class="btn icon icon-left btn-success"><i class="bi bi-file-earmark-excel-fill"></i> Export</a>
                 </div>
             </div>
             <div class="card-body">
-                <table class="table table-striped" id="table1">
+                <table class="table table-striped" id="data_rst">
                     <thead>
                         <tr>
-                            <th>Nama WL</th>
-                            <th>Provinsi</th>
-                            <th>Kab/Kota</th>
-                            <th>Jumlah Pengunjung</th>
+                            <th class="text-center">Nama WL</th>
+                            <th class="text-center">Provinsi</th>
+                            <th class="text-center">Kab/Kota</th>
+                            <th class="text-center">Jumlah Pengunjung</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>Distributor Buku Nusantara</td>
-                            <td>Jawa Barat</td>
-                            <td>Bandung</td>
-                            <td>1,230</td>
-                        </tr>
-                        <tr>
-                            <td>Literasi Pustaka Mandiri</td>
-                            <td>Jawa Timur</td>
-                            <td>Surabaya</td>
-                            <td>980</td>
-                        </tr>
-                        <tr>
-                            <td>Warung Buku Sejahtera</td>
-                            <td>Sumatera Barat</td>
-                            <td>Padang</td>
-                            <td>865</td>
-                        </tr>
-                        <tr>
-                            <td>Distributor Cerdas</td>
-                            <td>Jawa Tengah</td>
-                            <td>Semarang</td>
-                            <td>1,120</td>
-                        </tr>
-                        <tr>
-                            <td>Pustaka Inspirasi</td>
-                            <td>Bali</td>
-                            <td>Denpasar</td>
-                            <td>920</td>
-                        </tr>
-                        <tr>
-                            <td>Literasi Indonesia Maju</td>
-                            <td>Riau</td>
-                            <td>Pekanbaru</td>
-                            <td>750</td>
-                        </tr>
-                        <tr>
-                            <td>Distributor Sukses</td>
-                            <td>Kalimantan Timur</td>
-                            <td>Samarinda</td>
-                            <td>600</td>
-                        </tr>
-                        <tr>
-                            <td>Warung Buku Cendekia</td>
-                            <td>Jawa Timur</td>
-                            <td>Malang</td>
-                            <td>1,050</td>
-                        </tr>
-                        <tr>
-                            <td>Literasi Terdepan</td>
-                            <td>Jawa Barat</td>
-                            <td>Bogor</td>
-                            <td>1,270</td>
-                        </tr>
-                        <tr>
-                            <td>Pustaka Cemerlang</td>
-                            <td>Jawa Tengah</td>
-                            <td>Solo</td>
-                            <td>890</td>
-                        </tr>
-                    </tbody>
                 </table>
             </div>
         </div>
@@ -156,16 +93,9 @@
 </template>
 
 <script>
-import { Form as VeeForm, Field, ErrorMessage } from 'vee-validate'
 
 let table
 export default {
-    components: {
-        VeeForm,
-        Field,
-        ErrorMessage,
-    },
-
     data() {
         return {
             menu: {
@@ -182,12 +112,21 @@ export default {
             },
 
             configdate: {
-                dateFormat: 'F j, Y',
+                dateFormat: 'Y-m-d',
                 mode: 'range',
+            },
+
+            option: {
+                optProv: '',
+                optKab: '',
+                optWL: '',
             },
 
             filter: {
                 date: '',
+                provinsi: '',
+                kabupaten: '',
+                wl: '',
             },
         }
     },
@@ -195,8 +134,37 @@ export default {
     mounted() {
         this.__MENU()
         this.$root.web_access_log()
+        this.getProvinsi()
 
-        $('#table1').DataTable({})
+        table = $('#data_rst').DataTable({
+            paging: true,
+            pagingType: 'full_numbers',
+            lengthMenu: [[10, 25, 50, 100, 500], [10, 25, 50, 100, 500]],
+            pageLength: 25,
+            processing: true,
+            ajax: "/report/visitors-rpt?nodata=yes",
+            columns: [
+                { data: "wl_name", class: "text-center text-nowrap" },
+                { data: "provinsi_name", class: "text-center text-nowrap" },
+                { data: "kabupaten_name", class: "text-center text-nowrap" },
+                { data: "visitor", class: "text-center text-nowrap" }
+            ],
+            language: {
+                lengthMenu: "_MENU_",
+                search: "_INPUT_",
+                searchPlaceholder: "Search..",
+                info: '<span class="fs-sm">Showing _START_ to _END_ of _TOTAL_ entries</span>',
+                infoEmpty: '<span class="fs-sm">Showing 0 to 0 of 0 entries</span>',
+                infoFiltered: '<span class="fs-sm">(filtered from _MENU_ total entries)</span>',
+                zeroRecords: '<span class="fs-sm">No Data</span>',
+                paginate: {
+                    first: '<i class="bi bi-chevron-double-left"></i>',
+                    previous: '<i class="bi bi-chevron-left"></i>',
+                    next: '<i class="bi bi-chevron-right"></i>',
+                    last: '<i class="bi bi-chevron-double-right"></i>'
+                }
+            }
+        })
     },
 
     methods: {
@@ -217,6 +185,178 @@ export default {
                     console.error(e)
                 })
         },
+
+        getProvinsi() {
+            this.option.optProv = '';
+            this.option.optKab  = '';
+            this.option.optWL   = '';
+
+            let loader = this.$loading.show()
+            window.axios.post('/getOpt', { 'opt': 'Provinsi'})
+            .then((response) => {
+                loader.hide()
+                this.option.optProv = response.data;
+
+                if(this.option.optProv.length == 1) {
+                    this.filter.provinsi = this.option.optProv[0]['provinsi_id'];
+                    this.getKabupaten();
+                }
+            })
+            .catch((e) => {
+                loader.hide()
+
+                console.error(e);
+            });
+        },
+
+        getKabupaten() {
+            this.option.optKab  = '';
+            this.option.optWL   = '';
+
+            window.axios.post('/getOpt', {
+                'opt': 'Kabupaten',
+                'PROVINSI': this.filter.provinsi
+            })
+            .then((response) => {
+                this.option.optKab = response.data;
+
+                if(this.option.optKab.length == 1) {
+                    this.filter.kabupaten = this.option.optKab[0]['kabupaten_id'];
+                    this.getWhiteLabel()
+                }
+            })
+            .catch((e) => {
+                console.error(e);
+            });
+        },
+
+        getWhiteLabel() {
+            this.option.optWL   = '';
+
+            window.axios.post('/getOpt', {
+                'opt': 'WhiteLabel',
+                'PROVINSI': this.filter.provinsi,
+                'KABUPATEN': this.filter.kabupaten
+            })
+            .then((response) => {
+                this.option.optWL = response.data;
+
+                if(this.option.optWL.length == 1) {
+                    this.filter.wl = this.option.optWL[0]['instansi_name'];
+                }
+            })
+            .catch((e) => {
+                console.error(e);
+            });
+        },
+
+        openExecute(){
+            let check = true
+            let message = ''
+
+            if(this.filter.provinsi==''){
+                check = false
+                message += ' Provinsi, '
+            }
+
+            if(this.filter.kabupaten==''){
+                check = false
+                message += ' Kabupaten, '
+            }
+
+            if(this.filter.wl==''){
+                check = false
+                message += ' White Label, '
+            }
+
+            if(this.filter.date==''){
+                check = false
+                message += ' Tanggal, '
+            }
+
+            if(!check){
+                this.$swal({
+                    toast: true,
+                    icon: 'warning',
+                    text: 'Silahkan Isi'+ message.slice(0, -2) +'!'
+                });
+            }else{
+                let start_date  = this.filter.date.split(' to ')[0] ?? ''
+                let end_date    = this.filter.date.split(' to ')[1] ?? ''
+
+                let urlParam = "PROVINSI="+ this.filter.provinsi; 
+                    urlParam += "&KABUPATEN="+ this.filter.kabupaten;
+                    urlParam += "&WL="+ this.filter.wl;
+                    urlParam += "&START_DATE="+ start_date; 
+                    urlParam += "&END_DATE="+ end_date; 
+
+                table.ajax.url("/report/visitors-rpt?menufn="+ this.$route.name +"&"+ urlParam ).load();
+            }
+        },
+
+        openXLS(){
+			let check = true
+            let message = ''
+
+            if(this.filter.provinsi==''){
+                check = false
+                message += ' Provinsi, '
+            }
+
+            if(this.filter.kabupaten==''){
+                check = false
+                message += ' Kabupaten, '
+            }
+
+            if(this.filter.wl==''){
+                check = false
+                message += ' White Label, '
+            }
+
+            if(this.filter.date==''){
+                check = false
+                message += ' Tanggal, '
+            }
+
+            if(!check){
+                this.$swal({
+                    toast: true,
+                    icon: 'warning',
+                    text: 'Silahkan Isi'+ message.slice(0, -2) +'!'
+                });
+            }else{
+                let loader      = this.$loading.show()
+                let start_date  = this.filter.date.split(' to ')[0] ?? ''
+                let end_date    = this.filter.date.split(' to ')[1] ?? ''
+
+                window.axios({
+                    url: '/report/visitors-xls',
+                    method: 'POST',
+                    responseType: 'blob',
+                    data: {
+                        PROVINSI: this.filter.provinsi,
+                        KABUPATEN: this.filter.kabupaten,
+                        WL: this.filter.wl,
+                        START_DATE: start_date,
+                        END_DATE: end_date
+                    }
+                })
+                .then((response) => {
+                    loader.hide()
+
+                    const url = window.URL.createObjectURL(new Blob([response.data]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', 'Laporan Pengunjung ' + this.filter.date + '.xlsx');
+                    document.body.appendChild(link);
+                    link.click();
+                })
+                .catch((e) => {
+                    console.error(e);
+                    loader.hide()
+                });
+            }
+		},
     },
 
     computed: {
@@ -244,5 +384,14 @@ export default {
             return this.menu.permission.approve
         },
     },
+
+    beforeRouteLeave (to, from, next) {
+        if (table) {
+            table.destroy();
+            table = null;
+        }
+
+        next();
+    }
 }
 </script>

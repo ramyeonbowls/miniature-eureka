@@ -11,16 +11,15 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\Report\BookReportExport;
+use App\Exports\Report\VisitorsReportExport;
+use App\Services\Report\VisitorsReportService;
 use Yajra\DataTables\Facades\DataTables;
-use App\Services\Report\BookReportService;
 
-class BookReportController extends Controller
+class VisitorsReportController extends Controller
 {
-    private BookReportService $book_service;
+    private VisitorsReportService $visitors_service;
 
     /**
      * Instantiate a new controller instance.
@@ -30,7 +29,7 @@ class BookReportController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->book_service = new BookReportService();
+        $this->visitors_service = new VisitorsReportService();
     }
 
     /**
@@ -55,8 +54,10 @@ class BookReportController extends Controller
             $filter['PROVINSI']     = $request->PROVINSI ?? '';
             $filter['KABUPATEN']    = $request->KABUPATEN ?? '';
             $filter['WL']           = $request->WL ?? '';
+            $filter['START_DATE']   = $request->START_DATE ?? '';
+            $filter['END_DATE']     = $request->END_DATE ?? '';
 
-            $results = $this->book_service->get($filter);
+            $results = $this->visitors_service->get($filter);
 
             $queries = DB::getQueryLog();
             for($q = 0; $q < count($queries); $q++) {
@@ -125,17 +126,14 @@ class BookReportController extends Controller
             $filter['PROVINSI']     = $request->PROVINSI ?? '';
             $filter['KABUPATEN']    = $request->KABUPATEN ?? '';
             $filter['WL']           = $request->WL ?? '';
+            $filter['START_DATE']   = $request->START_DATE ?? '';
+            $filter['END_DATE']     = $request->END_DATE ?? '';
 
-            $this->book_service->get($filter)->map(function($value, $i) use (&$results) {
+            $this->visitors_service->get($filter)->map(function($value, $i) use (&$results) {
                 $results[$i]['wl_name']         = $value->wl_name;
                 $results[$i]['provinsi_name']   = $value->provinsi_name;
                 $results[$i]['kabupaten_name']  = $value->kabupaten_name;
-                $results[$i]['title']           = $value->title;
-                $results[$i]['publisher']       = $value->publisher;
-                $results[$i]['writer']          = $value->writer;
-    			$results[$i]['isbn']            = $value->isbn;
-    			$results[$i]['eisbn']           = $value->eisbn;
-    			$results[$i]['qty']             = $value->qty;
+    			$results[$i]['visitor']         = $value->visitor;
             });
         } catch (\Exception $e) {
             $logs->write("ERROR", $e->getMessage());
@@ -149,6 +147,6 @@ class BookReportController extends Controller
         }
         $logs->write(__FUNCTION__, "STOP\r\n");
 
-        return Excel::download(new BookReportExport($results), 'Laporan_Buku.xlsx');
+        return Excel::download(new VisitorsReportExport($results), 'Laporan_Baca_Buku.xlsx');
     }
 }

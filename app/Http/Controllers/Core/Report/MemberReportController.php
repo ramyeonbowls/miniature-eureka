@@ -11,16 +11,15 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\Report\BookReportExport;
+use App\Exports\Report\MemberReportExport;
+use App\Services\Report\MemberReportService;
 use Yajra\DataTables\Facades\DataTables;
-use App\Services\Report\BookReportService;
 
-class BookReportController extends Controller
+class MemberReportController extends Controller
 {
-    private BookReportService $book_service;
+    private MemberReportService $book_service;
 
     /**
      * Instantiate a new controller instance.
@@ -30,7 +29,7 @@ class BookReportController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->book_service = new BookReportService();
+        $this->book_service = new MemberReportService();
     }
 
     /**
@@ -130,12 +129,9 @@ class BookReportController extends Controller
                 $results[$i]['wl_name']         = $value->wl_name;
                 $results[$i]['provinsi_name']   = $value->provinsi_name;
                 $results[$i]['kabupaten_name']  = $value->kabupaten_name;
-                $results[$i]['title']           = $value->title;
-                $results[$i]['publisher']       = $value->publisher;
-                $results[$i]['writer']          = $value->writer;
-    			$results[$i]['isbn']            = $value->isbn;
-    			$results[$i]['eisbn']           = $value->eisbn;
-    			$results[$i]['qty']             = $value->qty;
+    			$results[$i]['name']            = $value->name;
+    			$results[$i]['email']           = $value->email;
+    			$results[$i]['created_at']      = $value->created_at;
             });
         } catch (\Exception $e) {
             $logs->write("ERROR", $e->getMessage());
@@ -149,6 +145,6 @@ class BookReportController extends Controller
         }
         $logs->write(__FUNCTION__, "STOP\r\n");
 
-        return Excel::download(new BookReportExport($results), 'Laporan_Buku.xlsx');
+        return Excel::download(new MemberReportExport($results), 'Laporan_Baca_Buku.xlsx');
     }
 }

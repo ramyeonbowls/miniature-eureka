@@ -2,20 +2,20 @@
 
 namespace App\Services\Report;
 
-use App\Repositories\Report\BookReportRepository;
+use App\Repositories\Report\VisitorsReportRepository;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 
-class BookReportService 
+class VisitorsReportService 
 {
-	private BookReportRepository $book_repo;
+	private VisitorsReportRepository $visitors_repo;
     protected $client_id = '';
 
     public function __construct()
     {
-        $this->book_repo = new BookReportRepository();
+        $this->visitors_repo = new VisitorsReportRepository();
         $this->client_id = config('app.client_id', '');
     }
 
@@ -25,6 +25,6 @@ class BookReportService
      */
     public function get($filter)
     {
-        return new Collection($this->book_repo->get($filter));
+        return new Collection($this->visitors_repo->get($filter));
     }
 }

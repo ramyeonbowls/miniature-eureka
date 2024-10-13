@@ -64,6 +64,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     
                     Route::prefix('master')->namespace('Master')->group(function() {
                         Route::apiResource('member-mst', MemberMasterController::class);
+                        Route::apiResource('book-mst', BookMasterController::class);
                     });
 
                     Route::prefix('setting')->namespace('Setting')->group(function() {
@@ -77,14 +78,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     });
                     
                     Route::prefix('report')->namespace('Report')->group(function() {
-                        Route::apiResource('book-rpt', BookReportController::class);
-
                         Route::get('readbook-rpt', 'ReadBookController@index')->name('readbook-rpt');
                         Route::post('readbook-xls', 'ReadBookController@ExportXLS')->name('readbook-xls');
                         Route::get('readbook-user-rpt', 'ReadBookUserController@index')->name('readbook-user-rpt');
                         Route::post('readbook-user-xls', 'ReadBookUserController@ExportXLS')->name('readbook-user-xls');
                         Route::get('readbook-content-rpt', 'ReadBookContentController@index')->name('readbook-content-rpt');
-                        Route::post('readbook-content-xls', 'ReadBookContentController@ExportXLS')->name('readbook-content-xls');
+                        Route::post('readbook-content-xls', 'ReadBookContentController@ExportXLS')->name('readbook-content-xls');;
+                        Route::get('books-rpt', 'BookReportController@index')->name('books-rpt');
+                        Route::post('books-xls', 'BookReportController@ExportXLS')->name('books-xls');
+                        Route::get('member-rpt', 'MemberReportController@index')->name('member-rpt');
+                        Route::post('member-xls', 'MemberReportController@ExportXLS')->name('member-xls');
+                        Route::get('loans-rpt', 'LoansReportController@index')->name('loans-rpt');
+                        Route::post('loans-xls', 'LoansReportController@ExportXLS')->name('loans-xls');
+                        Route::get('visitors-rpt', 'VisitorsReportController@index')->name('visitors-rpt');
+                        Route::post('visitors-xls', 'VisitorsReportController@ExportXLS')->name('visitors-xls');
                     });
                 });
             }); 

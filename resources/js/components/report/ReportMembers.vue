@@ -3,7 +3,7 @@
 
     <!-- filter modal -->
     <div class="modal fade text-left modal-borderless" id="border-less" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Filter</h5>
@@ -13,45 +13,37 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-12 col-12">
+                        <div class="col-md-6 col-6">
                             <div class="row">
                                 <div class="col-md-12 mb-12">
                                     <div class="form-group">
                                         <label for="basicSelect1" class="form-label">Provinsi</label>
-                                        <select class="form-select" id="basicSelect1">
-                                            <option>--</option>
-                                            <option>Jawa Barat</option>
-                                            <option>Jawa TengaH</option>
-                                            <option>DKI Jakarta</option>
+                                        <select class="form-select" id="basicSelect1" v-model="filter.provinsi" @change="getKabupaten">
+                                            <option value="">--</option>
+                                            <option v-for="(prov, key) in option.optProv" :key="key" :value="prov.provinsi_id">{{ prov.provinsi_id +" "+ prov.provinsi_name }}</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-12">
                                     <div class="form-group">
                                         <label for="basicSelect2" class="form-label">Kabupaten/Kota</label>
-                                        <select class="form-select" id="basicSelect2">
-                                            <option>--</option>
-                                            <option>Bandung</option>
-                                            <option>Jakarta Pusat</option>
-                                            <option>Semarang</option>
+                                        <select class="form-select" id="basicSelect2" v-model="filter.kabupaten" @change="getWhiteLabel">
+                                            <option value="">--</option>
+                                            <option v-for="(kab, key) in option.optKab" :key="key" :value="kab.kabupaten_id">{{ kab.kabupaten_id +" "+ kab.kabupaten_name }}</option>
                                         </select>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-6">
+                            <div class="row">
                                 <div class="col-md-12 mb-12">
                                     <div class="form-group">
                                         <label for="basicSelect3" class="form-label">White Label</label>
-                                        <select class="form-select" id="basicSelect3">
-                                            <option>--</option>
-                                            <option>Gramedia</option>
-                                            <option>Mizan</option>
-                                            <option>Erlangga</option>
+                                        <select class="form-select" id="basicSelect3" v-model="filter.wl">
+                                            <option value="">--</option>
+                                            <option v-for="(inst, key) in option.optWL" :key="key" :value="inst.instansi_name">{{ inst.instansi_name }}</option>
                                         </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-12">
-                                    <div class="form-group">
-                                        <label for="sdate" class="form-label">Tanggal</label>
-                                        <Flatpickr v-model="filter.date" class="form-control flatpickr-range" :config="configdate" placeholder="Select date.."></Flatpickr>
                                     </div>
                                 </div>
                             </div>
@@ -59,9 +51,11 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary ms-1" data-bs-dismiss="modal">
-                        <i class="bx bx-check d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Proses Data</span>
+                    <button type="button" class="btn btn-primary ms-1" data-bs-dismiss="modal" @click="openExecute">
+                        <i class="bi bi-file-earmark-excel-fill"></i> Proses Data
+                    </button>
+                    <button type="button" class="btn btn-success ms-1" data-bs-dismiss="modal" @click="openXLS">
+                        <i class="bi bi-file-earmark-excel-fill"></i> Export
                     </button>
                 </div>
             </div>
@@ -70,15 +64,14 @@
     <!-- filter modal -->
 
     <section class="section">
-        <div class="card">
+        <div class="card overflow-auto">
             <div class="card-header">
                 <div class="buttons">
                     <a href="#" class="btn icon icon-left btn-primary" data-bs-toggle="modal" data-bs-target="#border-less"><i class="bi bi-filter-square-fill"></i> Filter</a>
-                    <a href="#" class="btn icon icon-left btn-success"><i class="bi bi-file-earmark-excel-fill"></i> Export</a>
                 </div>
             </div>
             <div class="card-body">
-                <table class="table table-striped" id="table1">
+                <table class="table table-striped" id="data_rst">
                     <thead>
                         <tr>
                             <th>Nama WL</th>
@@ -89,296 +82,6 @@
                             <th>Waktu Daftar</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>Gramedia</td>
-                            <td>Jawa Barat</td>
-                            <td>Bandung</td>
-                            <td>Ardianto Prabowo</td>
-                            <td>ardianto.prabowo@example.com</td>
-                            <td>01 Januari 2024 09:30</td>
-                        </tr>
-                        <tr>
-                            <td>Literasi Utama</td>
-                            <td>Jawa Timur</td>
-                            <td>Surabaya</td>
-                            <td>Siti Nurhaliza</td>
-                            <td>siti.nurhaliza@example.com</td>
-                            <td>05 Februari 2024 14:45</td>
-                        </tr>
-                        <tr>
-                            <td>Toko Buku Mandiri</td>
-                            <td>DI Yogyakarta</td>
-                            <td>Yogyakarta</td>
-                            <td>Joko Santoso</td>
-                            <td>joko.santoso@example.com</td>
-                            <td>10 Maret 2024 11:00</td>
-                        </tr>
-                        <tr>
-                            <td>Pustaka Sejahtera</td>
-                            <td>Sumatera Selatan</td>
-                            <td>Palembang</td>
-                            <td>Rina Melati</td>
-                            <td>rina.melati@example.com</td>
-                            <td>15 April 2024 08:30</td>
-                        </tr>
-                        <tr>
-                            <td>Balai Pustaka</td>
-                            <td>Kalimantan Barat</td>
-                            <td>Pontianak</td>
-                            <td>Ahmad Zulkarnain</td>
-                            <td>ahmad.zulkarnain@example.com</td>
-                            <td>20 Mei 2024 13:15</td>
-                        </tr>
-                        <tr>
-                            <td>Literasi Pustaka</td>
-                            <td>Jawa Tengah</td>
-                            <td>Semarang</td>
-                            <td>Indah Pratiwi</td>
-                            <td>indah.pratiwi@example.com</td>
-                            <td>25 Juni 2024 16:45</td>
-                        </tr>
-                        <tr>
-                            <td>Gramedia</td>
-                            <td>Sumatera Utara</td>
-                            <td>Medan</td>
-                            <td>Fajar Nugroho</td>
-                            <td>fajar.nugroho@example.com</td>
-                            <td>30 Juli 2024 10:00</td>
-                        </tr>
-                        <tr>
-                            <td>Toko Buku Cerdas</td>
-                            <td>Jawa Barat</td>
-                            <td>Bandung</td>
-                            <td>Rizky Anwar</td>
-                            <td>rizky.anwar@example.com</td>
-                            <td>05 Agustus 2024 12:30</td>
-                        </tr>
-                        <tr>
-                            <td>Pustaka Utama</td>
-                            <td>Kalimantan Timur</td>
-                            <td>Balikpapan</td>
-                            <td>Fitri Sari</td>
-                            <td>fitri.sari@example.com</td>
-                            <td>10 September 2024 09:45</td>
-                        </tr>
-                        <tr>
-                            <td>Toko Buku Sejahtera</td>
-                            <td>DI Yogyakarta</td>
-                            <td>Yogyakarta</td>
-                            <td>Haris Subakti</td>
-                            <td>haris.subakti@example.com</td>
-                            <td>15 Oktober 2024 11:30</td>
-                        </tr>
-                        <tr>
-                            <td>Pustaka Jaya</td>
-                            <td>Sumatera Barat</td>
-                            <td>Padang</td>
-                            <td>Elena Desy</td>
-                            <td>elena.desy@example.com</td>
-                            <td>20 November 2024 15:00</td>
-                        </tr>
-                        <tr>
-                            <td>Gramedia</td>
-                            <td>Jawa Timur</td>
-                            <td>Malang</td>
-                            <td>Rendi Hidayat</td>
-                            <td>rendi.hidayat@example.com</td>
-                            <td>25 Desember 2024 14:00</td>
-                        </tr>
-                        <tr>
-                            <td>Literasi Utama</td>
-                            <td>Kalimantan Selatan</td>
-                            <td>Banjarmasin</td>
-                            <td>Yulia Sari</td>
-                            <td>yulia.sari@example.com</td>
-                            <td>01 Januari 2024 09:00</td>
-                        </tr>
-                        <tr>
-                            <td>Pustaka Sejahtera</td>
-                            <td>Jawa Tengah</td>
-                            <td>Salatiga</td>
-                            <td>Agus Santoso</td>
-                            <td>agus.santoso@example.com</td>
-                            <td>05 Februari 2024 10:15</td>
-                        </tr>
-                        <tr>
-                            <td>Toko Buku Mandiri</td>
-                            <td>Sumatera Utara</td>
-                            <td>Medan</td>
-                            <td>Yani Puspita</td>
-                            <td>yani.puspita@example.com</td>
-                            <td>10 Maret 2024 12:00</td>
-                        </tr>
-                        <tr>
-                            <td>Pustaka Utama</td>
-                            <td>DI Yogyakarta</td>
-                            <td>Yogyakarta</td>
-                            <td>Rizal Hakim</td>
-                            <td>rizal.hakim@example.com</td>
-                            <td>15 April 2024 13:45</td>
-                        </tr>
-                        <tr>
-                            <td>Gramedia</td>
-                            <td>Kalimantan Barat</td>
-                            <td>Pontianak</td>
-                            <td>Vivi Lestari</td>
-                            <td>vivi.lestari@example.com</td>
-                            <td>20 Mei 2024 14:30</td>
-                        </tr>
-                        <tr>
-                            <td>Toko Buku Cerdas</td>
-                            <td>Jawa Barat</td>
-                            <td>Bandung</td>
-                            <td>Andre Wijaya</td>
-                            <td>andre.wijaya@example.com</td>
-                            <td>25 Juni 2024 15:00</td>
-                        </tr>
-                        <tr>
-                            <td>Pustaka Jaya</td>
-                            <td>Sumatera Selatan</td>
-                            <td>Palembang</td>
-                            <td>Desi Melati</td>
-                            <td>desi.melati@example.com</td>
-                            <td>30 Juli 2024 16:30</td>
-                        </tr>
-                        <tr>
-                            <td>Literasi Pustaka</td>
-                            <td>Jawa Tengah</td>
-                            <td>Solo</td>
-                            <td>Rina Fitri</td>
-                            <td>rina.fitri@example.com</td>
-                            <td>05 Agustus 2024 09:15</td>
-                        </tr>
-                        <tr>
-                            <td>Toko Buku Mandiri</td>
-                            <td>Kalimantan Timur</td>
-                            <td>Balikpapan</td>
-                            <td>Oki Prasetyo</td>
-                            <td>oki.prasetyo@example.com</td>
-                            <td>10 September 2024 11:45</td>
-                        </tr>
-                        <tr>
-                            <td>Pustaka Utama</td>
-                            <td>Jawa Barat</td>
-                            <td>Depok</td>
-                            <td>Wulan Sari</td>
-                            <td>wulan.sari@example.com</td>
-                            <td>15 Oktober 2024 12:00</td>
-                        </tr>
-                        <tr>
-                            <td>Gramedia</td>
-                            <td>Sumatera Utara</td>
-                            <td>Medan</td>
-                            <td>Faisal Ardi</td>
-                            <td>faisal.ardi@example.com</td>
-                            <td>20 November 2024 13:30</td>
-                        </tr>
-                        <tr>
-                            <td>Toko Buku Sejahtera</td>
-                            <td>DI Yogyakarta</td>
-                            <td>Yogyakarta</td>
-                            <td>Susan Agustina</td>
-                            <td>susan.agustina@example.com</td>
-                            <td>25 Desember 2024 14:45</td>
-                        </tr>
-                        <tr>
-                            <td>Pustaka Jaya</td>
-                            <td>Jawa Timur</td>
-                            <td>Malang</td>
-                            <td>Dian Purnama</td>
-                            <td>dian.purnama@example.com</td>
-                            <td>01 Januari 2024 09:30</td>
-                        </tr>
-                        <tr>
-                            <td>Gramedia</td>
-                            <td>Kalimantan Selatan</td>
-                            <td>Banjarmasin</td>
-                            <td>Rina Kurniawati</td>
-                            <td>rina.kurniawati@example.com</td>
-                            <td>05 Februari 2024 10:00</td>
-                        </tr>
-                        <tr>
-                            <td>Literasi Utama</td>
-                            <td>Jawa Tengah</td>
-                            <td>Salatiga</td>
-                            <td>Rudi Setiawan</td>
-                            <td>rudi.setiawan@example.com</td>
-                            <td>10 Maret 2024 12:15</td>
-                        </tr>
-                        <tr>
-                            <td>Pustaka Utama</td>
-                            <td>Sumatera Selatan</td>
-                            <td>Palembang</td>
-                            <td>Yulianti</td>
-                            <td>yulianti@example.com</td>
-                            <td>15 April 2024 14:30</td>
-                        </tr>
-                        <tr>
-                            <td>Toko Buku Mandiri</td>
-                            <td>Kalimantan Barat</td>
-                            <td>Pontianak</td>
-                            <td>Hendra Gunawan</td>
-                            <td>hendra.gunawan@example.com</td>
-                            <td>20 Mei 2024 13:00</td>
-                        </tr>
-                        <tr>
-                            <td>Pustaka Sejahtera</td>
-                            <td>Jawa Timur</td>
-                            <td>Surabaya</td>
-                            <td>Intan Pratiwi</td>
-                            <td>intan.pratiwi@example.com</td>
-                            <td>25 Juni 2024 15:15</td>
-                        </tr>
-                        <tr>
-                            <td>Gramedia</td>
-                            <td>Sumatera Utara</td>
-                            <td>Medan</td>
-                            <td>Agung Wicaksono</td>
-                            <td>agung.wicaksono@example.com</td>
-                            <td>30 Juli 2024 09:45</td>
-                        </tr>
-                        <tr>
-                            <td>Toko Buku Cerdas</td>
-                            <td>DI Yogyakarta</td>
-                            <td>Yogyakarta</td>
-                            <td>Fany Setiawan</td>
-                            <td>fany.setiawan@example.com</td>
-                            <td>05 Agustus 2024 11:30</td>
-                        </tr>
-                        <tr>
-                            <td>Pustaka Jaya</td>
-                            <td>Kalimantan Timur</td>
-                            <td>Balikpapan</td>
-                            <td>Arif Prabowo</td>
-                            <td>arif.prabowo@example.com</td>
-                            <td>10 September 2024 12:00</td>
-                        </tr>
-                        <tr>
-                            <td>Literasi Utama</td>
-                            <td>Sumatera Selatan</td>
-                            <td>Palembang</td>
-                            <td>Gita Adi</td>
-                            <td>gita.adi@example.com</td>
-                            <td>15 Oktober 2024 13:30</td>
-                        </tr>
-                        <tr>
-                            <td>Pustaka Utama</td>
-                            <td>Jawa Barat</td>
-                            <td>Cimahi</td>
-                            <td>Rina Yuliana</td>
-                            <td>rina.yuliana@example.com</td>
-                            <td>20 November 2024 14:45</td>
-                        </tr>
-                        <tr>
-                            <td>Toko Buku Mandiri</td>
-                            <td>Kalimantan Selatan</td>
-                            <td>Banjarmasin</td>
-                            <td>Agung Supriyadi</td>
-                            <td>agung.supriyadi@example.com</td>
-                            <td>25 Desember 2024 10:00</td>
-                        </tr>
-                    </tbody>
                 </table>
             </div>
         </div>
@@ -386,16 +89,9 @@
 </template>
 
 <script>
-import { Form as VeeForm, Field, ErrorMessage } from 'vee-validate'
 
 let table
 export default {
-    components: {
-        VeeForm,
-        Field,
-        ErrorMessage,
-    },
-
     data() {
         return {
             menu: {
@@ -411,13 +107,16 @@ export default {
                 },
             },
 
-            configdate: {
-                dateFormat: 'F j, Y',
-                mode: 'range',
+            option: {
+                optProv: '',
+                optKab: '',
+                optWL: '',
             },
 
             filter: {
-                date: '',
+                provinsi: '',
+                kabupaten: '',
+                wl: '',
             },
         }
     },
@@ -425,8 +124,39 @@ export default {
     mounted() {
         this.__MENU()
         this.$root.web_access_log()
+        this.getProvinsi()
 
-        $('#table1').DataTable({})
+        table = $('#data_rst').DataTable({
+            paging: true,
+            pagingType: 'full_numbers',
+            lengthMenu: [[10, 25, 50, 100, 500], [10, 25, 50, 100, 500]],
+            pageLength: 25,
+            processing: true,
+            ajax: "/report/member-rpt?nodata=yes",
+            columns: [
+                { data: "wl_name", class: "text-center text-nowrap" },
+                { data: "provinsi_name", class: "text-center text-nowrap" },
+                { data: "kabupaten_name", class: "text-center text-nowrap" },
+                { data: "name", class: "text-center text-nowrap" },
+                { data: "email", class: "text-center text-nowrap" },
+                { data: "created_at", class: "text-right" }
+            ],
+            language: {
+                lengthMenu: "_MENU_",
+                search: "_INPUT_",
+                searchPlaceholder: "Search..",
+                info: '<span class="fs-sm">Showing _START_ to _END_ of _TOTAL_ entries</span>',
+                infoEmpty: '<span class="fs-sm">Showing 0 to 0 of 0 entries</span>',
+                infoFiltered: '<span class="fs-sm">(filtered from _MENU_ total entries)</span>',
+                zeroRecords: '<span class="fs-sm">No Data</span>',
+                paginate: {
+                    first: '<i class="bi bi-chevron-double-left"></i>',
+                    previous: '<i class="bi bi-chevron-left"></i>',
+                    next: '<i class="bi bi-chevron-right"></i>',
+                    last: '<i class="bi bi-chevron-double-right"></i>'
+                }
+            }
+        })
     },
 
     methods: {
@@ -447,6 +177,159 @@ export default {
                     console.error(e)
                 })
         },
+
+        getProvinsi() {
+            this.option.optProv = '';
+            this.option.optKab  = '';
+            this.option.optWL   = '';
+
+            let loader = this.$loading.show()
+            window.axios.post('/getOpt', { 'opt': 'Provinsi'})
+            .then((response) => {
+                loader.hide()
+                this.option.optProv = response.data;
+
+                if(this.option.optProv.length == 1) {
+                    this.filter.provinsi = this.option.optProv[0]['provinsi_id'];
+                    this.getKabupaten();
+                }
+            })
+            .catch((e) => {
+                loader.hide()
+
+                console.error(e);
+            });
+        },
+
+        getKabupaten() {
+            this.option.optKab  = '';
+            this.option.optWL   = '';
+
+            window.axios.post('/getOpt', {
+                'opt': 'Kabupaten',
+                'PROVINSI': this.filter.provinsi
+            })
+            .then((response) => {
+                this.option.optKab = response.data;
+
+                if(this.option.optKab.length == 1) {
+                    this.filter.kabupaten = this.option.optKab[0]['kabupaten_id'];
+                    this.getWhiteLabel()
+                }
+            })
+            .catch((e) => {
+                console.error(e);
+            });
+        },
+
+        getWhiteLabel() {
+            this.option.optWL   = '';
+
+            window.axios.post('/getOpt', {
+                'opt': 'WhiteLabel',
+                'PROVINSI': this.filter.provinsi,
+                'KABUPATEN': this.filter.kabupaten
+            })
+            .then((response) => {
+                this.option.optWL = response.data;
+
+                if(this.option.optWL.length == 1) {
+                    this.filter.wl = this.option.optWL[0]['instansi_name'];
+                }
+            })
+            .catch((e) => {
+                console.error(e);
+            });
+        },
+
+        openExecute(){
+            let check = true
+            let message = ''
+
+            if(this.filter.provinsi==''){
+                check = false
+                message += ' Provinsi, '
+            }
+
+            if(this.filter.kabupaten==''){
+                check = false
+                message += ' Kabupaten, '
+            }
+
+            if(this.filter.wl==''){
+                check = false
+                message += ' White Label, '
+            }
+
+            if(!check){
+                this.$swal({
+                    toast: true,
+                    icon: 'warning',
+                    text: 'Silahkan Isi'+ message.slice(0, -2) +'!'
+                });
+            }else{
+                let urlParam = "PROVINSI="+ this.filter.provinsi; 
+                    urlParam += "&KABUPATEN="+ this.filter.kabupaten;
+                    urlParam += "&WL="+ this.filter.wl;
+
+                table.ajax.url("/report/member-rpt?menufn="+ this.$route.name +"&"+ urlParam ).load();
+            }
+        },
+
+        openXLS(){
+			let check = true
+            let message = ''
+
+            if(this.filter.provinsi==''){
+                check = false
+                message += ' Provinsi, '
+            }
+
+            if(this.filter.kabupaten==''){
+                check = false
+                message += ' Kabupaten, '
+            }
+
+            if(this.filter.wl==''){
+                check = false
+                message += ' White Label, '
+            }
+
+            if(!check){
+                this.$swal({
+                    toast: true,
+                    icon: 'warning',
+                    text: 'Silahkan Isi'+ message.slice(0, -2) +'!'
+                });
+            }else{
+                let loader      = this.$loading.show()
+
+                window.axios({
+                    url: '/report/member-xls',
+                    method: 'POST',
+                    responseType: 'blob',
+                    data: {
+                        PROVINSI: this.filter.provinsi,
+                        KABUPATEN: this.filter.kabupaten,
+                        WL: this.filter.wl
+                    }
+                })
+                .then((response) => {
+                    loader.hide()
+
+                    const url = window.URL.createObjectURL(new Blob([response.data]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', 'Laporan Member ' + this.filter.wl + '.xlsx');
+                    document.body.appendChild(link);
+                    link.click();
+                })
+                .catch((e) => {
+                    console.error(e);
+                    loader.hide()
+                });
+            }
+		},
     },
 
     computed: {
@@ -474,5 +357,14 @@ export default {
             return this.menu.permission.approve
         },
     },
+
+    beforeRouteLeave (to, from, next) {
+        if (table) {
+            table.destroy();
+            table = null;
+        }
+
+        next();
+    }
 }
 </script>

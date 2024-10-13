@@ -3,7 +3,7 @@
 
     <!-- filter modal -->
     <div class="modal fade text-left modal-borderless" id="border-less" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Filter</h5>
@@ -13,45 +13,37 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-12 col-12">
+                        <div class="col-md-6 col-6">
                             <div class="row">
                                 <div class="col-md-12 mb-12">
                                     <div class="form-group">
                                         <label for="basicSelect1" class="form-label">Provinsi</label>
-                                        <select class="form-select" id="basicSelect1">
-                                            <option>--</option>
-                                            <option>Jawa Barat</option>
-                                            <option>Jawa TengaH</option>
-                                            <option>DKI Jakarta</option>
+                                        <select class="form-select" id="basicSelect1" v-model="filter.provinsi" @change="getKabupaten">
+                                            <option value="">--</option>
+                                            <option v-for="(prov, key) in option.optProv" :key="key" :value="prov.provinsi_id">{{ prov.provinsi_id +" "+ prov.provinsi_name }}</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-12">
                                     <div class="form-group">
                                         <label for="basicSelect2" class="form-label">Kabupaten/Kota</label>
-                                        <select class="form-select" id="basicSelect2">
-                                            <option>--</option>
-                                            <option>Bandung</option>
-                                            <option>Jakarta Pusat</option>
-                                            <option>Semarang</option>
+                                        <select class="form-select" id="basicSelect2" v-model="filter.kabupaten" @change="getWhiteLabel">
+                                            <option value="">--</option>
+                                            <option v-for="(kab, key) in option.optKab" :key="key" :value="kab.kabupaten_id">{{ kab.kabupaten_id +" "+ kab.kabupaten_name }}</option>
                                         </select>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-6">
+                            <div class="row">
                                 <div class="col-md-12 mb-12">
                                     <div class="form-group">
                                         <label for="basicSelect3" class="form-label">White Label</label>
-                                        <select class="form-select" id="basicSelect3">
-                                            <option>--</option>
-                                            <option>Gramedia</option>
-                                            <option>Mizan</option>
-                                            <option>Erlangga</option>
+                                        <select class="form-select" id="basicSelect3" v-model="filter.wl">
+                                            <option value="">--</option>
+                                            <option v-for="(inst, key) in option.optWL" :key="key" :value="inst.instansi_name">{{ inst.instansi_name }}</option>
                                         </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-12">
-                                    <div class="form-group">
-                                        <label for="sdate" class="form-label">Tanggal</label>
-                                        <Flatpickr v-model="filter.date" class="form-control flatpickr-range" :config="configdate" placeholder="Select date.."></Flatpickr>
                                     </div>
                                 </div>
                             </div>
@@ -59,9 +51,11 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary ms-1" data-bs-dismiss="modal">
-                        <i class="bx bx-check d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Proses Data</span>
+                    <button type="button" class="btn btn-primary ms-1" data-bs-dismiss="modal" @click="openExecute">
+                        <i class="bi bi-file-earmark-excel-fill"></i> Proses Data
+                    </button>
+                    <button type="button" class="btn btn-success ms-1" data-bs-dismiss="modal" @click="openXLS">
+                        <i class="bi bi-file-earmark-excel-fill"></i> Export
                     </button>
                 </div>
             </div>
@@ -70,228 +64,27 @@
     <!-- filter modal -->
 
     <section class="section">
-        <div class="card">
+        <div class="card overflow-auto">
             <div class="card-header">
                 <div class="buttons">
                     <a href="#" class="btn icon icon-left btn-primary" data-bs-toggle="modal" data-bs-target="#border-less"><i class="bi bi-filter-square-fill"></i> Filter</a>
-                    <a href="#" class="btn icon icon-left btn-success"><i class="bi bi-file-earmark-excel-fill"></i> Export</a>
                 </div>
             </div>
             <div class="card-body">
-                <table class="table table-striped" id="table1">
+                <table class="table table-striped" id="data_rst">
                     <thead>
                         <tr>
-                            <th>Nama WL</th>
-                            <th>Provinsi</th>
-                            <th>Kab/Kota</th>
-                            <th>Judul Buku</th>
-                            <th>Penerbit</th>
-                            <th>Penulis</th>
-                            <th>ISBN</th>
-                            <th>EISBN</th>
-                            <th>Qty</th>
+                            <th class="text-center">Nama WL</th>
+                            <th class="text-center">Provinsi</th>
+                            <th class="text-center">Kab/Kota</th>
+                            <th class="text-center">Judul Buku</th>
+                            <th class="text-center">Penerbit</th>
+                            <th class="text-center">Penulis</th>
+                            <th class="text-center">ISBN</th>
+                            <th class="text-center">EISBN</th>
+                            <th class="text-center">Copy</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>Gramedia</td>
-                            <td>Jawa Barat</td>
-                            <td>Bandung</td>
-                            <td>Teknologi Masa Depan</td>
-                            <td>Erlangga</td>
-                            <td>Budi Santoso</td>
-                            <td>978-1234567890</td>
-                            <td>978-9876543210</td>
-                            <td>100</td>
-                        </tr>
-                        <tr>
-                            <td>Toko Buku Agung</td>
-                            <td>Jawa Timur</td>
-                            <td>Surabaya</td>
-                            <td>Sejarah Indonesia</td>
-                            <td>Gramedia</td>
-                            <td>Agus Supriyadi</td>
-                            <td>978-2345678901</td>
-                            <td>978-8765432109</td>
-                            <td>75</td>
-                        </tr>
-                        <tr>
-                            <td>Pustaka Utama</td>
-                            <td>Sumatera Utara</td>
-                            <td>Medan</td>
-                            <td>Pendidikan di Era Digital</td>
-                            <td>Mizan</td>
-                            <td>Siti Nurhaliza</td>
-                            <td>978-3456789012</td>
-                            <td>978-7654321098</td>
-                            <td>120</td>
-                        </tr>
-                        <tr>
-                            <td>Balai Pustaka</td>
-                            <td>Jawa Tengah</td>
-                            <td>Semarang</td>
-                            <td>Ekonomi Global</td>
-                            <td>Balai Pustaka</td>
-                            <td>Dedi Kurniawan</td>
-                            <td>978-4567890123</td>
-                            <td>978-6543210987</td>
-                            <td>60</td>
-                        </tr>
-                        <tr>
-                            <td>Toko Buku Online</td>
-                            <td>DI Yogyakarta</td>
-                            <td>Yogyakarta</td>
-                            <td>Kesehatan Masyarakat</td>
-                            <td>Erlangga</td>
-                            <td>Ani Susanti</td>
-                            <td>978-5678901234</td>
-                            <td>978-5432109876</td>
-                            <td>80</td>
-                        </tr>
-                        <tr>
-                            <td>Surya Pustaka</td>
-                            <td>Bali</td>
-                            <td>Denpasar</td>
-                            <td>Seni dan Budaya Indonesia</td>
-                            <td>Visimedia</td>
-                            <td>Putra Aditya</td>
-                            <td>978-6789012345</td>
-                            <td>978-4321098765</td>
-                            <td>95</td>
-                        </tr>
-                        <tr>
-                            <td>Mulia Buku</td>
-                            <td>Kalimantan Timur</td>
-                            <td>Samarinda</td>
-                            <td>Teknologi Informasi</td>
-                            <td>Zikrul</td>
-                            <td>Arif Hidayat</td>
-                            <td>978-7890123456</td>
-                            <td>978-3210987654</td>
-                            <td>50</td>
-                        </tr>
-                        <tr>
-                            <td>Toko Buku Serambi</td>
-                            <td>Sulawesi Selatan</td>
-                            <td>Makassar</td>
-                            <td>Ilmu Sosial dan Politik</td>
-                            <td>Pustaka Utama</td>
-                            <td>Indra Wijaya</td>
-                            <td>978-8901234567</td>
-                            <td>978-2109876543</td>
-                            <td>110</td>
-                        </tr>
-                        <tr>
-                            <td>Gramedia</td>
-                            <td>Banten</td>
-                            <td>Tangerang</td>
-                            <td>Manajemen dan Kepemimpinan</td>
-                            <td>Erlangga</td>
-                            <td>Diana Pramesti</td>
-                            <td>978-9012345678</td>
-                            <td>978-1098765432</td>
-                            <td>90</td>
-                        </tr>
-                        <tr>
-                            <td>Pustaka Jaya</td>
-                            <td>Jawa Barat</td>
-                            <td>Bogor</td>
-                            <td>Psikologi dan Perilaku</td>
-                            <td>Mizan</td>
-                            <td>Wahyu Setiawan</td>
-                            <td>978-0123456789</td>
-                            <td>978-0987654321</td>
-                            <td>70</td>
-                        </tr>
-                        <tr>
-                            <td>Toko Buku Harapan</td>
-                            <td>Jawa Timur</td>
-                            <td>Malang</td>
-                            <td>Bisnis dan Investasi</td>
-                            <td>Gramedia</td>
-                            <td>Ratna Dewi</td>
-                            <td>978-8765432109</td>
-                            <td>978-2345678901</td>
-                            <td>105</td>
-                        </tr>
-                        <tr>
-                            <td>Literasi Pustaka</td>
-                            <td>Sumatera Selatan</td>
-                            <td>Palembang</td>
-                            <td>Sejarah Dunia</td>
-                            <td>Visimedia</td>
-                            <td>Denny Sugiarto</td>
-                            <td>978-7654321098</td>
-                            <td>978-3456789012</td>
-                            <td>115</td>
-                        </tr>
-                        <tr>
-                            <td>Toko Buku Nusantara</td>
-                            <td>Jawa Tengah</td>
-                            <td>Solo</td>
-                            <td>Pengembangan Diri</td>
-                            <td>Erlangga</td>
-                            <td>Yusuf Pratama</td>
-                            <td>978-6543210987</td>
-                            <td>978-4567890123</td>
-                            <td>85</td>
-                        </tr>
-                        <tr>
-                            <td>Pustaka Sejahtera</td>
-                            <td>Sumatera Barat</td>
-                            <td>Padang</td>
-                            <td>Ekonomi Kreatif</td>
-                            <td>Mizan</td>
-                            <td>Maria Ulfa</td>
-                            <td>978-5432109876</td>
-                            <td>978-5678901234</td>
-                            <td>130</td>
-                        </tr>
-                        <tr>
-                            <td>Toko Buku Sahabat</td>
-                            <td>Kalimantan Barat</td>
-                            <td>Pontianak</td>
-                            <td>Perkembangan Teknologi AI</td>
-                            <td>Zikrul</td>
-                            <td>Hasan Basri</td>
-                            <td>978-4321098765</td>
-                            <td>978-6789012345</td>
-                            <td>65</td>
-                        </tr>
-                        <tr>
-                            <td>Pustaka Utama</td>
-                            <td>Jawa Timur</td>
-                            <td>Kediri</td>
-                            <td>Pengantar Ilmu Komputer</td>
-                            <td>Pustaka Utama</td>
-                            <td>Fitriani</td>
-                            <td>978-3210987654</td>
-                            <td>978-7890123456</td>
-                            <td>125</td>
-                        </tr>
-                        <tr>
-                            <td>Gramedia</td>
-                            <td>DKI Jakarta</td>
-                            <td>Jakarta</td>
-                            <td>Teknologi di Era Globalisasi</td>
-                            <td>Erlangga</td>
-                            <td>Budi Nugraha</td>
-                            <td>978-2109876543</td>
-                            <td>978-8901234567</td>
-                            <td>140</td>
-                        </tr>
-                        <tr>
-                            <td>Toko Buku Mega</td>
-                            <td>Bali</td>
-                            <td>Kuta</td>
-                            <td>Bisnis Digital</td>
-                            <td>Gramedia</td>
-                            <td>Andi Kurniawan</td>
-                            <td>978-1098765432</td>
-                            <td>978-9012345678</td>
-                            <td>90</td>
-                        </tr>
-                    </tbody>
                 </table>
             </div>
         </div>
@@ -299,16 +92,9 @@
 </template>
 
 <script>
-import { Form as VeeForm, Field, ErrorMessage } from 'vee-validate'
 
 let table
 export default {
-    components: {
-        VeeForm,
-        Field,
-        ErrorMessage,
-    },
-
     data() {
         return {
             menu: {
@@ -324,13 +110,16 @@ export default {
                 },
             },
 
-            configdate: {
-                dateFormat: 'F j, Y',
-                mode: 'range',
+            option: {
+                optProv: '',
+                optKab: '',
+                optWL: '',
             },
 
             filter: {
-                date: '',
+                provinsi: '',
+                kabupaten: '',
+                wl: '',
             },
         }
     },
@@ -338,8 +127,42 @@ export default {
     mounted() {
         this.__MENU()
         this.$root.web_access_log()
+        this.getProvinsi()
 
-        $('#table1').DataTable({})
+        table = $('#data_rst').DataTable({
+            paging: true,
+            pagingType: 'full_numbers',
+            lengthMenu: [[10, 25, 50, 100, 500], [10, 25, 50, 100, 500]],
+            pageLength: 10,
+            processing: true,
+            ajax: "/report/books-rpt?nodata=yes",
+            columns: [
+                { data: "wl_name", class: "text-center text-nowrap" },
+                { data: "provinsi_name", class: "text-center text-nowrap" },
+                { data: "kabupaten_name", class: "text-center text-nowrap" },
+                { data: "title", class: "text-center text-nowrap" },
+                { data: "publisher", class: "text-center text-nowrap" },
+                { data: "writer", class: "text-center text-nowrap" },
+                { data: "isbn", class: "text-center text-nowrap" },
+                { data: "eisbn", class: "text-center text-nowrap" },
+                { data: "qty", class: "text-right" }
+            ],
+            language: {
+                lengthMenu: "_MENU_",
+                search: "_INPUT_",
+                searchPlaceholder: "Search..",
+                info: '<span class="fs-sm">Showing _START_ to _END_ of _TOTAL_ entries</span>',
+                infoEmpty: '<span class="fs-sm">Showing 0 to 0 of 0 entries</span>',
+                infoFiltered: '<span class="fs-sm">(filtered from _MENU_ total entries)</span>',
+                zeroRecords: '<span class="fs-sm">No Data</span>',
+                paginate: {
+                    first: '<i class="bi bi-chevron-double-left"></i>',
+                    previous: '<i class="bi bi-chevron-left"></i>',
+                    next: '<i class="bi bi-chevron-right"></i>',
+                    last: '<i class="bi bi-chevron-double-right"></i>'
+                }
+            }
+        })
     },
 
     methods: {
@@ -360,6 +183,159 @@ export default {
                     console.error(e)
                 })
         },
+
+        getProvinsi() {
+            this.option.optProv = '';
+            this.option.optKab  = '';
+            this.option.optWL   = '';
+
+            let loader = this.$loading.show()
+            window.axios.post('/getOpt', { 'opt': 'Provinsi'})
+            .then((response) => {
+                loader.hide()
+                this.option.optProv = response.data;
+
+                if(this.option.optProv.length == 1) {
+                    this.filter.provinsi = this.option.optProv[0]['provinsi_id'];
+                    this.getKabupaten();
+                }
+            })
+            .catch((e) => {
+                loader.hide()
+
+                console.error(e);
+            });
+        },
+
+        getKabupaten() {
+            this.option.optKab  = '';
+            this.option.optWL   = '';
+
+            window.axios.post('/getOpt', {
+                'opt': 'Kabupaten',
+                'PROVINSI': this.filter.provinsi
+            })
+            .then((response) => {
+                this.option.optKab = response.data;
+
+                if(this.option.optKab.length == 1) {
+                    this.filter.kabupaten = this.option.optKab[0]['kabupaten_id'];
+                    this.getWhiteLabel()
+                }
+            })
+            .catch((e) => {
+                console.error(e);
+            });
+        },
+
+        getWhiteLabel() {
+            this.option.optWL   = '';
+
+            window.axios.post('/getOpt', {
+                'opt': 'WhiteLabel',
+                'PROVINSI': this.filter.provinsi,
+                'KABUPATEN': this.filter.kabupaten
+            })
+            .then((response) => {
+                this.option.optWL = response.data;
+
+                if(this.option.optWL.length == 1) {
+                    this.filter.wl = this.option.optWL[0]['instansi_name'];
+                }
+            })
+            .catch((e) => {
+                console.error(e);
+            });
+        },
+
+        openExecute(){
+            let check = true
+            let message = ''
+
+            if(this.filter.provinsi==''){
+                check = false
+                message += ' Provinsi, '
+            }
+
+            if(this.filter.kabupaten==''){
+                check = false
+                message += ' Kabupaten, '
+            }
+
+            if(this.filter.wl==''){
+                check = false
+                message += ' White Label, '
+            }
+
+            if(!check){
+                this.$swal({
+                    toast: true,
+                    icon: 'warning',
+                    text: 'Silahkan Isi'+ message.slice(0, -2) +'!'
+                });
+            }else{
+                let urlParam = "PROVINSI="+ this.filter.provinsi; 
+                    urlParam += "&KABUPATEN="+ this.filter.kabupaten;
+                    urlParam += "&WL="+ this.filter.wl; 
+
+                table.ajax.url("/report/books-rpt?menufn="+ this.$route.name +"&"+ urlParam ).load();
+            }
+        },
+
+        openXLS(){
+			let check = true
+            let message = ''
+
+            if(this.filter.provinsi==''){
+                check = false
+                message += ' Provinsi, '
+            }
+
+            if(this.filter.kabupaten==''){
+                check = false
+                message += ' Kabupaten, '
+            }
+
+            if(this.filter.wl==''){
+                check = false
+                message += ' White Label, '
+            }
+
+            if(!check){
+                this.$swal({
+                    toast: true,
+                    icon: 'warning',
+                    text: 'Silahkan Isi'+ message.slice(0, -2) +'!'
+                });
+            }else{
+                let loader      = this.$loading.show()
+
+                window.axios({
+                    url: '/report/books-xls',
+                    method: 'POST',
+                    responseType: 'blob',
+                    data: {
+                        PROVINSI: this.filter.provinsi,
+                        KABUPATEN: this.filter.kabupaten,
+                        WL: this.filter.wl
+                    }
+                })
+                .then((response) => {
+                    loader.hide()
+
+                    const url = window.URL.createObjectURL(new Blob([response.data]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', 'Laporan Buku ' + this.filter.wl + '.xlsx');
+                    document.body.appendChild(link);
+                    link.click();
+                })
+                .catch((e) => {
+                    console.error(e);
+                    loader.hide()
+                });
+            }
+		},
     },
 
     computed: {
@@ -387,5 +363,14 @@ export default {
             return this.menu.permission.approve
         },
     },
+
+    beforeRouteLeave (to, from, next) {
+        if (table) {
+            table.destroy();
+            table = null;
+        }
+
+        next();
+    }
 }
 </script>
