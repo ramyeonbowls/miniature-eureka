@@ -34,6 +34,7 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
+                                                <th>Penulis</th>
                                                 <th>Aktif</th>
                                                 <th>File</th>
                                                 <th>dibuat oleh</th>
@@ -215,6 +216,7 @@ export default {
             ajax: "/setting/frasa-mst",
             columns: [
                 { data: "id" },
+                { data: "author" },
                 { data: "flag_aktif" },
                 {
                     data: "file",
