@@ -94,9 +94,9 @@
                             <th class="text-center">Provinsi</th>
                             <th class="text-center">Kab/Kota</th>
                             <th class="text-center">Nama Member</th>
-                            <th class="text-center">Tanggal Pinjam</th>
                             <th class="text-center">Judul Buku</th>
-                            <th class="text-center">Tempo Kembali</th>
+                            <th class="text-center">Tanggal Pinjam</th>
+                            <th class="text-center">Tanggal Kembali</th>
                             <th class="text-center">Status</th>
                         </tr>
                     </thead>
@@ -162,8 +162,8 @@ export default {
                 { data: "provinsi_name", class: "text-center text-nowrap" },
                 { data: "kabupaten_name", class: "text-center text-nowrap" },
                 { data: "name", class: "text-center text-nowrap" },
-                { data: "start_date", class: "text-center text-nowrap" },
                 { data: "title", class: "text-center text-nowrap" },
+                { data: "start_date", class: "text-center text-nowrap" },
                 { data: "end_date", class: "text-center text-nowrap" },
                 {
                     data: "flag_end",

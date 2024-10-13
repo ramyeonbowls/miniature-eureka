@@ -56,9 +56,9 @@ class LoansReportExport implements WithCustomStartCell, WithHeadings, WithTitle,
             'Provinsi',
             'Kab/Kota',
             'Nama Member',
-            'Tanggal Pinjam',
             'Judul Buku',
-            'Tempo Kembali',
+            'Tanggal Pinjam',
+            'Tanggal Kembali',
             'Status'
         ];
     }
@@ -108,8 +108,8 @@ class LoansReportExport implements WithCustomStartCell, WithHeadings, WithTitle,
                     $event->sheet->setCellValue('B'.$row, $val['provinsi_name']);
                     $event->sheet->setCellValue('C'.$row, $val['kabupaten_name']);
                     $event->sheet->setCellValue('D'.$row, $val['name']);
-                    $event->sheet->setCellValue('E'.$row, $val['start_date']);
-                    $event->sheet->setCellValue('F'.$row, $val['title']);
+                    $event->sheet->setCellValue('E'.$row, $val['title']);
+                    $event->sheet->setCellValue('F'.$row, $val['start_date']);
                     $event->sheet->setCellValue('G'.$row, $val['end_date']);
                     $event->sheet->setCellValue('H'.$row, $val['flag_end']);
 
