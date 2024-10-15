@@ -50,6 +50,9 @@ Route::post('/UpdateProfile', [App\Http\Controllers\ProfileController::class, 'U
 Route::apiResource('form-regis', App\Http\Controllers\FormRegisterController::class);
 Route::get('/agreement-letter', [App\Http\Controllers\FormRegisterController::class, 'exportPDF'])->name('agreement-letter');
 
+Route::get('/offline-visitor', [App\Http\Controllers\PengunjungOfflineController::class, 'index']);
+Route::post('/offline-visitor', [App\Http\Controllers\PengunjungOfflineController::class, 'store']);
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware('activated.user')->group(function() {
         Route::group(['middleware' => ['role.user:admin']], function () {
