@@ -230,8 +230,8 @@ export default {
             storeAsFile: true,
             acceptedFileTypes: ['image/png'],
             allowImageValidateSize: true,
-            // imageValidateSizeMaxWidth: 1500,
-            // imageValidateSizeMaxHeight: 510,
+            imageValidateSizeMaxWidth: 1500,
+            imageValidateSizeMaxHeight: 510,
             onerror: (error) => {
                 pondBig.removeFiles();
 
@@ -256,8 +256,8 @@ export default {
             storeAsFile: true,
             acceptedFileTypes: ['image/png'],
             allowImageValidateSize: true,
-            // imageValidateSizeMaxWidth: 510,
-            // imageValidateSizeMaxHeight: 510,
+            imageValidateSizeMaxWidth: 510,
+            imageValidateSizeMaxHeight: 510,
             onerror: (error) => {
                 pondSmall.removeFiles();
 
