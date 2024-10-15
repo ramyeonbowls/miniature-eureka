@@ -76,6 +76,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
                         Route::apiResource('humoria-mst', HumoriaMasterController::class);
                         Route::apiResource('layar-penulis-mst', LayarPenulisMasterController::class);
                         Route::apiResource('frasa-mst', FrasaMasterController::class);
+                        
+                        Route::apiResource('profile', ProfileMasterController::class);
                     });
                     
                     Route::prefix('report')->namespace('Report')->group(function() {

@@ -8,7 +8,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-center align-items-center flex-column">
                             <div class="avatar avatar-2xl">
-                                <img src="images/faces/2.jpg" alt="Avatar" />
+                                <img src="/images/logo/logo_small.png" alt="Avatar" />
                             </div>
 
                             <h3 class="mt-3">{{ user.name }}</h3>
@@ -20,93 +20,116 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
+                        <h5 class="card-title">Logo</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label for="name" class="form-label">Logo</label>
+                                <br><img :src="form.field.logo.big" alt="Logo" height="100px" v-if="form.field.logo.small" />
+                                <div class="form-group mt-2">
+                                    <input type="file" class="logo-big" />
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <label for="name" class="form-label">Logo Small</label>
+                                <br><img :src="form.field.logo.small" alt="Logo Small" height="100px" v-if="form.field.logo.small" />
+                                <div class="form-group mt-2">
+                                    <input type="file" class="logo-small" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
                         <h5 class="card-title">Profile Admin</h5>
                     </div>
                     <div class="card-body">
-                        <form action="#" method="get">
+                        <form class="form" @submit.prevent="handleUpdateProfile">
                             <div class="row">
                                 <div class="col-md-6 mb-4">
                                     <div class="form-group">
                                         <label for="name" class="form-label">Nama Aplikasi</label>
-                                        <input type="text" name="name" id="name" class="form-control" placeholder="Nama Aplikasi" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="name" class="form-label">Alamat</label>
-                                        <input type="text" name="name" id="name" class="form-control" placeholder="Alamat" />
+                                        <input type="text" name="name" id="name" class="form-control" v-model="form.field.info.application_name" placeholder="Nama Aplikasi" />
                                     </div>
                                     <div class="form-group">
                                         <label for="name" class="form-label">Kabupaten/Kota</label>
-                                        <select name="name" id="name" class="choices form-select">
-                                            <option value="square">Jakarta Pusat</option>
-                                            <option value="rectangle">Jakarta Utara</option>
-                                            <option value="rombo">Jakarta Selatan</option>
-                                            <option value="romboid">Jakarta Timur</option>
-                                            <option value="trapeze">Jakarta Barat Daya</option>
-                                            <option value="traible">Jakarta Timur ke Barat</option>
-                                            <option value="polygon">Jakarta Selatan ke Utara</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="phone" class="form-label">NPWP</label>
-                                        <input type="text" name="phone" id="phone" class="form-control" placeholder="NPWP" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="phone" class="form-label">Nama Penanggung Jawab <small class="text-danger">*</small></label>
-                                        <input type="text" name="phone" id="phone" class="form-control" placeholder="Nama Penanggung Jawab" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="phone" class="form-label">Jabatan Penanggung Jawab <small class="text-danger">*</small></label>
-                                        <input type="text" name="phone" id="phone" class="form-control" placeholder="Jabatan Penanggung Jawab" />
+                                        <input type="text" name="name" id="name" class="form-control" v-model="form.field.info.kabupaten_name" placeholder="Kabupaten/Kota" readonly/>
                                     </div>
                                     <div class="form-group">
                                         <label for="phone" class="form-label">Nama Penandatangan MOU <small class="text-danger">*</small></label>
-                                        <input type="text" name="phone" id="phone" class="form-control" placeholder="Nama Penandatangan MOU" />
+                                        <input type="text" name="phone" id="phone" class="form-control" v-model="form.field.info.mou_sign_name" placeholder="Nama Penandatangan MOU" readonly/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="phone" class="form-label">Nama Penanggung Jawab <small class="text-danger">*</small></label>
+                                        <input type="text" name="phone" id="phone" class="form-control" v-model="form.field.info.pers_responsible" placeholder="Nama Penanggung Jawab" readonly/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="phone" class="form-label">Nama Pengelola (Admin) <small class="text-danger">*</small></label>
+                                        <input type="text" name="phone" id="phone" class="form-control" v-model="form.field.info.administrator_name" placeholder="Nama Pengelola" />
+                                    </div>
+                                    <!-- <div class="form-group">
+                                        <label for="email" class="form-label">E-Mail Pengelola (Admin) </label>
+                                        <input type="text" name="email" id="email" class="form-control" v-model="user.email" placeholder="E-Mail Pengelola" readonly/>
+                                    </div> -->
+                                    <div class="form-group">
+                                        <label for="password-column">Kata Sandi</label>
+                                        <div class="form-group position-relative has-icon-left mb-4">
+                                            <input type="password" class="form-control form-control-md" :class="{'is-invalid': errors.password}" placeholder="Kata Sandi" v-model="form.field.info.password"/>
+                                            <div class="form-control-icon">
+                                                <i class="bi bi-shield-lock"></i>
+                                            </div>
+                                            <p class="text-subtitle text-muted">Isi jika ingin ubah kata sandi</p>
+                                            <div v-if="errors.password" class="invalid-feedback">{{ errors.password[0] }}</div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-4">
                                     <div class="form-group">
-                                        <label for="phone" class="form-label">Jabatan Penandatangan MOU <small class="text-danger">*</small></label>
-                                        <input type="text" name="phone" id="phone" class="form-control" placeholder="Jabatan Penandatangan MOU" />
+                                        <label for="name" class="form-label">Alamat</label>
+                                        <input type="text" name="name" id="name" class="form-control" v-model="form.field.info.address" placeholder="Alamat" />
                                     </div>
                                     <div class="form-group">
-                                        <label for="phone" class="form-label">Nama Pengelola (Admin) <small class="text-danger">*</small></label>
-                                        <input type="text" name="phone" id="phone" class="form-control" placeholder="Nama Pengelola" />
+                                        <label for="phone" class="form-label">NPWP</label>
+                                        <input type="text" name="phone" id="phone" class="form-control" v-model="form.field.info.npwp" placeholder="NPWP" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="phone" class="form-label">Jabatan Penandatangan MOU <small class="text-danger">*</small></label>
+                                        <input type="text" name="phone" id="phone" class="form-control" v-model="form.field.info.pos_sign_name" placeholder="Jabatan Penandatangan MOU" readonly/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="phone" class="form-label">Jabatan Penanggung Jawab <small class="text-danger">*</small></label>
+                                        <input type="text" name="phone" id="phone" class="form-control" v-model="form.field.info.kabupaten_name" placeholder="Jabatan Penanggung Jawab" readonly/>
                                     </div>
                                     <div class="form-group">
                                         <label for="phone" class="form-label">Nomor HP/WA (Admin) <small class="text-danger">*</small></label>
-                                        <input type="text" name="phone" id="phone" class="form-control" placeholder="Nomor HP/WA" />
+                                        <input type="text" name="phone" id="phone" class="form-control" v-model="form.field.info.administrator_phone" placeholder="Nomor HP/WA" />
                                     </div>
                                     <div class="form-group">
-                                        <label for="email" class="form-label">E-Mail Pengelola (Admin) </label>
-                                        <input type="text" name="email" id="email" class="form-control" placeholder="E-Mail Pengelola" />
+                                        <label for="password-confirm-column">Ulangi Kata Sandi</label>
+                                        <div class="form-group position-relative has-icon-left mb-4">
+                                            <input type="password" class="form-control form-control-md" :class="{'is-invalid': errors.passwordConfirm}" placeholder="Ulangi Kata Sandi" v-model="form.field.info.passwordConfirm"/>
+                                            <div class="form-control-icon">
+                                                <i class="bi bi-shield-lock"></i>
+                                            </div>
+                                            <div v-if="errors.passwordConfirm" class="invalid-feedback">{{ errors.passwordConfirm[0] }}</div>
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="gender" class="form-label">Aktifkan Fitur Daftar Member</label>
-                                        <select name="gender" id="gender" class="form-control">
-                                            <option value="">--</option>
-                                            <option value="Y">Ya</option>
-                                            <option value="N">Tidak</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="gender" class="form-label">Metode Konfirmasi Pendaftaraan User </label>
-                                        <select name="gender" id="gender" class="form-control">
-                                            <option value="1">Auto</option>
-                                            <option value="2">Manual</option>
-                                            <option value="3">Verifiaksi Email</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email" class="form-label">Password </label>
-                                        <input type="password" name="email" id="email" class="form-control" placeholder="Password" />
-                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-4">
+                                <div class="form-group my-2 d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary">Save Changes</button>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-            <div class="col-12">
+            <!-- <div class="col-12">
                 <div class="card">
                     <div class="card-header">
                         <h5 class="card-title">Konfirmasi</h5>
@@ -144,67 +167,24 @@
                         </form>
                     </div>
                 </div>
-            </div>
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title">Upload</h5>
-                    </div>
-                    <div class="card-body">
-                        <form action="#" method="get">
-                            <div class="row">
-                                <div class="col-md-6 mb-4">
-                                    <div class="form-group">
-                                        <label for="name" class="form-label">Logo</label>
-                                        <input type="file" class="basic-filepond1" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-4">
-                                    <div class="form-group">
-                                        <label for="name" class="form-label">Header</label>
-                                        <input type="file" class="basic-filepond2" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-4">
-                                    <div class="form-group">
-                                        <label for="name" class="form-label">Banner Desktop</label>
-                                        <input type="file" class="basic-filepond3" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-4">
-                                    <div class="form-group">
-                                        <label for="name" class="form-label">Banner Mobile</label>
-                                        <input type="file" class="basic-filepond4" />
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-4">
-                                    <div class="form-group my-2 d-flex justify-content-end">
-                                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+            </div> -->
         </div>
     </section>
 </template>
 
 <script>
-import { Form as VeeForm, Field, ErrorMessage } from 'vee-validate'
-import Choices from 'choices.js'
-import 'choices.js/public/assets/styles/choices.min.css'
 import * as FilePond from 'filepond'
 import 'filepond/dist/filepond.min.css'
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+import FilePondPluginImageValidateSize from 'filepond-plugin-image-validate-size';
+
+FilePond.registerPlugin(FilePondPluginFileValidateType);
+FilePond.registerPlugin(FilePondPluginImagePreview);
+FilePond.registerPlugin(FilePondPluginImageValidateSize);
 
 export default {
-    components: {
-        VeeForm,
-        Field,
-        ErrorMessage,
-    },
-
     data() {
         return {
             menu: {
@@ -221,59 +201,77 @@ export default {
             },
 
             user: {},
+            form:{
+                field:{
+                    logo:{
+                        small: '/images/logo/logo_small.png',
+                        big: '/images/logo/logo.png',
+                        newsmall: '',
+                        newbig: ''
+                    },
+                    info: {}
+                }
+            },
+            errors: {}
         }
     },
 
     mounted() {
-        this.__MENU()
+        // this.__MENU()
         this.userinfo()
+        this.getProfile()
 
-        let choices = document.querySelectorAll('.choices')
-        let initChoice
-        for (let i = 0; i < choices.length; i++) {
-            if (choices[i].classList.contains('multiple-remove')) {
-                initChoice = new Choices(choices[i], {
-                    delimiter: ',',
-                    editItems: true,
-                    maxItemCount: -1,
-                    removeItemButton: true,
-                })
-            } else {
-                initChoice = new Choices(choices[i])
+        const pondBig = FilePond.create(document.querySelector('.logo-big'), {
+            credits: null,
+            allowImagePreview: true,
+            allowMultiple: false,
+            allowFileEncode: false,
+            required: false,
+            storeAsFile: true,
+            acceptedFileTypes: ['image/png'],
+            allowImageValidateSize: true,
+            // imageValidateSizeMaxWidth: 1500,
+            // imageValidateSizeMaxHeight: 510,
+            onerror: (error) => {
+                pondBig.removeFiles();
+
+                this.$swal({
+                    icon: 'error',
+                    title: 'Invalid Image',
+                    text: 'The image exceeds the maximum dimensions of 1500x510 pixels.'
+                });
+            },
+            onupdatefiles: (fileItems) => {
+                if (fileItems.length > 0) {
+                    this.form.field.logo.newbig = fileItems[0].file; // Assign the valid file
+                }
             }
-        }
+        })
+        const pondSmall = FilePond.create(document.querySelector('.logo-small'), {
+            credits: null,
+            allowImagePreview: true,
+            allowMultiple: false,
+            allowFileEncode: false,
+            required: false,
+            storeAsFile: true,
+            acceptedFileTypes: ['image/png'],
+            allowImageValidateSize: true,
+            // imageValidateSizeMaxWidth: 510,
+            // imageValidateSizeMaxHeight: 510,
+            onerror: (error) => {
+                pondSmall.removeFiles();
 
-        FilePond.create(document.querySelector('.basic-filepond1'), {
-            credits: null,
-            allowImagePreview: false,
-            allowMultiple: false,
-            allowFileEncode: false,
-            required: false,
-            storeAsFile: true,
-        })
-        FilePond.create(document.querySelector('.basic-filepond2'), {
-            credits: null,
-            allowImagePreview: false,
-            allowMultiple: false,
-            allowFileEncode: false,
-            required: false,
-            storeAsFile: true,
-        })
-        FilePond.create(document.querySelector('.basic-filepond3'), {
-            credits: null,
-            allowImagePreview: false,
-            allowMultiple: false,
-            allowFileEncode: false,
-            required: false,
-            storeAsFile: true,
-        })
-        FilePond.create(document.querySelector('.basic-filepond4'), {
-            credits: null,
-            allowImagePreview: false,
-            allowMultiple: false,
-            allowFileEncode: false,
-            required: false,
-            storeAsFile: true,
+                this.$swal({
+                    icon: 'error',
+                    title: 'Invalid Image',
+                    text: 'The image exceeds the maximum dimensions of 510x510 pixels.'
+                });
+            },
+            onupdatefiles: (fileItems) => {
+                if (fileItems.length > 0) {
+                    this.form.field.logo.newsmall = fileItems[0].file;
+                }
+            }
         })
     },
 
@@ -308,6 +306,83 @@ export default {
                     console.error(e)
                 })
         },
+
+        getProfile() {
+            let loader = this.$loading.show();
+            window.axios
+                .get('/setting/profile')
+                .then((response) => {
+                    loader.hide();
+                    this.form.field.info = response.data
+                })
+                .catch((e) => {
+                    loader.hide();
+                    console.error(e)
+                })
+        },
+
+        async handleUpdateProfile() {
+            if(this.form.field.info.password!=''){
+                if (this.form.field.info.password !== this.form.field.info.passwordConfirm) {
+                    this.errors.passwordConfirm = ['Kata sandi tidak sesuai!'];
+                    return;
+                }
+            }
+
+            let form_data = new FormData();
+            Object.keys(this.form.field.info).forEach(value => {
+                form_data.append(value, this.form.field.info[value]);
+            });
+
+            if (this.form.field.logo.newsmall) {
+                form_data.append('logo_small', this.form.field.logo.newsmall);
+            }
+            if (this.form.field.logo.newbig) {
+                form_data.append('logo', this.form.field.logo.newbig);
+            }
+
+            let loader = this.$loading.show();
+            await axios.post('/setting/profile', form_data)
+            .then((response) => {
+                loader.hide();
+                this.$swal({
+                    title: "Update Profile",
+                    text: response.data,
+                    icon: response.status === 201 ? 'success' : 'error',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    showCloseButton: false,
+                    showCancelButton: false
+                }).then((result) => {
+                    location.reload(); 
+                });
+            })
+            .catch(error => {
+                loader.hide();
+                if (error.response && error.response.status === 400) {
+                    this.errors = error.response.data.errors;
+                    let errorMessages = '';
+
+                    for (let key in this.errors) {
+                        if (this.errors.hasOwnProperty(key)) {
+                            errorMessages += `${this.errors[key][0]}\n`;
+                        }
+                    }
+
+                    this.$swal({
+                        icon: 'error',
+                        title: 'Kesalahan',
+                        text: errorMessages,
+                    });
+                } else {
+                    this.$swal({
+                        icon: 'error',
+                        title: 'Kesalahan',
+                        text: 'Terjadi kesalahan, silakan coba lagi nanti.',
+                    });
+                }
+            });
+        },
     },
 
     computed: {
@@ -335,5 +410,28 @@ export default {
             return this.menu.permission.approve
         },
     },
+
+    watch: {
+        'form.field.info.password'(newValue, oldValue) {
+            if (this.errors.password) {
+                this.errors.password = null;
+            }
+            if (newValue !== this.form.field.info.passwordConfirm) {
+                this.errors.passwordConfirm = ['Kata sandi tidak sesuai!'];
+            } else {
+                this.errors.passwordConfirm = null;
+            }
+        },
+        'form.field.info.passwordConfirm'(newValue, oldValue) {
+            if (this.errors.passwordConfirm) {
+                this.errors.passwordConfirm = null;
+            }
+            if (newValue !== this.form.field.info.password) {
+                this.errors.passwordConfirm = ['Kata sandi tidak sesuai!'];
+            } else {
+                this.errors.passwordConfirm = null;
+            }
+        }
+    }
 }
 </script>
