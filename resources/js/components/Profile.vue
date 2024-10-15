@@ -13,6 +13,10 @@
 
                             <h3 class="mt-3">{{ user.name }}</h3>
                             <p class="text-small">{{ user.email }}</p>
+
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#BarcodeModal">
+                                QR Code Pengunjung Offline
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -170,6 +174,37 @@
             </div> -->
         </div>
     </section>
+
+    <!-- Modal for QRcode Preview -->
+    <div class="modal fade text-left" id="BarcodeModal" tabindex="-1" role="dialog" aria-labelledby="BarcodeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-full" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel20">Barcode</h4>
+                </div>
+                <div class="modal-body" id="modalBodyContent">
+                    <div class="auth-logo">
+                        <a href="/"><img src="/images/logo/logo.png" alt="Logo" /></a>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary ms-1" @click="printModalContent()">
+                        <i class="bx bx-check d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Print</span>
+                    </button>
+                    <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                        <i class="bx bx-x d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Close</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal for QRcode Preview -->
+
+    <div id="printableArea" style="display: none;">
+        <div id="printableContent"></div>
+    </div>
 </template>
 
 <script>
@@ -247,6 +282,7 @@ export default {
                 }
             }
         })
+
         const pondSmall = FilePond.create(document.querySelector('.logo-small'), {
             credits: null,
             allowImagePreview: true,
@@ -383,6 +419,45 @@ export default {
                 }
             });
         },
+
+        printModalContent() {
+            // Get the content of the modal body
+            var modalBody = document.getElementById("modalBodyContent").innerHTML;
+
+            // Set the content of the hidden div
+            document.getElementById("printableContent").innerHTML = modalBody;
+
+            // Open the print dialog
+            var printWindow = window.open('', '', 'height=600,width=800');
+            printWindow.document.write('<html><head><title>Print Modal</title>');
+            
+            // Add necessary styles here
+            printWindow.document.write(`
+                <style>
+                    .auth-logo {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        margin-bottom: 1.7rem;
+                        img {
+                            height: 4rem;
+                        }
+                    }
+                </style>
+            `);
+            printWindow.document.write('</head><body>');
+            printWindow.document.write(document.getElementById("printableContent").innerHTML); // Insert the content
+            printWindow.document.write('</body></html>');
+
+            // Close the document to render the content
+            printWindow.document.close();
+
+            // Wait for the content to be fully loaded, then call the print dialog
+            printWindow.onload = function() {
+                printWindow.print(); // Open the print dialog
+                printWindow.close(); // Close the window after printing
+            };
+        }
     },
 
     computed: {
@@ -435,3 +510,15 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.auth-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.7rem;
+    img {
+        height: 4rem;
+    }
+}
+</style>
