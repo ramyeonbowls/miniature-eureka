@@ -131,7 +131,7 @@
                             </div>
                             <div class="col-md-12 mb-4">
                                 <div class="form-group my-2 d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                                 </div>
                             </div>
                         </form>
