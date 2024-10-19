@@ -7,9 +7,9 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="buttons">
-                            <template v-if="!form.new && !form.edit">
-                                <!-- <a href="#" class="btn icon icon-left btn-primary" @click="create"><i class="bi bi-check-square-fill"></i> New</a>
-                                <a href="#" class="btn icon icon-left btn-success" @click="edit"><i class="bi bi-pencil-square"></i> Edit</a> -->
+                            <template v-if="!form.upload">
+                                <!-- <a href="#" class="btn icon icon-left btn-primary" @click="upload"><i class="bi bi-check-square-fill"></i> Upload</a> -->
+                                <a href="#" class="btn icon icon-left btn-success" @click="DownloadTpl"><i class="bi bi-pencil-square"></i> Download Template</a>
                                 <a href="#" class="btn icon icon-left btn-danger" @click="destroy"><i class="bi bi-x-square-fill"></i> Delete</a>
                             </template>
                             <template v-else>
@@ -21,14 +21,14 @@
                     <div class="card-body">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link" :class="form.new || form.edit ? 'disabled' : 'active'" id="data-tab" data-bs-toggle="tab" href="javascript:void(0);" role="tab" aria-controls="data" aria-selected="true">Data</a>
+                                <a class="nav-link" :class="form.upload ? 'disabled' : 'active'" id="data-tab" data-bs-toggle="tab" href="javascript:void(0);" role="tab" aria-controls="data" aria-selected="true">Data</a>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link" :class="!form.new && !form.edit ? 'disabled' : 'active'" id="form-tab" data-bs-toggle="tab" href="javascript:void(0);" role="tab" aria-controls="form" aria-selected="false">Form</a>
+                                <a class="nav-link" :class="!form.upload ? 'disabled' : 'active'" id="form-tab" data-bs-toggle="tab" href="javascript:void(0);" role="tab" aria-controls="form" aria-selected="false">Form</a>
                             </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade" :class="!form.new && !form.edit ? 'show active' : ''" id="data" role="tabpanel" aria-labelledby="data-tab">
+                            <div class="tab-pane fade" :class="!form.upload ? 'show active' : ''" id="data" role="tabpanel" aria-labelledby="data-tab">
                                 <div class="table-responsive">
                                     <table class="table table-striped" id="table1">
                                         <thead>
@@ -46,7 +46,7 @@
                                     </table>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" :class="form.new || form.edit ? 'show active' : ''" id="form" role="tabpanel" aria-labelledby="form-tab">
+                            <div class="tab-pane fade" :class="form.upload ? 'show active' : ''" id="form" role="tabpanel" aria-labelledby="form-tab">
                                 <form class="form form-vertical">
                                     <div class="form-body">
                                         <div class="row">
@@ -219,8 +219,7 @@ export default {
             },
             selected: [],
             form: {
-                new: false,
-                edit: false,
+                upload: false
             },
         }
     },
@@ -337,14 +336,8 @@ export default {
                 })
         },
 
-        create() {
-            this.form.new = true
-            this.form.edit = false
-        },
-
-        edit() {
-            this.form.new = false
-            this.form.edit = true
+        upload() {
+            this.form.upload = true
         },
 
         destroy() {
@@ -394,9 +387,33 @@ export default {
         },
 
         cancel() {
-            this.form.new = false
-            this.form.edit = false
+            this.form.upload = false
+            table.ajax.reload(null, false)
         },
+
+        DownloadTpl(){
+            let loader = this.$loading.show()
+
+            window.axios({
+                url: '/master/member-mst?menufn='+ this.$route.name +'&download=tpl',
+                method: 'POST',
+                responseType: 'blob'
+            })
+            .then((response) => {
+                loader.hide()
+
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', 'Template Upload Member.xlsx');
+                document.body.appendChild(link);
+                link.click();
+            })
+            .catch((e) => {
+                console.error(e);
+                loader.hide()
+            })
+		},
     },
 
     computed: {

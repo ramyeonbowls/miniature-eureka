@@ -12,8 +12,10 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 use App\Services\Master\MemberMasterService;
+use App\Exports\Master\MemberMasterTemplateExport;
 
 class MemberMasterController extends Controller
 {
@@ -69,57 +71,57 @@ class MemberMasterController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  IconMenuDeviceRequestStore  $request
-     * @return JsonResponse
-     */
-    public function store(StoreMemberMasterRequest $request): JsonResponse
+        * Store a newly created resource in storage.
+        *
+        * @param  \Illuminate\Http\Request  $request
+        * @return \Illuminate\Http\Response
+    */
+    public function store(Request $request)
     {
-        $validated = $request->validated();
-
         $logs = new Logs(Arr::last(explode("\\", get_class())) . 'Log');
         $logs->write(__FUNCTION__, 'START');
+        if($request->has('download') && $request->download == 'tpl') {
+            $logs->write(__FUNCTION__, 'Download Tpl');
+            return Excel::download(new MemberMasterTemplateExport(), 'Master_Member_Template.xlsx');
+         }else{
+            try {
+                DB::enableQueryLog();
+                
+                if ($request->hasFile('file')) {
+                    try {
+                        $Member_file = $request->file('file')->getClientOriginalName();
+                        $extension = $request->file('file')->getClientOriginalExtension();
+                        $Member_name = explode('.', str_replace(' ', '', $Member_file))[0] . '-' . now('Asia/Jakarta')->format('YmdHis') . '-' . rand(100000, 999999) . '.' . $extension;
+                        $request->file('file')->storeAs('/public/images/Member', $Member_name);
 
-        $result['status'] = 200;
-        $result['message'] = '';
-        try {
-            DB::enableQueryLog();
-            
-            if ($request->hasFile('file')) {
-                try {
-                    $Member_file = $request->file('file')->getClientOriginalName();
-                    $extension = $request->file('file')->getClientOriginalExtension();
-                    $Member_name = explode('.', str_replace(' ', '', $Member_file))[0] . '-' . now('Asia/Jakarta')->format('YmdHis') . '-' . rand(100000, 999999) . '.' . $extension;
-                    $request->file('file')->storeAs('/public/images/Member', $Member_name);
-
-                    $validated['file'] = $Member_name;
-                } catch (Throwable $th) {
-                    $logs->write("ERROR", $th->getMessage());
+                        $validated['file'] = $Member_name;
+                    } catch (Throwable $th) {
+                        $logs->write("ERROR", $th->getMessage());
+                    }
                 }
+
+                $created = $this->member_service->store((object)$validated);
+                if ($created) {
+                    $logs->write("INFO", "Successfully created");
+
+                    $result['status'] = 201;
+                    $result['message'] = "Successfully created.";
+                }
+
+                $queries = DB::getQueryLog();
+                for ($q = 0; $q < count($queries); $q++) {
+                    $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+                    $logs->write('SQL', $queries[$q]['query']);
+                }
+            } catch (Throwable $th) {
+                $logs->write("ERROR", $th->getMessage());
+
+                $result['message'] = "Failed created.<br>" . $th->getMessage();
             }
+            $logs->write(__FUNCTION__, "STOP\r\n");
 
-            $created = $this->member_service->store((object)$validated);
-            if ($created) {
-                $logs->write("INFO", "Successfully created");
-
-                $result['status'] = 201;
-                $result['message'] = "Successfully created.";
-            }
-
-            $queries = DB::getQueryLog();
-            for ($q = 0; $q < count($queries); $q++) {
-                $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
-                $logs->write('SQL', $queries[$q]['query']);
-            }
-        } catch (Throwable $th) {
-            $logs->write("ERROR", $th->getMessage());
-
-            $result['message'] = "Failed created.<br>" . $th->getMessage();
+            return response()->json($result['message'], $result['status']);
         }
-        $logs->write(__FUNCTION__, "STOP\r\n");
-
-        return response()->json($result['message'], $result['status']);
     }
 
     /**
