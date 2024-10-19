@@ -99,6 +99,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
                         Route::post('loans-xls', 'LoansReportController@ExportXLS')->name('loans-xls');
                         Route::get('visitors-rpt', 'VisitorsReportController@index')->name('visitors-rpt');
                         Route::post('visitors-xls', 'VisitorsReportController@ExportXLS')->name('visitors-xls');
+                        Route::get('offline-visitors-rpt', 'OfflineVisitorsReportController@index')->name('offline-visitors-rpt');
+                        Route::post('offline-visitors-xls', 'OfflineVisitorsReportController@ExportXLS')->name('offline-visitors-xls');
                     });
                 });
             }); 
