@@ -63,16 +63,16 @@ class VerificationController extends Controller
                         : redirect($this->redirectPath())->with('verified', true);
         }
 
-        if ($user->flag_approve === 'Y') { // Check if the user is approved
-            if ($user->markEmailAsVerified()) {
-                event(new Verified($user));
-                Auth::login($user); // Log the user in after verification
+        if ($user->markEmailAsVerified()) {
+            event(new Verified($user));
+
+            if ($user->flag_approve === 'Y') {
+                Auth::login($user);
+            } else {
+                return $request->wantsJson()
+                        ? new JsonResponse(['message' => 'Akun anda belum di approve, silahkan hubungi petugas perpustakaan.'], 403)
+                        : redirect($this->redirectPath())->withErrors(['email' => 'Akun anda belum di approve, silahkan hubungi petugas perpustakaan.']);
             }
-        } else {
-            // Return an error response or redirect if the user is not approved
-            return $request->wantsJson()
-                    ? new JsonResponse(['message' => 'Akun anda belum di approve, silahkan hubungi petugas perpustakaan.'], 403)
-                    : redirect($this->redirectPath())->withErrors(['email' => 'Akun anda belum di approve, silahkan hubungi petugas perpustakaan.']);
         }
 
         return $request->wantsJson()
