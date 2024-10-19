@@ -207,11 +207,11 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary ms-1" @click="printModalContent()">
                         <i class="bx bx-check d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Print</span>
+                        <span class="d-none d-sm-block">Cetak</span>
                     </button>
                     <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
                         <i class="bx bx-x d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Close</span>
+                        <span class="d-none d-sm-block">Tutup</span>
                     </button>
                 </div>
             </div>
@@ -246,11 +246,11 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary ms-1" @click="printModalContent()">
                         <i class="bx bx-check d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Print</span>
+                        <span class="d-none d-sm-block">Cetak</span>
                     </button>
                     <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
                         <i class="bx bx-x d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Close</span>
+                        <span class="d-none d-sm-block">Tutup</span>
                     </button>
                 </div>
             </div>
