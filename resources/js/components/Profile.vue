@@ -14,9 +14,14 @@
                             <h3 class="mt-3">{{ user.name }}</h3>
                             <p class="text-small">{{ user.email }}</p>
 
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#QrCodeModal">
-                                QR Code Pengunjung Offline
-                            </button>
+                            <div class="user-dropdown d-flex align-items-center dropend">
+                                <button type="button" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#QrCodeModal">
+                                    QR Code Perpustakaan
+                                </button>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#QrCodeModalOffline">
+                                    QR Code Pengunjung Offline
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -29,14 +34,14 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6 mb-4">
-                                <label for="name" class="form-label">Logo</label>
+                                <label for="name" class="form-label">Logo Besar</label>
                                 <br><img :src="form.field.logo.big" height="100px" v-if="form.field.logo.small" />
                                 <div class="form-group mt-2">
                                     <input type="file" class="logo-big" />
                                 </div>
                             </div>
                             <div class="col-md-6 mb-4">
-                                <label for="name" class="form-label">Logo Small</label>
+                                <label for="name" class="form-label">Logo Kecil</label>
                                 <br><img :src="form.field.logo.small" height="100px" v-if="form.field.logo.small" />
                                 <div class="form-group mt-2">
                                     <input type="file" class="logo-small" />
@@ -49,7 +54,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title">Profile Admin</h5>
+                        <h5 class="card-title">Profil Perpustakaan</h5>
                     </div>
                     <div class="card-body">
                         <form class="form" @submit.prevent="handleUpdateProfile">
@@ -180,17 +185,17 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-full" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel20">QR Code Pengunjung Offline</h4>
+                    <h4 class="modal-title" id="myModalLabel20">QR Code Pengunjung</h4>
                 </div>
                 <div class="modal-body" id="modalBodyContent">
                     <div class="qr-code-body">
                         <div class="container-offline">
                             <div class="texth">
                                 {{ form.field.info.application_name }}
-                                <br>Scan untuk kunjungan di lokasi
+                                <br>Scan untuk mengunjungi aplikasi
                             </div>
                             <div class="qr-code">
-                                <img src="/images/logo/qrcode_offline.png" style="max-width: 200px; max-height: 200px;"/>
+                                <img src="/images/logo/qrcode.png" style="max-width: 200px; max-height: 200px;"/>
                             </div>
                             <div class="textb">
                                 {{ form.field.info.instansi_name }}
@@ -213,6 +218,45 @@
         </div>
     </div>
     <!-- Modal for QRcode Preview -->
+     
+    <!-- Modal for QRcode Preview Offline -->
+    <div class="modal fade text-left" id="QrCodeModalOffline" tabindex="-1" role="dialog" aria-labelledby="QrCodeModalOfflineLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-full" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel20">QR Code Pengunjung Offline</h4>
+                </div>
+                <div class="modal-body" id="modalBodyContent">
+                    <div class="qr-code-body">
+                        <div class="container-offline">
+                            <div class="texth">
+                                {{ form.field.info.application_name }}
+                                <br>Scan untuk kunjungan di lokasi
+                            </div>
+                            <div class="qr-code">
+                                <img src="/images/logo/qrcode_offline.png" style="max-width: 200px; max-height: 200px;"/>
+                            </div>
+                            <div class="textb">
+                                {{ form.field.info.instansi_name }}
+                                <br>{{ form.field.info.app_url }}/offline-visitor
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary ms-1" @click="printModalContent()">
+                        <i class="bx bx-check d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Print</span>
+                    </button>
+                    <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                        <i class="bx bx-x d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Close</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal for QRcode Preview Offline -->
 
     <div id="printableArea" style="display: none;">
         <div id="printableContent"></div>
@@ -235,8 +279,8 @@ export default {
     data() {
         return {
             menu: {
-                menu_label: 'Profile',
-                menu_desc: 'Profile Admin',
+                menu_label: 'Profil',
+                menu_desc: 'Profil Perpustakaan',
                 permission: {
                     create: false,
                     read: false,
