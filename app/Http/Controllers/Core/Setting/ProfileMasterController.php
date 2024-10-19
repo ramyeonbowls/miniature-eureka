@@ -57,7 +57,7 @@ class ProfileMasterController extends Controller
                     'c.kabupaten_name',
                     'd.kecamatan_name',
                     'e.kelurahan_name',
-                    DB::raw("'".$this->app_url."offline-visitor' as app_url")
+                    DB::raw("'".$this->app_url."/offline-visitor' as app_url")
                 ])
                 ->join('tprovinsi as b', 'a.provinsi_id', '=', 'b.provinsi_id')
                 ->join('tkabupaten as c', 'a.kabupaten_id', '=', 'c.kabupaten_id')

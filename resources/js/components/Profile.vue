@@ -106,7 +106,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="phone" class="form-label">Jabatan Penanggung Jawab <small class="text-danger">*</small></label>
-                                        <input type="text" name="phone" id="phone" class="form-control" v-model="form.field.info.kabupaten_name" placeholder="Jabatan Penanggung Jawab" readonly/>
+                                        <input type="text" name="phone" id="phone" class="form-control" v-model="form.field.info.pos_pers_responsible" placeholder="Jabatan Penanggung Jawab" readonly/>
                                     </div>
                                     <div class="form-group">
                                         <label for="phone" class="form-label">Nomor HP/WA (Admin) <small class="text-danger">*</small></label>

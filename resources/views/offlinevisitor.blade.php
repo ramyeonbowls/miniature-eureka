@@ -9,7 +9,7 @@
                 </div>
                 
                 @if($success)
-                    <h1 class="auth-title">Terima Kasih Sudah Berkunjung!</h1>
+                    <h1 class="auth-title">Terima Kasih Sudah Mengisi Form Kunjungan Perpustakaan.<br>Selamat Membaca</h1>
                     <p class="auth-subtitle mb-4"></p>
 
                 @else
@@ -20,14 +20,14 @@
                         @csrf
                         <label for="name">Nama Lengkap</label>
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="text" class="form-control" placeholder="Nama Lengkap" id="name" name="name" value="{{ old('name') }}"/>
+                            <input type="text" class="form-control" placeholder="Nama Lengkap" id="name" name="name" value="{{ old('name') }}" autofocus/>
                             <div class="form-control-icon">
                                 <i class="bi bi-person"></i>
                             </div>
                         </div>
                         <label for="email">Email</label>
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="text" class="form-control" placeholder="Email" id="email" name="email" value="{{ old('email') }}" autofocus />
+                            <input type="text" class="form-control" placeholder="Email" id="email" name="email" value="{{ old('email') }}"/>
                             <div class="form-control-icon">
                                 <i class="bi bi-envelope"></i>
                             </div>
@@ -51,7 +51,7 @@
                                 <option value="P">Perempuan</option>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="submit" class="btn btn-primary">Kirim</button>
                     </form>
                 @endif
             </div>
