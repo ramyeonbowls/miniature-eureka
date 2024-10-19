@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('client_id', 50);
             $table->string('name', 255);
             $table->string('email', 255);
+            $table->string('nik', 50);
+            $table->string('gender', 5);
             $table->date('date');
             $table->timestamps();
         });

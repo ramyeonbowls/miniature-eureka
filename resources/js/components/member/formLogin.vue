@@ -37,7 +37,7 @@
                 </form>
                 <div class="col-12 d-flex justify-content-start mt-3">
                     <div class="text-center text-md fs-10">
-                        <p class="text-gray-600">
+                        <p class="text-gray-600" v-if="register">
                             Belum punya akun?
                             <router-link :to="{ name: 'mregister' }" class="font-bold">Daftar</router-link>
                             .
@@ -50,7 +50,15 @@
 </template>
 
 <script>
+import { register } from 'swiper/element';
+
 export default {
+    props: {
+        register: {
+            type: Boolean,
+            required: true
+        }
+    },
     data() {
         return {
             email: '',
@@ -65,23 +73,36 @@ export default {
 
     methods: {
         async handleLogin() {
-            let loader = this.$loading.show();
+            let loader = this.$loading.show()
             try {
                 const response = await axios.post('/login', {
                     _token: this.csrfToken,
                     email: this.email,
                     password: this.password,
                     from: 'member'
-                });
-                loader.hide();
-                window.location.href = '/';
+                })
+                loader.hide()
+                window.location.href = '/'
             } catch (error) {
                 loader.hide();
                 if (error.response && error.response.status === 422) {
-                    this.errors = error.response.data.errors || {};
+                    this.errors = error.response.data.errors || {}
+                    this.password = ''
+                } else if (error.response && error.response.status === 403) {
+                    this.$swal({
+                        title: "Login",
+                        text: error.response.data.message,
+                        icon: 'error',
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        showCloseButton: false,
+                        showCancelButton: false
+                    })
+
+                    this.password = ''
                 } else {
-                    this.errors = 'Terjadi error, silahkan refresh halaman';
-                    console.error('An unknown error occurred:', error);
+                    this.errors = 'Terjadi error, silahkan refresh halaman'
+                    console.error('An unknown error occurred:', error)
                 }
             }
         }

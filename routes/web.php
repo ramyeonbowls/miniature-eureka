@@ -35,6 +35,7 @@ Auth::routes([
 Route::post('/mregist', [App\Http\Controllers\Auth\RegisterController::class, 'mregist'])->name('mregist');
 Route::get('/getInfo', [App\Http\Controllers\MainController::class, 'getInfo'])->name('getInfo');
 Route::get('/getAppInfo', [App\Http\Controllers\MainController::class, 'getAppInfo'])->name('getAppInfo');
+Route::get('/getParam', [App\Http\Controllers\MainController::class, 'getParam'])->name('getParam');
 Route::get('/getBukuPopuler', [App\Http\Controllers\MainController::class, 'getBukuPopuler'])->name('getBukuPopuler');
 Route::get('/getBook', [App\Http\Controllers\MainController::class, 'getBook'])->name('getBook');
 Route::get('/getBanner', [App\Http\Controllers\MainController::class, 'getBanner'])->name('getBanner');

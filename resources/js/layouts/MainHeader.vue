@@ -53,9 +53,11 @@
                                 <router-link :to="{ name: 'mlogin' }" class="font-bold">
                                     <button class="custom-button log me-1">Masuk</button>
                                 </router-link>
-                                <router-link :to="{ name: 'mregister' }" class="font-bold">
-                                    <button class="custom-button reg me-1">Daftar</button>
-                                </router-link>
+                                <div v-if="register">
+                                    <router-link :to="{ name: 'mregister' }" class="font-bold">
+                                        <button class="custom-button reg me-1">Daftar</button>
+                                    </router-link>
+                                </div>
                             </div>
                         </template>
                     </div>
@@ -170,6 +172,7 @@
 import "~@fontsource/libre-franklin";
 import "~@fontsource/libre-franklin/900.css";
 import "~@fontsource/libre-franklin/800.css";
+import { register } from "swiper/element";
 
 export default {
     name: 'headerItems',
@@ -189,6 +192,10 @@ export default {
         },
         appname: {
             type: String,
+            required: true
+        },
+        register: {
+            type: Boolean,
             required: true
         }
     },

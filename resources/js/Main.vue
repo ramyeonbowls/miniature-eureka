@@ -1,10 +1,10 @@
 <template>
     <div id="app-usr">
         <div id="main" class="layout-horizontal">
-            <headerItems :isAuthenticated="isAuthenticated" :name="user.name" :avatar="user.avatar" :appname="appname"></headerItems>
+            <headerItems :isAuthenticated="isAuthenticated" :name="user.name" :avatar="user.avatar" :appname="appname" :register="param.register"></headerItems>
         
             <div class="content-wrapper container">
-                <router-view :isAuthenticated="isAuthenticated"></router-view>
+                <router-view :isAuthenticated="isAuthenticated" :register="param.register"></router-view>
             </div>
 
             <nav class="navbar-dark navbar-expand d-block d-xs-block d-xl-none fixed-bottom" role="navigation" style="border-radius: 10px 10px 0 0 !important;  background: rgb(21,47,74); background: linear-gradient(180deg, rgba(21,47,74,1) 0%, rgba(69,62,190,1) 100%);">
@@ -91,6 +91,9 @@ export default {
                 name: '',
                 avatar: ''
             },
+            param: {
+                register: true
+            },
             appname: '',
             searchQuery: '',
             isAuthenticated: false,
@@ -100,6 +103,7 @@ export default {
     mounted() {
         this.getInfo();
         this.getAppInfo();
+        this.getParam();
         this.initializeSubMenu();
         
         document.addEventListener('DOMContentLoaded', () => {
@@ -143,6 +147,18 @@ export default {
             axios.get('/getAppInfo')
             .then((response) => {
                 this.appname = response.data[0].application_name;
+            })
+            .catch((e) => {
+                console.error(e)
+            });
+        },
+
+        getParam() {
+            this.param.register = '';
+
+            axios.get('/getParam')
+            .then((response) => {
+                this.param.register = (response.data[0].value==1) ? true : false;
             })
             .catch((e) => {
                 console.error(e)

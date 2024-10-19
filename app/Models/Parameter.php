@@ -5,19 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class OfflineVisitors extends Model
+class Parameter extends Model
 {
     use HasFactory;
 
-    protected $table = 'tvisitors_offline';
+    protected $table = 'tparameter';
 
     protected $fillable = [
         'client_id',
         'name',
-        'email',
-        'nik',
-        'gender',
-        'date',
+        'description',
+        'value',
         'created_at',
         'updated_at'
     ];

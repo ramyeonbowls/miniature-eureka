@@ -37,15 +37,19 @@ class PengunjungOfflineController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
+            'name'      => 'required|string|max:255',
+            'email'     => 'required|email|max:255',
+            'nik'       => 'required|regex:/^[0-9]{12,16}$/|max:50', 
+            'gender'    => 'required|in:L,P',
         ]);
 
         OfflineVisitors::create([
             'client_id' => $this->client_id,
-            'name' => $request->name,
-            'email' => $request->email,
-            'date' => Carbon::now('Asia/Jakarta')->format('Y-m-d')
+            'name'      => $request->name,
+            'email'     => $request->email,
+            'nik'       => $request->nik,
+            'gender'    => $request->gender,
+            'date'      => Carbon::now('Asia/Jakarta')->format('Y-m-d')
         ]);
 
         return redirect('/offline-visitor')->with('success', 'Data berhasil disimpan!');

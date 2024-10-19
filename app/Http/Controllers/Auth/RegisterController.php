@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Logs;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Parameter;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -77,6 +78,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'role' => $data['role'],
+            'flag_approve' => $data['flag_approve'],
             'client_id' => $this->client_id,
         ]);
     }
@@ -91,10 +93,28 @@ class RegisterController extends Controller
         // $logs->write(__FUNCTION__, "START");
         // DB::enableQueryLog();
 
+        $registrasi = Parameter::where('client_id', $this->client_id)
+            ->where('name', 'reg_member')
+            ->first();
+
+        if(!$registrasi->value){
+            return response()->json('Pendaftaran ditutup, silahkan hubungi petugas perpustakaan.', 500);
+        }
+
         try {
+            $flag_approve = Parameter::where('client_id', $this->client_id)
+            ->where('name', 'app_reg_member')
+            ->first();
+
+            $request['flag_approve'] = 'Y';
+            if($flag_approve->value){
+                $request['flag_approve'] = 'N';
+            }else{
+                $request['flag_approve'] = 'Y';
+            }
+
             $user = $this->create($request->all());
 
-            // $birthday = Carbon::parse($request->birthday)->format('Y-m-d');
             $attr = DB::table('tattr_member')
                     ->insert([
                         'id'            => $user->id,
@@ -120,13 +140,13 @@ class RegisterController extends Controller
 
             $user->sendEmailVerificationNotification();
 
-            return response()->json('Registration successful! Please verify your email address.', 201);
+            return response()->json('Pendaftaran berhasil! Silahkan konfirmasi email anda.', 201);
         } catch (\Exception $e) {
             // $logs->write('error', $e);
             // $logs->write(__FUNCTION__, "STOP\r\n");
             \DB::rollBack();
 
-            return response()->json('Registration failed! Please try again.', 500);
+            return response()->json('Pendaftaran gagal! Silahkan coba lagi.', 500);
         }
     }
 }

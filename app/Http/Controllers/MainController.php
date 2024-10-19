@@ -665,7 +665,20 @@ class MainController extends Controller
             ->select([
                 'a.application_name',
             ])
-            ->where('a.client_id','=', $this->client_id)
+            ->where('a.client_id', '=' , $this->client_id)
+            ->get();
+
+        return response()->json($results, 200);
+    }
+
+    public function getParam()
+    {
+        $results = DB::table('tparameter as a')
+            ->select([
+                'a.value',
+            ])
+            ->where('a.client_id', '=' , $this->client_id)
+            ->where('a.name', '=' , 'reg_member')
             ->get();
 
         return response()->json($results, 200);
