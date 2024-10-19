@@ -14,7 +14,7 @@
                             <h3 class="mt-3">{{ user.name }}</h3>
                             <p class="text-small">{{ user.email }}</p>
 
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#BarcodeModal">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#QrCodeModal">
                                 QR Code Pengunjung Offline
                             </button>
                         </div>
@@ -176,23 +176,25 @@
     </section>
 
     <!-- Modal for QRcode Preview -->
-    <div class="modal fade text-left" id="BarcodeModal" tabindex="-1" role="dialog" aria-labelledby="BarcodeModalLabel" aria-hidden="true">
+    <div class="modal fade text-left" id="QrCodeModal" tabindex="-1" role="dialog" aria-labelledby="QrCodeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-full" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel20">Barcode</h4>
+                    <h4 class="modal-title" id="myModalLabel20">QR Code Pengunjung Offline</h4>
                 </div>
                 <div class="modal-body" id="modalBodyContent">
                     <div class="qr-code-body">
                         <div class="container-offline">
+                            <div class="texth">
+                                {{ form.field.info.application_name }}
+                                <br>Scan untuk kunjungan di lokasi
+                            </div>
                             <div class="qr-code">
                                 <img src="/images/logo/qrcode_offline.png" style="max-width: 200px; max-height: 200px;"/>
                             </div>
-                            <div class="texth">
-                                {{ form.field.info.application_name }}
-                            </div>
                             <div class="textb">
-                                QR Code Pengunjung Offline
+                                {{ form.field.info.instansi_name }}
+                                <br>{{ form.field.info.app_url }}
                             </div>
                         </div>
                     </div>
@@ -456,8 +458,8 @@ export default {
                         }
 
                         .container-offline {
-                            width: 350px;
-                            height: 400px;
+                            width: 450px;
+                            height: 550px;
                             background-color: #fff;
                             box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
                             position: relative;
@@ -466,7 +468,7 @@ export default {
                         .qr-code {
                             width: 200px;
                             height: 200px;
-                            background-color: #000;
+                            background-color: #fff;
                             border-radius: 10px;
                             position: absolute;
                             top: 50%;
@@ -476,7 +478,7 @@ export default {
 
                         .texth {
                             position: absolute;
-                            top: 10%;
+                            top: 20%;
                             left: 50%;
                             transform: translate(-50%, -50%);
                             color: #fff;
@@ -588,8 +590,8 @@ export default {
 }
 
 .container-offline {
-    width: 350px;
-    height: 400px;
+    width: 450px;
+    height: 550px;
     background-color: #fff;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
     position: relative;
@@ -608,7 +610,7 @@ export default {
 
 .texth {
     position: absolute;
-    top: 10%;
+    top: 20%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: #fff;
