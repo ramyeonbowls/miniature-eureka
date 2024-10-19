@@ -90,7 +90,7 @@ export default {
                     this.password = ''
                 } else if (error.response && error.response.status === 403) {
                     this.$swal({
-                        title: "Login",
+                        title: "Gagal Masuk",
                         text: error.response.data.message,
                         icon: 'error',
                         allowOutsideClick: false,

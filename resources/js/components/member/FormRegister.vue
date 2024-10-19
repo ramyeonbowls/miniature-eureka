@@ -63,7 +63,7 @@
                     </div>
                     <div class="col-md-6 col-12">
                         <div class="form-group">
-                            <label for="nik">NIK</label>
+                            <label for="nik">Nomor Identitas</label>
                             <div class="form-group position-relative has-icon-left mb-4">
                                 <input type="text" id="nikInput" class="form-control form-control-md" placeholder="Nomor Induk Kependudukan" maxlength="20" v-model="nik" @input="filterInput($event, 'nik')" />
                                 <div class="form-control-icon">
@@ -197,7 +197,7 @@ export default {
             .then((response) => {
                 loader.hide();
                 this.$swal({
-                    title: "Register",
+                    title: "Pendaftaran",
                     text: response.data,
                     icon: response.status === 201 ? 'success' : 'error',
                     allowOutsideClick: false,
@@ -212,7 +212,7 @@ export default {
                 let err = (error.response.data.message ? error.response.data.message : (error.response.data) ? error.response.data : error.message);
                 loader.hide();
                 this.$swal({
-                    title: "Register",
+                    title: "Pendaftaran",
                     text: err,
                     icon: 'error',
                     allowOutsideClick: false,

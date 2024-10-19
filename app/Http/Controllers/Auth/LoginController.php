@@ -67,7 +67,7 @@ class LoginController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if ($user && $user->flag_approve === 'N') {
-            return response()->json(['message' => 'Email anda belum di approve, silahkan hubungi petugas perpustakaan.'], 403);
+            return response()->json(['message' => 'Akun anda belum di approve, silahkan hubungi petugas perpustakaan.'], 403);
         }
 
         if (Auth::attempt($request->only('email', 'password'))) {
