@@ -82,6 +82,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                         Route::apiResource('frasa-mst', FrasaMasterController::class);
                         
                         Route::apiResource('profile', ProfileMasterController::class);
+                        Route::apiResource('appparam', ParameterController::class);
                     });
                     
                     Route::prefix('report')->namespace('Report')->group(function() {

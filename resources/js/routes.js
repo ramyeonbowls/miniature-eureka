@@ -129,6 +129,11 @@ const routes = [
         name: 'report_offline_visitors',
         component: () => import(/* webpackChunkName: "report/report_offline_visitors" */ './components/report/ReportOfflineVisitors.vue'),
     },
+    {
+        path: '/parameter',
+        name: 'parameter',
+        component: () => import(/* webpackChunkName: "report/parameter" */ './components/setting/Parameter.vue'),
+    },
 ]
 
 export default routes
