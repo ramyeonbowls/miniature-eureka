@@ -290,7 +290,12 @@ export default {
                         instance.set('disable', [])
                     }
                 },
-                onClose: function(selectedDates, dateStr, instance) {
+                onClose: (selectedDates, dateStr, instance) => {
+					if (selectedDates.length === 1) {
+                        instance.clear()
+                        this.filter.date = ''
+                    }
+
 					instance.set('disable', [])
                 },
             },
@@ -725,10 +730,10 @@ export default {
                 message += ' White Label, '
             }
 
-            if (!this.filter.date.split(' to ')[0] || !this.filter.date.split(' to ')[1]) {
-                check = false
-                message += ' Tanggal, '
-            }
+            if (this.filter.date === '' || this.filter.date === null) {
+				check = false
+				message += ' Tanggal, '
+			}
 
             if(!check){
                 this.$swal({
