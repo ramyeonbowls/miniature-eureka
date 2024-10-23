@@ -79,7 +79,16 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Jumlah Pengunjung Harian</h4>
+								<div class="row">
+									<div class="col-10 text-start">
+										<h4>Jumlah Pengunjung Harian</h4>
+									</div>
+									<div class="col-2 text-end">
+										<div class="buttons">
+											<a href="#" class="btn icon icon-left btn-primary" data-bs-toggle="modal" data-bs-target="#filter-visit-daily"><i class="bi bi-filter-square-fill"></i> Filter</a>
+										</div>
+									</div>
+								</div>
                             </div>
                             <div class="card-body">
                                 <div id="chart-visit-daily"></div>
@@ -180,6 +189,71 @@
                 </div>
             </div>
         </section>
+
+		<!-- filter modal -->
+		<div class="modal fade text-left modal-borderless" id="filter-visit-daily" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+			<div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Filter</h5>
+						<button type="button" class="close rounded-pill" data-bs-dismiss="modal" aria-label="Close">
+							<i data-feather="x"></i>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-6 col-6">
+								<div class="row">
+									<div class="col-md-12 mb-12">
+										<div class="form-group">
+											<label for="basicSelect1" class="form-label">Provinsi</label>
+											<select class="form-select" id="basicSelect1" v-model="filter.provinsi" @change="getKabupaten">
+												<option value="">--</option>
+												<option v-for="(prov, key) in option.optProv" :key="key" :value="prov.provinsi_id">{{ prov.provinsi_id +" "+ prov.provinsi_name }}</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-md-12 mb-12">
+										<div class="form-group">
+											<label for="basicSelect2" class="form-label">Kabupaten/Kota</label>
+											<select class="form-select" id="basicSelect2" v-model="filter.kabupaten" @change="getWhiteLabel">
+												<option value="">--</option>
+												<option v-for="(kab, key) in option.optKab" :key="key" :value="kab.kabupaten_id">{{ kab.kabupaten_id +" "+ kab.kabupaten_name }}</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-6">
+								<div class="row">
+									<div class="col-md-12 mb-12">
+										<div class="form-group">
+											<label for="basicSelect3" class="form-label">White Label</label>
+											<select class="form-select" id="basicSelect3" v-model="filter.wl">
+												<option value="">--</option>
+												<option v-for="(inst, key) in option.optWL" :key="key" :value="inst.instansi_name">{{ inst.instansi_name }}</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-md-12 mb-12">
+										<div class="form-group">
+											<label for="sdate" class="form-label">Tanggal</label>
+											<Flatpickr v-model="filter.date" class="form-control flatpickr-range" :config="configdate" placeholder="Select date.."></Flatpickr>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary ms-1" data-bs-dismiss="modal" @click="ExecuteVisitDaily">
+							<i class="bi bi-file-earmark-excel-fill"></i> Proses Data
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- filter modal -->
     </div>
 </template>
 
@@ -196,6 +270,43 @@ export default {
     data() {
         return {
             data_members: [],
+			configdate: {
+                dateFormat: 'Y-m-d',
+                mode: 'range',
+                onChange: function(selectedDates, dateStr, instance) {
+                    instance.set('disable', [])
+
+                    if (selectedDates.length === 1) {
+                        const startDate = selectedDates[0]
+                        const minDate = new Date(startDate.getTime() - 6 * 24 * 60 * 60 * 1000)
+                        const maxDate = new Date(startDate.getTime() + 6 * 24 * 60 * 60 * 1000)
+
+                        instance.set('disable', [
+                            function(date) {
+                                return date < minDate || date > maxDate;
+                            }
+                        ])
+                    } else {
+                        instance.set('disable', [])
+                    }
+                },
+                onClose: function(selectedDates, dateStr, instance) {
+					instance.set('disable', [])
+                },
+            },
+
+            option: {
+                optProv: '',
+                optKab: '',
+                optWL: '',
+            },
+
+            filter: {
+                date: '',
+                provinsi: '',
+                kabupaten: '',
+                wl: '',
+            },
         }
     },
 
@@ -203,6 +314,7 @@ export default {
         this.__Chart()
         this.__DailyChart()
         this.__randomDataMember()
+        this.getProvinsi()
 
         let _row = this
         $(document).ready(function () {
@@ -529,6 +641,106 @@ export default {
             const secs = seconds % 60
             return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
         },
+
+		getProvinsi() {
+            this.option.optProv = '';
+            this.option.optKab  = '';
+            this.option.optWL   = '';
+
+            let loader = this.$loading.show()
+            window.axios.post('/getOpt', { 'opt': 'Provinsi'})
+            .then((response) => {
+                loader.hide()
+                this.option.optProv = response.data;
+
+                if(this.option.optProv.length == 1) {
+                    this.filter.provinsi = this.option.optProv[0]['provinsi_id'];
+                    this.getKabupaten();
+                }
+            })
+            .catch((e) => {
+                loader.hide()
+
+                console.error(e);
+            });
+        },
+
+        getKabupaten() {
+            this.option.optKab  = '';
+            this.option.optWL   = '';
+
+            window.axios.post('/getOpt', {
+                'opt': 'Kabupaten',
+                'PROVINSI': this.filter.provinsi
+            })
+            .then((response) => {
+                this.option.optKab = response.data;
+
+                if(this.option.optKab.length == 1) {
+                    this.filter.kabupaten = this.option.optKab[0]['kabupaten_id'];
+                    this.getWhiteLabel()
+                }
+            })
+            .catch((e) => {
+                console.error(e);
+            });
+        },
+
+        getWhiteLabel() {
+            this.option.optWL   = '';
+
+            window.axios.post('/getOpt', {
+                'opt': 'WhiteLabel',
+                'PROVINSI': this.filter.provinsi,
+                'KABUPATEN': this.filter.kabupaten
+            })
+            .then((response) => {
+                this.option.optWL = response.data;
+
+                if(this.option.optWL.length == 1) {
+                    this.filter.wl = this.option.optWL[0]['instansi_name'];
+                }
+            })
+            .catch((e) => {
+                console.error(e);
+            });
+        },
+
+		ExecuteVisitDaily(){
+			let check = true
+            let message = ''
+
+            if(this.filter.provinsi==''){
+                check = false
+                message += ' Provinsi, '
+            }
+
+            if(this.filter.kabupaten==''){
+                check = false
+                message += ' Kabupaten, '
+            }
+
+            if(this.filter.wl==''){
+                check = false
+                message += ' White Label, '
+            }
+
+            if (!this.filter.date.split(' to ')[0] || !this.filter.date.split(' to ')[1]) {
+                check = false
+                message += ' Tanggal, '
+            }
+
+            if(!check){
+                this.$swal({
+                    toast: true,
+                    icon: 'warning',
+                    text: 'Silahkan Isi'+ message.slice(0, -2) +'!'
+                });
+            }else{
+				console.log('visit daily');
+			}
+			
+		}
     },
 
     computed: {},

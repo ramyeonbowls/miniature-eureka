@@ -115,6 +115,12 @@ export default {
             configdate: {
                 dateFormat: 'Y-m-d',
                 mode: 'range',
+				onClose: (selectedDates, instance) => {
+                    if (selectedDates.length === 1) {
+                        instance.clear()
+                        this.filter.date = ''
+                    }
+                },
             },
 
             option: {
@@ -272,7 +278,7 @@ export default {
                 message += ' White Label, '
             }
 
-            if(this.filter.date==''){
+            if (this.filter.date === '' || this.filter.date === null) {
                 check = false
                 message += ' Tanggal, '
             }
@@ -316,7 +322,7 @@ export default {
                 message += ' White Label, '
             }
 
-            if(this.filter.date==''){
+            if (this.filter.date === '' || this.filter.date === null) {
                 check = false
                 message += ' Tanggal, '
             }
