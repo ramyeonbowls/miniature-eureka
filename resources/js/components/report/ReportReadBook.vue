@@ -117,7 +117,7 @@ export default {
             configdate: {
                 dateFormat: 'Y-m-d',
                 mode: 'range',
-				onClose: (selectedDates, instance) => {
+				onClose: (selectedDates, dateStr, instance) => {
                     if (selectedDates.length === 1) {
                         instance.clear()
                         this.filter.date = ''
