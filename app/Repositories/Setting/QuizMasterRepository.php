@@ -110,7 +110,7 @@ class QuizMasterRepository
 								'question_id' => $question_id,
 								'id' => $answer_id,
 								'description' => $ans['description'],
-								'point' => $question['point'] > 0 ? $question['point'] : ($ans['point'] > 0 ? $ans['point'] : 0),
+								'point' => $ans['point'] > 0 ? $ans['point'] : 0,
 								'created_by' => $data->create_by,
 								'created_at' => $data->create_date
 							]);
@@ -184,7 +184,7 @@ class QuizMasterRepository
 									'question_id' => $question_id,
 									'id' => $answer_id,
 									'description' => $ans['description'],
-									'point' => $question['point'] > 0 ? $question['point'] : ($ans['point'] > 0 ? $ans['point'] : 0),
+									'point' => $ans['point'] > 0 ? $ans['point'] : 0,
 									'created_by' => $data->create_by,
 									'created_at' => $data->create_date
 								]);
