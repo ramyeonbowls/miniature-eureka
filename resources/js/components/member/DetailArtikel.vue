@@ -45,9 +45,30 @@ export default {
         this.idart      = this.$route.params.idart;
         this.iddetail   = this.$route.params.detail;
         this.getDetailArtikel();
+        this.ReadFitur();
     },
 
     methods: {
+		ReadFitur(){
+			try {
+                let loader = this.$loading.show();
+                axios.post('/api/ReadFitur', {
+					category: this.idart,
+					id: this.iddetail
+                })
+                .then((response) => {
+                    loader.hide();
+                })
+                .catch((e) => {
+                    loader.hide();
+                    console.error(e);
+                });
+            } catch (e) {
+                loader.hide();
+                console.error(e);
+            }
+		},
+
         async getDetailArtikel() {
             try {
                 let loader = this.$loading.show();

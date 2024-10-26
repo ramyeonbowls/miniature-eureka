@@ -39,4 +39,26 @@ class VisitorsRepository
         	return false;
 		}
 	}
+
+	public function ReadFitur($data)
+	{
+		Carbon::setLocale('id');
+		$date = Carbon::now('Asia/Jakarta')->format('Y-m-d');
+		$client_id = config('app.client_id', '');
+
+		try {
+			$rent	= DB::table('tread_fitur')
+				->insert([
+					'client_id'		=> $client_id,
+					'fitur'			=> $data->category,
+					'id_fitur'		=> $data->id,
+					'created_at'	=> Carbon::now('Asia/Jakarta')
+				]);
+
+			return true;
+		} catch (\Exception $e) {
+			\Log::error('Read Fitur log failed => ' . $e->getMessage());
+        	return false;
+		}
+	}
 }

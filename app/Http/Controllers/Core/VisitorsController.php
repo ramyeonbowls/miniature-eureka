@@ -90,4 +90,31 @@ class VisitorsController extends Controller
     {
         //
     }
+
+	/**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function ReadFitur(Request $request)
+    {
+        $results['status'] = 200;
+        $results['success'] = false;
+        $results['message'] = '';
+        try {
+            $Visitors = $this->VisitorsService->ReadFitur($request);
+
+            if($Visitors) {
+                $results['status'] = 201;
+                $results['success'] = true;
+                $results['message'] = 'Ok';
+            }
+        } catch (\Throwable $th) {
+            $results['status'] = 500;
+            $results['message'] = $th->getMessage();
+        }
+
+        return response()->json($results, $results['status']);
+    }
 }

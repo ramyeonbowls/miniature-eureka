@@ -17,4 +17,9 @@ class VisitorsService
 	{
 		return $this->VisitorsRepo->createVisitor($data);
 	}
+
+	public function ReadFitur($data)
+	{
+		return $this->VisitorsRepo->ReadFitur($data);
+	}
 }

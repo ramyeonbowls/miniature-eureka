@@ -103,6 +103,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
                         Route::post('visitors-xls', 'VisitorsReportController@ExportXLS')->name('visitors-xls');
                         Route::get('offline-visitors-rpt', 'OfflineVisitorsReportController@index')->name('offline-visitors-rpt');
                         Route::post('offline-visitors-xls', 'OfflineVisitorsReportController@ExportXLS')->name('offline-visitors-xls');
+						Route::get('read-fitur-rpt', 'ReadFiturReportController@index')->name('read-fitur-rpt');
+                        Route::post('read-fitur-xls', 'ReadFiturReportController@ExportXLS')->name('read-fitur-xls');
                     });
                 });
             }); 
