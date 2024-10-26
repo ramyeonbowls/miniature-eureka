@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('tread_fitur', function (Blueprint $table) {
             $table->id();
+            $table->string('client_id', 50);
+            $table->string('fitur', 5);
+            $table->string('id_fitur', 50);
             $table->timestamps();
         });
     }

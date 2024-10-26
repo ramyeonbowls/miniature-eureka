@@ -80,6 +80,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                         Route::apiResource('humoria-mst', HumoriaMasterController::class);
                         Route::apiResource('layar-penulis-mst', LayarPenulisMasterController::class);
                         Route::apiResource('frasa-mst', FrasaMasterController::class);
+                        Route::apiResource('quiz-mst', QuizMasterController::class);
                         
                         Route::apiResource('profile', ProfileMasterController::class);
                         Route::apiResource('appparam', ParameterController::class);
