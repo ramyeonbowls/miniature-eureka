@@ -39,7 +39,7 @@ class MemberMasterTemplateExport implements WithCustomStartCell, WithHeadings, W
      */
     public function title(): string
     {
-        return 'Template Upload Member';
+        return 'Member';
     }
 
     /**

@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Validator;
 use App\Services\Master\MemberMasterService;
 use App\Exports\Master\MemberMasterTemplateExport;
 
@@ -84,29 +86,90 @@ class MemberMasterController extends Controller
             $logs->write(__FUNCTION__, 'Download Tpl');
             return Excel::download(new MemberMasterTemplateExport(), 'Master_Member_Template.xlsx');
          }else{
+			$result['status'] = 200;
+        	$result['message'] = '';
+			$check = true;
+			$messages = '';
+
             try {
+				DB::beginTransaction();
                 DB::enableQueryLog();
-                
-                if ($request->hasFile('file')) {
-                    try {
-                        $Member_file = $request->file('file')->getClientOriginalName();
-                        $extension = $request->file('file')->getClientOriginalExtension();
-                        $Member_name = explode('.', str_replace(' ', '', $Member_file))[0] . '-' . now('Asia/Jakarta')->format('YmdHis') . '-' . rand(100000, 999999) . '.' . $extension;
-                        $request->file('file')->storeAs('/public/images/Member', $Member_name);
 
-                        $validated['file'] = $Member_name;
-                    } catch (Throwable $th) {
-                        $logs->write("ERROR", $th->getMessage());
-                    }
-                }
+				$spreadsheet         = IOFactory::load($request->file('file'));
+				$Sheetheader         = $spreadsheet->getSheet(0);
+				$H_worksheetTitle    = $Sheetheader->getTitle();
+				$H_highestRow        = $Sheetheader->getHighestRow();
+				$H_worksheetTitle_A  = explode(" ", $H_worksheetTitle);
+				if(strtolower($H_worksheetTitle_A[0])=="member"){
+					for ($row = 2; $row <= $H_highestRow; ++ $row) {
+						$name		= trim($Sheetheader->getCellByColumnAndRow(1, $row)->getFormattedValue());
+						$email		= trim($Sheetheader->getCellByColumnAndRow(2, $row)->getFormattedValue());
+						$phone		= trim($Sheetheader->getCellByColumnAndRow(3, $row)->getFormattedValue());
+						$gender		= trim($Sheetheader->getCellByColumnAndRow(4, $row)->getFormattedValue());
+						$birthday	= trim($Sheetheader->getCellByColumnAndRow(5, $row)->getFormattedValue());
+						$nik		= trim($Sheetheader->getCellByColumnAndRow(6, $row)->getFormattedValue());
+						$password	= trim($Sheetheader->getCellByColumnAndRow(7, $row)->getFormattedValue());
 
-                $created = $this->member_service->store((object)$validated);
-                if ($created) {
-                    $logs->write("INFO", "Successfully created");
+						$data = [
+							'name'		=> $name,
+							'email'		=> $email,
+							'phone'		=> $phone,
+							'gender'	=> $gender,
+							'birthday'	=> $birthday,
+							'nik'		=> $nik,
+							'password'	=> $password
+						];
+					
+						$validator = Validator::make($data, [
+							'name' => ['required', 'string', 'max:255'],
+							'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+							'nik' => 'nullable|string|max:20',
+							'phone' => 'required|string|max:15',
+							'birthday' => 'required|date',
+							'gender' => 'required|string|in:L,P',
+							'password' => ['required', 'string', 'min:8'],
+						]);
 
-                    $result['status'] = 201;
-                    $result['message'] = "Successfully created.";
-                }
+						if ($validator->fails()) {
+							$check		= false;
+							$errors = '';
+							foreach ($validator->errors()->all() as $error) {
+								$errors .= "Errors in row ".$row.": ".$error . "<br>";
+							}
+							$messages	.= $errors;
+						}
+
+						if($check){
+							try {
+								$created = $this->member_service->store((object)$data);
+								if (!$created) {
+									$check		= false;
+									$messages	= "Failed created.";
+								}
+							}catch (Throwable $e) {
+								$check		= false;
+								$messages	= "Failed created.";
+								$logs->write("ERROR", $e->getMessage());
+							}
+						}
+
+					}
+				}else{
+					$check		= false;
+					$messages	= "Wrong Template!";
+					$this->logs->write("ERROR", "Wrong Template!");
+				}
+
+				if(!$check){
+					DB::rollBack();
+					$logs->write("Failed", $result['message']);
+					$result['message']	= $messages;
+				}else {
+					DB::commit();
+					$logs->write("INFO", "Successfully created");
+					$result['status']	= 201;
+					$result['message']	= "Successfully created.";
+				}
 
                 $queries = DB::getQueryLog();
                 for ($q = 0; $q < count($queries); $q++) {

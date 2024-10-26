@@ -34,14 +34,11 @@ class MemberMasterService
     public function store(object $data): bool
     {
         $datetime_now = Carbon::now("Asia/Jakarta");
-        $username = auth()->user()->email;
 
-        $data->create_by        = $username;
-        $data->modified_by      = $username;
         $data->create_date      = $datetime_now;
         $data->modified_date    = $datetime_now;
 
-        return $this->member_repo->store($data);
+        return $this->member_repo->store($data, $this->client_id);
     }
 
      /**

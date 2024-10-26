@@ -8,7 +8,7 @@
                     <div class="card-header">
                         <div class="buttons">
                             <template v-if="!form.upload">
-                                <!-- <a href="#" class="btn icon icon-left btn-primary" @click="upload"><i class="bi bi-check-square-fill"></i> Upload</a> -->
+                                <a href="#" class="btn icon icon-left btn-primary" @click="upload"><i class="bi bi-check-square-fill"></i> Upload</a>
                                 <a href="#" class="btn icon icon-left btn-success" @click="DownloadTpl"><i class="bi bi-pencil-square"></i> Download Template</a>
                                 <a href="#" class="btn icon icon-left btn-danger" @click="destroy"><i class="bi bi-x-square-fill"></i> Delete</a>
                             </template>
@@ -30,7 +30,7 @@
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade" :class="!form.upload ? 'show active' : ''" id="data" role="tabpanel" aria-labelledby="data-tab">
                                 <div class="table-responsive">
-                                    <table class="table table-striped" id="table1">
+                                    <table class="table table-striped" id="data_rst">
                                         <thead>
                                             <tr>
                                                 <th>NIK</th>
@@ -50,108 +50,12 @@
                                 <form class="form form-vertical">
                                     <div class="form-body">
                                         <div class="row">
-                                            <p class="col-12"></p>
+											<p class="col-12"></p>
                                             <div class="col-12">
-                                                <div class="form-group has-icon-left">
-                                                    <label for="email-id-icon">Email</label>
-                                                    <div class="position-relative">
-                                                        <input type="text" class="form-control" placeholder="Email" id="email-id-icon" />
-                                                        <div class="form-control-icon">
-                                                            <i class="bi bi-envelope"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="form-group has-icon-left">
-                                                    <label for="first-name-icon">Name</label>
-                                                    <div class="position-relative">
-                                                        <input type="text" class="form-control" placeholder="Name" id="first-name-icon" />
-                                                        <div class="form-control-icon">
-                                                            <i class="bi bi-person"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="form-group has-icon-left">
-                                                    <label for="mobile-id-icon">No Hp</label>
-                                                    <div class="position-relative">
-                                                        <input type="text" class="form-control" placeholder="No. HP" id="mobile-id-icon" />
-                                                        <div class="form-control-icon">
-                                                            <i class="bi bi-phone"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="form-group has-icon-left">
-                                                    <label for="mobile-id-icon">Tanggal Lahir</label>
-                                                    <div class="position-relative">
-                                                        <input type="text" class="form-control" placeholder="Tanggal Lahir" id="mobile-id-icon" />
-                                                        <div class="form-control-icon">
-                                                            <i class="bi bi-calendar"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="form-group has-icon-left">
-                                                    <label for="mobile-id-icon">NIK</label>
-                                                    <div class="position-relative">
-                                                        <input type="text" class="form-control" placeholder="NIK" id="mobile-id-icon" />
-                                                        <div class="form-control-icon">
-                                                            <i class="bi bi-card-list"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="form-group has-icon-left">
-                                                    <label for="mobile-id-icon">Jenis Kelamin</label>
-                                                    <div class="position-relative">
-                                                        <select name="mobile-id-icon" id="mobile-id-icon" class="form-control">
-                                                            <option value="">--</option>
-                                                            <option value="L">Laki-Laki</option>
-                                                            <option value="P">Perempuan</option>
-                                                        </select>
-                                                        <div class="form-control-icon">
-                                                            <i class="bi bi-gender-male"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="form-group has-icon-left">
-                                                    <label for="password-id-icon">Password</label>
-                                                    <div class="position-relative">
-                                                        <input type="password" class="form-control" placeholder="Password" id="password-id-icon" />
-                                                        <div class="form-control-icon">
-                                                            <i class="bi bi-lock"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="form-group has-icon-left">
-                                                    <label for="mobile-id-icon">Verifikasi</label>
-                                                    <div class="position-relative">
-                                                        <select name="mobile-id-icon" id="mobile-id-icon" class="form-control">
-                                                            <option value="">--</option>
-                                                            <option value="L">Verifiaksi</option>
-                                                            <option value="P">Belum Verifiaksi</option>
-                                                        </select>
-                                                        <div class="form-control-icon">
-                                                            <i class="bi bi-check"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <label for="mobile-id-icon">Foto</label>
-                                                    <input type="file" class="basic-filepond1" />
-                                                </div>
+												<label for="upl" class="col-sm-4 col-form-label-sm">Upload File <span class="text-danger">*</span></label>
+												<div class="col-sm-8">
+													<input type="file" ref="file_upl" @change="onChangeFileUpload" accept=".xls,.xlsx">
+												</div>
                                             </div>
                                         </div>
                                     </div>
@@ -192,8 +96,6 @@
 <script>
 import { Form as VeeForm, Field, ErrorMessage } from 'vee-validate'
 import 'choices.js/public/assets/styles/choices.min.css'
-import * as FilePond from 'filepond'
-import 'filepond/dist/filepond.min.css'
 
 let table
 export default {
@@ -219,6 +121,9 @@ export default {
             },
             selected: [],
             form: {
+				field:{
+					file: ''
+				},
                 upload: false
             },
         }
@@ -229,7 +134,7 @@ export default {
         this.$root.web_access_log()
 
         let _row = this
-        table = $('#table1').DataTable({
+        table = $('#data_rst').DataTable({
             paging: true,
             pagingType: 'full_numbers',
             lengthMenu: [[10, 25, 50, 100, 500], [10, 25, 50, 100, 500]],
@@ -282,7 +187,7 @@ export default {
                 }
             }
         });
-        window.$('#table1 tbody').on('click', 'tr', function () {
+        window.$('#data_rst tbody').on('click', 'tr', function () {
             _row.selected = [];
 
             if ( window.$(this).hasClass('selected') ) {
@@ -296,7 +201,7 @@ export default {
                 }
             }
         });
-        window.$('#table1 tbody').on('click', '.thumbnail', function () {
+        window.$('#data_rst tbody').on('click', '.thumbnail', function () {
             // Get the large image URL from data attribute
             var largeImageUrl = $(this).data('large');
             
@@ -306,15 +211,6 @@ export default {
             // Show the modal
             new bootstrap.Modal(document.getElementById('imageModal')).show()
         });
-
-        FilePond.create(document.querySelector('.basic-filepond1'), {
-            credits: null,
-            allowImagePreview: false,
-            allowMultiple: false,
-            allowFileEncode: false,
-            required: false,
-            storeAsFile: true,
-        })
     },
 
     methods: {
@@ -338,6 +234,7 @@ export default {
 
         upload() {
             this.form.upload = true
+			this.form.field.file = ''
         },
 
         destroy() {
@@ -383,11 +280,45 @@ export default {
         },
 
         submit() {
+			if(this.form.upload) {
+				let loader = this.$loading.show()
+
+				let form_data = new FormData();
+				form_data.append('file', this.form.field.file);
+
+				window.axios.post('/master/member-mst?menufn='+ this.$route.name, form_data, {
+					headers: {
+						'Content-Type': 'multipart/form-data'
+					}
+				})
+				.then((response) => {
+					loader.hide()
+					table.ajax.reload();
+
+					this.submit_count = 0;
+					this.cancel();
+
+					this.$swal({
+						toast: true,
+						position: 'top',
+						icon: response.status === 201 ? 'success' : 'info',
+						html: response.data
+					});
+				})
+				.catch((e) => {
+					loader.hide()
+
+					this.submit_count = 0;
+					console.error(e);
+				});
+			}
             this.cancel()
         },
 
         cancel() {
             this.form.upload = false
+			this.form.field.file = ''
+			this.$refs.file_upl.value = '';
             table.ajax.reload(null, false)
         },
 
@@ -413,6 +344,10 @@ export default {
                 console.error(e);
                 loader.hide()
             })
+		},
+
+		async onChangeFileUpload(e) {
+			this.form.field.file = this.$refs.file_upl.files[0];
 		},
     },
 

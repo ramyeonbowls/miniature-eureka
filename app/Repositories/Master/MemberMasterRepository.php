@@ -2,9 +2,11 @@
 
 namespace App\Repositories\Master;
 
+use App\Models\User;
 use App\Models\IconMenu\IconMenu;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class MemberMasterRepository 
 {
@@ -38,21 +40,39 @@ class MemberMasterRepository
      * @param object $data
      * @return bool
      */
-    public function store(object $data): bool
+    public function store(object $data, $client_id): bool
     {
-        return DB::transaction(function () use ($data) {
-            return DB::table('users')->insert([
-                'id' => $data->id,
-				'description' => $data->desc,
-				'file' => $data->file,
-				'disp_type' => $data->type,
-				'client_id' => '',
-				'created_at' => $data->create_date,
-				'created_by' => $data->create_by,
-				'updated_at' => $data->modified_date,
-				'updated_by' => $data->modified_by,
-            ]);
-        });
+		try{
+			$user = $this->createUser($data, $client_id);
+	
+			$attr = DB::table('tattr_member')
+				->insert([
+					'id'            => $user->id,
+					'client_id'     => $client_id,
+					'nik'           => $data->nik,
+					'phone'         => $data->phone,
+					'birthday'      => $data->birthday,
+					'gender'        => $data->gender,
+					'created_at'    => $data->create_date
+				]);
+
+			return true;
+		} catch (\Exception $e) {
+			\Log::error('Create member failed => ' . $e->getMessage());
+            return false;
+        }
+    }
+
+	protected function createUser(object $data, $client_id)
+    {
+        return User::create([
+            'name' => $data->name,
+            'email' => $data->email,
+            'password' => Hash::make($data->password),
+            'role' => 'member',
+            'flag_approve' => 'Y',
+            'client_id' => $client_id
+        ]);
     }
 	
 	/**
