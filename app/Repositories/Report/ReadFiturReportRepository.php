@@ -55,12 +55,11 @@ class ReadFiturReportRepository
             ->where('b.provinsi_id', '=', $PROVINSI)
             ->where('b.kabupaten_id', '=', $KABUPATEN)
             ->when(!empty($END_DATE), function ($query) use ($START_DATE, $END_DATE) {
-                return $query->whereBetween(DB::raw("CONVERT(DATE, a.created_at, 103)"), [$START_DATE, $END_DATE]);
+                return $query->whereBetween(DB::raw("CONVERT(a.created_at, DATE)"), [$START_DATE, $END_DATE]);
             }, function ($query) use ($START_DATE) {
-                return $query->where(DB::raw("CONVERT(DATE, a.created_at, 103)"), '=', $START_DATE);
+                return $query->where(DB::raw("CONVERT(a.created_at, DATE)"), '=', $START_DATE);
             })
             ->groupBy('b.instansi_name', 'b.provinsi_id', 'c.provinsi_name', 'b.kabupaten_id', 'd.kabupaten_name', 'e.title', 'e.category')
-            ->sharedLock()
             ->get();
     }
     
