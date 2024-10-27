@@ -15,7 +15,7 @@
                             <div class="d-flex justify-content-center align-items-center flex-column">
                                 <div id="AvatarFileUpload">
                                     <div class="selected-image-holder">
-                                        <img :src="user.avatar">
+                                        <img :src="user.avatar + '?'+ Math.floor(Math.random() * (999 - 100 + 1)) + 100">
                                     </div>
 
                                     <div class="avatar-selector">

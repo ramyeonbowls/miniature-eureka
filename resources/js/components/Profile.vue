@@ -8,7 +8,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-center align-items-center flex-column">
                             <div class="avatar avatar-2xl">
-                                <img src="/images/logo/logo_small.png" />
+                                <img :src="'/images/logo/logo_small.png?' + Math.floor(Math.random() * (999 - 100 + 1)) + 100" />
                             </div>
 
                             <h3 class="mt-3">{{ user.name }}</h3>
@@ -35,14 +35,14 @@
                         <div class="row">
                             <div class="col-md-6 mb-4">
                                 <label for="name" class="form-label">Logo Besar</label>
-                                <br><img :src="form.field.logo.big" height="100px" v-if="form.field.logo.small" />
+                                <br><img :src="form.field.logo.big + '?'+ Math.floor(Math.random() * (999 - 100 + 1)) + 100" height="100px" v-if="form.field.logo.small" />
                                 <div class="form-group mt-2">
                                     <input type="file" class="logo-big" />
                                 </div>
                             </div>
                             <div class="col-md-6 mb-4">
                                 <label for="name" class="form-label">Logo Kecil</label>
-                                <br><img :src="form.field.logo.small" height="100px" v-if="form.field.logo.small" />
+                                <br><img :src="form.field.logo.small + '?'+ Math.floor(Math.random() * (999 - 100 + 1)) + 100" height="100px" v-if="form.field.logo.small" />
                                 <div class="form-group mt-2">
                                     <input type="file" class="logo-small" />
                                 </div>

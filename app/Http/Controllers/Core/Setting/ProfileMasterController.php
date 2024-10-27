@@ -115,10 +115,42 @@ class ProfileMasterController extends Controller
                 try {
                     $extension          = $request->file('logo_small')->getClientOriginalExtension();
                     $logo_small_name    = 'logo_small.' . $extension;
-                    $favicon            = 'favicon.' . $extension;
+                    $favicon_name       = 'favicon.' . $extension;
 
-                    $request->file('logo_small')->move(public_path('images/logo'), $logo_small_name);
-                    $request->file('logo_small')->move(public_path('images/logo'), $logo_small_name);
+                    $logoSmallPath		= $request->file('logo_small')->move(public_path('images/logo'), $logo_small_name);
+                    
+					// Resize the favicon image
+					list($width, $height) = getimagesize($logoSmallPath);
+					$newWidth = 200;
+					$newHeight = 200;
+			
+					// Create a new blank image with the new dimensions
+					$resizedImage = imagecreatetruecolor($newWidth, $newHeight);
+			
+					// Load the original image based on its type
+					switch (strtolower($extension)) {
+						case 'png':
+							$source = imagecreatefrompng(public_path('images/logo/' . $logo_small_name));
+							imagealphablending($resizedImage, false);
+							imagesavealpha($resizedImage, true);
+							break;
+						default:
+							throw new Exception('Unsupported image format.');
+					}
+			
+					// Resize and save the favicon image
+					imagecopyresampled($resizedImage, $source, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+					$faviconPath = public_path('images/logo/' . $favicon_name);
+			
+					switch (strtolower($extension)) {
+						case 'png':
+							imagepng($resizedImage, $faviconPath);
+							break;
+					}
+			
+					// Free memory
+					imagedestroy($resizedImage);
+					imagedestroy($source);
                 } catch (Throwable $th) {
                     $logs->write("ERROR", $th->getMessage());
                 }
