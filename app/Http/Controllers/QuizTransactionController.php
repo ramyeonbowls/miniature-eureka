@@ -206,19 +206,19 @@ class QuizTransactionController extends Controller
 				$logs->write("SUCCESS", 'COMMIT');
 				$logs->write(__FUNCTION__, "STOP\r\n");
 				
-				return response()->json('successfully completed the quiz!.', 201);
+				return response()->json('Berhasil menyimpan jawaban kuis.', 201);
 			}else{
 				\DB::rollBack();
 				$logs->write("ERROR", 'ROLLBACK');
 				$logs->write(__FUNCTION__, "STOP\r\n");
 
-				return response()->json('failed to complete the quiz! Please try again.', 500);
+				return response()->json('Gagal menyimpan jawaban kuis.', 500);
 			}
         } catch (\Exception $e) {
             $logs->write("ERROR", $e->getMessage());
             \DB::rollBack();
 
-            return response()->json('failed to complete the quiz! Please try again.', 500);
+            return response()->json('Gagal menyimpan jawaban kuis.', 500);
         }
     }
 
