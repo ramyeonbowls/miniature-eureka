@@ -118,6 +118,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/ReadCheck', [App\Http\Controllers\BookController::class, 'ReadCheck'])->name('ReadCheck');
             Route::get('/appreader', [App\Http\Controllers\BookController::class, 'index'])->name('appreader');
             Route::get('/book-pdf', [App\Http\Controllers\BookController::class, 'getBook'])->name('book-pdf');
+			Route::get('/getQuiz', [App\Http\Controllers\QuizTransactionController::class, 'index'])->name('getQuiz');
+			Route::post('/setQuiz', [App\Http\Controllers\QuizTransactionController::class, 'store'])->name('setQuiz');
+			Route::get('/getDetailQuiz', [App\Http\Controllers\QuizTransactionController::class, 'getDetailQuiz'])->name('getDetailQuiz');
         });
 
         Route::controller(App\Http\Controllers\HomeController::class)->group(function () {

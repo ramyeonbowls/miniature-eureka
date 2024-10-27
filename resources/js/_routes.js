@@ -60,6 +60,16 @@ const _routes = [
         name: 'history-pinjaman',
         component: () => import(/* webpackChunkName: "usr/RentHistory" */ './components/member/RentHistory.vue'),
     },
+    {
+        path: '/quiz',
+        name: 'quiz',
+        component: () => import(/* webpackChunkName: "usr/quiz" */ './components/member/Quiz.vue'),
+    },
+    {
+        path: '/quiz-test/:ids',
+        name: 'quiz-test',
+        component: () => import(/* webpackChunkName: "usr/quiz-test" */ './components/member/QuizTest.vue'),
+    },
 ]
 
 export default _routes

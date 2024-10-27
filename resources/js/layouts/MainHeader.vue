@@ -2,7 +2,7 @@
     <header class="header mb-5 fixed-top">
         <div class="header-top">
             <div class="container">
-                <a href="#" class="burger-btn d-block d-xl-none me-4" @click="toggleDropdown">
+                <a href="#" class="burger-btn d-block d-xl-none me-4">
                     <i class="bi bi-justify fs-3"></i>
                 </a>
 
@@ -27,7 +27,7 @@
 
                 <div class="col-md-3 col-2 col-lg-2 d-block d-xl-none">
                 </div>
-                
+
                 <div class="header-top-right d-none d-xl-block">
                     <div class="dropdown">
                         <template v-if="isAuthenticated">
@@ -119,6 +119,11 @@
                         </div>
                     </li>
                     <template v-if="isAuthenticated">
+						<li class="menu-item ">
+							<router-link to="/quiz" class='menu-link'>
+								<span> Quiz</span>
+							</router-link>
+						</li>
                         <li class="menu-item ">
                             <router-link to="/history-pinjaman" class='menu-link'>
                                 <span> Riwayat Pinjaman</span>

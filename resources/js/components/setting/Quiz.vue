@@ -127,7 +127,7 @@
 																		<div class="form-group mt-1 mb-0 col-md-2">
 																			<label class="form-label mb-0"><small class="text-muted">Point</small></label>
 																			<div class="input-group">
-																				<Field type="text" :name="'questions.'+i+'.point'" v-model.number="question.point" class="form-control form-control-sm" placeholder="Point" />
+																				<Field type="text" :name="'questions.'+i+'.point'" v-model.number="question.point" class="form-control form-control-sm" placeholder="Point" :disabled="question.type!= 'essay' ? true : false" />
 																				<div class="input-group-append">
 																					<template v-if="!question.flag_new">
 																						<button type="button" class="btn btn-sm btn-danger ml-1" @click="delQuestion(question)">

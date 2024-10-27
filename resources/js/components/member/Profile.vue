@@ -237,7 +237,7 @@ export default {
                     showCloseButton: false,
                     showCancelButton: false
                 }).then((result) => {
-                    location.reload(); 
+                    location.reload();
                 });
             })
             .catch(error => {
