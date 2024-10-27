@@ -12,9 +12,11 @@ class BannerMasterService
 {
 	private BannerMasterRepository $banner_repo;
 
+    protected $client_id = '';
     public function __construct()
     {
         $this->banner_repo = new BannerMasterRepository();
+        $this->client_id = config('app.client_id', '');
     }
 
     /**
@@ -23,7 +25,7 @@ class BannerMasterService
      */
     public function get(array $filter = []): Collection
     {
-        return new Collection($this->banner_repo->get($filter));
+        return new Collection($this->banner_repo->get($filter, $this->client_id));
     }
 
     /**
@@ -40,7 +42,7 @@ class BannerMasterService
         $data->create_date      = $datetime_now;
         $data->modified_date    = $datetime_now;
 
-        return $this->banner_repo->store($data);
+        return $this->banner_repo->store($data, $this->client_id);
     }
 
      /**
@@ -58,7 +60,7 @@ class BannerMasterService
         $data->modified_by 		= $username;
         $data->modified_date 	= $datetime_now;
 
-        return $this->banner_repo->update($data, $id);
+        return $this->banner_repo->update($data, $id, $this->client_id);
     }
 
     /**
@@ -67,6 +69,6 @@ class BannerMasterService
      */
     public function delete(string $id)
     {
-        return $this->banner_repo->delete($id);
+        return $this->banner_repo->delete($id, $this->client_id);
     }
 }
