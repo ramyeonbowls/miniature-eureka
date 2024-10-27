@@ -9,12 +9,12 @@
                 <div class="col-md-1 col-2 col-lg-1">
                     <div class="logo-header d-block d-sm-block d-xl-none">
                         <a href="/">
-                            <img src="/images/logo/logo_small.png" height="40px" class="mobile-logo" alt="Logo">
+                            <img :src="'/images/logo/logo_small.png?' + Math.floor(Math.random() * (999 - 100 + 1)) + 100" height="40px" class="mobile-logo" alt="Logo">
                         </a>
                     </div>
                     <div class="logo-header d-none d-xl-block d-lg-none">
                         <a href="/">
-                            <img src="/images/logo/logo.png" height="50px" class="desktop-logo" alt="Logo">
+                            <img :src="'/images/logo/logo.png?' + Math.floor(Math.random() * (999 - 100 + 1)) + 100" height="50px" class="desktop-logo" alt="Logo">
                         </a>
                     </div>
                 </div>
