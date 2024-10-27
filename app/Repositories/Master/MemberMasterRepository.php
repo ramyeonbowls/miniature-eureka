@@ -44,7 +44,7 @@ class MemberMasterRepository
     {
 		try{
 			$user = $this->createUser($data, $client_id);
-	
+
 			$attr = DB::table('tattr_member')
 				->insert([
 					'id'            => $user->id,
@@ -71,6 +71,7 @@ class MemberMasterRepository
             'password' => Hash::make($data->password),
             'role' => 'member',
             'flag_approve' => 'Y',
+            'email_verified_at' => $data->create_date,
             'client_id' => $client_id
         ]);
     }
