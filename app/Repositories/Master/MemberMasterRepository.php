@@ -72,6 +72,7 @@ class MemberMasterRepository
             'role' => 'member',
             'flag_approve' => 'Y',
             'email_verified_at' => $data->create_date,
+            'created_at' => $data->create_date,
             'client_id' => $client_id
         ]);
     }
