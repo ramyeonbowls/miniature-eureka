@@ -5,7 +5,7 @@
 				<div class="card" style="height: 400px;">
 					<p></p>
 					<div class="card-content d-flex flex-column text-center">
-						<h1>Tidak Ada Quiz</h1>
+						<h1>Tidak Ada Kuis</h1>
 					</div>
 				</div>
 			</div>

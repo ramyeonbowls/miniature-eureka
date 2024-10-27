@@ -121,7 +121,7 @@
                     <template v-if="isAuthenticated">
 						<li class="menu-item ">
 							<router-link to="/quiz" class='menu-link'>
-								<span> Quiz</span>
+								<span> Kuis</span>
 							</router-link>
 						</li>
                         <li class="menu-item ">
