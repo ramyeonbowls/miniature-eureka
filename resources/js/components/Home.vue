@@ -7,7 +7,7 @@
             <div class="col-12 col-lg-12">
                 <div class="row">
                     <div class="col-6 col-lg-3 col-md-6">
-                        <div class="card">
+                        <div class="card" style="height: 130px;">
                             <div class="card-body px-4 py-4-5">
                                 <div class="row">
                                     <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
@@ -17,14 +17,14 @@
                                     </div>
                                     <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                         <h6 class="text-muted font-semibold">Data Pengunjung</h6>
-                                        <h6 class="font-extrabold mb-0">112.000</h6>
+                                        <h6 class="font-extrabold mb-0">{{ dashboard.atas.visitor }}</h6>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-6 col-lg-3 col-md-6">
-                        <div class="card">
+                        <div class="card" style="height: 130px;">
                             <div class="card-body px-4 py-4-5">
                                 <div class="row">
                                     <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
@@ -34,14 +34,14 @@
                                     </div>
                                     <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                         <h6 class="text-muted font-semibold">Data Buku</h6>
-                                        <h6 class="font-extrabold mb-0">183.000</h6>
+                                        <h6 class="font-extrabold mb-0">{{ dashboard.atas.book }}</h6>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-6 col-lg-3 col-md-6">
-                        <div class="card">
+                        <div class="card" style="height: 130px;">
                             <div class="card-body px-4 py-4-5">
                                 <div class="row">
                                     <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
@@ -51,14 +51,14 @@
                                     </div>
                                     <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                         <h6 class="text-muted font-semibold">Data Member</h6>
-                                        <h6 class="font-extrabold mb-0">1000</h6>
+                                        <h6 class="font-extrabold mb-0">{{ dashboard.atas.member }}</h6>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-6 col-lg-3 col-md-6">
-                        <div class="card">
+                        <div class="card" style="height: 130px;">
                             <div class="card-body px-4 py-4-5">
                                 <div class="row">
                                     <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
@@ -68,7 +68,7 @@
                                     </div>
                                     <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                         <h6 class="text-muted font-semibold">Data PO</h6>
-                                        <h6 class="font-extrabold mb-0">112</h6>
+                                        <h6 class="font-extrabold mb-0">{{ dashboard.atas.po }}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -190,7 +190,7 @@
             </div>
         </section>
 
-		<!-- filter modal -->
+		<!-- filter visit daily modal -->
 		<div class="modal fade text-left modal-borderless" id="filter-visit-daily" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
 			<div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
 				<div class="modal-content">
@@ -253,7 +253,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- filter modal -->
+		<!-- filter visit daily modal -->
     </div>
 </template>
 
@@ -312,10 +312,19 @@ export default {
                 kabupaten: '',
                 wl: '',
             },
+			dashboard:{
+				atas:{
+					visitor: 0,
+					book: 0,
+					member: 0,
+					po: 0,
+				}
+			}
         }
     },
 
     mounted() {
+        this.getdashAtas()
         this.__Chart()
         this.__DailyChart()
         this.__randomDataMember()
@@ -647,15 +656,31 @@ export default {
             return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
         },
 
+		getdashAtas() {
+            let loader = this.$loading.show()
+            axios.get('/dashAtas')
+            .then((response) => {
+				loader.hide()
+				console.log(response);
+				
+                this.dashboard.atas.visitor	= response.data.visitor;
+                this.dashboard.atas.book	= response.data.book;
+                this.dashboard.atas.member	= response.data.member;
+                this.dashboard.atas.po		= response.data.po;
+            })
+            .catch((e) => {
+				loader.hide()
+                console.error(e)
+            });
+        },
+
 		getProvinsi() {
             this.option.optProv = '';
             this.option.optKab  = '';
             this.option.optWL   = '';
 
-            let loader = this.$loading.show()
             window.axios.post('/getOpt', { 'opt': 'Provinsi'})
             .then((response) => {
-                loader.hide()
                 this.option.optProv = response.data;
 
                 if(this.option.optProv.length == 1) {
@@ -664,8 +689,6 @@ export default {
                 }
             })
             .catch((e) => {
-                loader.hide()
-
                 console.error(e);
             });
         },

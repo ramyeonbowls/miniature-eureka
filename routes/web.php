@@ -59,6 +59,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::group(['middleware' => ['role.user:admin']], function () {
             Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index'])->name('admin');
             Route::get('/userinfo', [App\Http\Controllers\HomeController::class, 'userinfo'])->name('userinfo');
+            Route::get('/dashAtas', [App\Http\Controllers\Core\Dashboard\DashboardController::class, 'dashAtas'])->name('dashAtas');
             Route::get('/my-web-menu', [App\Http\Controllers\HomeController::class, 'webMenuAcl'])->name('web_menu_acl');
     
             Route::middleware([App\Http\Middleware\IfRequestAjax::class])->group(function() {

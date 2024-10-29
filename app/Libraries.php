@@ -28,7 +28,6 @@ class Libraries
 					'a.kabupaten_id'
 				)
 				->where('a.client_id', $client_id)
-				->sharedLock()
 				->first();
 
 			if($parameter) {
