@@ -8,8 +8,8 @@
                     <div class="card-header">
                         <div class="buttons">
                             <template v-if="!form.upload">
-                                <a href="#" class="btn icon icon-left btn-primary" @click="upload"><i class="bi bi-check-square-fill"></i> Upload</a>
-                                <a href="#" class="btn icon icon-left btn-success" @click="DownloadTpl"><i class="bi bi-pencil-square"></i> Download Template</a>
+                                <a href="#" class="btn icon icon-left btn-primary" @click="upload"><i class="bi bi-file-arrow-up-fill"></i> Upload</a>
+                                <a href="#" class="btn icon icon-left btn-success" @click="DownloadTpl"><i class="bi bi-file-arrow-down-fill"></i> Download Template</a>
                                 <a href="#" class="btn icon icon-left btn-danger" @click="destroy"><i class="bi bi-x-square-fill"></i> Delete</a>
                             </template>
                             <template v-else>
