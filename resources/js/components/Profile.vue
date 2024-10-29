@@ -308,7 +308,7 @@ export default {
     },
 
     mounted() {
-        // this.__MENU()
+        this.__MENU()
         this.userinfo()
         this.getProfile()
 
