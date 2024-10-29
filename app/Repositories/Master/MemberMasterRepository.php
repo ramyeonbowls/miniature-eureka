@@ -32,6 +32,7 @@ class MemberMasterRepository
                 $join->on('a.id', '=', 'b.id');
             })
             ->where('a.client_id', '=', $client_id)
+            ->where('a.role', '=', 'member')
 			->sharedLock()
 			->get();
     }

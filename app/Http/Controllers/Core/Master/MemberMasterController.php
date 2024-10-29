@@ -7,6 +7,7 @@ use Exception;
 use Throwable;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
@@ -52,9 +53,10 @@ class MemberMasterController extends Controller
             $results = $this->member_service->get();
 
             $queries = DB::getQueryLog();
-            for ($q = 0; $q < count($queries); $q++) {
+            for($q = 0; $q < count($queries); $q++) {
+                $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
                 $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
-                $logs->write('SQL', $queries[$q]['query']);
+                $logs->write('SQL', $sql);
             }
         } catch (Throwable $th) {
             $logs->write("ERROR", $th->getMessage());
@@ -172,10 +174,11 @@ class MemberMasterController extends Controller
 				}
 
                 $queries = DB::getQueryLog();
-                for ($q = 0; $q < count($queries); $q++) {
-                    $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
-                    $logs->write('SQL', $queries[$q]['query']);
-                }
+				for($q = 0; $q < count($queries); $q++) {
+					$sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
+					$logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+					$logs->write('SQL', $sql);
+				}
             } catch (Throwable $th) {
                 $logs->write("ERROR", $th->getMessage());
 
@@ -239,9 +242,10 @@ class MemberMasterController extends Controller
             }
 
             $queries = DB::getQueryLog();
-            for ($q = 0; $q < count($queries); $q++) {
+            for($q = 0; $q < count($queries); $q++) {
+                $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
                 $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
-                $logs->write('SQL', $queries[$q]['query']);
+                $logs->write('SQL', $sql);
             }
         } catch (Throwable $th) {
             $logs->write("ERROR", $th->getMessage());
@@ -280,9 +284,10 @@ class MemberMasterController extends Controller
             $deleted    = $this->member_service->delete($id);
 
             $queries = DB::getQueryLog();
-            for ($q = 0; $q < count($queries); $q++) {
+            for($q = 0; $q < count($queries); $q++) {
+                $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
                 $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
-                $logs->write('SQL', $queries[$q]['query']);
+                $logs->write('SQL', $sql);
             }
 
             if ($check) {
