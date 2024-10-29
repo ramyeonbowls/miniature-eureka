@@ -3,7 +3,7 @@
 
     <!-- filter modal -->
     <div class="modal fade text-left modal-borderless" id="border-less" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Filter</h5>
@@ -13,49 +13,49 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-12 col-12">
+                        <div class="col-md-6 col-6">
                             <div class="row">
                                 <div class="col-md-12 mb-12">
-                                    <h6>Provinsi</h6>
-                                    <fieldset class="form-group">
-                                        <select class="form-select" id="basicSelect">
-                                            <option>--</option>
-                                            <option>Jawa Barat</option>
-                                            <option>Jawa TengaH</option>
-                                            <option>DKI Jakarta</option>
+                                    <div class="form-group">
+                                        <label for="basicSelect1" class="form-label">Provinsi</label>
+                                        <select class="form-select" id="basicSelect1" v-model="filter.provinsi" @change="getKabupaten">
+                                            <option value="">--</option>
+                                            <option v-for="(prov, key) in option.optProv" :key="key" :value="prov.provinsi_id">{{ prov.provinsi_id +" "+ prov.provinsi_name }}</option>
                                         </select>
-                                    </fieldset>
+                                    </div>
                                 </div>
                                 <div class="col-md-12 mb-12">
-                                    <h6>Kabupaten/Kota</h6>
-                                    <fieldset class="form-group">
-                                        <select class="form-select" id="basicSelect">
-                                            <option>--</option>
-                                            <option>Bandung</option>
-                                            <option>Jakarta Pusat</option>
-                                            <option>Semarang</option>
+                                    <div class="form-group">
+                                        <label for="basicSelect2" class="form-label">Kabupaten/Kota</label>
+                                        <select class="form-select" id="basicSelect2" v-model="filter.kabupaten" @change="getWhiteLabel">
+                                            <option value="">--</option>
+                                            <option v-for="(kab, key) in option.optKab" :key="key" :value="kab.kabupaten_id">{{ kab.kabupaten_id +" "+ kab.kabupaten_name }}</option>
                                         </select>
-                                    </fieldset>
+                                    </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-6">
+                            <div class="row">
                                 <div class="col-md-12 mb-12">
-                                    <h6>White Label</h6>
-                                    <fieldset class="form-group">
-                                        <select class="form-select" id="basicSelect">
-                                            <option>--</option>
-                                            <option>Gramedia</option>
-                                            <option>Mizan</option>
-                                            <option>Erlangga</option>
+                                    <div class="form-group">
+                                        <label for="basicSelect3" class="form-label">White Label</label>
+                                        <select class="form-select" id="basicSelect3" v-model="filter.wl">
+                                            <option value="">--</option>
+                                            <option v-for="(inst, key) in option.optWL" :key="key" :value="inst.instansi_name">{{ inst.instansi_name }}</option>
                                         </select>
-                                    </fieldset>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary ms-1" data-bs-dismiss="modal">
-                        <i class="bx bx-check d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Proses Data</span>
+                    <button type="button" class="btn btn-primary ms-1" data-bs-dismiss="modal" @click="openExecute">
+                        <i class="bi bi-file-earmark-excel-fill"></i> Proses Data
+                    </button>
+                    <button type="button" class="btn btn-success ms-1" data-bs-dismiss="modal" @click="openXLS">
+                        <i class="bi bi-file-earmark-excel-fill"></i> Export
                     </button>
                 </div>
             </div>
@@ -68,11 +68,10 @@
             <div class="card-header">
                 <div class="buttons">
                     <a href="#" class="btn icon icon-left btn-primary" data-bs-toggle="modal" data-bs-target="#border-less"><i class="bi bi-filter-square-fill"></i> Filter</a>
-                    <a href="#" class="btn icon icon-left btn-success"><i class="bi bi-file-earmark-excel-fill"></i> Export</a>
                 </div>
             </div>
             <div class="card-body">
-                <table class="table table-striped" id="table1">
+                <table class="table table-striped" id="data_rst">
                     <thead>
                         <tr>
                             <th>Nama WL</th>
@@ -83,128 +82,6 @@
                             <th>Jabatan</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>Distributor Buku Nusantara</td>
-                            <td>Jawa Barat</td>
-                            <td>Bandung</td>
-                            <td>1234567890</td>
-                            <td>Rizky Pratama</td>
-                            <td>Manager Pemasaran</td>
-                        </tr>
-                        <tr>
-                            <td>Literasi Pustaka Mandiri</td>
-                            <td>Jawa Timur</td>
-                            <td>Surabaya</td>
-                            <td>0987654321</td>
-                            <td>Dewi Lestari</td>
-                            <td>Direktur Operasional</td>
-                        </tr>
-                        <tr>
-                            <td>Warung Buku Sejahtera</td>
-                            <td>Sumatera Barat</td>
-                            <td>Padang</td>
-                            <td>1122334455</td>
-                            <td>Faisal Ramadhan</td>
-                            <td>Supervisor</td>
-                        </tr>
-                        <tr>
-                            <td>Distributor Cerdas</td>
-                            <td>Jawa Tengah</td>
-                            <td>Semarang</td>
-                            <td>5566778899</td>
-                            <td>Andi Setiawan</td>
-                            <td>Kepala Gudang</td>
-                        </tr>
-                        <tr>
-                            <td>Pustaka Inspirasi</td>
-                            <td>Bali</td>
-                            <td>Denpasar</td>
-                            <td>6677889900</td>
-                            <td>Sri Kurniawati</td>
-                            <td>Manajer Distribusi</td>
-                        </tr>
-                        <tr>
-                            <td>Literasi Indonesia Maju</td>
-                            <td>Riau</td>
-                            <td>Pekanbaru</td>
-                            <td>4455667788</td>
-                            <td>Hasan Basri</td>
-                            <td>Manajer Pemasaran</td>
-                        </tr>
-                        <tr>
-                            <td>Distributor Sukses</td>
-                            <td>Kalimantan Timur</td>
-                            <td>Samarinda</td>
-                            <td>9988776655</td>
-                            <td>Muhammad Arif</td>
-                            <td>Supervisor</td>
-                        </tr>
-                        <tr>
-                            <td>Warung Buku Cendekia</td>
-                            <td>Jawa Timur</td>
-                            <td>Malang</td>
-                            <td>3344556677</td>
-                            <td>Lisa Permata</td>
-                            <td>Direktur Keuangan</td>
-                        </tr>
-                        <tr>
-                            <td>Literasi Terdepan</td>
-                            <td>Jawa Barat</td>
-                            <td>Bogor</td>
-                            <td>2211334455</td>
-                            <td>Reza Kurnia</td>
-                            <td>Manajer Operasional</td>
-                        </tr>
-                        <tr>
-                            <td>Pustaka Cemerlang</td>
-                            <td>Jawa Tengah</td>
-                            <td>Solo</td>
-                            <td>7766554433</td>
-                            <td>Dina Rahma</td>
-                            <td>Kepala Seksi</td>
-                        </tr>
-                        <tr>
-                            <td>Warung Buku Pintar</td>
-                            <td>Jawa Barat</td>
-                            <td>Depok</td>
-                            <td>1234432112</td>
-                            <td>Bayu Prasetyo</td>
-                            <td>Manager Operasional</td>
-                        </tr>
-                        <tr>
-                            <td>Pustaka Merdeka</td>
-                            <td>Sumatera Utara</td>
-                            <td>Medan</td>
-                            <td>6655443322</td>
-                            <td>Putri Anggraeni</td>
-                            <td>Direktur Pemasaran</td>
-                        </tr>
-                        <tr>
-                            <td>Literasi Masa Depan</td>
-                            <td>Jawa Timur</td>
-                            <td>Sidoarjo</td>
-                            <td>8899007766</td>
-                            <td>Wahyu Nugraha</td>
-                            <td>Supervisor</td>
-                        </tr>
-                        <tr>
-                            <td>Distributor Buku Abadi</td>
-                            <td>Jawa Barat</td>
-                            <td>Cirebon</td>
-                            <td>4433221100</td>
-                            <td>Yusuf Maulana</td>
-                            <td>Kepala Distribusi</td>
-                        </tr>
-                        <tr>
-                            <td>Warung Literasi</td>
-                            <td>Jawa Tengah</td>
-                            <td>Klaten</td>
-                            <td>9988775544</td>
-                            <td>Siti Fatimah</td>
-                            <td>Manajer Keuangan</td>
-                        </tr>
-                    </tbody>
                 </table>
             </div>
         </div>
@@ -236,14 +113,57 @@ export default {
                     approve: false,
                 },
             },
+
+			option: {
+                optProv: '',
+                optKab: '',
+                optWL: '',
+            },
+
+            filter: {
+                provinsi: '',
+                kabupaten: '',
+                wl: '',
+            },
         }
     },
 
     mounted() {
         this.__MENU()
         this.$root.web_access_log()
+		this.getProvinsi()
 
-        $('#table1').DataTable({})
+        table = $('#data_rst').DataTable({
+            paging: true,
+            pagingType: 'full_numbers',
+            lengthMenu: [[10, 25, 50, 100, 500], [10, 25, 50, 100, 500]],
+            pageLength: 25,
+            processing: true,
+            ajax: "/report/library-officer-rpt?nodata=yes",
+            columns: [
+                { data: "wl_name", class: "text-center text-nowrap" },
+                { data: "provinsi_name", class: "text-center text-nowrap" },
+                { data: "kabupaten_name", class: "text-center text-nowrap" },
+                { data: "nip", class: "text-center text-nowrap" },
+                { data: "name", class: "text-center text-nowrap" },
+                { data: "position", class: "text-center" }
+            ],
+            language: {
+                lengthMenu: "_MENU_",
+                search: "_INPUT_",
+                searchPlaceholder: "Search..",
+                info: '<span class="fs-sm">Showing _START_ to _END_ of _TOTAL_ entries</span>',
+                infoEmpty: '<span class="fs-sm">Showing 0 to 0 of 0 entries</span>',
+                infoFiltered: '<span class="fs-sm">(filtered from _MAX_ total entries)</span>',
+                zeroRecords: '<span class="fs-sm">No Data</span>',
+                paginate: {
+                    first: '<i class="bi bi-chevron-double-left"></i>',
+                    previous: '<i class="bi bi-chevron-left"></i>',
+                    next: '<i class="bi bi-chevron-right"></i>',
+                    last: '<i class="bi bi-chevron-double-right"></i>'
+                }
+            }
+        })
     },
 
     methods: {
@@ -264,6 +184,159 @@ export default {
                     console.error(e)
                 })
         },
+
+		getProvinsi() {
+            this.option.optProv = '';
+            this.option.optKab  = '';
+            this.option.optWL   = '';
+
+            let loader = this.$loading.show()
+            window.axios.post('/getOpt', { 'opt': 'Provinsi'})
+            .then((response) => {
+                loader.hide()
+                this.option.optProv = response.data;
+
+                if(this.option.optProv.length == 1) {
+                    this.filter.provinsi = this.option.optProv[0]['provinsi_id'];
+                    this.getKabupaten();
+                }
+            })
+            .catch((e) => {
+                loader.hide()
+
+                console.error(e);
+            });
+        },
+
+        getKabupaten() {
+            this.option.optKab  = '';
+            this.option.optWL   = '';
+
+            window.axios.post('/getOpt', {
+                'opt': 'Kabupaten',
+                'PROVINSI': this.filter.provinsi
+            })
+            .then((response) => {
+                this.option.optKab = response.data;
+
+                if(this.option.optKab.length == 1) {
+                    this.filter.kabupaten = this.option.optKab[0]['kabupaten_id'];
+                    this.getWhiteLabel()
+                }
+            })
+            .catch((e) => {
+                console.error(e);
+            });
+        },
+
+        getWhiteLabel() {
+            this.option.optWL   = '';
+
+            window.axios.post('/getOpt', {
+                'opt': 'WhiteLabel',
+                'PROVINSI': this.filter.provinsi,
+                'KABUPATEN': this.filter.kabupaten
+            })
+            .then((response) => {
+                this.option.optWL = response.data;
+
+                if(this.option.optWL.length == 1) {
+                    this.filter.wl = this.option.optWL[0]['instansi_name'];
+                }
+            })
+            .catch((e) => {
+                console.error(e);
+            });
+        },
+
+        openExecute(){
+            let check = true
+            let message = ''
+
+            if(this.filter.provinsi==''){
+                check = false
+                message += ' Provinsi, '
+            }
+
+            if(this.filter.kabupaten==''){
+                check = false
+                message += ' Kabupaten, '
+            }
+
+            if(this.filter.wl==''){
+                check = false
+                message += ' White Label, '
+            }
+
+            if(!check){
+                this.$swal({
+                    toast: true,
+                    icon: 'warning',
+                    text: 'Silahkan Isi'+ message.slice(0, -2) +'!'
+                });
+            }else{
+                let urlParam = "PROVINSI="+ this.filter.provinsi; 
+                    urlParam += "&KABUPATEN="+ this.filter.kabupaten;
+                    urlParam += "&WL="+ this.filter.wl;
+
+                table.ajax.url("/report/library-officer-rpt?menufn="+ this.$route.name +"&"+ urlParam ).load();
+            }
+        },
+
+        openXLS(){
+			let check = true
+            let message = ''
+
+            if(this.filter.provinsi==''){
+                check = false
+                message += ' Provinsi, '
+            }
+
+            if(this.filter.kabupaten==''){
+                check = false
+                message += ' Kabupaten, '
+            }
+
+            if(this.filter.wl==''){
+                check = false
+                message += ' White Label, '
+            }
+
+            if(!check){
+                this.$swal({
+                    toast: true,
+                    icon: 'warning',
+                    text: 'Silahkan Isi'+ message.slice(0, -2) +'!'
+                });
+            }else{
+                let loader      = this.$loading.show()
+
+                window.axios({
+                    url: '/report/library-officer-xls',
+                    method: 'POST',
+                    responseType: 'blob',
+                    data: {
+                        PROVINSI: this.filter.provinsi,
+                        KABUPATEN: this.filter.kabupaten,
+                        WL: this.filter.wl
+                    }
+                })
+                .then((response) => {
+                    loader.hide()
+
+                    const url = window.URL.createObjectURL(new Blob([response.data]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', 'Laporan Petugas Perpustakaan ' + this.filter.wl + '.xlsx');
+                    document.body.appendChild(link);
+                    link.click();
+                })
+                .catch((e) => {
+                    console.error(e);
+                    loader.hide()
+                });
+            }
+		},
     },
 
     computed: {
@@ -291,5 +364,14 @@ export default {
             return this.menu.permission.approve
         },
     },
+
+	beforeRouteLeave (to, from, next) {
+		if (table) {
+			table.destroy();
+			table = null;
+		}
+
+		next();
+	}
 }
 </script>

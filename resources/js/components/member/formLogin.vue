@@ -35,12 +35,14 @@
                     
                     <button type="submit" class="btn btn-primary btn-block btn-md shadow-md mt-3">Masuk</button>
                 </form>
-                <div class="col-12 d-flex justify-content-start mt-3">
+                <div class="col-12 mt-3">
                     <div class="text-center text-md fs-10">
                         <p class="text-gray-600" v-if="register">
                             Belum punya akun?
                             <router-link :to="{ name: 'mregister' }" class="font-bold">Daftar</router-link>
-                            .
+                        </p>
+						<p class="text-gray-600">
+							<a class="font-bold" href="/password/reset">Lupa Kata Sandi?</a>
                         </p>
                     </div>
                 </div>

@@ -153,7 +153,7 @@ export default {
                 searchPlaceholder: "Search..",
                 info: '<span class="fs-sm">Showing _START_ to _END_ of _TOTAL_ entries</span>',
                 infoEmpty: '<span class="fs-sm">Showing 0 to 0 of 0 entries</span>',
-                infoFiltered: '<span class="fs-sm">(filtered from _MENU_ total entries)</span>',
+                infoFiltered: '<span class="fs-sm">(filtered from _MAX_ total entries)</span>',
                 zeroRecords: '<span class="fs-sm">No Data</span>',
                 paginate: {
                     first: '<i class="bi bi-chevron-double-left"></i>',

@@ -29,7 +29,7 @@
                         </ul>
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade" :class="!form.new && !form.edit ? 'show active' : ''" id="data" role="tabpanel" aria-labelledby="data-tab">
-                                <table class="table table-striped" id="table1">
+                                <table class="table table-striped" id="data_rst">
                                     <thead>
                                         <tr>
                                             <th>Nama</th>
@@ -37,131 +37,54 @@
                                             <th>Jabatan</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Ahmad Faiz</td>
-                                            <td>1234567890</td>
-                                            <td>Penjaga</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Linda Sari</td>
-                                            <td>1234567891</td>
-                                            <td>Penjaga</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Joko Susanto</td>
-                                            <td>1234567892</td>
-                                            <td>Penjaga</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Rina Wulandari</td>
-                                            <td>1234567893</td>
-                                            <td>Penjaga</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ali Riza</td>
-                                            <td>1234567894</td>
-                                            <td>Penjaga</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Farah Kurnia</td>
-                                            <td>1234567895</td>
-                                            <td>Penjaga</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Rudi Hartono</td>
-                                            <td>1234567896</td>
-                                            <td>Penjaga</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Putri Dewi</td>
-                                            <td>1234567897</td>
-                                            <td>Penjaga</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Yusuf Anwar</td>
-                                            <td>1234567898</td>
-                                            <td>Penjaga</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Desi Rahmawati</td>
-                                            <td>1234567899</td>
-                                            <td>Penjaga</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Wira Pratama</td>
-                                            <td>1234567800</td>
-                                            <td>Penjaga</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ratna Puspita</td>
-                                            <td>1234567801</td>
-                                            <td>Penjaga</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Arief Maulana</td>
-                                            <td>1234567802</td>
-                                            <td>Penjaga</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Intan Jaya</td>
-                                            <td>1234567803</td>
-                                            <td>Penjaga</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Hadi Susilo</td>
-                                            <td>1234567804</td>
-                                            <td>Penjaga</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Melisa Amalia</td>
-                                            <td>1234567805</td>
-                                            <td>Penjaga</td>
-                                        </tr>
-                                    </tbody>
                                 </table>
                             </div>
                             <div class="tab-pane fade" :class="form.new || form.edit ? 'show active' : ''" id="form" role="tabpanel" aria-labelledby="form-tab">
-                                <form class="form form-vertical">
-                                    <div class="form-body">
-                                        <div class="row">
-                                            <p class="col-12"></p>
-                                            <div class="col-12">
-                                                <div class="form-group has-icon-left">
-                                                    <label for="email-id-icon">NIP</label>
-                                                    <div class="position-relative">
-                                                        <input type="text" class="form-control" placeholder="NIP" id="email-id-icon" />
-                                                        <div class="form-control-icon">
-                                                            <i class="bi bi-person"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="form-group has-icon-left">
-                                                    <label for="first-name-icon">Nama</label>
-                                                    <div class="position-relative">
-                                                        <input type="text" class="form-control" placeholder="Nama" id="first-name-icon" />
-                                                        <div class="form-control-icon">
-                                                            <i class="bi bi-person"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="form-group has-icon-left">
-                                                    <label for="mobile-id-icon">Jabatan</label>
-                                                    <div class="position-relative">
-                                                        <input type="text" class="form-control" placeholder="Jabatan" id="mobile-id-icon" />
-                                                        <div class="form-control-icon">
-                                                            <i class="bi bi-person"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
+                                <VeeForm ref="form" v-slot="{ handleSubmit }" as="div">
+									<form class="form form-horizontal" @submit.prevent="handleSubmit($event, submit)">
+										<div class="form-body">
+											<div class="row">
+												<p class="col-12"></p>
+												<div class="col-12">
+													<div class="form-group has-icon-left">
+														<label for="email-id-icon">NIP</label>
+														<div class="position-relative">
+															<input type="text" class="form-control" placeholder="NIP" id="email-id-icon" v-model="form.field.nip" />
+															<div class="form-control-icon">
+																<i class="bi bi-card-text"></i>
+															</div>
+														</div>
+														<ErrorMessage name="nip" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
+													</div>
+												</div>
+												<div class="col-12">
+													<div class="form-group has-icon-left">
+														<label for="first-name-icon">Nama</label>
+														<div class="position-relative">
+															<input type="text" class="form-control" placeholder="Nama" id="first-name-icon" v-model="form.field.name" />
+															<div class="form-control-icon">
+																<i class="bi bi-person"></i>
+															</div>
+														</div>
+														<ErrorMessage name="name" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
+													</div>
+												</div>
+												<div class="col-12">
+													<div class="form-group has-icon-left">
+														<label for="mobile-id-icon">Jabatan</label>
+														<div class="position-relative">
+															<input type="text" class="form-control" placeholder="Jabatan" id="mobile-id-icon" v-model="form.field.position" />
+															<div class="form-control-icon">
+																<i class="bi bi-person-vcard"></i>
+															</div>
+														</div>
+														<ErrorMessage name="position" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
+													</div>
+												</div>
+											</div>
+										</div>
+                                	</form>
+                                </VeeForm>
                             </div>
                         </div>
                     </div>
@@ -173,10 +96,6 @@
 
 <script>
 import { Form as VeeForm, Field, ErrorMessage } from 'vee-validate'
-import Choices from 'choices.js'
-import 'choices.js/public/assets/styles/choices.min.css'
-import * as FilePond from 'filepond'
-import 'filepond/dist/filepond.min.css'
 
 let table
 export default {
@@ -200,11 +119,18 @@ export default {
                     approve: false,
                 },
             },
-
+			selected: [],
             form: {
+				submitted: false,
                 new: false,
                 edit: false,
+				field: {
+					nip: '',
+					name: '',
+					position: ''
+				}
             },
+			errors: {}
         }
     },
 
@@ -212,19 +138,55 @@ export default {
         this.__MENU()
         this.$root.web_access_log()
 
-        $('#table1').DataTable({
-            scrollY: true,
-            scrollX: true,
-        })
+		let _row = this
+        table = $('#data_rst').DataTable({
+            paging: true,
+            pagingType: 'full_numbers',
+            lengthMenu: [[10, 25, 50, 100, 500], [10, 25, 50, 100, 500]],
+            pageLength: 25,
+            processing: true,
+            serverSide: true,
+            deferRender: true,
+            stateSave: true,
+            select: true,
+            rowId: 'extn',
+            order: [[0, "asc"]],
+            ajax: "/master/library-officer-mst",
+            columns: [
+                { data: "nip" },
+                { data: "name" },
+                { data: "position" }
+            ],
+            language: {
+                lengthMenu: "_MENU_",
+                search: "_INPUT_",
+                searchPlaceholder: "Search..",
+                info: '<span class="fs-sm">Showing _START_ to _END_ of _TOTAL_ entries</span>',
+                infoEmpty: '<span class="fs-sm">Showing 0 to 0 of 0 entries</span>',
+                infoFiltered: '<span class="fs-sm">(filtered from _MAX_ total entries)</span>',
+                zeroRecords: '<span class="fs-sm">No Data</span>',
+                paginate: {
+                    first: '<i class="bi bi-chevron-double-left"></i>',
+                    previous: '<i class="bi bi-chevron-left"></i>',
+                    next: '<i class="bi bi-chevron-right"></i>',
+                    last: '<i class="bi bi-chevron-double-right"></i>'
+                }
+            }
+        });
+        window.$('#data_rst tbody').on('click', 'tr', function () {
+            _row.selected = [];
 
-        FilePond.create(document.querySelector('.basic-filepond1'), {
-            credits: null,
-            allowImagePreview: false,
-            allowMultiple: false,
-            allowFileEncode: false,
-            required: false,
-            storeAsFile: true,
-        })
+            if ( window.$(this).hasClass('selected') ) {
+                window.$(this).removeClass('selected');
+            } else {
+                table.$('tr.selected').removeClass('selected');
+                window.$(this).addClass('selected');
+
+                if (table.rows('.selected').data().length > 0) {
+                    _row.selected.push(table.rows('.selected').data()[0]);
+                }
+            }
+        });
     },
 
     methods: {
@@ -249,39 +211,166 @@ export default {
         create() {
             this.form.new = true
             this.form.edit = false
+            this.clearForm()
         },
 
         edit() {
-            this.form.new = false
-            this.form.edit = true
+			if (this.selected.length > 0) {
+                this.form.new	= false
+                this.form.edit	= true
+                this.submitted 	= false
+
+                this.form.field.id			= this.selected[0].id
+                this.form.field.nip			= this.selected[0].nip
+                this.form.field.name		= this.selected[0].name
+                this.form.field.position	= this.selected[0].position
+            } else {
+                this.$swal({
+                    toast: true,
+                    icon: 'warning',
+                    text: 'No row selected!'
+                });
+            }
         },
 
         destroy() {
-            this.$swal({
-                icon: 'question',
-                text: 'Are you sure you will delete this data?',
-                showCancelButton: true,
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                confirmButtonText: '<i class="bi bi-trash-fill"></i> Delete',
-                cancelButtonText: '<i class="bi bi-x-square-fill"></i> Cancel',
-                buttonsStyling: false,
-                customClass: {
-                    confirmButton: 'btn btn-sm btn-danger me-2',
-                    cancelButton: 'btn btn-sm btn-secondary',
-                },
-            }).then((result) => {
-                this.cancel()
-            })
+            if(this.selected.length > 0) {
+                this.$swal({
+                    icon: 'question',
+                    text: 'Are you sure you will delete this data?',
+                    showCancelButton: true,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    confirmButtonText: '<i class="bi bi-trash-fill"></i> Delete',
+                    cancelButtonText: '<i class="bi bi-x-square-fill"></i> Cancel',
+                    buttonsStyling: false,
+                    customClass: {
+                        confirmButton: 'btn btn-sm btn-danger me-2',
+                        cancelButton: 'btn btn-sm btn-secondary',
+                    },
+                }).then((result) => {
+                    if (result.value) {
+                        let loader = this.$loading.show();
+
+                        window.axios.delete('/master/library-officer-mst/'+ this.selected[0].id +'?menufn='+ this.$route.name)
+                            .then(response => {
+                                loader.hide();
+                                this.selected = [];
+                                table.ajax.reload();
+
+                                this.$swal({
+                                    toast: true,
+                                    icon: 'success',
+                                    html: response.data
+                                });
+                            })
+                    }
+                })
+            } else {
+                this.$swal({
+                    toast: true,
+                    icon: 'warning',
+                    text: 'No row selected!'
+                });
+            }
         },
 
         submit() {
-            this.cancel()
+            if(!this.form.submitted) {
+                this.form.submitted = true;
+				this.$refs.form.setErrors({
+					nip: [],
+					name: [],
+					position: []
+				});
+
+                this.$refs.form.validate().then(result => {
+                    if(result.valid) {
+                        this.form.submitted = false;
+
+                        let loader = this.$loading.show();
+                        if(this.form.new) {
+                            let form_data = new FormData();
+                            Object.keys(this.form.field).forEach(value => {
+                                form_data.append(value, this.form.field[value]);
+                            });
+                            
+                            window.axios.post('/master/library-officer-mst?menu_fn='+ this.$route.name, form_data)
+                                .then((response) => {
+                                    loader.hide();
+                                    this.cancel();
+
+                                    this.$swal({
+                                        toast: true,
+                                        position: 'top',
+                                        icon: response.status === 201 ? 'success' : 'info',
+                                        html: response.data
+                                    });
+                                })
+                                .catch((e) => {
+                                    loader.hide();
+                                    this.form.submitted = false;
+                                    if(e.response.status === 422) {
+                                        this.$refs.form.setErrors(e.response.data.errors);
+                                    }
+                                });
+                        } else {
+                            let form_data = new FormData();
+                            form_data.append('_method', 'PUT');
+                            Object.keys(this.form.field).forEach(value => {
+                                form_data.append(value, this.form.field[value]);
+                            });
+
+                            window.axios.post('/master/library-officer-mst/'+ this.form.field.id +'?menu_fn='+ this.$route.name, form_data)
+                                .then((response) => {
+                                    loader.hide();
+                                    this.cancel();
+
+                                    this.$swal({
+                                        toast: true,
+                                        position: 'top',
+                                        icon: response.status === 201 ? 'success' : 'info',
+                                        html: response.data
+                                    });
+                                })
+                                .catch((e) => {
+                                    loader.hide();
+                                    this.form.submitted = false;
+
+                                    if(e.response.status === 422) {
+                                        this.$refs.form.setErrors(e.response.data.errors);
+                                    }
+                                });
+                        }
+                    } else {
+                        this.form.submitted = false;
+                    }
+                });
+            }
         },
 
         cancel() {
             this.form.new = false
             this.form.edit = false
+			this.form.submitted = false
+
+			this.selected = []
+            this.clearForm()
+            table.ajax.reload(null, false)
+        },
+
+		clearForm() {
+            this.form.field.id			= ''
+            this.form.field.nip			= ''
+            this.form.field.name		= ''
+            this.form.field.position	= ''
+
+			this.$refs.form.setErrors({
+				nip: [],
+				name: [],
+				position: []
+			})
+			this.$refs.form.resetForm()
         },
     },
 

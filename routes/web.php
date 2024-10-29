@@ -69,6 +69,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::prefix('master')->namespace('Master')->group(function() {
                         Route::apiResource('member-mst', MemberMasterController::class);
                         Route::apiResource('book-mst', BookMasterController::class);
+                        Route::apiResource('library-officer-mst', LibraryOfficerMasterController::class);
                     });
 
                     Route::prefix('setting')->namespace('Setting')->group(function() {
@@ -105,6 +106,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
                         Route::post('offline-visitors-xls', 'OfflineVisitorsReportController@ExportXLS')->name('offline-visitors-xls');
 						Route::get('read-fitur-rpt', 'ReadFiturReportController@index')->name('read-fitur-rpt');
                         Route::post('read-fitur-xls', 'ReadFiturReportController@ExportXLS')->name('read-fitur-xls');
+						Route::get('library-officer-rpt', 'LibraryOfficerReportController@index')->name('library-officer-rpt');
+                        Route::post('library-officer-xls', 'LibraryOfficerReportController@ExportXLS')->name('library-officer-xls');
                     });
                 });
             }); 

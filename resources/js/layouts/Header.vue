@@ -70,8 +70,10 @@ export default {
         },
 
         logout() {
+			let loader = this.$loading.show();
             window.axios.post('/logout').then((e) => {
-                window.location = '/'
+				loader.hide();
+                window.location = '/admin'
             })
         },
     },
