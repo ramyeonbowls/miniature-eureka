@@ -380,7 +380,7 @@ export default {
             if(this.selected.length > 0) {
                 this.$swal({
                     icon: 'question',
-                    text: 'Are you sure you will delete this data?',
+                    text: 'Apakah anda yakin ingin menghapus data ini?',
                     showCancelButton: true,
                     allowOutsideClick: false,
                     allowEscapeKey: false,
