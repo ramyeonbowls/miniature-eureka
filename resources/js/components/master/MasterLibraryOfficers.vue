@@ -8,13 +8,13 @@
                     <div class="card-header">
                         <div class="buttons">
                             <template v-if="!form.new && !form.edit">
-                                <a href="#" class="btn icon icon-left btn-primary" @click="create"><i class="bi bi-check-square-fill"></i> New</a>
-                                <a href="#" class="btn icon icon-left btn-success" @click="edit"><i class="bi bi-pencil-square"></i> Edit</a>
-                                <a href="#" class="btn icon icon-left btn-danger" @click="destroy"><i class="bi bi-x-square-fill"></i> Delete</a>
+                                <a href="#" class="btn icon icon-left btn-primary" @click="create"><i class="bi bi-check-square-fill"></i> Tambah</a>
+                                <a href="#" class="btn icon icon-left btn-success" @click="edit"><i class="bi bi-pencil-square"></i> Sunting</a>
+                                <a href="#" class="btn icon icon-left btn-danger" @click="destroy"><i class="bi bi-x-square-fill"></i> Hapus</a>
                             </template>
                             <template v-else>
-                                <a href="#" class="btn icon icon-left btn-success" @click.prevent="submit"><i class="bi bi-check-square-fill"></i> Submit</a>
-                                <a href="#" class="btn icon icon-left btn-danger" @click="cancel"><i class="bi bi-x-square-fill"></i> Cancel</a>
+                                <a href="#" class="btn icon icon-left btn-success" @click.prevent="submit"><i class="bi bi-check-square-fill"></i> Simpan</a>
+                                <a href="#" class="btn icon icon-left btn-danger" @click="cancel"><i class="bi bi-x-square-fill"></i> Batal</a>
                             </template>
                         </div>
                     </div>
@@ -237,7 +237,7 @@ export default {
             if(this.selected.length > 0) {
                 this.$swal({
                     icon: 'question',
-                    text: 'Are you sure you will delete this data?',
+                    text: 'Apakah anda yakin ingin menghapus data ini?',
                     showCancelButton: true,
                     allowOutsideClick: false,
                     allowEscapeKey: false,
