@@ -65,7 +65,7 @@
 																<label for="desc">Judul <span class="text-danger">*</span></label>
 															</div>
 															<div class="col-md-10 form-group">
-																<Field type="text" id="title" v-model="form.field.title" class="form-control" name="title" />
+																<Field type="text" id="title" v-model="form.field.title" class="form-control" placeholder="Tulis judul disini" name="title" />
 																<ErrorMessage name="title" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
 															</div>
 															<div class="col-md-2">
@@ -73,7 +73,7 @@
 															</div>
 															<div class="col-md-4 form-group">
 																<Field name="start_date">
-																	<Flatpickr v-model="form.field.start_date" class="form-control flatpickr-range" :config="configsdate" placeholder="Select date.."></Flatpickr>
+																	<Flatpickr v-model="form.field.start_date" class="form-control flatpickr-range" :config="configsdate" placeholder="Pilih tanggal.."></Flatpickr>
 																</Field>
 																<ErrorMessage name="start_date" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
 															</div>
@@ -82,12 +82,12 @@
 															</div>
 															<div class="col-md-4 form-group">
 																<Field name="end_date">
-																	<Flatpickr v-model="form.field.end_date" class="form-control flatpickr-range" :config="configedate" placeholder="Select date.."></Flatpickr>
+																	<Flatpickr v-model="form.field.end_date" class="form-control flatpickr-range" :config="configedate" placeholder="Pilih tanggal.."></Flatpickr>
 																</Field>
 																<ErrorMessage name="end_date" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
 															</div>
 
-															<div class="col-md-12 mt-3">Setting Question and Answer</div>
+															<div class="col-md-12 mt-3">Menetapkan Pertanyaan dan Jawaban</div>
 															<div class="col-md-12" v-for="(question, i) in form.field.questions" :key="i">
 																<div class="px-2 py-1 border-bottom" :class="(i % 2 == 0) ? 'bg-body-lighter' : 'bg-body-light'">
 																	<div class="row">
@@ -99,23 +99,23 @@
 																			</div>
 																		</div>
 																		<div class="form-group mt-1 mb-0 col-md-9">
-																			<label class="form-label mb-0"><small class="text-muted">Question</small></label>
-																			<Field type="text" :name="'questions.'+i+'.description'" v-model="question.description" class="form-control form-control-sm" placeholder="Write the question here" :title="question.description" />
+																			<label class="form-label mb-0"><small class="text-muted">Pertanyaan</small></label>
+																			<Field type="text" :name="'questions.'+i+'.description'" v-model="question.description" class="form-control form-control-sm" placeholder="Tulis pertanyaan disini" :title="question.description" />
 																			<div v-if="errors['questions.' + i + '.description']" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;">
 																				<div v-for="(message, index) in errors['questions.' + i + '.description']" :key="index">{{ message }}</div>
 																			</div>
 																		</div>
 																		<div class="form-group mt-1 mb-0 col-md-2">
-																			<label class="form-label mb-0"><small class="text-muted">Sequence</small></label>
+																			<label class="form-label mb-0"><small class="text-muted">Urutan</small></label>
 																			<Field type="number" :name="'questions.'+i+'.template_sequence'" v-model.number="question.template_sequence" min="1" step="1" class="form-control form-control-sm" placeholder="Seq. template here" :title="question.template_sequence" />
 																		</div>
 																		<div class="form-group mt-1 mb-0 col-md-2">
-																			<label class="form-label mb-0"><small class="text-muted">Type</small></label>
+																			<label class="form-label mb-0"><small class="text-muted">Tipe Jawaban</small></label>
 																			<select :disabled="!question.editable" :name="'questions.'+i+'.type'" v-model="question.type" class="form-select form-select-sm" @change="changeType(question)">
-																				<option value="">Select Type</option>
-																				<option value="essay">Essay</option>
+																				<option value="">Pilih Tipe</option>
+																				<option value="essay">Essai</option>
 																				<!-- <option value="date">Date</option> -->
-																				<option value="multiple">Multiple Choice</option>
+																				<option value="multiple">Pilihan Ganda</option>
 																				<option value="checklist">Checklist</option>
 																				<!-- <option value="rating">Rating</option>
 																				<option value="ranking">Ranking</option> -->
@@ -125,7 +125,7 @@
 																			</div>
 																		</div>
 																		<div class="form-group mt-1 mb-0 col-md-2">
-																			<label class="form-label mb-0"><small class="text-muted">Point</small></label>
+																			<label class="form-label mb-0"><small class="text-muted">Poin</small></label>
 																			<div class="input-group">
 																				<Field type="text" :name="'questions.'+i+'.point'" v-model.number="question.point" class="form-control form-control-sm" placeholder="Point" :disabled="question.type!= 'essay' ? true : false" />
 																				<div class="input-group-append">
