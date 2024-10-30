@@ -146,11 +146,11 @@ class MemberMasterController extends Controller
 								$created = $this->member_service->store((object)$data);
 								if (!$created) {
 									$check		= false;
-									$messages	= "Failed created.";
+									$messages	= "Data gagal dibuat.";
 								}
 							}catch (Throwable $e) {
 								$check		= false;
-								$messages	= "Failed created.";
+								$messages	= "Data gagal dibuat.";
 								$logs->write("ERROR", $e->getMessage());
 							}
 						}
@@ -158,7 +158,7 @@ class MemberMasterController extends Controller
 					}
 				}else{
 					$check		= false;
-					$messages	= "Wrong Template!";
+					$messages	= "Salah Template!";
 					$this->logs->write("ERROR", "Wrong Template!");
 				}
 
@@ -170,7 +170,7 @@ class MemberMasterController extends Controller
 					DB::commit();
 					$logs->write("INFO", "Successfully created");
 					$result['status']	= 201;
-					$result['message']	= "Successfully created.";
+					$result['message']	= "Data berhasil dibuat.";
 				}
 
                 $queries = DB::getQueryLog();
@@ -182,7 +182,7 @@ class MemberMasterController extends Controller
             } catch (Throwable $th) {
                 $logs->write("ERROR", $th->getMessage());
 
-                $result['message'] = "Failed created.<br>" . $th->getMessage();
+                $result['message'] = "Data gagal dibuat.<br>" . $th->getMessage();
             }
             $logs->write(__FUNCTION__, "STOP\r\n");
 
@@ -238,7 +238,7 @@ class MemberMasterController extends Controller
                 $logs->write("INFO", "Successfully updated");
 
                 $result['status'] = 201;
-                $result['message'] = "Successfully updated.";
+                $result['message'] = "Data berhasil diperbarui.";
             }
 
             $queries = DB::getQueryLog();
@@ -250,7 +250,7 @@ class MemberMasterController extends Controller
         } catch (Throwable $th) {
             $logs->write("ERROR", $th->getMessage());
 
-            $result['message'] = "Failed updated.<br>" . $th->getMessage();
+            $result['message'] = "Data gagal diperbarui.<br>" . $th->getMessage();
         }
 
         return response()->json($result['message'], $result['status']);
@@ -276,7 +276,7 @@ class MemberMasterController extends Controller
             $dibaca     = $check[0]->total ?? 0;
 
             if($dibaca > 0){
-                $result['message'] = 'Member tidak bisa dihapus, karna sudah pernah baca buku';
+                $result['message'] = 'Member tidak bisa dihapus, karena sudah pernah baca buku';
 
                 return response()->json($result['message'], $result['status']);
             }
@@ -291,12 +291,12 @@ class MemberMasterController extends Controller
             }
 
             if ($check) {
-                $result['message'] = 'Successfully deleted';
+                $result['message'] = 'Data berhasil dihapus';
             }
         } catch (Throwable $th) {
             $logs->write("ERROR", $th->getMessage());
 
-            $result['message'] = 'Failed delete.<br>' . $th->getMessage();
+            $result['message'] = 'Data gagal dihapus.<br>' . $th->getMessage();
         }
         $logs->write(__FUNCTION__, "STOP\r\n");
 

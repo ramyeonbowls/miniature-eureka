@@ -85,7 +85,7 @@ class LibraryOfficerMasterController extends Controller
                 $logs->write("INFO", "Successfully created");
 
                 $result['status'] = 201;
-                $result['message'] = "Successfully created.";
+                $result['message'] = "Data berhasil dibuat.";
             }
 
             $queries = DB::getQueryLog();
@@ -96,7 +96,7 @@ class LibraryOfficerMasterController extends Controller
         } catch (Throwable $th) {
             $logs->write("ERROR", $th->getMessage());
 
-            $result['message'] = "Failed created.<br>" . $th->getMessage();
+            $result['message'] = "Data gagal dibuat.<br>" . $th->getMessage();
         }
         $logs->write(__FUNCTION__, "STOP\r\n");
 
@@ -141,7 +141,7 @@ class LibraryOfficerMasterController extends Controller
                 $logs->write("INFO", "Successfully updated");
 
                 $result['status'] = 201;
-                $result['message'] = "Successfully updated.";
+                $result['message'] = "Data berhasil diperbarui.";
             }
 
             $queries = DB::getQueryLog();
@@ -152,7 +152,7 @@ class LibraryOfficerMasterController extends Controller
         } catch (Throwable $th) {
             $logs->write("ERROR", $th->getMessage());
 
-            $result['message'] = "Failed updated.<br>" . $th->getMessage();
+            $result['message'] = "Data Gagal diperbarui.<br>" . $th->getMessage();
         }
         $logs->write(__FUNCTION__, "STOP\r\n");
 
@@ -184,12 +184,12 @@ class LibraryOfficerMasterController extends Controller
             }
 
             if ($deleted) {
-                $result['message'] = 'Successfully deleted';
+                $result['message'] = 'Data berhasil dihapus';
             }
         } catch (Throwable $th) {
             $logs->write("ERROR", $th->getMessage());
 
-            $result['message'] = 'Failed delete.<br>' . $th->getMessage();
+            $result['message'] = 'Data gagal dihapus.<br>' . $th->getMessage();
         }
         $logs->write(__FUNCTION__, "STOP\r\n");
 
