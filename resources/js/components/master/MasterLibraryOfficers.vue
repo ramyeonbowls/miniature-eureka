@@ -228,7 +228,7 @@ export default {
                 this.$swal({
                     toast: true,
                     icon: 'warning',
-                    text: 'No row selected!'
+                    text: 'Tidak ada baris yang dipilih!'
                 });
             }
         },
@@ -241,8 +241,8 @@ export default {
                     showCancelButton: true,
                     allowOutsideClick: false,
                     allowEscapeKey: false,
-                    confirmButtonText: '<i class="bi bi-trash-fill"></i> Delete',
-                    cancelButtonText: '<i class="bi bi-x-square-fill"></i> Cancel',
+                    confirmButtonText: '<i class="bi bi-trash-fill"></i> Hapus',
+                    cancelButtonText: '<i class="bi bi-x-square-fill"></i> Batal',
                     buttonsStyling: false,
                     customClass: {
                         confirmButton: 'btn btn-sm btn-danger me-2',
@@ -270,7 +270,7 @@ export default {
                 this.$swal({
                     toast: true,
                     icon: 'warning',
-                    text: 'No row selected!'
+                    text: 'Tidak ada baris yang dipilih!'
                 });
             }
         },
