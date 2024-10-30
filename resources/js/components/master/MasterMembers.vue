@@ -8,13 +8,13 @@
                     <div class="card-header">
                         <div class="buttons">
                             <template v-if="!form.upload">
-                                <a href="#" class="btn icon icon-left btn-primary" @click="upload"><i class="bi bi-file-arrow-up-fill"></i> Upload</a>
-                                <a href="#" class="btn icon icon-left btn-success" @click="DownloadTpl"><i class="bi bi-file-arrow-down-fill"></i> Download Template</a>
-                                <a href="#" class="btn icon icon-left btn-danger" @click="destroy"><i class="bi bi-x-square-fill"></i> Delete</a>
+                                <a href="#" class="btn icon icon-left btn-primary" @click="upload"><i class="bi bi-file-arrow-up-fill"></i> Unggah</a>
+                                <a href="#" class="btn icon icon-left btn-success" @click="DownloadTpl"><i class="bi bi-file-arrow-down-fill"></i> Unduh Template</a>
+                                <a href="#" class="btn icon icon-left btn-danger" @click="destroy"><i class="bi bi-x-square-fill"></i> Hapus</a>
                             </template>
                             <template v-else>
                                 <a href="#" class="btn icon icon-left btn-success" @click.prevent="submit"><i class="bi bi-check-square-fill"></i> Submit</a>
-                                <a href="#" class="btn icon icon-left btn-danger" @click="cancel"><i class="bi bi-x-square-fill"></i> Cancel</a>
+                                <a href="#" class="btn icon icon-left btn-danger" @click="cancel"><i class="bi bi-x-square-fill"></i> Batal</a>
                             </template>
                         </div>
                     </div>
@@ -174,11 +174,11 @@ export default {
             language: {
                 lengthMenu: "_MENU_",
                 search: "_INPUT_",
-                searchPlaceholder: "Search..",
-                info: '<span class="fs-sm">Showing _START_ to _END_ of _TOTAL_ entries</span>',
-                infoEmpty: '<span class="fs-sm">Showing 0 to 0 of 0 entries</span>',
-                infoFiltered: '<span class="fs-sm">(filtered from _MAX_ total entries)</span>',
-                zeroRecords: '<span class="fs-sm">No Data</span>',
+                searchPlaceholder: "Pencarian..",
+                info: '<span class="fs-sm">Menampilkan _START_ sampai _END_ dari _TOTAL_ entri</span>',
+                infoEmpty: '<span class="fs-sm">Menampilkan 0 sampai 0 dari 0 entri</span>',
+                infoFiltered: '<span class="fs-sm">(disaring dari _MAX_ total entri)</span>',
+                zeroRecords: '<span class="fs-sm">Tidak Ada Data</span>',
                 paginate: {
                     first: '<i class="bi bi-chevron-double-left"></i>',
                     previous: '<i class="bi bi-chevron-left"></i>',
@@ -245,8 +245,8 @@ export default {
                     showCancelButton: true,
                     allowOutsideClick: false,
                     allowEscapeKey: false,
-                    confirmButtonText: '<i class="bi bi-trash-fill"></i> Delete',
-                    cancelButtonText: '<i class="bi bi-x-square-fill"></i> Cancel',
+                    confirmButtonText: '<i class="bi bi-trash-fill"></i> Hapus',
+                    cancelButtonText: '<i class="bi bi-x-square-fill"></i> Batal',
                     buttonsStyling: false,
                     customClass: {
                         confirmButton: 'btn btn-sm btn-danger me-2',
@@ -274,7 +274,7 @@ export default {
                 this.$swal({
                     toast: true,
                     icon: 'warning',
-                    text: 'No row selected!'
+                    text: 'Tidak ada baris yang dipilih!'
                 });
             }
         },
