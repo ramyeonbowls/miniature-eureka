@@ -144,11 +144,11 @@ export default {
             language: {
                 lengthMenu: "_MENU_",
                 search: "_INPUT_",
-                searchPlaceholder: "Search..",
-                info: '<span class="fs-sm">Showing _START_ to _END_ of _TOTAL_ entries</span>',
-                infoEmpty: '<span class="fs-sm">Showing 0 to 0 of 0 entries</span>',
-                infoFiltered: '<span class="fs-sm">(filtered from _MAX_ total entries)</span>',
-                zeroRecords: '<span class="fs-sm">No Data</span>',
+                searchPlaceholder: "Pencarian..",
+                info: '<span class="fs-sm">Menampilkan _START_ sampai _END_ dari _TOTAL_ entri</span>',
+                infoEmpty: '<span class="fs-sm">Menampilkan 0 sampai 0 dari 0 entri</span>',
+                infoFiltered: '<span class="fs-sm">(disaring dari _MAX_ total entri)</span>',
+                zeroRecords: '<span class="fs-sm">Tidak Ada Data</span>',
                 paginate: {
                     first: '<i class="bi bi-chevron-double-left"></i>',
                     previous: '<i class="bi bi-chevron-left"></i>',
