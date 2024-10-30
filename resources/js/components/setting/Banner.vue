@@ -8,13 +8,13 @@
                     <div class="card-header">
                         <div class="buttons">
                             <template v-if="!form.new && !form.edit">
-                                <a href="#" class="btn icon icon-left btn-primary" @click="create"><i class="bi bi-folder-fill"></i> New</a>
-                                <a href="#" class="btn icon icon-left btn-success" @click="edit"><i class="bi bi-pen-fill"></i> Edit</a>
-                                <a href="#" class="btn icon icon-left btn-danger" @click="destroy"><i class="bi bi-trash-fill"></i> Delete</a>
+                                <a href="#" class="btn icon icon-left btn-primary" @click="create"><i class="bi bi-folder-fill"></i> Tambah</a>
+                                <a href="#" class="btn icon icon-left btn-success" @click="edit"><i class="bi bi-pen-fill"></i> Sunting</a>
+                                <a href="#" class="btn icon icon-left btn-danger" @click="destroy"><i class="bi bi-trash-fill"></i> Hapus</a>
                             </template>
                             <template v-else>
-                                <a href="#" class="btn icon icon-left btn-success" @click.prevent="submit"><i class="bi bi-cloud-arrow-up-fill"></i> Submit</a>
-                                <a href="#" class="btn icon icon-left btn-danger" @click="cancel"><i class="bi bi-arrow-left-square-fill"></i> Cancel</a>
+                                <a href="#" class="btn icon icon-left btn-success" @click.prevent="submit"><i class="bi bi-cloud-arrow-up-fill"></i> Simpan</a>
+                                <a href="#" class="btn icon icon-left btn-danger" @click="cancel"><i class="bi bi-arrow-left-square-fill"></i> Batal</a>
                             </template>
                         </div>
                     </div>
@@ -309,7 +309,7 @@ export default {
                 this.$swal({
                     toast: true,
                     icon: 'warning',
-                    text: 'No row selected!'
+                    text: 'Tidak ada baris yang dipilih!'
                 });
             }
         },
@@ -322,8 +322,8 @@ export default {
                     showCancelButton: true,
                     allowOutsideClick: false,
                     allowEscapeKey: false,
-                    confirmButtonText: '<i class="bi bi-trash-fill"></i> Delete',
-                    cancelButtonText: '<i class="bi bi-x-square-fill"></i> Cancel',
+                    confirmButtonText: '<i class="bi bi-trash-fill"></i> Hapus',
+                    cancelButtonText: '<i class="bi bi-x-square-fill"></i> Batal',
                     buttonsStyling: false,
                     customClass: {
                         confirmButton: 'btn btn-sm btn-danger me-2',
@@ -351,7 +351,7 @@ export default {
                 this.$swal({
                     toast: true,
                     icon: 'warning',
-                    text: 'No row selected!'
+                    text: 'Tidak ada baris yang dipilih!'
                 });
             }
         },
