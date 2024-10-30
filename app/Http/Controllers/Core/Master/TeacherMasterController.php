@@ -17,12 +17,12 @@ use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
-use App\Services\Master\MemberMasterService;
-use App\Exports\Master\MemberMasterTemplateExport;
+use App\Services\Master\TeacherMasterService;
+use App\Exports\Master\TeacherMasterTemplateExport;
 
-class MemberMasterController extends Controller
+class TeacherMasterController extends Controller
 {
-    private MemberMasterService $member_service;
+    private TeacherMasterService $Teacher_service;
 
     /**
      * Instantiate a new controller instance.
@@ -32,7 +32,7 @@ class MemberMasterController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->member_service = new MemberMasterService();
+        $this->Teacher_service = new TeacherMasterService();
     }
 
     /**
@@ -50,7 +50,7 @@ class MemberMasterController extends Controller
         try {
             DB::enableQueryLog();
 
-            $results = $this->member_service->get();
+            $results = $this->Teacher_service->get();
 
             $queries = DB::getQueryLog();
             for($q = 0; $q < count($queries); $q++) {
@@ -86,8 +86,8 @@ class MemberMasterController extends Controller
         $logs->write(__FUNCTION__, 'START');
         if($request->has('download') && $request->download == 'tpl') {
             $logs->write(__FUNCTION__, 'Download Tpl');
-            return Excel::download(new MemberMasterTemplateExport(), 'Master_Member_Template.xlsx');
-         }else{
+            return Excel::download(new TeacherMasterTemplateExport(), 'Master_Teacher_Template.xlsx');
+		}else{
 			$result['status'] = 200;
         	$result['message'] = '';
 			$check = true;
@@ -102,7 +102,7 @@ class MemberMasterController extends Controller
 				$H_worksheetTitle    = $Sheetheader->getTitle();
 				$H_highestRow        = $Sheetheader->getHighestRow();
 				$H_worksheetTitle_A  = explode(" ", $H_worksheetTitle);
-				if(strtolower($H_worksheetTitle_A[0])=="member"){
+				if(strtolower($H_worksheetTitle_A[0])=="teacher"){
 					for ($row = 2; $row <= $H_highestRow; ++ $row) {
 						$name		= trim($Sheetheader->getCellByColumnAndRow(1, $row)->getFormattedValue());
 						$email		= trim($Sheetheader->getCellByColumnAndRow(2, $row)->getFormattedValue());
@@ -143,7 +143,7 @@ class MemberMasterController extends Controller
 
 						if($check){
 							try {
-								$created = $this->member_service->store((object)$data);
+								$created = $this->Teacher_service->store((object)$data);
 								if (!$created) {
 									$check		= false;
 									$messages	= "Data gagal dibuat.";
@@ -204,11 +204,11 @@ class MemberMasterController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param UpdateMemberMasterRequest $request
+     * @param UpdateTeacherMasterRequest $request
      * @param string $id
      * @return JsonResponse
      */
-    public function update(UpdateMemberMasterRequest $request, string $id): JsonResponse
+    public function update(UpdateTeacherMasterRequest $request, string $id): JsonResponse
     {
         $validated = $request->validated();
 
@@ -222,18 +222,18 @@ class MemberMasterController extends Controller
 
             if ($request->hasFile('file')) {
                 try {
-                    $Member_file = $request->file('file')->getClientOriginalName();
+                    $Teacher_file = $request->file('file')->getClientOriginalName();
                     $extension = $request->file('file')->getClientOriginalExtension();
-                    $Member_name = explode('.', str_replace(' ', '', $Member_file))[0] . '-' . now('Asia/Jakarta')->format('YmdHis') . '-' . rand(100000, 999999) . '.' . $extension;
-                    $request->file('file')->storeAs('/public/images/Member', $Member_name);
+                    $Teacher_name = explode('.', str_replace(' ', '', $Teacher_file))[0] . '-' . now('Asia/Jakarta')->format('YmdHis') . '-' . rand(100000, 999999) . '.' . $extension;
+                    $request->file('file')->storeAs('/public/images/Teacher', $Teacher_name);
 
-                    $validated['file'] = $Member_name;
+                    $validated['file'] = $Teacher_name;
                 } catch (Throwable $th) {
                     $logs->write("ERROR", $th->getMessage());
                 }
             }
 
-            $updated = $this->member_service->update((object)$validated, $id);
+            $updated = $this->Teacher_service->update((object)$validated, $id);
             if ($updated) {
                 $logs->write("INFO", "Successfully updated");
 
@@ -272,16 +272,7 @@ class MemberMasterController extends Controller
         try {
             DB::enableQueryLog();
 
-            $check      = $this->member_service->check($id);
-            $dibaca     = $check[0]->total ?? 0;
-
-            if($dibaca > 0){
-                $result['message'] = 'Member tidak bisa dihapus, karena sudah pernah baca buku';
-
-                return response()->json($result['message'], $result['status']);
-            }
-
-            $deleted    = $this->member_service->delete($id);
+            $deleted    = $this->Teacher_service->delete($id);
 
             $queries = DB::getQueryLog();
             for($q = 0; $q < count($queries); $q++) {

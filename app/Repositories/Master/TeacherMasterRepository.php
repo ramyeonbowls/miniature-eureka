@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-class MemberMasterRepository 
+class TeacherMasterRepository 
 {
 	/**
      * @param array $filter
@@ -32,7 +32,7 @@ class MemberMasterRepository
                 $join->on('a.id', '=', 'b.id');
             })
             ->where('a.client_id', '=', $client_id)
-            ->where('a.role', '=', 'member')
+            ->where('a.role', '=', 'teacher')
 			->get();
     }
 
@@ -56,9 +56,59 @@ class MemberMasterRepository
 					'created_at'    => $data->create_date
 				]);
 
+			$inserted = [
+				[
+					'username'			=> $user->email,
+					'menu_id'			=> 1,
+					'create_permission'	=> 1,
+					'read_permission'	=> 1,
+					'update_permission'	=> 1,
+					'delete_permission'	=> 1,
+					'print_permission'	=> 1,
+					'approve_permission'=> 1,
+					'created_at'		=> $data->create_date
+				],
+				[
+					'username'			=> $user->email,
+					'menu_id'			=> 4,
+					'create_permission'	=> 1,
+					'read_permission'	=> 1,
+					'update_permission'	=> 1,
+					'delete_permission'	=> 1,
+					'print_permission'	=> 1,
+					'approve_permission'=> 1,
+					'created_at'		=> $data->create_date
+				],
+				[
+					'username'			=> $user->email,
+					'menu_id'			=> 27,
+					'create_permission'	=> 1,
+					'read_permission'	=> 1,
+					'update_permission'	=> 1,
+					'delete_permission'	=> 1,
+					'print_permission'	=> 1,
+					'approve_permission'=> 1,
+					'created_at'		=> $data->create_date
+				],
+				[
+					'username'			=> $user->email,
+					'menu_id'			=> 29,
+					'create_permission'	=> 1,
+					'read_permission'	=> 1,
+					'update_permission'	=> 1,
+					'delete_permission'	=> 1,
+					'print_permission'	=> 1,
+					'approve_permission'=> 1,
+					'created_at'		=> $data->create_date
+				],
+			];
+
+			$acl = DB::table('web_menu_acls')
+				->insert($inserted);
+
 			return true;
 		} catch (\Exception $e) {
-			\Log::error('Create member failed => ' . $e->getMessage());
+			\Log::error('Create teacher failed => ' . $e->getMessage());
             return false;
         }
     }
@@ -69,7 +119,7 @@ class MemberMasterRepository
             'name' => $data->name,
             'email' => $data->email,
             'password' => Hash::make($data->password),
-            'role' => 'member',
+            'role' => 'teacher',
             'flag_approve' => 'Y',
             'email_verified_at' => $data->create_date,
             'created_at' => $data->create_date,
@@ -85,7 +135,7 @@ class MemberMasterRepository
     public function update(object $data, string $id): bool
     {
         return DB::transaction(function () use ($data, $id) {
-            return DB::table('users')->where('id', $id)->where('role', '=', 'member')
+            return DB::table('users')->where('id', $id)->where('role', '=', 'teacher')
                 ->update([
                     'description' => $data->desc,
                     'file' => $data->file,
@@ -115,9 +165,21 @@ class MemberMasterRepository
 
             DB::table('tattr_member')->where('id', $id)->where('client_id', $client_id)->delete();
 
-            $member = DB::table('users')->where('id', $id)->where('client_id', $client_id)->where('role', 'member');;
+			$teacher = DB::table('users')
+				->where('id', $id)
+				->where('client_id', $client_id)
+				->where('role', 'teacher')
+				->first();
 
-            return $member->delete();
+			if ($teacher) {
+				DB::table('web_menu_acls')->where('username', $teacher->email)->delete();
+
+				$teacher = DB::table('users')->where('id', $id)->where('client_id', $client_id)->where('role', 'teacher');
+
+				return $teacher->delete();
+			}
+
+			return false;
         });
     }
 

@@ -134,11 +134,15 @@ const routes = [
         name: 'parameter',
         component: () => import(/* webpackChunkName: "report/parameter" */ './components/setting/Parameter.vue'),
     },
-	
     {
         path: '/setting/quiz',
         name: 'quiz',
         component: () => import(/* webpackChunkName: "setting/quiz" */ './components/setting/Quiz.vue'),
+    },
+    {
+        path: '/master/master-teachers',
+        name: 'master_teachers',
+        component: () => import(/* webpackChunkName: "setting/master_teachers" */ './components/master/MasterTeachers.vue'),
     },
 ]
 

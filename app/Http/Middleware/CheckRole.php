@@ -15,9 +15,9 @@ class CheckRole
      * @param  string  $role
      * @return mixed
      */
-    public function handle(Request $request, Closure $next, $role)
+    public function handle(Request $request, Closure $next, ...$roles)
     {
-        if (!auth()->check() || auth()->user()->role !== $role) {
+        if (!auth()->check() || !in_array(auth()->user()->role, $roles)) {
             return redirect('/403');
         }
 

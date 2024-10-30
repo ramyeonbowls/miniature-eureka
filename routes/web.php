@@ -56,7 +56,7 @@ Route::post('/offline-visitor', [App\Http\Controllers\PengunjungOfflineControlle
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware('activated.user')->group(function() {
-        Route::group(['middleware' => ['role.user:admin']], function () {
+        Route::group(['middleware' => ['role.user:admin,teacher']], function () {
             Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index'])->name('admin');
             Route::get('/userinfo', [App\Http\Controllers\HomeController::class, 'userinfo'])->name('userinfo');
             Route::get('/dashAtas', [App\Http\Controllers\Core\Dashboard\DashboardController::class, 'dashAtas'])->name('dashAtas');
@@ -71,6 +71,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                         Route::apiResource('member-mst', MemberMasterController::class);
                         Route::apiResource('book-mst', BookMasterController::class);
                         Route::apiResource('library-officer-mst', LibraryOfficerMasterController::class);
+                        Route::apiResource('teacher-mst', TeacherMasterController::class);
                     });
 
                     Route::prefix('setting')->namespace('Setting')->group(function() {
