@@ -8,7 +8,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-center align-items-center flex-column">
                             <div class="avatar avatar-2xl">
-                                <img :src="'/images/logo/logo_small.png?' + Math.floor(Math.random() * (999 - 100 + 1)) + 100" />
+                                <img :src="'/storage/images/logo/logo_small.png?' + Math.floor(Math.random() * (999 - 100 + 1)) + 100" />
                             </div>
 
                             <h3 class="mt-3">{{ user.name }}</h3>
@@ -195,7 +195,7 @@
                                 <br>Scan untuk mengunjungi aplikasi
                             </div>
                             <div class="qr-code">
-                                <img src="/images/logo/qrcode.png" style="max-width: 200px; max-height: 200px;"/>
+                                <img src="/storage/images/logo/qrcode.png" style="max-width: 200px; max-height: 200px;"/>
                             </div>
                             <div class="textb">
                                 {{ form.field.info.instansi_name }}
@@ -234,7 +234,7 @@
                                 <br>Scan untuk kunjungan di lokasi
                             </div>
                             <div class="qr-code">
-                                <img src="/images/logo/qrcode_offline.png" style="max-width: 200px; max-height: 200px;"/>
+                                <img src="/storage/images/logo/qrcode_offline.png" style="max-width: 200px; max-height: 200px;"/>
                             </div>
                             <div class="textb">
                                 {{ form.field.info.instansi_name }}
@@ -295,8 +295,8 @@ export default {
             form:{
                 field:{
                     logo:{
-                        small: '/images/logo/logo_small.png',
-                        big: '/images/logo/logo.png',
+                        small: '/storage/images/logo/logo_small.png',
+                        big: '/storage/images/logo/logo.png',
                         newsmall: '',
                         newbig: ''
                     },

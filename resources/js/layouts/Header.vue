@@ -19,7 +19,7 @@
                             </div>
                             <div class="user-img d-flex align-items-center">
                                 <div class="avatar avatar-md">
-                                    <img :src="'/images/logo/logo_small.png?' + Math.floor(Math.random() * (999 - 100 + 1)) + 100" />
+                                    <img :src="'/storage/images/logo/logo_small.png?' + Math.floor(Math.random() * (999 - 100 + 1)) + 100" />
                                 </div>
                             </div>
                         </div>

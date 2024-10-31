@@ -7,8 +7,8 @@
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-        <link rel="shortcut icon" href="{{ asset('images/logo/favicon.svg?' . rand(10000, 99999)) }}" type="image/x-icon" />
-        <link rel="shortcut icon" href="{{ asset('images/logo/favicon.png?' . rand(10000, 99999)) }}" type="image/png" />
+        <link rel="shortcut icon" href="{{ asset('storage/images/logo/favicon.svg?' . rand(10000, 99999)) }}" type="image/x-icon" />
+        <link rel="shortcut icon" href="{{ asset('storage/images/logo/favicon.png?' . rand(10000, 99999)) }}" type="image/png" />
 
         <script type="text/javascript">
             if (window.top !== window.self) {

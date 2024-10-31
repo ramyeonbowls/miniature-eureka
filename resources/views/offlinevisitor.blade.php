@@ -5,7 +5,7 @@
         <div class="col-md-5 col-12">
             <div id="auth-left">
                 <div class="auth-logo">
-                    <a href="{{ url('/') }}"><img src="./images/logo/logo.png" alt="Logo" /></a>
+                    <a href="{{ url('/') }}"><img src="./storage/images/logo/logo.png" alt="Logo" /></a>
                 </div>
                 
                 @if($success)

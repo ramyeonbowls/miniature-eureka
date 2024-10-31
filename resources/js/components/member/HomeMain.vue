@@ -780,7 +780,7 @@ export default {
     }
 
     .background-populer {
-        background-image: url('/images/logo/buku-populer.jpg');
+        background-image: url('/storage/images/logo/buku-populer.jpg');
         background-size: cover;
         background-position: center;
         border-radius: 10px;

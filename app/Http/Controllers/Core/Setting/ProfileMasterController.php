@@ -140,7 +140,7 @@ class ProfileMasterController extends Controller
 			
 					// Resize and save the favicon image
 					imagecopyresampled($resizedImage, $source, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
-					$faviconPath = public_path('images/logo/' . $favicon_name);
+					$faviconPath = public_path('storage/images/logo/' . $favicon_name);
 			
 					switch (strtolower($extension)) {
 						case 'png':
