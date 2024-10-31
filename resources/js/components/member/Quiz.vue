@@ -73,7 +73,6 @@ export default {
 							cancelButtonText: 'Tutup'
 						})
 						.then(async (result) => {
-							console.log(result);
 							
 							if (result.isConfirmed) {
 								try {

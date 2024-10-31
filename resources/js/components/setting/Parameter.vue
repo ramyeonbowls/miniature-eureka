@@ -121,8 +121,6 @@ export default {
             Object.keys(this.form.param).forEach(value => {
                 form_data.append(value, this.form.param[value])
             })
-
-            console.log(form_data);
             
             await axios.post('/setting/appparam', form_data)
             .then((response) => {

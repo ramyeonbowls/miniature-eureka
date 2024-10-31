@@ -661,7 +661,6 @@ export default {
             axios.get('/dashAtas')
             .then((response) => {
 				loader.hide()
-				console.log(response);
 				
                 this.dashboard.atas.visitor	= response.data.visitor;
                 this.dashboard.atas.book	= response.data.book;
