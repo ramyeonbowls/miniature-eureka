@@ -56,52 +56,20 @@ class TeacherMasterRepository
 					'created_at'    => $data->create_date
 				]);
 
-			$inserted = [
-				[
-					'username'			=> $user->email,
-					'menu_id'			=> 1,
-					'create_permission'	=> 1,
-					'read_permission'	=> 1,
-					'update_permission'	=> 1,
-					'delete_permission'	=> 1,
-					'print_permission'	=> 1,
-					'approve_permission'=> 1,
-					'created_at'		=> $data->create_date
-				],
-				[
-					'username'			=> $user->email,
-					'menu_id'			=> 4,
-					'create_permission'	=> 1,
-					'read_permission'	=> 1,
-					'update_permission'	=> 1,
-					'delete_permission'	=> 1,
-					'print_permission'	=> 1,
-					'approve_permission'=> 1,
-					'created_at'		=> $data->create_date
-				],
-				[
-					'username'			=> $user->email,
-					'menu_id'			=> 27,
-					'create_permission'	=> 1,
-					'read_permission'	=> 1,
-					'update_permission'	=> 1,
-					'delete_permission'	=> 1,
-					'print_permission'	=> 1,
-					'approve_permission'=> 1,
-					'created_at'		=> $data->create_date
-				],
-				[
-					'username'			=> $user->email,
-					'menu_id'			=> 29,
-					'create_permission'	=> 1,
-					'read_permission'	=> 1,
-					'update_permission'	=> 1,
-					'delete_permission'	=> 1,
-					'print_permission'	=> 1,
-					'approve_permission'=> 1,
-					'created_at'		=> $data->create_date
-				],
-			];
+			$webmenus = [1, 4, 18, 27, 29];
+			for($i=0; $i<count($webmenus); $i++){
+				$inserted[] = [
+						'username'			=> $user->email,
+						'menu_id'			=> $webmenus[$i],
+						'create_permission'	=> 1,
+						'read_permission'	=> 1,
+						'update_permission'	=> 1,
+						'delete_permission'	=> 1,
+						'print_permission'	=> 1,
+						'approve_permission'=> 1,
+						'created_at'		=> $data->create_date
+				];
+			}
 
 			$acl = DB::table('web_menu_acls')
 				->insert($inserted);
