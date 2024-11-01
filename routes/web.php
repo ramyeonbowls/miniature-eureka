@@ -32,30 +32,32 @@ Auth::routes([
     'reset' => true
 ]);
 
-Route::post('/mregist', [App\Http\Controllers\Auth\RegisterController::class, 'mregist'])->name('mregist');
-Route::get('/getInfo', [App\Http\Controllers\MainController::class, 'getInfo'])->name('getInfo');
-Route::get('/getAppInfo', [App\Http\Controllers\MainController::class, 'getAppInfo'])->name('getAppInfo');
-Route::get('/getParam', [App\Http\Controllers\MainController::class, 'getParam'])->name('getParam');
-Route::get('/getBukuPopuler', [App\Http\Controllers\MainController::class, 'getBukuPopuler'])->name('getBukuPopuler');
-Route::get('/getBook', [App\Http\Controllers\MainController::class, 'getBook'])->name('getBook');
-Route::get('/getBanner', [App\Http\Controllers\MainController::class, 'getBanner'])->name('getBanner');
-Route::get('/getDetail', [App\Http\Controllers\MainController::class, 'getDetail'])->name('getDetail');
-Route::get('/getCategory', [App\Http\Controllers\MainController::class, 'getCategory'])->name('getCategory');
-Route::get('/getArticle', [App\Http\Controllers\MainController::class, 'getArticle'])->name('getArticle');
-Route::get('/getAllArticle', [App\Http\Controllers\MainController::class, 'getAllArticle'])->name('getAllArticle');
-Route::get('/getDetailArticle', [App\Http\Controllers\MainController::class, 'getDetailArticle'])->name('getDetailArticle');
-Route::get('/getNewCollection', [App\Http\Controllers\MainController::class, 'getNewCollection'])->name('getNewCollection');
-Route::get('/getProfile', [App\Http\Controllers\ProfileController::class, 'index'])->name('getProfile');
-Route::post('/UpdateProfile', [App\Http\Controllers\ProfileController::class, 'UpdateProfile'])->name('UpdateProfile');
+Route::middleware('destroy.session')->group(function() {
+    Route::post('/mregist', [App\Http\Controllers\Auth\RegisterController::class, 'mregist'])->name('mregist');
+    Route::get('/getInfo', [App\Http\Controllers\MainController::class, 'getInfo'])->name('getInfo');
+    Route::get('/getAppInfo', [App\Http\Controllers\MainController::class, 'getAppInfo'])->name('getAppInfo');
+    Route::get('/getParam', [App\Http\Controllers\MainController::class, 'getParam'])->name('getParam');
+    Route::get('/getBukuPopuler', [App\Http\Controllers\MainController::class, 'getBukuPopuler'])->name('getBukuPopuler');
+    Route::get('/getBook', [App\Http\Controllers\MainController::class, 'getBook'])->name('getBook');
+    Route::get('/getBanner', [App\Http\Controllers\MainController::class, 'getBanner'])->name('getBanner');
+    Route::get('/getDetail', [App\Http\Controllers\MainController::class, 'getDetail'])->name('getDetail');
+    Route::get('/getCategory', [App\Http\Controllers\MainController::class, 'getCategory'])->name('getCategory');
+    Route::get('/getArticle', [App\Http\Controllers\MainController::class, 'getArticle'])->name('getArticle');
+    Route::get('/getAllArticle', [App\Http\Controllers\MainController::class, 'getAllArticle'])->name('getAllArticle');
+    Route::get('/getDetailArticle', [App\Http\Controllers\MainController::class, 'getDetailArticle'])->name('getDetailArticle');
+    Route::get('/getNewCollection', [App\Http\Controllers\MainController::class, 'getNewCollection'])->name('getNewCollection');
+    Route::get('/getProfile', [App\Http\Controllers\ProfileController::class, 'index'])->name('getProfile');
+    Route::post('/UpdateProfile', [App\Http\Controllers\ProfileController::class, 'UpdateProfile'])->name('UpdateProfile');
 
-Route::apiResource('form-regis', App\Http\Controllers\FormRegisterController::class);
-Route::get('/agreement-letter', [App\Http\Controllers\FormRegisterController::class, 'exportPDF'])->name('agreement-letter');
+    Route::apiResource('form-regis', App\Http\Controllers\FormRegisterController::class);
+    Route::get('/agreement-letter', [App\Http\Controllers\FormRegisterController::class, 'exportPDF'])->name('agreement-letter');
 
-Route::get('/offline-visitor', [App\Http\Controllers\PengunjungOfflineController::class, 'index']);
-Route::post('/offline-visitor', [App\Http\Controllers\PengunjungOfflineController::class, 'store']);
+    Route::get('/offline-visitor', [App\Http\Controllers\PengunjungOfflineController::class, 'index']);
+    Route::post('/offline-visitor', [App\Http\Controllers\PengunjungOfflineController::class, 'store']);
+});
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::middleware('activated.user')->group(function() {
+    Route::middleware(['activated.user', 'destroy.session'])->group(function() {
         Route::group(['middleware' => ['role.user:admin,teacher']], function () {
             Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index'])->name('admin');
             Route::get('/userinfo', [App\Http\Controllers\HomeController::class, 'userinfo'])->name('userinfo');

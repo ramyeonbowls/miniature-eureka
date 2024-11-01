@@ -38,6 +38,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
         
         $middleware->alias([
+            'destroy.session' => \App\Http\Middleware\DestroySessionMiddleware::class,
             'role.user' => \App\Http\Middleware\CheckRole::class,
             'auth.role' => \App\Http\Middleware\DirectRole::class,
             'activated.user' => \App\Http\Middleware\ActivatedUser::class,
