@@ -144,6 +144,11 @@ const routes = [
         name: 'master_teachers',
         component: () => import(/* webpackChunkName: "setting/master_teachers" */ './components/master/MasterTeachers.vue'),
     },
+	{
+        path: '/teacher-account',
+        name: 'teacher_account',
+        component: () => import(/* webpackChunkName: "home/teacher_account" */ './components/ProfileTeacher.vue'),
+    },
 ]
 
 export default routes

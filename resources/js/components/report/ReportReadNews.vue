@@ -80,7 +80,7 @@
                 <table class="table table-striped" id="data_rst">
                     <thead>
                         <tr>
-                            <th>Penerbit Buku</th>
+                            <th>Nama WL</th>
                             <th>Provinsi</th>
                             <th>Kab/Kota</th>
                             <th>Jenis Fitur</th>

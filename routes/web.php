@@ -5,10 +5,6 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 
-Route::get('/', function () {
-    return view('main');
-});
-
 Route::get('/form-register', function () {
     return view('formregister');
 });
@@ -33,6 +29,10 @@ Auth::routes([
 ]);
 
 Route::middleware('destroy.session')->group(function() {
+	Route::get('/', function () {
+		return view('main');
+	});
+
     Route::post('/mregist', [App\Http\Controllers\Auth\RegisterController::class, 'mregist'])->name('mregist');
     Route::get('/getInfo', [App\Http\Controllers\MainController::class, 'getInfo'])->name('getInfo');
     Route::get('/getAppInfo', [App\Http\Controllers\MainController::class, 'getAppInfo'])->name('getAppInfo');
@@ -86,9 +86,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
                         Route::apiResource('layar-penulis-mst', LayarPenulisMasterController::class);
                         Route::apiResource('frasa-mst', FrasaMasterController::class);
                         Route::apiResource('quiz-mst', QuizMasterController::class);
-                        
+
                         Route::apiResource('profile', ProfileMasterController::class);
                         Route::apiResource('appparam', ParameterController::class);
+                        Route::apiResource('profile-teacher', ProfileTeacherMasterController::class);
                     });
                     
                     Route::prefix('report')->namespace('Report')->group(function() {

@@ -12,10 +12,10 @@ class DestroySessionMiddleware
         if (Auth::check()) {
             $user = Auth::user();
 
-            if (($user->role == 'admin' || $user->role == 'teacher') && ($request->path() == '/' || $request->path() == 'getInfo')) {
+            if (($user->role == 'admin' || $user->role == 'teacher') && $request->path() == '/') {
                 Auth::logout();
                 $request->session()->invalidate();
-                return view('main');
+                return redirect('/');
             }
 
             if ($user->role == 'member' && $request->path() == 'admin') {

@@ -29,7 +29,12 @@
                             <h6 class="dropdown-header">{{ user.name }}</h6>
                         </li>
                         <li>
-                            <router-link :to="{ name: 'my_account' }" class="dropdown-item"><i class="icon-mid bi bi-person me-2"></i> Profil Perpustakaan</router-link>
+							<template v-if="user.role=='teacher'">
+								<router-link :to="{ name: 'teacher_account' }" class="dropdown-item"><i class="icon-mid bi bi-person me-2"></i> Profil</router-link>
+							</template>
+							<template v-else>
+								<router-link :to="{ name: 'my_account' }" class="dropdown-item"><i class="icon-mid bi bi-person me-2"></i> Profil Perpustakaan</router-link>
+							</template>
                         </li>
                         <li>
                             <a class="dropdown-item" href="javascript:void(0);" @click.prevent="logout"><i class="icon-mid bi bi-box-arrow-left me-2"></i> Keluar</a>
