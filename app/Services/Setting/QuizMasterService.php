@@ -23,9 +23,9 @@ class QuizMasterService
      * @param array $filter
      * @return Collection
      */
-    public function get(array $filter = []): Collection
+    public function get($email, array $filter = []): Collection
     {
-        return new Collection($this->Quiz_repo->get($filter, $this->client_id));
+        return new Collection($this->Quiz_repo->get($filter, $this->client_id, $email));
     }
 
     /**

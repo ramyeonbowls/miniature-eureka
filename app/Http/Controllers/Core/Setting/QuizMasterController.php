@@ -43,12 +43,13 @@ class QuizMasterController extends Controller
     {
         $logs = new Logs(Arr::last(explode("\\", get_class())) . 'Log');
         $logs->write(__FUNCTION__, 'START');
+		$user = auth()->user();
 
         $results = [];
         try {
             DB::enableQueryLog();
 
-            $results = $this->Quiz_service->get();
+            $results = $this->Quiz_service->get($user->email);
 
             $queries = DB::getQueryLog();
 			for($q = 0; $q < count($queries); $q++) {
@@ -78,6 +79,7 @@ class QuizMasterController extends Controller
 		$request->validate([
             'id' => 'required|max:50',
             'title' => 'required',
+            'description' => 'required|max:255',
             'start_date' => 'required|max:19',
             'end_date' => 'required|max:19',
             'questions.*.id' => 'required|max:20',
@@ -179,6 +181,7 @@ class QuizMasterController extends Controller
         $request->validate([
             'id' => 'required|max:50',
             'title' => 'required',
+            'description' => 'required|max:255',
             'start_date' => 'required|max:19',
             'end_date' => 'required|max:19',
             'questions.*.id' => 'required|max:20',

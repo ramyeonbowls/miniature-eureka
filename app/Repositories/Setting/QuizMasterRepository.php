@@ -12,13 +12,14 @@ class QuizMasterRepository
      * @param array $filter
      * @return Collection
      */
-    public function get($filter, $client_id): Collection
+    public function get($filter, $client_id, $email): Collection
     {
         return DB::table('tquiz_h as a')
 			->select(
 				'a.id',
 				'a.client_id',
 				'a.title',
+				'a.description',
 				'a.start_date',
 				'a.end_date',
 				'a.created_at',
@@ -27,6 +28,7 @@ class QuizMasterRepository
 				'a.update_by',
 			)
             ->where('a.client_id', '=', $client_id)
+            ->where('a.created_by', '=', $email)
 			->get();
     }
 
@@ -74,6 +76,7 @@ class QuizMasterRepository
 				'client_id' => $client_id,
 				'id' => $data->id,
 				'title' => $data->title,
+				'description' => $data->description,
 				'start_date' => $data->start_date,
 				'end_date' => $data->end_date,
 				'created_by' => $data->create_by,
@@ -142,6 +145,7 @@ class QuizMasterRepository
 			$quiz_h = DB::table('tquiz_h')->where('id', $id)->where('client_id', '=', $client_id)
 				->update([
 				'title' => $data->title,
+				'description' => $data->description,
 				'start_date' => $data->start_date,
 				'end_date' => $data->end_date,
 				'update_by' => $data->modified_by,

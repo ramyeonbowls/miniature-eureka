@@ -69,6 +69,14 @@
 																<ErrorMessage name="title" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
 															</div>
 															<div class="col-md-2">
+																<label for="desc">Deskripsi <span class="text-danger">*</span></label>
+															</div>
+															<div class="col-md-10 form-group">
+																<Field as="textarea" id="description" v-model="form.field.description" class="form-control" placeholder="Tulis deskripsi disini" name="description" maxlength="255" />
+																<br><small class="text-muted">{{ remainingCharacters }}/{{ maxLength }}</small>
+																<ErrorMessage name="description" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
+															</div>
+															<div class="col-md-2">
 																<label for="start_date">Tanggal Mulai <span class="text-danger">*</span></label>
 															</div>
 															<div class="col-md-4 form-group">
@@ -249,11 +257,13 @@ export default {
                 field: {
                     id: '',
                     title: '',
+                    description: '',
                     start_date: '',
                     end_date: '',
                     questions: [],
                 }
             },
+			maxLength: 255,
 			errors: {}
         }
     },
@@ -340,6 +350,7 @@ export default {
         clearForm() {
             this.form.field.id				= ''
             this.form.field.title			= ''
+            this.form.field.description		= ''
             this.form.field.start_date		= ''
             this.form.field.end_date		= ''
 			this.form.field.questions		= []
@@ -363,6 +374,7 @@ export default {
 
                 this.form.field.id			= this.selected[0].id
                 this.form.field.title		= this.selected[0].title
+                this.form.field.description	= this.selected[0].description
                 this.form.field.start_date	= this.selected[0].start_date
                 this.form.field.end_date	= this.selected[0].end_date
 
@@ -640,6 +652,10 @@ export default {
         aPermitted() {
             return this.menu.permission.approve
         },
+
+		remainingCharacters() {
+            return this.maxLength - this.form.field.description.length;
+        }
     },
 
 	watch: {

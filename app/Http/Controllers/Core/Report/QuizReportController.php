@@ -46,6 +46,7 @@ class QuizReportController extends Controller
 
         $logs = new Logs(Arr::last(explode("\\", get_class())) . 'Log');
         $logs->write(__FUNCTION__, 'START');
+		$user = auth()->user();
 
         $results = [];
         try {
@@ -56,6 +57,7 @@ class QuizReportController extends Controller
             $filter['WL']           = $request->WL ?? '';
             $filter['START_DATE']   = $request->START_DATE ?? '';
             $filter['END_DATE']     = $request->END_DATE ?? '';
+            $filter['created_by']	= $user->email;
 
             $results = $this->loans_service->get($filter);
 

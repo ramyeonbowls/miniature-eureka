@@ -53,7 +53,7 @@
 									<div v-if="data.type === 'checklist'">
 										<div v-for="(ans, ii) in data.answer" :key="ans.id">
 											<div class="form-check">
-												<input type="checkbox" :id="data.id + '.' + ans.id" v-model="ans.checked" @change="updateChecklist(data.id, ans.id)" :value="ans.id" class="form-check-input" required>
+												<input type="checkbox" :id="data.id + '.' + ans.id" v-model="ans.checked" :value="ans.id" class="form-check-input" required>
 												<label :for="data.id + '.' + ans.id">
 													{{ ans.description }}
 												</label>
@@ -208,7 +208,6 @@ export default {
                     type: "checklist"
                 });
             } else {
-               
                 const idx = this.form.field.answers.findIndex(a => a.questionId === questionId && a.selectedAnswer === answerId);
                 if (idx >= 0) {
                     this.form.field.answers.splice(idx, 1);
@@ -225,42 +224,43 @@ export default {
         },
 
 		SetAnswer(){
-			this.form.field.answers = [];
-            this.question.forEach(q => {
-                if (q.type === 'checklist') {
-                    q.answer.forEach(ans => {
-                        if (ans.checked) {
-                            this.form.field.answers.push({
-                                answerPoint: 10,
-                                questionId: q.id,
-                                questionPoint: q.point,
-                                selectedAnswer: ans.id,
-                                type: q.type
-                            });
-                        }
-                    });
-                } else if (q.type === 'multiple') {
-                    const selectedAnswer = this.selectedMultipleAnswer[q.id];
-                    if (selectedAnswer) {
-                        this.form.field.answers.push({
-                            answerPoint: 10,
-                            questionId: q.id,
-                            questionPoint: q.point,
-                            selectedAnswer: selectedAnswer,
-                            type: q.type
-                        });
-                    }
-                } else if (q.type === 'essay') {
-                    const selectedAnswer = this.selectedEssayAnswer[q.id];
-                    this.form.field.answers.push({
-                        answerPoint: selectedAnswer ? q.point : 0,
-                        questionId: q.id,
-                        questionPoint: q.point,
-                        selectedAnswer: selectedAnswer || '',
-                        type: q.type
-                    });
-                }
-            });
+			this.form.field.answers = []
+			this.question.forEach(q => {
+				if (q.type === 'checklist') {
+				q.answer.forEach(ans => {
+					if (ans.checked) {
+					this.form.field.answers.push({
+						answerPoint: ans.point,
+						questionId: q.id,
+						questionPoint: q.point,
+						selectedAnswer: ans.id,
+						type: q.type
+					});
+					}
+				});
+				} else if (q.type === 'multiple') {
+				const selectedAnswer = this.selectedMultipleAnswer[q.id];
+				if (selectedAnswer) {
+					const ans = q.answer.find(a => a.id === selectedAnswer);
+					this.form.field.answers.push({
+					answerPoint: ans ? ans.point : 0,
+					questionId: q.id,
+					questionPoint: q.point,
+					selectedAnswer: selectedAnswer,
+					type: q.type
+					});
+				}
+				} else if (q.type === 'essay') {
+					const selectedAnswer = this.selectedEssayAnswer[q.id];
+					this.form.field.answers.push({
+						answerPoint: selectedAnswer ? q.point : 0,
+						questionId: q.id,
+						questionPoint: q.point,
+						selectedAnswer: selectedAnswer || '',
+						type: q.type
+					});
+				}
+			});
 
             const isValid = this.validateAnswer()
 			if (isValid) {
