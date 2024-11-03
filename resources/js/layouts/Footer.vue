@@ -4,7 +4,7 @@
             <p>v 1.0.0</p>
         </div>
         <div class="float-end">
-            <p>Under <a href="#">Development</a></p>
+            <!-- <p>Under <a href="#">Development</a></p> -->
         </div>
     </div>
 </template>
