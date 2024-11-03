@@ -51,7 +51,7 @@
 								<div class="col-12 mb-2 mt-2">
 									{{ i + 1 }}. {{ data.description }}
 									<div v-if="data.type === 'checklist'">
-										<div v-for="(ans, ii) in data.answer" :key="ans.id">
+										<div v-for="(ans, ii) in data.answer" :key="ans.id" class="mx-3">
 											<div class="form-check">
 												<input type="checkbox" :id="data.id + '.' + ans.id" v-model="ans.checked" :value="ans.id" class="form-check-input" required>
 												<label :for="data.id + '.' + ans.id">
@@ -61,7 +61,7 @@
 										</div>
 									</div>
 									<div v-if="data.type === 'multiple'">
-										<div v-for="(ans, ii) in data.answer" :key="ans.id">
+										<div v-for="(ans, ii) in data.answer" :key="ans.id" class="mx-3">
 											<div class="form-check">
 												<input class="form-check-input" type="radio" :id="data.id + '.' + ans.id" :name="data.id" v-model="selectedMultipleAnswer[data.id]" :value="ans.id" required>
 												<label class="form-check-label" :for="data.id + '.' + ans.id">
@@ -70,7 +70,7 @@
 											</div>
 										</div>
 									</div>
-									<div v-if="data.type === 'essay'">
+									<div v-if="data.type === 'essay'" class="mx-3">
 										<div class="form-group with-title mb-3">
 											<textarea class="form-control" :id="data.id" rows="3" v-model="selectedEssayAnswer[data.id]" required>
 											</textarea>
