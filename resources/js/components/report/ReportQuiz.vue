@@ -107,7 +107,10 @@
                 </div>
                 <div class="modal-body">
 					<div class="modal-header">
-						{{ selected[0].title }}
+						<div v-if="selected.length > 0">
+							{{ selected[0].title }}
+
+						</div>
 					</div>
                     <div v-for="(data, i) in detail" :key="i" class="card mb-0 py-0">
 						<div class="card-body">
