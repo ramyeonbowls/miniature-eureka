@@ -8,6 +8,7 @@ const routes = [
         path: '/admin',
         name: 'home',
         component: () => import(/* webpackChunkName: "home" */ './components/Home.vue'),
+		props: route => ({ user: route.meta.user })
     },
     {
         path: '/my-account',
@@ -148,6 +149,11 @@ const routes = [
         path: '/teacher-account',
         name: 'teacher_account',
         component: () => import(/* webpackChunkName: "home/teacher_account" */ './components/ProfileTeacher.vue'),
+    },
+    {
+        path: '/report/report-quiz',
+        name: 'report_quiz',
+        component: () => import(/* webpackChunkName: "report/report_quiz" */ './components/report/ReportQuiz.vue'),
     },
 ]
 

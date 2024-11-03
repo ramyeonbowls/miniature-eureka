@@ -1,259 +1,266 @@
 <template>
     <div class="page-heading">
-        <h3>Dashboard</h3>
-    </div>
+		<template v-if="user.role=='admin'">
+			<h3>Dashboard</h3>
+		</template>
+		<template v-else>
+			<h3>Selamat Datang, {{ user.name }}</h3>
+		</template>
+	</div>
     <div class="page-content">
-        <section class="row">
-            <div class="col-12 col-lg-12">
-                <div class="row">
-                    <div class="col-6 col-lg-3 col-md-6">
-                        <div class="card" style="height: 150px;">
-                            <div class="card-body px-4 py-4-5">
-                                <div class="row">
-                                    <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
-                                        <div class="stats-icon purple mb-2">
-                                            <i class="iconly-boldShow"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                        <h6 class="text-muted font-semibold">Data Pengunjung</h6>
-                                        <h6 class="font-extrabold mb-0">{{ dashboard.atas.visitor }}</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 col-lg-3 col-md-6">
-                        <div class="card" style="height: 150px;">
-                            <div class="card-body px-4 py-4-5">
-                                <div class="row">
-                                    <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
-                                        <div class="stats-icon blue mb-2">
-                                            <i class="iconly-boldBookmark"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                        <h6 class="text-muted font-semibold">Data Buku</h6>
-                                        <h6 class="font-extrabold mb-0">{{ dashboard.atas.book }}</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 col-lg-3 col-md-6">
-                        <div class="card" style="height: 150px;">
-                            <div class="card-body px-4 py-4-5">
-                                <div class="row">
-                                    <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
-                                        <div class="stats-icon green mb-2">
-                                            <i class="iconly-boldUser1"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                        <h6 class="text-muted font-semibold">Data Member</h6>
-                                        <h6 class="font-extrabold mb-0">{{ dashboard.atas.member }}</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 col-lg-3 col-md-6">
-                        <div class="card" style="height: 150px;">
-                            <div class="card-body px-4 py-4-5">
-                                <div class="row">
-                                    <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
-                                        <div class="stats-icon red mb-2">
-                                            <i class="iconly-boldBuy"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                        <h6 class="text-muted font-semibold">Data PO</h6>
-                                        <h6 class="font-extrabold mb-0">{{ dashboard.atas.po }}</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-								<div class="row">
-									<div class="col-10 text-start">
-										<h4>Jumlah Pengunjung Harian</h4>
-									</div>
-									<div class="col-2 text-end">
-										<div class="buttons">
-											<a href="#" class="btn icon icon-left btn-primary" data-bs-toggle="modal" data-bs-target="#filter-visit-daily"><i class="bi bi-filter-square-fill"></i> Filter</a>
+		<template :v-show="user.role=='admin'">
+			<section class="row">
+				<div class="col-12 col-lg-12">
+					<div class="row">
+						<div class="col-6 col-lg-3 col-md-6">
+							<div class="card" style="height: 150px;">
+								<div class="card-body px-4 py-4-5">
+									<div class="row">
+										<div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+											<div class="stats-icon purple mb-2">
+												<i class="iconly-boldShow"></i>
+											</div>
 										</div>
-									</div>
-								</div>
-                            </div>
-                            <div class="card-body">
-                                <div id="chart-visit-daily"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4>Jumlah Pembaca Harian</h4>
-                            </div>
-                            <div class="card-body">
-                                <div id="chart-read-daily"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4>Jumlah Pengunjung Bulanan</h4>
-                            </div>
-                            <div class="card-body">
-                                <div id="chart-profile-visit"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4>Jumlah Pembaca Bulanan</h4>
-                            </div>
-                            <div class="card-body">
-                                <div id="chart-read-month"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 col-xl-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4>Pertumbuhan Member</h4>
-                            </div>
-                            <div class="card-body">
-                                <div id="area"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-xl-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4>Top 10 Member Baca Buku</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-striped" id="table_member">
-                                        <thead>
-                                            <tr>
-                                                <th>Foto</th>
-                                                <th>Nama</th>
-                                                <th>Total Jam</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-xl-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4>Top 10 Buku Dibaca</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-striped" id="table_book">
-                                        <thead>
-                                            <tr>
-                                                <th>Cover</th>
-                                                <th>Judul</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-xl-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4>Katalog Buku</h4>
-                            </div>
-                            <div class="card-body">
-                                <CarouselHome></CarouselHome>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-		<!-- filter visit daily modal -->
-		<div class="modal fade text-left modal-borderless" id="filter-visit-daily" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-			<div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title">Filter</h5>
-						<button type="button" class="close rounded-pill" data-bs-dismiss="modal" aria-label="Close">
-							<i data-feather="x"></i>
-						</button>
-					</div>
-					<div class="modal-body">
-						<div class="row">
-							<div class="col-md-6 col-6">
-								<div class="row">
-									<div class="col-md-12 mb-12">
-										<div class="form-group">
-											<label for="basicSelect1" class="form-label">Provinsi</label>
-											<select class="form-select" id="basicSelect1" v-model="filter.provinsi" @change="getKabupaten">
-												<option value="">--</option>
-												<option v-for="(prov, key) in option.optProv" :key="key" :value="prov.provinsi_id">{{ prov.provinsi_id +" "+ prov.provinsi_name }}</option>
-											</select>
-										</div>
-									</div>
-									<div class="col-md-12 mb-12">
-										<div class="form-group">
-											<label for="basicSelect2" class="form-label">Kabupaten/Kota</label>
-											<select class="form-select" id="basicSelect2" v-model="filter.kabupaten" @change="getWhiteLabel">
-												<option value="">--</option>
-												<option v-for="(kab, key) in option.optKab" :key="key" :value="kab.kabupaten_id">{{ kab.kabupaten_id +" "+ kab.kabupaten_name }}</option>
-											</select>
+										<div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+											<h6 class="text-muted font-semibold">Data Pengunjung</h6>
+											<h6 class="font-extrabold mb-0">{{ dashboard.atas.visitor }}</h6>
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class="col-md-6 col-6">
-								<div class="row">
-									<div class="col-md-12 mb-12">
-										<div class="form-group">
-											<label for="basicSelect3" class="form-label">White Label</label>
-											<select class="form-select" id="basicSelect3" v-model="filter.wl">
-												<option value="">--</option>
-												<option v-for="(inst, key) in option.optWL" :key="key" :value="inst.instansi_name">{{ inst.instansi_name }}</option>
-											</select>
+						</div>
+						<div class="col-6 col-lg-3 col-md-6">
+							<div class="card" style="height: 150px;">
+								<div class="card-body px-4 py-4-5">
+									<div class="row">
+										<div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+											<div class="stats-icon blue mb-2">
+												<i class="iconly-boldBookmark"></i>
+											</div>
+										</div>
+										<div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+											<h6 class="text-muted font-semibold">Data Buku</h6>
+											<h6 class="font-extrabold mb-0">{{ dashboard.atas.book }}</h6>
 										</div>
 									</div>
-									<div class="col-md-12 mb-12">
-										<div class="form-group">
-											<label for="sdate" class="form-label">Tanggal</label>
-											<Flatpickr v-model="filter.date" class="form-control flatpickr-range" :config="configdate" placeholder="Select date.."></Flatpickr>
+								</div>
+							</div>
+						</div>
+						<div class="col-6 col-lg-3 col-md-6">
+							<div class="card" style="height: 150px;">
+								<div class="card-body px-4 py-4-5">
+									<div class="row">
+										<div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+											<div class="stats-icon green mb-2">
+												<i class="iconly-boldUser1"></i>
+											</div>
+										</div>
+										<div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+											<h6 class="text-muted font-semibold">Data Member</h6>
+											<h6 class="font-extrabold mb-0">{{ dashboard.atas.member }}</h6>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-6 col-lg-3 col-md-6">
+							<div class="card" style="height: 150px;">
+								<div class="card-body px-4 py-4-5">
+									<div class="row">
+										<div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+											<div class="stats-icon red mb-2">
+												<i class="iconly-boldBuy"></i>
+											</div>
+										</div>
+										<div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+											<h6 class="text-muted font-semibold">Data PO</h6>
+											<h6 class="font-extrabold mb-0">{{ dashboard.atas.po }}</h6>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-primary ms-1" data-bs-dismiss="modal" @click="ExecuteVisitDaily">
-							<i class="bi bi-file-earmark-excel-fill"></i> Proses Data
-						</button>
+					<div class="row">
+						<div class="col-12">
+							<div class="card">
+								<div class="card-header">
+									<div class="row">
+										<div class="col-10 text-start">
+											<h4>Jumlah Pengunjung Harian</h4>
+										</div>
+										<div class="col-2 text-end">
+											<div class="buttons">
+												<a href="#" class="btn icon icon-left btn-primary" data-bs-toggle="modal" data-bs-target="#filter-visit-daily"><i class="bi bi-filter-square-fill"></i> Filter</a>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="card-body">
+									<div id="chart-visit-daily"></div>
+								</div>
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="card">
+								<div class="card-header">
+									<h4>Jumlah Pembaca Harian</h4>
+								</div>
+								<div class="card-body">
+									<div id="chart-read-daily"></div>
+								</div>
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="card">
+								<div class="card-header">
+									<h4>Jumlah Pengunjung Bulanan</h4>
+								</div>
+								<div class="card-body">
+									<div id="chart-profile-visit"></div>
+								</div>
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="card">
+								<div class="card-header">
+									<h4>Jumlah Pembaca Bulanan</h4>
+								</div>
+								<div class="card-body">
+									<div id="chart-read-month"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12 col-xl-12">
+							<div class="card">
+								<div class="card-header">
+									<h4>Pertumbuhan Member</h4>
+								</div>
+								<div class="card-body">
+									<div id="area"></div>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-xl-12">
+							<div class="card">
+								<div class="card-header">
+									<h4>Top 10 Member Baca Buku</h4>
+								</div>
+								<div class="card-body">
+									<div class="table-responsive">
+										<table class="table table-striped" id="table_member">
+											<thead>
+												<tr>
+													<th>Foto</th>
+													<th>Nama</th>
+													<th>Total Jam</th>
+												</tr>
+											</thead>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-xl-12">
+							<div class="card">
+								<div class="card-header">
+									<h4>Top 10 Buku Dibaca</h4>
+								</div>
+								<div class="card-body">
+									<div class="table-responsive">
+										<table class="table table-striped" id="table_book">
+											<thead>
+												<tr>
+													<th>Cover</th>
+													<th>Judul</th>
+												</tr>
+											</thead>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-xl-12">
+							<div class="card">
+								<div class="card-header">
+									<h4>Katalog Buku</h4>
+								</div>
+								<div class="card-body">
+									<CarouselHome></CarouselHome>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+	
+			<!-- filter visit daily modal -->
+			<div class="modal fade text-left modal-borderless" id="filter-visit-daily" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+				<div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">Filter</h5>
+							<button type="button" class="close rounded-pill" data-bs-dismiss="modal" aria-label="Close">
+								<i data-feather="x"></i>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="row">
+								<div class="col-md-6 col-6">
+									<div class="row">
+										<div class="col-md-12 mb-12">
+											<div class="form-group">
+												<label for="basicSelect1" class="form-label">Provinsi</label>
+												<select class="form-select" id="basicSelect1" v-model="filter.provinsi" @change="getKabupaten">
+													<option value="">--</option>
+													<option v-for="(prov, key) in option.optProv" :key="key" :value="prov.provinsi_id">{{ prov.provinsi_id +" "+ prov.provinsi_name }}</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-md-12 mb-12">
+											<div class="form-group">
+												<label for="basicSelect2" class="form-label">Kabupaten/Kota</label>
+												<select class="form-select" id="basicSelect2" v-model="filter.kabupaten" @change="getWhiteLabel">
+													<option value="">--</option>
+													<option v-for="(kab, key) in option.optKab" :key="key" :value="kab.kabupaten_id">{{ kab.kabupaten_id +" "+ kab.kabupaten_name }}</option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6 col-6">
+									<div class="row">
+										<div class="col-md-12 mb-12">
+											<div class="form-group">
+												<label for="basicSelect3" class="form-label">White Label</label>
+												<select class="form-select" id="basicSelect3" v-model="filter.wl">
+													<option value="">--</option>
+													<option v-for="(inst, key) in option.optWL" :key="key" :value="inst.instansi_name">{{ inst.instansi_name }}</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-md-12 mb-12">
+											<div class="form-group">
+												<label for="sdate" class="form-label">Tanggal</label>
+												<Flatpickr v-model="filter.date" class="form-control flatpickr-range" :config="configdate" placeholder="Select date.."></Flatpickr>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary ms-1" data-bs-dismiss="modal" @click="ExecuteVisitDaily">
+								<i class="bi bi-file-earmark-excel-fill"></i> Proses Data
+							</button>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<!-- filter visit daily modal -->
+			<!-- filter visit daily modal -->
+		</template>
     </div>
 </template>
 
@@ -263,6 +270,13 @@ import CarouselHome from './../layouts/Carousel.vue'
 
 let table_members, table_books
 export default {
+	props: {
+        user: {
+            type: Object,
+            required: true
+        }
+    },
+
     components: {
         CarouselHome,
     },

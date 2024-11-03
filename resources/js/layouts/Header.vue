@@ -48,31 +48,32 @@
 
 <script>
 export default {
-    name: 'headerItems',
-
-    data() {
-        return {
-            user: {},
+	props: {
+        user: {
+            type: Object,
+            required: true
         }
     },
 
+    name: 'headerItems',
+
     mounted() {
-        this.userinfo()
+        // this.userinfo()
     },
 
     methods: {
-        userinfo() {
-            this.user = {}
+        // userinfo() {
+        //     this.user = {}
 
-            window.axios
-                .get('/userinfo')
-                .then((response) => {
-                    this.user = response.data
-                })
-                .catch((e) => {
-                    console.error(e)
-                })
-        },
+        //     window.axios
+        //         .get('/userinfo')
+        //         .then((response) => {
+        //             this.user = response.data
+        //         })
+        //         .catch((e) => {
+        //             console.error(e)
+        //         })
+        // },
 
         logout() {
 			let loader = this.$loading.show();

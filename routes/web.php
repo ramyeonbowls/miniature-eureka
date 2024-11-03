@@ -113,6 +113,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
                         Route::post('read-fitur-xls', 'ReadFiturReportController@ExportXLS')->name('read-fitur-xls');
 						Route::get('library-officer-rpt', 'LibraryOfficerReportController@index')->name('library-officer-rpt');
                         Route::post('library-officer-xls', 'LibraryOfficerReportController@ExportXLS')->name('library-officer-xls');
+						Route::get('quiz-rpt', 'QuizReportController@index')->name('quiz-rpt');
+						Route::get('quiz-dtl', 'QuizReportController@detail')->name('quiz-dtl');
+                        Route::post('quiz-xls', 'QuizReportController@ExportXLS')->name('quiz-xls');
                     });
                 });
             }); 

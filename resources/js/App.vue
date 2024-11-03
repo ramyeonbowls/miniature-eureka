@@ -5,10 +5,10 @@
         </div>
         <div id="main" class="layout-navbar navbar-fixed">
             <header>
-                <headerItems></headerItems>
+                <headerItems :user="user"></headerItems>
             </header>
             <div id="main-content">
-                <router-view></router-view>
+                <router-view :user="user"></router-view>
             </div>
             <footer>
                 <footerItems></footerItems>
@@ -29,7 +29,17 @@ export default {
         footerItems,
     },
 
+	data() {
+        return {
+            user: {
+                role: ''
+            }
+        }
+    },
+
     mounted() {
+		this.userinfo()
+
         document.addEventListener('DOMContentLoaded', () => {
             let loader = this.$loading.show()
             setTimeout(() => {
@@ -38,7 +48,20 @@ export default {
         })
     },
 
-    methods: {},
+    methods: {
+		userinfo() {
+            this.user = {}
+
+            window.axios
+                .get('/userinfo')
+                .then((response) => {
+                    this.user = response.data
+                })
+                .catch((e) => {
+                    console.error(e)
+                })
+        },
+	},
 
     computed: {},
 }
