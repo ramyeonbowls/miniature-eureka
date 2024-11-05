@@ -1,14 +1,12 @@
 <template>
-    <div class="page-heading">
-		<template v-if="user.role=='admin'">
-			<h3>Dashboard</h3>
-		</template>
-		<template v-else>
-			<h3>Selamat Datang, {{ user.name }}</h3>
-		</template>
+    <div class="page-heading" v-if="welcome">
+		<p>
+			<h3 class="text-muted">Halo, {{ user.name }}</h3>
+		</p>
+		<h3>Selamat datang di {{ user.appname }}</h3>
 	</div>
     <div class="page-content">
-		<template :v-show="user.role=='admin'">
+		<template v-if="user.role=='admin'">
 			<section class="row">
 				<div class="col-12 col-lg-12">
 					<div class="row">
@@ -82,19 +80,13 @@
 						</div>
 					</div>
 					<div class="row">
+						<div class="buttons text-end">
+							<a href="#" class="btn icon icon-left btn-primary" data-bs-toggle="modal" data-bs-target="#filter-visit-daily"><i class="bi bi-filter-square-fill"></i> Filter</a>
+						</div>
 						<div class="col-12">
 							<div class="card">
 								<div class="card-header">
-									<div class="row">
-										<div class="col-10 text-start">
-											<h4>Jumlah Pengunjung Harian</h4>
-										</div>
-										<div class="col-2 text-end">
-											<div class="buttons">
-												<a href="#" class="btn icon icon-left btn-primary" data-bs-toggle="modal" data-bs-target="#filter-visit-daily"><i class="bi bi-filter-square-fill"></i> Filter</a>
-											</div>
-										</div>
-									</div>
+									<h4>Jumlah Pengunjung Harian</h4>
 								</div>
 								<div class="card-body">
 									<div id="chart-visit-daily"></div>
@@ -283,6 +275,7 @@ export default {
 
     data() {
         return {
+			welcome: false,
             data_members: [],
 			configdate: {
                 dateFormat: 'Y-m-d',
@@ -338,11 +331,7 @@ export default {
     },
 
     mounted() {
-        this.getdashAtas()
-        this.__Chart()
-        this.__DailyChart()
-        this.__randomDataMember()
-        this.getProvinsi()
+		this.execDashboard()
 
         let _row = this
         $(document).ready(function () {
@@ -402,6 +391,20 @@ export default {
     },
 
     methods: {
+		execDashboard() {
+			if (this.user.role === 'admin') {
+				this.$nextTick(() => {
+					this.getdashAtas()
+					this.__Chart()
+					this.__DailyChart()
+					this.__randomDataMember()
+					this.getProvinsi()
+				});
+			} else if (this.user.role === 'teacher') {
+				this.welcome = true
+			}
+		},
+
         __randomDataMember() {
             this.data_members = []
             let names = ['John Doe', 'Jane Smith', 'Alice Johnson', 'Bob Brown', 'Charlie Wilson', 'Emily Davis', 'Michael Taylor', 'Sophia Martinez', 'William Lee', 'Olivia Anderson']
@@ -672,9 +675,10 @@ export default {
 
 		getdashAtas() {
             let loader = this.$loading.show()
-            axios.get('/dashAtas')
+            axios.get('/dashboard/dashAtas')
             .then((response) => {
 				loader.hide()
+				this.welcome = true
 				
                 this.dashboard.atas.visitor	= response.data.visitor;
                 this.dashboard.atas.book	= response.data.book;
@@ -784,6 +788,14 @@ export default {
 		}
     },
 
-    computed: {},
+	watch: {
+		user: {
+			handler() {
+				this.execDashboard();
+			},
+			immediate: true,
+			deep: true
+		}
+	}
 }
 </script>

@@ -80,6 +80,37 @@ class DashboardController extends Controller
         return response()->json($results, 200);
     }
 
+
+    public function VisitDaily(Request $request)
+    {
+		$logs = new Logs(Arr::last(explode("\\", get_class())) . 'Log');
+        $logs->write(__FUNCTION__, "START");
+        DB::enableQueryLog();
+
+		if($this->isDinas['status']){
+			$client_id	= $this->getClientID($this->client_id, $this->isDinas);
+		}else{
+			$client_id	= [$this->client_id];
+		}
+
+		$days = $this->getDateRangeArray($request->start_date, $request->end_date);
+
+		$results = [
+			'days'		=> $days,
+		];
+
+		$queries = DB::getQueryLog();
+        for($q = 0; $q < count($queries); $q++) {
+            $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
+            $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+            $logs->write('SQL', $sql);
+        }
+
+        $logs->write(__FUNCTION__, "STOP\r\n");
+
+        return response()->json($results, 200);
+    }
+
 	private function getClientID($client_id, $isDinas)
 	{
 		$sql = DB::table('tclient as a')
@@ -98,5 +129,22 @@ class DashboardController extends Controller
 		$results = $sql->get()->pluck('client_id');
 
 		return $results;
+	}
+
+	private function getDateRangeArray($start, $end) {
+		// Create a collection to hold the date range
+		$dateArray = [];
+	
+		// Create Carbon instances from the provided dates
+		$startDate = Carbon::parse($start);
+		$endDate = Carbon::parse($end);
+	
+		// Loop through the dates from start to end
+		while ($startDate->lte($endDate)) {
+			$dateArray[] = $startDate->format('Y-m-d'); // Format the date as needed
+			$startDate->addDay(); // Move to the next day
+		}
+	
+		return $dateArray;
 	}
 }

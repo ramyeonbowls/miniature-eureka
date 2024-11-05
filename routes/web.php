@@ -61,13 +61,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::group(['middleware' => ['role.user:admin,teacher']], function () {
             Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index'])->name('admin');
             Route::get('/userinfo', [App\Http\Controllers\HomeController::class, 'userinfo'])->name('userinfo');
-            Route::get('/dashAtas', [App\Http\Controllers\Core\Dashboard\DashboardController::class, 'dashAtas'])->name('dashAtas');
+            
             Route::get('/my-web-menu', [App\Http\Controllers\HomeController::class, 'webMenuAcl'])->name('web_menu_acl');
     
             Route::middleware([App\Http\Middleware\IfRequestAjax::class])->group(function() {
                 Route::namespace('App\Http\Controllers\Core')->group(function() {
                     Route::apiResource('web-access-log', WebAccessLogController::class);
                     Route::post('getOpt', 'OptionController@option')->name('getOpt');
+
+					Route::prefix('dashboard')->namespace('Dashboard')->group(function() {
+						Route::get('dashAtas', 'DashboardController@dashAtas')->name('dashAtas');
+						Route::get('VisitDaily', 'DashboardController@VisitDaily')->name('VisitDaily');
+                    });
     
                     Route::prefix('master')->namespace('Master')->group(function() {
                         Route::apiResource('member-mst', MemberMasterController::class);

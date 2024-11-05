@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Logs;
-use App\Services\Web\WebMenuService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Services\Web\WebMenuService;
 
 class HomeController extends Controller
 {
@@ -14,9 +15,11 @@ class HomeController extends Controller
      *
      * @return void
      */
+    protected $client_id = '';
     public function __construct()
     {
         $this->middleware('auth');
+		$this->client_id = config('app.client_id', '');
     }
 
     /**
@@ -47,11 +50,24 @@ class HomeController extends Controller
     {
         $user = auth()->user();
 
+		$appname = '';
+		if($user){
+			$results = DB::table('tclient as a')
+				->select([
+					'a.application_name',
+				])
+				->where('a.client_id', '=' , $this->client_id)
+				->first();
+			
+			$appname = $results->application_name;
+		}
+
         return response()->json([
             'id' => $user->id,
             'name' => $user->name,
             'email' => $user->email,
             'role' => $user->role,
+            'appname' => $appname
         ], 200);
     }
 
