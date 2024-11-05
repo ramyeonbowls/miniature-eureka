@@ -53,7 +53,7 @@ class BookController extends Controller
             ->get();
         $file = $book[0]->filename;
 
-        $filePath = 'private/pdf/'.$file;
+        $filePath = 'private/books/'.$file;
         $filename = explode('.', basename($filePath))[0];
 
         $encryptedContents = Storage::get($filePath);
