@@ -118,9 +118,9 @@ class MainController extends Controller
                     'isbn'     => $value->isbn,
                     'title'    => $value->title,
                     'sinopsis' => $value->sinopsis,
-                    'image'    => (isset($value->image) && file_exists(public_path('/storage/images/cover/' . $value->image))) 
-                                    ? '/storage/images/cover/' . $value->image 
-                                    : '/storage/images/cover/default-cover.jpg',
+                    'image'    => (isset($value->image) && file_exists(public_path('/storage/covers/' . $value->image))) 
+                                    ? '/storage/covers/' . $value->image 
+                                    : '/storage/covers/default-cover.jpg',
                     'writer'   => $value->writer
                 ];
             });
@@ -171,9 +171,9 @@ class MainController extends Controller
                     'isbn'     => $value->isbn,
                     'title'    => $value->title,
                     'sinopsis' => $value->sinopsis,
-                    'image'    => (isset($value->image) && file_exists(public_path('/storage/images/cover/' . $value->image))) 
-                                    ? '/storage/images/cover/' . $value->image 
-                                    : '/storage/images/cover/default-cover.jpg',
+                    'image'    => (isset($value->image) && file_exists(public_path('/storage/covers/' . $value->image))) 
+                                    ? '/storage/covers/' . $value->image 
+                                    : '/storage/covers/default-cover.jpg',
                     'writer'   => $value->writer
                 ];
             });
@@ -219,9 +219,9 @@ class MainController extends Controller
                     'isbn'     => $value->isbn,
                     'title'    => $value->title,
                     'sinopsis' => $value->sinopsis,
-                    'image'    => (isset($value->image) && file_exists(public_path('/storage/images/cover/' . $value->image))) 
-                                    ? '/storage/images/cover/' . $value->image 
-                                    : '/storage/images/cover/default-cover.jpg',
+                    'image'    => (isset($value->image) && file_exists(public_path('/storage/covers/' . $value->image))) 
+                                    ? '/storage/covers/' . $value->image 
+                                    : '/storage/covers/default-cover.jpg',
                     'writer'   => $value->writer
                 ];
             });
@@ -311,7 +311,7 @@ class MainController extends Controller
             ->first();
 
         if ($results) {
-            $results->image = (isset($results->image) && file_exists(public_path('/storage/images/cover/' . $results->image))) ? "/storage/images/cover/" . $results->image : '/storage/images/cover/default-cover.jpg';
+            $results->image = (isset($results->image) && file_exists(public_path('/storage/covers/' . $results->image))) ? "/storage/covers/" . $results->image : '/storage/covers/default-cover.jpg';
         }
 
         // $queries = DB::getQueryLog();

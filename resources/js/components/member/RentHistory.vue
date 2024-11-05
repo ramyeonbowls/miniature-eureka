@@ -76,7 +76,7 @@ export default {
                 {
                     data: "cover",
                     render: function(data, type, row) {
-                        return '<img src="/storage/images/cover/' + data + '" class="cover" data-large="/storage/images/cover/' + data + '" alt="Image" style="width: 50px; cursor: pointer;" />';
+                        return '<img src="/storage/covers/' + data + '" class="cover" data-large="/storage/covers/' + data + '" alt="Image" style="width: 50px; cursor: pointer;" />';
                     }
                 },
                 { data: "start_date" },
