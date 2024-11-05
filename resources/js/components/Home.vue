@@ -1,9 +1,9 @@
 <template>
     <div class="page-heading" v-if="welcome">
 		<p>
-			<h3 class="text-muted">Halo, {{ user.name }}</h3>
+			<h5 class="text-muted">Halo, {{ user.name }}</h5>
 		</p>
-		<h3>Selamat datang di {{ user.appname }}</h3>
+		<h4>Selamat datang di {{ user.appname }}</h4>
 	</div>
     <div class="page-content">
 		<template v-if="user.role=='admin'">
