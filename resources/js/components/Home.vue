@@ -372,8 +372,10 @@ export default {
                 },
             }
 
-            chartVisitMonthly = new ApexCharts(document.querySelector('#chart-visit-month'), optionsVisitMonthly)
-            chartVisitMonthly.render()
+			if (!chartVisitMonthly) {
+				chartVisitMonthly = new ApexCharts(document.querySelector('#chart-visit-month'), optionsVisitMonthly)
+            	chartVisitMonthly.render()
+			}
 
             let optionsReadMonthly = {
                 annotations: {
@@ -403,8 +405,10 @@ export default {
                 },
             }
 
-            chartReadMonthly = new ApexCharts(document.querySelector('#chart-read-month'), optionsReadMonthly)
-            chartReadMonthly.render()
+			if(!chartReadMonthly){
+				chartReadMonthly = new ApexCharts(document.querySelector('#chart-read-month'), optionsReadMonthly)
+				chartReadMonthly.render()
+			}
 
             let optionsGrowthMember = {
                 series: [
@@ -435,8 +439,10 @@ export default {
                 },
             }
 
-            chartGrowthMember = new ApexCharts(document.querySelector('#growth-member'), optionsGrowthMember)
-            chartGrowthMember.render()
+			if(!chartGrowthMember){
+				chartGrowthMember = new ApexCharts(document.querySelector('#growth-member'), optionsGrowthMember)
+				chartGrowthMember.render()
+			}
         },
 
         __DailyChart() {
@@ -499,8 +505,10 @@ export default {
                 },
             }
 
-            chartReadDaily = new ApexCharts(document.querySelector('#chart-read-daily'), optionsReadDaily)
-            chartReadDaily.render()
+			if(!chartReadDaily){
+				chartReadDaily = new ApexCharts(document.querySelector('#chart-read-daily'), optionsReadDaily)
+				chartReadDaily.render()
+			}
 
             let optioVisitoradDaily = {
                 series: [
@@ -561,8 +569,10 @@ export default {
                 },
             }
 
-            chartVisitorDaily = new ApexCharts(document.querySelector('#chart-visit-daily'), optioVisitoradDaily)
-            chartVisitorDaily.render()
+			if(!chartVisitorDaily){
+				chartVisitorDaily = new ApexCharts(document.querySelector('#chart-visit-daily'), optioVisitoradDaily)
+				chartVisitorDaily.render()
+			}
         },
 
 		execDashAtas() {
@@ -768,6 +778,9 @@ export default {
 			if(chartReadDaily){
 				ApexCharts.exec('ReadDaily', 'updateSeries', [{ data: readDaily }], true);
 				ApexCharts.exec('ReadDaily', 'updateOptions', {
+					series: [
+						{ data: readDaily }
+					],
 					xaxis: {
 						categories: days,
 					},
