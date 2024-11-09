@@ -8,8 +8,8 @@
 							<img :src="slide.image.replace('&amp;', '&')" :alt="slide.alt" class="img-fluid">
 						</div>
 						<div class="card-body">
-							<p class="card-title mb-0">{{ slide.writer }}</p>
-							<p class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="slide.title">{{ slide.title }}</p>
+							<p class="card-title mb-0" style="text-align: left; font-size: 13px; color: #435ebe;">{{ slide.writer }}</p>
+							<p class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="text-align: left; display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="slide.title">{{ slide.title }}</p>
 						</div>
 					</div>
 				</div>
