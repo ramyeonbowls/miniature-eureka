@@ -83,7 +83,7 @@
                                 <th>Thn. Terbit</th>
                                 <th>Penulis</th>
                                 <th>Penerbit</th>
-                                <th>Kategori Buku</th>
+                                <th>Kategori</th>
                                 <th>Copy</th>
                             </tr>
                         </thead>
