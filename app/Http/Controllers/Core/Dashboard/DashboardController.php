@@ -178,8 +178,8 @@ class DashboardController extends Controller
 		$monthNames = [];
 
 		foreach ($monthNumbers as $month) {
-			$monthArray['name'][]	= Carbon::createFromFormat('m', str_pad($month, 2, '0', STR_PAD_LEFT))->format('M');
-			$monthArray['month'][]	= Carbon::createFromFormat('m', str_pad($month, 2, '0', STR_PAD_LEFT))->format('Y-m');
+			$monthArray['name'][]	= Carbon::createFromFormat('Y-m', "$year-$month")->format('M');
+			$monthArray['month'][]	= Carbon::createFromFormat('Y-m', "$year-$month")->format('Y-m');
 		}
 
 		return $monthArray;
