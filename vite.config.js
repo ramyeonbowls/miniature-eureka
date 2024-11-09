@@ -50,6 +50,7 @@ export default defineConfig({
             '~perfect-scrollbar': resolve(__dirname, 'node_modules/perfect-scrollbar'),
             '~@fontsource': resolve(__dirname, 'node_modules/@fontsource'),
             '~@public': resolve(__dirname, 'public'),
+			'@apexcharts': 'apexcharts'
         },
     },
     build: {
