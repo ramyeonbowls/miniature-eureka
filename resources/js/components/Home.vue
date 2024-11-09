@@ -860,12 +860,29 @@ export default {
             table_books = null;
         }
 
-		if (typeof ApexCharts !== 'undefined') {
-			ApexCharts.exec('ReadDaily', 'destroy');
-			ApexCharts.exec('VisitDaily', 'destroy');
-			ApexCharts.exec('ReadMonthly', 'destroy');
-			ApexCharts.exec('VisitMonthly', 'destroy');
-			ApexCharts.exec('GrowthMember', 'destroy');
+		if (chartVisitMonthly) {
+			chartVisitMonthly.destroy();
+			chartVisitMonthly = null;
+		}
+
+		if (chartReadMonthly) {
+			chartReadMonthly.destroy();
+			chartReadMonthly = null;
+		}
+
+		if (chartGrowthMember) {
+			chartGrowthMember.destroy();
+			chartGrowthMember = null;
+		}
+
+		if (chartReadDaily) {
+			chartReadDaily.destroy();
+			chartReadDaily = null;
+		}
+
+		if (chartVisitorDaily) {
+			chartVisitorDaily.destroy();
+			chartVisitorDaily = null;
 		}
 
         next();
