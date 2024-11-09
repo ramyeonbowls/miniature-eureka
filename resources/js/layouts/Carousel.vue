@@ -5,12 +5,10 @@
 				<div class="card">
 					<div class="card-content">
 						<div class="product-image">
-							<img :src="slide.image" :alt="slide.alt" class="img-fluid">
+							<img :src="slide.image.replace('&amp;', '&')" :alt="slide.alt" class="img-fluid">
 						</div>
 						<div class="card-body">
-							<a href="#">
-								<p class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="slide.title">{{ slide.title }}</p>
-							</a>
+							<p class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="slide.title">{{ slide.title }}</p>
 						</div>
 					</div>
 				</div>
@@ -66,7 +64,7 @@ export default defineComponent({
             this.buku = [];
 
             window.axios
-            .get('/getBook')
+            .get('/dashboard/getKatalog')
             .then((response) => {
                 this.buku = response.data;
             })

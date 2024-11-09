@@ -71,7 +71,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 					Route::prefix('dashboard')->namespace('Dashboard')->group(function() {
 						Route::get('dashAtas', 'DashboardController@dashAtas')->name('dashAtas');
-						Route::get('VisitDaily', 'DashboardController@VisitDaily')->name('VisitDaily');
+						Route::get('dashBawah', 'DashboardController@dashBawah')->name('dashBawah');
+						Route::get('getKatalog', 'DashboardController@getKatalog')->name('getKatalog');
                     });
     
                     Route::prefix('master')->namespace('Master')->group(function() {

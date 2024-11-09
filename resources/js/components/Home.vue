@@ -81,7 +81,7 @@
 					</div>
 					<div class="row">
 						<div class="buttons text-end">
-							<a href="#" class="btn icon icon-left btn-primary" data-bs-toggle="modal" data-bs-target="#filter-visit-daily"><i class="bi bi-filter-square-fill"></i> Filter</a>
+							<a href="#" class="btn icon icon-left btn-primary" data-bs-toggle="modal" data-bs-target="#filter-dashboard"><i class="bi bi-filter-square-fill"></i> Filter</a>
 						</div>
 						<div class="col-12">
 							<div class="card">
@@ -109,7 +109,7 @@
 									<h4>Jumlah Pengunjung Bulanan</h4>
 								</div>
 								<div class="card-body">
-									<div id="chart-profile-visit"></div>
+									<div id="chart-visit-month"></div>
 								</div>
 							</div>
 						</div>
@@ -131,7 +131,7 @@
 									<h4>Pertumbuhan Member</h4>
 								</div>
 								<div class="card-body">
-									<div id="area"></div>
+									<div id="growth-member"></div>
 								</div>
 							</div>
 						</div>
@@ -145,7 +145,6 @@
 										<table class="table table-striped" id="table_member">
 											<thead>
 												<tr>
-													<th>Foto</th>
 													<th>Nama</th>
 													<th>Total Jam</th>
 												</tr>
@@ -167,6 +166,7 @@
 												<tr>
 													<th>Cover</th>
 													<th>Judul</th>
+													<th>Total Dibaca</th>
 												</tr>
 											</thead>
 										</table>
@@ -177,7 +177,7 @@
 						<div class="col-12 col-xl-12">
 							<div class="card">
 								<div class="card-header">
-									<h4>Katalog Buku</h4>
+									<h4>Katalog Buku Ginesia</h4>
 								</div>
 								<div class="card-body">
 									<CarouselHome></CarouselHome>
@@ -188,8 +188,8 @@
 				</div>
 			</section>
 	
-			<!-- filter visit daily modal -->
-			<div class="modal fade text-left modal-borderless" id="filter-visit-daily" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+			<!-- filter modal -->
+			<div class="modal fade text-left modal-borderless" id="filter-dashboard" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
 				<div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -236,7 +236,7 @@
 										<div class="col-md-12 mb-12">
 											<div class="form-group">
 												<label for="sdate" class="form-label">Tanggal</label>
-												<Flatpickr v-model="filter.date" class="form-control flatpickr-range" :config="configdate" placeholder="Select date.."></Flatpickr>
+												<Flatpickr v-model="filter.date" class="form-control flatpickr-month-year" :config="configdate" placeholder="Select date.."></Flatpickr>
 											</div>
 										</div>
 									</div>
@@ -244,14 +244,14 @@
 							</div>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-primary ms-1" data-bs-dismiss="modal" @click="ExecuteVisitDaily">
+							<button type="button" class="btn btn-primary ms-1" data-bs-dismiss="modal" @click="execDashBawah">
 								<i class="bi bi-file-earmark-excel-fill"></i> Proses Data
 							</button>
 						</div>
 					</div>
 				</div>
 			</div>
-			<!-- filter visit daily modal -->
+			<!-- filter modal -->
 		</template>
     </div>
 </template>
@@ -259,6 +259,8 @@
 <script>
 import ApexCharts from 'apexcharts'
 import CarouselHome from './../layouts/Carousel.vue'
+import 'flatpickr/dist/plugins/monthSelect/style.css'
+import monthSelectPlugin from 'flatpickr/dist/plugins/monthSelect/index';
 
 let table_members, table_books
 export default {
@@ -278,33 +280,14 @@ export default {
 			welcome: false,
             data_members: [],
 			configdate: {
-                dateFormat: 'Y-m-d',
-                mode: 'range',
-                onChange: function(selectedDates, dateStr, instance) {
-                    instance.set('disable', [])
-
-                    if (selectedDates.length === 1) {
-                        const startDate = selectedDates[0]
-                        const minDate = new Date(startDate.getTime() - 6 * 24 * 60 * 60 * 1000)
-                        const maxDate = new Date(startDate.getTime() + 6 * 24 * 60 * 60 * 1000)
-
-                        instance.set('disable', [
-                            function(date) {
-                                return date < minDate || date > maxDate;
-                            }
-                        ])
-                    } else {
-                        instance.set('disable', [])
-                    }
-                },
-                onClose: (selectedDates, dateStr, instance) => {
-					if (selectedDates.length === 1) {
-                        instance.clear()
-                        this.filter.date = ''
-                    }
-
-					instance.set('disable', [])
-                },
+                plugins: [
+					new monthSelectPlugin({
+						shorthand: true,
+						dateFormat: "Y-m",
+						altFormat: "F Y",
+						theme: "light"
+					})
+				],
             },
 
             option: {
@@ -325,79 +308,36 @@ export default {
 					book: 0,
 					member: 0,
 					po: 0,
+				},
+				bawah:{
+					days: [],
+					months: [],
+					formattedDate: ''
 				}
 			}
         }
     },
 
     mounted() {
+		this.getNow()
 		this.execDashboard()
-
-        let _row = this
-        $(document).ready(function () {
-            table_members = $('#table_member').DataTable()
-            _row.data_members.forEach((item) => {
-                table_members.row.add([`<img src="${item.foto}" alt="${item.nama}" style="width: 50px; height: 50px;" />`, item.nama, item.lamaJam]).draw()
-            })
-
-            table_books = $('#table_book').DataTable()
-            const data = [
-                {
-                    cover: 'https://via.placeholder.com/80x80',
-                    judul: 'The Great Adventure',
-                },
-                {
-                    cover: 'https://via.placeholder.com/80x80',
-                    judul: 'Journey to the Unknown',
-                },
-                {
-                    cover: 'https://via.placeholder.com/80x80',
-                    judul: 'Mystery of the Old Castle',
-                },
-                {
-                    cover: 'https://via.placeholder.com/80x80',
-                    judul: 'The Secret of the Forest',
-                },
-                {
-                    cover: 'https://via.placeholder.com/80x80',
-                    judul: 'Legends of the Lost City',
-                },
-                {
-                    cover: 'https://via.placeholder.com/80x80',
-                    judul: 'Quest for the Ancient Relic',
-                },
-                {
-                    cover: 'https://via.placeholder.com/80x80',
-                    judul: 'The Enchanted Kingdom',
-                },
-                {
-                    cover: 'https://via.placeholder.com/80x80',
-                    judul: 'Tales of the Forgotten',
-                },
-                {
-                    cover: 'https://via.placeholder.com/80x80',
-                    judul: 'Beyond the Horizon',
-                },
-                {
-                    cover: 'https://via.placeholder.com/80x80',
-                    judul: 'Wonders of the Deep Sea',
-                },
-            ]
-
-            data.forEach((item) => {
-                table_books.row.add([`<img src="${item.cover}" alt="${item.judul}" style="width: 50px; height: 80px;" />`, item.judul]).draw()
-            })
-        })
     },
 
     methods: {
+		getNow(){
+			const currentDate = new Date()
+			const year = currentDate.getFullYear()
+			const month = String(currentDate.getMonth() + 1).padStart(2, '0')
+			this.filter.date = year + '-' + month
+		},
+
 		execDashboard() {
 			if (this.user.role === 'admin') {
 				this.$nextTick(() => {
-					this.getdashAtas()
-					this.__Chart()
+					this.execDashAtas()
 					this.__DailyChart()
-					this.__randomDataMember()
+					this.__Chart()
+					this.execDashBawah()
 					this.getProvinsi()
 				});
 			} else if (this.user.role === 'teacher') {
@@ -405,25 +345,8 @@ export default {
 			}
 		},
 
-        __randomDataMember() {
-            this.data_members = []
-            let names = ['John Doe', 'Jane Smith', 'Alice Johnson', 'Bob Brown', 'Charlie Wilson', 'Emily Davis', 'Michael Taylor', 'Sophia Martinez', 'William Lee', 'Olivia Anderson']
-
-            for (let i = 0; i < 10; i++) {
-                const randomSeconds = Math.floor(Math.random() * 3600)
-                let randomData = {
-                    foto: 'https://via.placeholder.com/50x80',
-                    nama: names[i],
-                    lamaJam: this.formatTime(randomSeconds),
-                }
-                this.data_members.push(randomData)
-            }
-        },
-
         __Chart() {
-            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-
-            var optionsProfileVisit = {
+            var optionsVisitMonthly = {
                 annotations: {
                     position: 'back',
                 },
@@ -431,6 +354,7 @@ export default {
                     enabled: false,
                 },
                 chart: {
+					id: 'VisitMonthly',
                     type: 'bar',
                     height: 300,
                 },
@@ -440,20 +364,20 @@ export default {
                 plotOptions: {},
                 series: [
                     {
-                        name: 'Visitors',
-                        data: months.map(() => Math.floor(Math.random() * 10)),
+                        name: 'Pengunjung',
+                        data: []
                     },
                 ],
                 colors: '#435ebe',
                 xaxis: {
-                    categories: months,
+                    categories: [],
                 },
             }
 
-            var chartProfileVisit = new ApexCharts(document.querySelector('#chart-profile-visit'), optionsProfileVisit)
-            chartProfileVisit.render()
+            var chartVisitMonthly = new ApexCharts(document.querySelector('#chart-visit-month'), optionsVisitMonthly)
+            chartVisitMonthly.render()
 
-            var optionsReaders = {
+            var optionsReadMonthly = {
                 annotations: {
                     position: 'back',
                 },
@@ -461,6 +385,7 @@ export default {
                     enabled: false,
                 },
                 chart: {
+					id: 'ReadMonthly',
                     type: 'bar',
                     height: 300,
                 },
@@ -470,31 +395,28 @@ export default {
                 plotOptions: {},
                 series: [
                     {
-                        name: 'Readers',
-                        data: months.map(() => Math.floor(Math.random() * 10)),
+                        name: 'Pembaca',
+                        data: []
                     },
                 ],
                 colors: '#435ebe',
                 xaxis: {
-                    categories: months,
+                    categories: [],
                 },
             }
 
-            var chartReaders = new ApexCharts(document.querySelector('#chart-read-month'), optionsReaders)
-            chartReaders.render()
+            var chartReadMonthly = new ApexCharts(document.querySelector('#chart-read-month'), optionsReadMonthly)
+            chartReadMonthly.render()
 
-            var areaOptions = {
+            var optionsGrowthMember = {
                 series: [
                     {
-                        name: '2023',
-                        data: months.map(() => Math.floor(Math.random() * 10)),
-                    },
-                    {
-                        name: '2024',
-                        data: months.map(() => Math.floor(Math.random() * 10)),
-                    },
+                        name: 'Member',
+                        data: []
+                    }
                 ],
                 chart: {
+					id: 'GrowthMember',
                     height: 350,
                     type: 'area',
                 },
@@ -506,7 +428,7 @@ export default {
                 },
                 xaxis: {
                     type: 'month',
-                    categories: months,
+                    categories: [],
                 },
                 tooltip: {
                     x: {
@@ -515,32 +437,24 @@ export default {
                 },
             }
 
-            var area = new ApexCharts(document.querySelector('#area'), areaOptions)
+            var area = new ApexCharts(document.querySelector('#growth-member'), optionsGrowthMember)
             area.render()
         },
 
         __DailyChart() {
-            let date = new Date()
-            let options = { year: 'numeric', month: 'long' }
-            let formattedDate = date.toLocaleDateString('en-US', options)
-            let year = date.getFullYear()
-            let month = date.getMonth() + 1
-            let totalDaysInMonth = 7
-            let days = Array.from({ length: totalDaysInMonth }, (_, i) => (i + 1).toString());
-            
-
-            var optionsReadDaily = {
+            let optionsReadDaily = {
                 series: [
                     {
-                        name: formattedDate,
-                        data: days.map(() => Math.floor(Math.random() * 10)),
+                        name: 'Pembaca',
+                        data: [],
                     },
                 ],
                 title: {
-                    text: formattedDate,
+                    text: '',
                     align: "center"
                 },
                 chart: {
+					id: 'ReadDaily',
                     type: 'bar',
                     height: 350,
                     colors: ['#ff4560'],
@@ -554,17 +468,17 @@ export default {
                             ranges: [
                                 {
                                     from: 0,
-                                    to: 5,
+                                    to: 20,
                                     color: '#00e396',
                                 },
                                 {
-                                    from: 6,
-                                    to: 7,
+                                    from: 21,
+                                    to: 50,
                                     color: '#f5aa19',
                                 },
                                 {
-                                    from: 8,
-                                    to: 10,
+                                    from: 51,
+                                    to: 100,
                                     color: '#ff4560',
                                 },
                             ],
@@ -580,35 +494,29 @@ export default {
                     colors: ['transparent'],
                 },
                 xaxis: {
-                    categories: days,
+                    categories: [],
                 },
                 fill: {
                     opacity: 1,
                 },
-                tooltip: {
-                    y: {
-                        formatter: function (val) {
-                            return val + ' reads'
-                        },
-                    },
-                },
             }
 
-            var chartReadDaily = new ApexCharts(document.querySelector('#chart-read-daily'), optionsReadDaily)
+            let chartReadDaily = new ApexCharts(document.querySelector('#chart-read-daily'), optionsReadDaily)
             chartReadDaily.render()
 
-            var optioVisitoradDaily = {
+            let optioVisitoradDaily = {
                 series: [
                     {
-                        name: formattedDate,
-                        data: days.map(() => Math.floor(Math.random() * 10)),
+                        name: 'Pengunjung',
+                        data: [],
                     },
                 ],
                 title: {
-                    text: formattedDate,
+                    text: '',
                     align: "center"
                 },
                 chart: {
+					id: 'VisitDaily',
                     type: 'bar',
                     height: 350,
                     colors: ['#ff4560'],
@@ -622,17 +530,17 @@ export default {
                             ranges: [
                                 {
                                     from: 0,
-                                    to: 5,
+                                    to: 20,
                                     color: '#00e396',
                                 },
                                 {
-                                    from: 6,
-                                    to: 7,
+                                    from: 21,
+                                    to: 50,
                                     color: '#f5aa19',
                                 },
                                 {
-                                    from: 8,
-                                    to: 10,
+                                    from: 50,
+                                    to: 100,
                                     color: '#ff4560',
                                 },
                             ],
@@ -648,21 +556,14 @@ export default {
                     colors: ['transparent'],
                 },
                 xaxis: {
-                    categories: days,
+                    categories: [],
                 },
                 fill: {
                     opacity: 1,
                 },
-                tooltip: {
-                    y: {
-                        formatter: function (val) {
-                            return val + ' visits'
-                        },
-                    },
-                },
             }
 
-            var chartVisitorDaily = new ApexCharts(document.querySelector('#chart-visit-daily'), optioVisitoradDaily)
+            let chartVisitorDaily = new ApexCharts(document.querySelector('#chart-visit-daily'), optioVisitoradDaily)
             chartVisitorDaily.render()
         },
 
@@ -673,7 +574,7 @@ export default {
             return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
         },
 
-		getdashAtas() {
+		execDashAtas() {
             let loader = this.$loading.show()
             axios.get('/dashboard/dashAtas')
             .then((response) => {
@@ -751,24 +652,9 @@ export default {
             });
         },
 
-		ExecuteVisitDaily(){
+		execDashBawah(){
 			let check = true
             let message = ''
-
-            if(this.filter.provinsi==''){
-                check = false
-                message += ' Provinsi, '
-            }
-
-            if(this.filter.kabupaten==''){
-                check = false
-                message += ' Kabupaten, '
-            }
-
-            if(this.filter.wl==''){
-                check = false
-                message += ' White Label, '
-            }
 
             if (this.filter.date === '' || this.filter.date === null) {
 				check = false
@@ -782,7 +668,160 @@ export default {
                     text: 'Silahkan Isi'+ message.slice(0, -2) +'!'
                 });
             }else{
-				console.log('visit daily');
+				let loader = this.$loading.show()
+				axios.get('/dashboard/dashBawah', {
+					params: {
+						date: this.filter.date,
+						provinsi: this.filter.provinsi,
+						kabupaten: this.filter.kabupaten,
+						wl: this.filter.wl
+					},
+				})
+				.then((response) => {
+					loader.hide()
+					this.welcome = true
+					
+					this.dashboard.bawah.days			= response.data.days
+					this.dashboard.bawah.months			= response.data.months
+					this.dashboard.bawah.formattedDate	= response.data.formattedDate
+
+					let MemberRead = response.data.member_read;
+						if ($.fn.dataTable.isDataTable('#table_member')) {
+							table_members.clear().draw();
+							table_members.rows.add(MemberRead.map(item => [item.name, item.totalJam])).draw();
+						} else {
+							table_members = $('#table_member').DataTable({
+								order: [[1, 'desc']],
+								columnDefs: [
+									{
+										targets: 0,
+										orderable: false,
+										width: "70%",
+										class: 'text-left',
+										createdCell: function(td, cellData, rowData, row, col) {
+											$(td).css({
+												'font-weight': 'bold',
+												'background-color': '#f9f9f9',
+												'color': '#333'
+											});
+										}
+									},
+									{
+										targets: 1,
+										orderable: false,
+										width: "30%",
+										class: 'text-right'
+									}
+								]
+							});
+							table_members.rows.add(MemberRead.map(item => [item.name, item.totalJam])).draw();
+						}
+
+						let BookRead = response.data.book_read;
+						if ($.fn.dataTable.isDataTable('#table_book')) {
+							table_books.clear().draw();
+							table_books.rows.add(BookRead.map(val => [`<img src="${val.cover.replace('&amp;', '&')}" alt="${val.title}" style="width: 50px; height: 80px;" />`, val.title, val.totalRead])).draw();
+						} else {
+							table_books = $('#table_book').DataTable({
+								order: [[2, 'desc']],
+								columnDefs: [
+									{
+										targets: 0,
+										orderable: false,
+										width: "15%",
+										class: 'text-center'
+									},
+									{
+										targets: 1,
+										orderable: false,
+										width: "70%",
+										createdCell: function(td, cellData, rowData, row, col) {
+											$(td).css({
+												'font-weight': 'bold',
+												'background-color': '#f9f9f9',
+												'color': '#333'
+											});
+											$(td).addClass('text-left');
+										}
+									},
+									{
+										targets: 2,
+										orderable: false,
+										width: "15%",
+										class: 'text-right'
+									}
+								]
+							});
+							table_books.rows.add(BookRead.map(val => [`<img src="${val.cover.replace('&amp;', '&')}" alt="${val.title}" style="width: 50px; height: 80px;" />`, val.title, val.totalRead])).draw();
+						}
+
+					let readDaily = response.data.read_daily.map(item => item.data)
+					let VisitDaily = response.data.visit_daily.map(item => item.data)
+
+					ApexCharts.exec('ReadDaily', 'updateSeries', [{
+						data: readDaily
+					}], true)
+
+					ApexCharts.exec('ReadDaily', 'updateOptions', {
+						xaxis: {
+							categories: this.dashboard.bawah.days,
+						},
+						title: {
+							text: this.dashboard.bawah.formattedDate
+						},
+					}, false, true)
+
+					ApexCharts.exec('VisitDaily', 'updateSeries', [{
+						data: VisitDaily
+					}], true)
+
+					ApexCharts.exec('VisitDaily', 'updateOptions', {
+						xaxis: {
+							categories: this.dashboard.bawah.days,
+						},
+						title: {
+							text: this.dashboard.bawah.formattedDate
+						},
+					}, false, true)
+
+					let readMonthly		= response.data.read_monthly.map(item => item.data)
+					let VisitMonthly	= response.data.visit_monthly.map(item => item.data)
+
+					ApexCharts.exec('ReadMonthly', 'updateSeries', [{
+						data: readMonthly,
+					}], true)
+
+					ApexCharts.exec('ReadMonthly', 'updateOptions', {
+						xaxis: {
+							categories: this.dashboard.bawah.months,
+						},
+					}, false, true)
+
+					ApexCharts.exec('VisitMonthly', 'updateSeries', [{
+						data: VisitMonthly,
+					}], true)
+
+					ApexCharts.exec('VisitMonthly', 'updateOptions', {
+						xaxis: {
+							categories: this.dashboard.bawah.months,
+						},
+					}, false, true)
+
+					let GrowthMember	= response.data.growth_member.map(item => item.data)
+					ApexCharts.exec('GrowthMember', 'updateSeries', [{
+						data: GrowthMember,
+					}], true)
+
+					ApexCharts.exec('GrowthMember', 'updateOptions', {
+						xaxis: {
+							categories: this.dashboard.bawah.months,
+						},
+					}, false, true)
+				})
+				.catch((e) => {
+					loader.hide()
+					console.error(e)
+				});
 			}
 			
 		}
@@ -796,6 +835,28 @@ export default {
 			immediate: true,
 			deep: true
 		}
-	}
+	},
+
+	beforeRouteLeave (to, from, next) {
+        if (table_members) {
+            table_members.destroy();
+            table_members = null;
+        }
+
+		if (table_books) {
+            table_books.destroy();
+            table_books = null;
+        }
+
+		if (typeof ApexCharts !== 'undefined') {
+			ApexCharts.exec('ReadDaily', 'destroy');
+			ApexCharts.exec('VisitDaily', 'destroy');
+			ApexCharts.exec('ReadMonthly', 'destroy');
+			ApexCharts.exec('VisitMonthly', 'destroy');
+			ApexCharts.exec('GrowthMember', 'destroy');
+		}
+
+        next();
+    }
 }
 </script>
