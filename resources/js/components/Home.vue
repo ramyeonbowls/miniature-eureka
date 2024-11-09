@@ -331,17 +331,20 @@ export default {
 			this.filter.date = year + '-' + month
 		},
 
-		execDashboard() {
+		async execDashboard() {
 			if (this.user.role === 'admin') {
-				this.$nextTick(() => {
-					this.execDashAtas()
-					this.__DailyChart()
-					this.__Chart()
-					this.execDashBawah()
-					this.getProvinsi()
-				});
+				try {
+					await this.execDashAtas();
+					await this.__DailyChart();
+					await this.__Chart();
+
+					this.execDashBawah();
+					this.getProvinsi();
+				} catch (error) {
+					console.error("Error in dashboard execution:", error);
+				}
 			} else if (this.user.role === 'teacher') {
-				this.welcome = true
+				this.welcome = true;
 			}
 		},
 
