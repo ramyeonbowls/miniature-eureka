@@ -683,4 +683,72 @@ class MainController extends Controller
 
         return response()->json($results, 200);
     }
+
+	public function getDtQuiz()
+    {
+		// $logs = new Logs(Arr::last(explode("\\", get_class())) . 'Log');
+        // $logs->write(__FUNCTION__, 'START');
+		// DB::enableQueryLog();
+
+		$user = auth()->user();
+
+        $results = DB::table('tquiz_h as a')
+            ->select([
+                'a.id',
+                'a.title',
+                'a.description',
+                'a.start_date',
+                'a.end_date',
+				'b.name'
+            ])
+			->join('users as b', function ($join) {
+				$join->on('a.client_id', '=', 'b.client_id')
+				->on('a.created_by', '=', 'b.email');
+			})
+            ->where('a.client_id','=', $this->client_id)
+            ->whereRaw("CONVERT(NOW(), DATE) BETWEEN a.start_date AND a.end_date")
+            ->orderBy('a.created_at', 'DESC')
+            ->get()
+            ->map(function ($value) use ($user) {
+				if($user){
+					$cek_nilai	= $this->getResult($this->client_id, $value->id, $user->id);
+					$nilai		= $cek_nilai->nilai;
+					$finished	= ($cek_nilai->finished > 0 ? true : false);
+				}else{
+					$nilai		= 0;
+					$finished	= false;
+				}
+
+                return [
+                    'id'			=> $value->id,
+                    'title'			=> $value->title,
+                    'description'	=> $value->description,
+                    'start_date'	=> $value->start_date,
+                    'end_date'		=> $value->end_date,
+                    'finished'		=> $finished,
+                    'name'			=> $value->name
+                ];
+            });
+
+		// $queries = DB::getQueryLog();
+		// for($q = 0; $q < count($queries); $q++) {
+		// 	$sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
+		// 	$logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+		// 	$logs->write('SQL', $sql);
+		// }
+
+        return response()->json($results, 200);
+    }
+
+	private function getResult($client_id, $survey_id, $user_id){
+		return DB::table('tquiz_trx as a')
+			->select(
+				DB::raw("SUM(a.point) as nilai"),
+				DB::raw("COUNT(a.question_id) as finished")
+			)
+			->where('a.client_id', '=', $client_id)
+			->where('a.survey_id', '=', $survey_id)
+			->where('a.user_id', '=', $user_id)
+			->first();
+	}
 }

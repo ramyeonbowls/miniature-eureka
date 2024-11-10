@@ -4,9 +4,13 @@
 			<div class="card">
 				<div class="card-content d-flex flex-column">
 					<div class="card-header">
-						<h4 class="card-title">{{ header.title }}</h4>
+						<h4 class="card-title"><strong>{{ header.title }}</strong></h4>
+						<h4 class="card-title pt-2 pb-3 text-muted">{{ header.description }}</h4>
 						<template v-if="finished">
-							<h6 class="card-subtitle">Nilai anda : {{ nilai }}</h6>
+							<div class="team">
+								<i class="bi bi-check-square-fill text-white mx-2 mb-2" width="16" height="20"></i>
+								<span class="name mx-2">Nilai anda</span>
+								<span class="score mx-2">{{ nilai }}</span></div>
 						</template>
 					</div>
 					<div class="card-body">
@@ -86,6 +90,17 @@
 							<div class="col-md-12">
 								<div class="form-group my-2 d-flex justify-content-end">
 									<button type="submit" class="btn btn-primary" @click="SetAnswer">Simpan Jawaban</button>
+								</div>
+							</div>
+						</div>
+					</template>
+					<template v-else>
+						<div class="card-footer">
+							<div class="col-md-12">
+								<div class="form-group my-2 d-flex justify-content-end">
+									<router-link to="/quiz" class="menu-link">
+										<button type="submit" class="btn btn-primary">Kembali</button>
+									</router-link>
 								</div>
 							</div>
 						</div>
@@ -318,3 +333,35 @@ export default {
     },
 };
 </script>
+<style scoped>
+.team {
+    width: 20%;
+    height: 50px;
+    background: #42a5f5;
+    box-shadow: 0 3px 5px #0000001f;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+
+}
+
+.name {
+    width: 80%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    font-size: 1.1rem;
+    color: #fff;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.score {
+    width: var(--team-height);
+    margin: 20px 0;
+    font-size: 1.4rem;
+    color: #fff;
+    font-weight: 600;
+}
+</style>

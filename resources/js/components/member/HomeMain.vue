@@ -133,6 +133,70 @@
                 </div>
             </div>
         </section>
+		<section  v-if="quiz.length>0" class="row">
+            <div class="col-12 col-lg-12">
+                <div class="testimonial-slider hover-shadow">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="testimonial-title">
+                                <i class="bi bi-quote display-2"></i>
+                                <h2 class="fw-bold display-6 text-white">Quiz</h2>
+                            </div>
+                            <div class="d-flex justify-content-center mt-2 mb-3">
+                                <button class="swiper-button-prev-quiz btn rounded-pill me-2"><i class="bi bi-caret-left-fill" style="font-size: 2rem; color: white;"></i></button>
+                                <button class="swiper-button-next-quiz btn rounded-pill"><i class="bi bi-caret-right-fill" style="font-size: 2rem; color: white;"></i></button>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <swiper
+                                ref="swiperQuiz"
+                                :modules="modules"
+                                :slides-per-view="2"
+                                :space-between="10"
+                                :breakpoints="swiperBreakpointsfrasa"
+                                :navigation="navigationQuiz"
+                                :scrollbar="{ draggable: true }"
+                                @swiper="onSwiper"
+                                @slideChange="onSlideChange"
+                                :autoplay= "{ delay: 4000 }"
+                                class="swiper-frasa col-md-10"
+                                loop
+                            >
+                                <swiper-slide v-for="(value, index) in quiz" :key="index">
+									<div class="card" style="height: 320px;">
+										<div class="d-flex justify-content-center align-items-center flex-column mt-3 mb-0 mx-4 mb-0 py-1" style="height: 125px; max-height: 125px;" :title="value.title">
+                                            <h6 class="mb-0">{{ value.title }}</h6>
+                                        </div>
+										<hr>
+										<div class="card-body-quiz h-100">
+											<div class="card-description-quiz mx-4 mb-0" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="value.description">
+												{{ value.description }}
+											</div>
+										</div>
+										<div class="row mx-2">
+											<div class="col-12 text-center mb-2">
+												<small class="text-muted"><i class="bi bi-calendar-check"></i> Tenggat Waktu : {{ value.start_date }} s/d {{ value.start_date }}</small>
+											</div>
+										</div>
+										<div class="card-footer-quiz mb-1">
+											<div class="row mx-2">
+												<div class="card-date-quiz mb-1">
+													<button :class="value.finished ? 'btn btn-success btn-block' : 'btn btn-primary btn-block'" @click="goToQuiz(value.id, value.finished)">{{ value.finished ? 'Lihat Nilai' : 'Lihat Quiz' }}</button>
+												</div>
+												<div class="card-author-quiz">
+													<small class="text-muted"><i class="bi bi-person-circle"></i> <strong>{{ value.name }}</strong></small>
+												</div>
+											</div>
+										</div>
+									</div>
+                                    
+                                </swiper-slide>
+                            </swiper>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
         <section v-if="news.length>0" class="row">
             <div class="col-12 col-lg-12">
                 <div class="card py-2 px-4 hover-shadow">
@@ -554,6 +618,7 @@ export default {
             layar_penulis: [],
             titik_fokus: [],
             humoria: [],
+            quiz: [],
             swiperBreakpoints: {
                 320: {
                     slidesPerView: 2,
@@ -593,6 +658,10 @@ export default {
             navigationFrasa: {
                 nextEl: '.swiper-button-next-frasa',
                 prevEl: '.swiper-button-prev-frasa',
+            },
+            navigationQuiz: {
+                nextEl: '.swiper-button-next-quiz',
+                prevEl: '.swiper-button-prev-quiz',
             },
             swiperBreakpointswawasan: {
                 320: {
@@ -638,6 +707,7 @@ export default {
         this.getNewCollection();
         this.getBanner();
         this.getAllArticle();
+        this.getQuiz();
     },
 
     mounted() {
@@ -681,7 +751,7 @@ export default {
         },
 
         getBanner() {
-            this.buku = [];
+            this.banner = [];
 
             window.axios
             .get('/getBanner')
@@ -730,6 +800,48 @@ export default {
                     e.preventDefault()
                 })
             })
+        },
+
+		getQuiz() {
+            this.quiz = [];
+
+            window.axios
+            .get('/getDtQuiz')
+            .then((response) => {
+                this.quiz = response.data;
+            })
+            .catch((e) => {
+                console.error(e)
+            });
+        },
+
+		goToQuiz(id, finished) {
+			if(this.isAuthenticated){
+				if(finished){
+					this.$router.push({ name: 'quiz-test', params: { ids: id } });
+				}else{
+					this.$swal({
+						icon: 'question',
+						text: 'Apakah anda yakin ingin memulai quiz ini?',
+						showCancelButton: true,
+						allowOutsideClick: false,
+						allowEscapeKey: false,
+						confirmButtonText: '<i class="bi bi-check-circle-fill"></i> Ya',
+						cancelButtonText: '<i class="bi bi-x-square-fill"></i> Tidak',
+						buttonsStyling: false,
+						customClass: {
+							confirmButton: 'btn btn-sm btn-primary me-2',
+							cancelButton: 'btn btn-sm btn-secondary',
+						},
+					}).then((result) => {
+						if (result.value) {
+							this.$router.push({ name: 'quiz-test', params: { ids: id } });
+						}
+					})
+				}
+			}else{
+				this.$router.push('/mlogin');
+			}
         }
     },
 
@@ -745,6 +857,54 @@ export default {
 </script>
 
 <style scoped>
+	.card-header-quiz {
+		font-weight: bold;
+		text-align: center;
+	}
+
+	.card-body-quiz {
+		text-align: center;
+	}
+
+	.card-title-quiz {
+		font-size: 18px;
+		font-weight: bold;
+		margin-bottom: 10px;
+	}
+
+	.card-description-quiz {
+		text-align: left;
+		margin-bottom: 10px;
+	}
+
+	.card-description-quiz p {
+		margin: 0;
+	}
+
+	.button-quiz {
+		display: inline-block;
+		padding: 10px 20px;
+		background-color: #4CAF50;
+		color: white;
+		text-align: center;
+		text-decoration: none;  
+		display: inline-block;
+		font-size: 16px;
+		margin: 4px 2px;
+		cursor: pointer;
+		border-radius: 4px;
+	}
+
+	.card-footer-quiz {
+		text-align: center;
+		font-size: 15px;
+	}
+
+	.card-author-quiz {
+		font-weight: bold;
+		margin-bottom: 5px;
+	}
+
     :deep(.swiper-button-next),
     :deep(.swiper-button-prev) {
         width: 30px !important;

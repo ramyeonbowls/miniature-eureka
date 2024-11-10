@@ -35,11 +35,18 @@ class QuizTransactionController extends Controller
             ->select([
                 'a.id',
                 'a.title',
-                'a.end_date'
+				'a.description',
+                'a.start_date',
+                'a.end_date',
+				'b.name'
             ])
+			->join('users as b', function ($join) {
+				$join->on('a.client_id', '=', 'b.client_id')
+				->on('a.created_by', '=', 'b.email');
+			})
             ->where('a.client_id','=', $this->client_id)
             ->whereRaw("CONVERT(NOW(), DATE) BETWEEN a.start_date AND a.end_date")
-            ->orderBy('created_at', 'DESC')
+            ->orderBy('a.created_at', 'DESC')
             ->get()
             ->map(function ($value) use ($user) {
 				$cek_nilai	= $this->getResult($this->client_id, $value->id, $user->id);
@@ -47,10 +54,13 @@ class QuizTransactionController extends Controller
 				$finished	= ($cek_nilai->finished > 0 ? true : false);
 
                 return [
-                    'id'		=> $value->id,
-                    'title'		=> $value->title,
-                    'end_date'	=> $value->end_date,
-                    'finished'	=> $finished,
+                    'id'			=> $value->id,
+                    'title'			=> $value->title,
+					'description'	=> $value->description,
+                    'start_date'	=> $value->start_date,
+                    'end_date'		=> $value->end_date,
+                    'finished'		=> $finished,
+					'name'			=> $value->name
                 ];
             });
 
@@ -76,17 +86,27 @@ class QuizTransactionController extends Controller
             ->select([
                 'a.id',
                 'a.title',
-                'a.end_date'
+				'a.description',
+                'a.start_date',
+                'a.end_date',
+				'b.name'
             ])
+			->join('users as b', function ($join) {
+				$join->on('a.client_id', '=', 'b.client_id')
+				->on('a.created_by', '=', 'b.email');
+			})
             ->where('a.client_id','=', $this->client_id)
             ->where('a.id','=', $request->id)
-            ->orderBy('created_at', 'DESC')
+            ->orderBy('a.created_at', 'DESC')
             ->get()
             ->map(function ($value) {
                 return [
-                    'id'		=> $value->id,
-                    'title'		=> $value->title,
-                    'end_date'	=> $value->end_date,
+                    'id'			=> $value->id,
+                    'title'			=> $value->title,
+					'description'	=> $value->description,
+                    'start_date'	=> $value->start_date,
+                    'end_date'		=> $value->end_date,
+					'name'			=> $value->name
                 ];
             });
 

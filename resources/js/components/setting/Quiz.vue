@@ -65,7 +65,8 @@
 																<label for="desc">Judul <span class="text-danger">*</span></label>
 															</div>
 															<div class="col-md-10 form-group">
-																<Field type="text" id="title" v-model="form.field.title" class="form-control" placeholder="Tulis judul disini" name="title" />
+																<Field type="text" id="title" v-model="form.field.title" class="form-control" placeholder="Tulis judul disini" name="title" maxlength="80" />
+																<br><small class="text-muted">{{ remainingCharactersTitle }}/{{ maxLengthTitle }}</small>
 																<ErrorMessage name="title" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
 															</div>
 															<div class="col-md-2">
@@ -264,6 +265,7 @@ export default {
                 }
             },
 			maxLength: 255,
+			maxLengthTitle: 80,
 			errors: {}
         }
     },
@@ -655,6 +657,10 @@ export default {
 
 		remainingCharacters() {
             return this.maxLength - this.form.field.description.length;
+        },
+
+		remainingCharactersTitle() {
+            return this.maxLengthTitle - this.form.field.title.length;
         }
     },
 
