@@ -70,6 +70,11 @@ const _routes = [
         name: 'quiz-test',
         component: () => import(/* webpackChunkName: "usr/quiz-test" */ './components/member/QuizTest.vue'),
     },
+    {
+        path: '/game-math',
+        name: 'game-math',
+        component: () => import(/* webpackChunkName: "usr/game-math" */ './components/member/GameMath.vue'),
+    },
 ]
 
 export default _routes
