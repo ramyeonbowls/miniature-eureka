@@ -73,7 +73,7 @@ class StoreBannerMasterRequest extends FormRequest
         if ($type === 'web') {
             $dimensionMessage = 'The file dimensions can\'t be larger than 1300 x 500 pixels for web.';
         } elseif ($type === 'mobile') {
-            $dimensionMessage = 'The file dimensions can\'t be larger than 390 x 400 pixels for mobile.';
+            $dimensionMessage = 'The file dimensions can\'t be larger than 400 x 250 pixels for mobile.';
         }
 
         return [

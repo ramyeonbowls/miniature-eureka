@@ -90,7 +90,7 @@
                                                                                 <input type="file" ref="banner_files" id="file" name="file" @change="onChangeIcon" accept=".png,.jpg,.jpeg" />
                                                                             </Field>
                                                                             <ErrorMessage name="file" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
-                                                                            <br><small v-if="form.field.type == 'web' || form.field.type == ''" class="text-muted">Max. size: 1500 kb (1300x500 pixels)<br>File types: png, jpg, jpeg</small><small v-else class="text-muted">Max. size: 1500 kb (390x400 pixels)<br>File types: png, jpg, jpeg</small>
+                                                                            <br><small v-if="form.field.type == 'web' || form.field.type == ''" class="text-muted">Max. size: 1500 kb (1300x500 pixels)<br>File types: png, jpg, jpeg</small><small v-else class="text-muted">Max. size: 1500 kb (400x250 pixels)<br>File types: png, jpg, jpeg</small>
                                                                         </div>
                                                                     </div>
                                                                 </div>
