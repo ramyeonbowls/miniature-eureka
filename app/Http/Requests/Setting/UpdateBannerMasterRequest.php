@@ -27,7 +27,7 @@ class UpdateBannerMasterRequest extends FormRequest
         if ($type === 'web') {
             $dimensionRule = $dimensionRule->maxWidth(1300)->maxHeight(500);
         } elseif ($type === 'mobile') {
-            $dimensionRule = $dimensionRule->maxWidth(390)->maxHeight(400);
+            $dimensionRule = $dimensionRule->maxWidth(400)->maxHeight(250);
         }
 
         return [
