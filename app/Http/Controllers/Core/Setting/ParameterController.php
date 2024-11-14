@@ -56,6 +56,7 @@ class ParameterController extends Controller
                     'a.value',
                 ])
                 ->where('a.client_id', $this->client_id)
+                ->where('a.name', '!=', 'additional_features')
                 ->orderBy('created_at')
                 ->get();
 

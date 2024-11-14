@@ -119,11 +119,20 @@
                         </div>
                     </li>
                     <template v-if="isAuthenticated">
-						<li class="menu-item ">
-							<router-link to="/quiz" class='menu-link'>
-								<span> Quiz</span>
-							</router-link>
-						</li>
+						<template v-if="additional_features==2 || additional_features==3">
+							<li class="menu-item ">
+								<router-link to="/quiz" class='menu-link'>
+									<span> Quiz</span>
+								</router-link>
+							</li>
+						</template>
+						<template v-if="additional_features==1 || additional_features==3">
+							<li class="menu-item ">
+								<router-link to="/game-math" class='menu-link'>
+									<span> Permainan</span>
+								</router-link>
+							</li>
+						</template>
                         <li class="menu-item ">
                             <router-link to="/history-pinjaman" class='menu-link'>
                                 <span> Riwayat Pinjaman</span>
@@ -177,7 +186,6 @@
 import "~@fontsource/libre-franklin";
 import "~@fontsource/libre-franklin/900.css";
 import "~@fontsource/libre-franklin/800.css";
-import { register } from "swiper/element";
 
 export default {
     name: 'headerItems',
@@ -201,6 +209,10 @@ export default {
         },
         register: {
             type: Boolean,
+            required: true
+        },
+        additional_features: {
+            type: Number,
             required: true
         }
     },

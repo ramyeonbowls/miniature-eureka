@@ -673,13 +673,19 @@ class MainController extends Controller
 
     public function getParam()
     {
+		$parameter = ['reg_member', 'additional_features'];
         $results = DB::table('tparameter as a')
             ->select([
+                'a.name',
                 'a.value',
             ])
             ->where('a.client_id', '=' , $this->client_id)
-            ->where('a.name', '=' , 'reg_member')
-            ->get();
+            ->whereIn('a.name', $parameter)
+            ->get()
+			->keyBy('name')
+			->map(function ($item) {
+				return $item->value;
+			});
 
         return response()->json($results, 200);
     }

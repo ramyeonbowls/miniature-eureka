@@ -1,7 +1,7 @@
 <template>
     <div id="app-usr">
         <div id="main" class="layout-horizontal">
-            <headerItems :isAuthenticated="isAuthenticated" :name="user.name" :avatar="user.avatar" :appname="appname" :register="param.register"></headerItems>
+            <headerItems :isAuthenticated="isAuthenticated" :name="user.name" :avatar="user.avatar" :appname="appname" :register="param.register" :additional_features="param.additional_features"></headerItems>
         
             <div class="content-wrapper container">
                 <router-view :isAuthenticated="isAuthenticated" :register="param.register"></router-view>
@@ -92,7 +92,8 @@ export default {
                 avatar: ''
             },
             param: {
-                register: true
+                register: true,
+				additional_features: 0
             },
             appname: '',
             searchQuery: '',
@@ -158,7 +159,8 @@ export default {
 
             axios.get('/getParam')
             .then((response) => {
-                this.param.register = (response.data[0].value==1) ? true : false;
+                this.param.register = (response.data.reg_member==1) ? true : false;
+                this.param.additional_features = response.data.additional_features;
             })
             .catch((e) => {
                 console.error(e)

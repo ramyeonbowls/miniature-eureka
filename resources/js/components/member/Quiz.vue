@@ -51,14 +51,42 @@ export default {
     data() {
         return {
             quizs: [],
+			param: {
+				additional_features: 0
+            },
         };
     },
 
     mounted() {
         this.getQuiz();
+		this.getParam();
     },
 
     methods: {
+		getParam() {
+            this.param.additional_features = '';
+
+            axios.get('/getParam')
+            .then((response) => {
+                this.param.additional_features = response.data.additional_features;
+				if (this.param.additional_features!=2 || this.param.additional_features!=3) {
+					this.$swal({
+						title: "Access Denied",
+						icon: 'error',
+						allowOutsideClick: false,
+						allowEscapeKey: false,
+						showCloseButton: false,
+						showCancelButton: false
+					}).then((result) => {
+						window.location.href = '/';
+					});
+				}
+            })
+            .catch((e) => {
+                console.error(e)
+            });
+        },
+
 		getQuiz() {
 			let loader = this.$loading.show();
             this.quizs = [];

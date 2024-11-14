@@ -45,90 +45,6 @@
                 </div>
             </div>
         </template>
-		<div class="col-12 col-lg-12 mt-4">
-			<!-- Video Carousel -->
-			<div class="card">
-				<div class="divider divider-left-center mb-3">
-					<h2>VIDEO</h2>
-				</div>
-				<div id="videoCarousel" class="carousel slide mb-3 mx-3" data-bs-ride="carousel">
-					<div class="carousel-inner">
-						<div class="carousel-item active">
-							<div class="row">
-								<div class="col-12 col-sm-6">
-									<iframe
-										class="d-block w-100"
-										style="border-radius: 10px;"
-										width="100%"
-										height="300"
-										src="https://www.youtube.com/embed/HlWYVGeKBZY?enablejsapi=1"
-										frameborder="0"
-										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-										allowfullscreen
-									></iframe>
-								</div>
-								<div class="col-12 col-sm-6">
-									<div class=" d-none d-sm-block">
-										<h4>Demi Literasi Lebih Baik, Hotel di Solo Hadirkan Perpustakaan Digital</h4>
-										<div class="d-flex justify-content-left mb-0 mt-3">
-											Beragam buku dalam format digital tersedia gratis dan bisa diakses pengunjung. Dengan mudah buku bisa dibaca dengan memindai kode yang tersedia.
-										</div>
-									</div>
-									<div class="d-block d-sm-none">
-										<div class="divider mb-0">
-											<h4>Demi Literasi Lebih Baik, Hotel di Solo Hadirkan Perpustakaan Digital</h4>
-										</div>
-										<div class="text-center mb-0 mt-3">
-											Beragam buku dalam format digital tersedia gratis dan bisa diakses pengunjung. Dengan mudah buku bisa dibaca dengan memindai kode yang tersedia.
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="carousel-item">
-							<div class="row">
-								<div class="col-12 col-md-6">
-									<iframe
-										class="d-block w-100"
-										style="border-radius: 10px;"
-										width="100%"
-										height="300"
-										src="https://www.youtube.com/embed/Tgt8zrXh-Gs?enablejsapi=1"
-										frameborder="0"
-										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-										allowfullscreen
-									></iframe>
-								</div>
-								<div class="col-12 col-sm-6">
-									<div class=" d-none d-sm-block">
-										<h4>TALKSHOW TRANSFORMASI PERPUSTAKAAN MENUJU EKOSISTEM DIGITAL</h4>
-										<div class="d-flex justify-content-left mb-0 mt-3">
-											Kunci paling penting agar Perpustakaan dapat mewujudkan tujuan transformasi, termasuk dlm membangun ekosistem digital, adalah melalui penguatan SDM Pustakawan.
-										</div>
-									</div>
-									<div class="d-block d-sm-none">
-										<div class="divider mb-0">
-											<h4>TALKSHOW TRANSFORMASI PERPUSTAKAAN MENUJU EKOSISTEM DIGITAL</h4>
-										</div>
-										<div class="text-center mb-0 mt-3">
-											Kunci paling penting agar Perpustakaan dapat mewujudkan tujuan transformasi, termasuk dlm membangun ekosistem digital, adalah melalui penguatan SDM Pustakawan.
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<a class="carousel-control-prev" href="#videoCarousel" role="button" data-bs-slide="prev">
-						<span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: lightgray; border-radius: 5px;"></span>
-						<span class="visually-hidden">Previous</span>
-					</a>
-					<a class="carousel-control-next" href="#videoCarousel" role="button" data-bs-slide="next">
-						<span class="carousel-control-next-icon" aria-hidden="true" style="background-color: lightgray; border-radius: 5px;"></span>
-						<span class="visually-hidden">Next</span>
-					</a>
-				</div>
-			</div>
-		</div>
     </div>
     <div class="page-content">
         <section class="row">
@@ -217,7 +133,7 @@
                 </div>
             </div>
         </section>
-		<section  v-if="quiz.length>0" class="row">
+		<section v-if="quiz.length>0" class="row">
             <div class="col-12 col-lg-12">
                 <div class="testimonial-slider hover-shadow">
                     <div class="row">
@@ -281,7 +197,93 @@
                 </div>
             </div>
         </section>
-        <section v-if="news.length>0" class="row mt-4">
+		<section class="row mt-4">
+			<div class="col-12 col-lg-12">
+				<!-- Video Carousel -->
+				<div class="card">
+					<div class="text-start pt-3 px-3 pe-0 mb-3">
+						<h2>VIDEO</h2>
+					</div>
+					<div id="videoCarousel" class="carousel slide mb-3 mx-3" data-bs-ride="carousel">
+						<div class="carousel-inner">
+							<div class="carousel-item active">
+								<div class="row">
+									<div class="col-12 col-sm-6">
+										<iframe
+											class="d-block w-100"
+											style="border-radius: 10px;"
+											width="100%"
+											height="300"
+											src="https://www.youtube.com/embed/HlWYVGeKBZY?enablejsapi=1"
+											frameborder="0"
+											allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+											allowfullscreen
+										></iframe>
+									</div>
+									<div class="col-12 col-sm-6">
+										<div class=" d-none d-sm-block">
+											<h4>Demi Literasi Lebih Baik, Hotel di Solo Hadirkan Perpustakaan Digital</h4>
+											<div class="d-flex justify-content-left mb-0 mt-3">
+												Beragam buku dalam format digital tersedia gratis dan bisa diakses pengunjung. Dengan mudah buku bisa dibaca dengan memindai kode yang tersedia.
+											</div>
+										</div>
+										<div class="d-block d-sm-none">
+											<div class="divider mb-0">
+												<h4>Demi Literasi Lebih Baik, Hotel di Solo Hadirkan Perpustakaan Digital</h4>
+											</div>
+											<div class="text-center mb-0 mt-3">
+												Beragam buku dalam format digital tersedia gratis dan bisa diakses pengunjung. Dengan mudah buku bisa dibaca dengan memindai kode yang tersedia.
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="carousel-item">
+								<div class="row">
+									<div class="col-12 col-md-6">
+										<iframe
+											class="d-block w-100"
+											style="border-radius: 10px;"
+											width="100%"
+											height="300"
+											src="https://www.youtube.com/embed/Tgt8zrXh-Gs?enablejsapi=1"
+											frameborder="0"
+											allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+											allowfullscreen
+										></iframe>
+									</div>
+									<div class="col-12 col-sm-6">
+										<div class=" d-none d-sm-block">
+											<h4>TALKSHOW TRANSFORMASI PERPUSTAKAAN MENUJU EKOSISTEM DIGITAL</h4>
+											<div class="d-flex justify-content-left mb-0 mt-3">
+												Kunci paling penting agar Perpustakaan dapat mewujudkan tujuan transformasi, termasuk dlm membangun ekosistem digital, adalah melalui penguatan SDM Pustakawan.
+											</div>
+										</div>
+										<div class="d-block d-sm-none">
+											<div class="divider mb-0">
+												<h4>TALKSHOW TRANSFORMASI PERPUSTAKAAN MENUJU EKOSISTEM DIGITAL</h4>
+											</div>
+											<div class="text-center mb-0 mt-3">
+												Kunci paling penting agar Perpustakaan dapat mewujudkan tujuan transformasi, termasuk dlm membangun ekosistem digital, adalah melalui penguatan SDM Pustakawan.
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<a class="carousel-control-prev" href="#videoCarousel" role="button" data-bs-slide="prev">
+							<span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: lightgray; border-radius: 5px;"></span>
+							<span class="visually-hidden">Previous</span>
+						</a>
+						<a class="carousel-control-next" href="#videoCarousel" role="button" data-bs-slide="next">
+							<span class="carousel-control-next-icon" aria-hidden="true" style="background-color: lightgray; border-radius: 5px;"></span>
+							<span class="visually-hidden">Next</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+        <section v-if="news.length>0" class="row">
             <div class="col-12 col-lg-12">
                 <div class="card py-2 px-4 hover-shadow">
                     <div class="row">
@@ -340,7 +342,7 @@
                 </div>
             </div>
         </section>
-        <section  v-if="frasa.length>0" class="row">
+        <section v-if="frasa.length>0" class="row">
             <div class="col-12 col-lg-12">
                 <div class="testimonial-slider hover-shadow">
                     <div class="row">
@@ -703,6 +705,7 @@ export default {
             titik_fokus: [],
             humoria: [],
             quiz: [],
+            video: [],
             swiperBreakpoints: {
                 320: {
                     slidesPerView: 2,
