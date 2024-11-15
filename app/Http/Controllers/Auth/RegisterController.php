@@ -79,7 +79,7 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'role' => $data['role'],
             'flag_approve' => $data['flag_approve'],
-            'client_id' => $this->client_id,
+            'client_id' => $this->client_id
         ]);
     }
 
@@ -123,7 +123,7 @@ class RegisterController extends Controller
                         'phone'         => $request->phone,
                         'birthday'      => $request->birthday,
                         'gender'        => $request->gender,
-                        'created_at'     => Carbon::now()
+                        'created_at'     => Carbon::now("Asia/Jakarta")
                     ]);
 
             // $queries = DB::getQueryLog();
