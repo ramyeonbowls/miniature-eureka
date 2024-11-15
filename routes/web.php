@@ -93,6 +93,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                         Route::apiResource('layar-penulis-mst', LayarPenulisMasterController::class);
                         Route::apiResource('frasa-mst', FrasaMasterController::class);
                         Route::apiResource('quiz-mst', QuizMasterController::class);
+                        Route::apiResource('video-mst', VideoMasterController::class);
 
                         Route::apiResource('profile', ProfileMasterController::class);
                         Route::apiResource('appparam', ParameterController::class);

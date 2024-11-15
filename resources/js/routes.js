@@ -155,6 +155,11 @@ const routes = [
         name: 'report_quiz',
         component: () => import(/* webpackChunkName: "report/report_quiz" */ './components/report/ReportQuiz.vue'),
     },
+	{
+        path: '/setting/video',
+        name: 'video',
+        component: () => import(/* webpackChunkName: "setting/video" */ './components/setting/Video.vue'),
+    },
 ]
 
 export default routes
