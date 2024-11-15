@@ -746,6 +746,48 @@ class MainController extends Controller
         return response()->json($results, 200);
     }
 
+	public function getVideo()
+    {
+		// $logs = new Logs(Arr::last(explode("\\", get_class())) . 'Log');
+        // $logs->write(__FUNCTION__, 'START');
+		// DB::enableQueryLog();
+
+		$user = auth()->user();
+
+        $results = DB::table('tvideo as a')
+            ->select([
+                'a.id',
+                'a.title',
+                'a.description',
+                'a.file'
+            ])
+            ->where('a.client_id','=', $this->client_id)
+            ->where('a.flag_aktif','=', 'Y')
+            ->where('a.file','!=', '')
+            ->get()
+            ->map(function ($value) use ($user) {
+				$url	= explode('https://www.youtube.com/embed/', $value->file)[1];
+				$idv	= explode('"', $url)[0];
+				$id		= "https://www.youtube.com/embed/".$idv."?enablejsapi=1";
+
+                return [
+                    'id'			=> $value->id,
+                    'title'			=> $value->title,
+                    'description'	=> $value->description,
+                    'file'			=> $id != '' ? $id : ''
+                ];
+            });
+
+		// $queries = DB::getQueryLog();
+		// for($q = 0; $q < count($queries); $q++) {
+		// 	$sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
+		// 	$logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+		// 	$logs->write('SQL', $sql);
+		// }
+
+        return response()->json($results, 200);
+    }
+
 	private function getResult($client_id, $survey_id, $user_id){
 		return DB::table('tquiz_trx as a')
 			->select(

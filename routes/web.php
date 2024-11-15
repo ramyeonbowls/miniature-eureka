@@ -47,6 +47,7 @@ Route::middleware('destroy.session')->group(function() {
     Route::get('/getAllArticle', [App\Http\Controllers\MainController::class, 'getAllArticle'])->name('getAllArticle');
     Route::get('/getDetailArticle', [App\Http\Controllers\MainController::class, 'getDetailArticle'])->name('getDetailArticle');
     Route::get('/getNewCollection', [App\Http\Controllers\MainController::class, 'getNewCollection'])->name('getNewCollection');
+    Route::get('/getVideo', [App\Http\Controllers\MainController::class, 'getVideo'])->name('getVideo');
     Route::get('/getProfile', [App\Http\Controllers\ProfileController::class, 'index'])->name('getProfile');
     Route::post('/UpdateProfile', [App\Http\Controllers\ProfileController::class, 'UpdateProfile'])->name('UpdateProfile');
 
