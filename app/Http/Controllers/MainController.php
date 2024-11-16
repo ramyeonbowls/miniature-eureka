@@ -157,9 +157,11 @@ class MainController extends Controller
                 $join->on('b.category_id', '=', 'c.id');
             })
             ->when($parameter != '', function($query) use ($parameter) {
-				$query->where('b.writer', 'LIKE', '%' . $parameter . '%')
-                    ->orWhere('b.isbn', 'LIKE', '%' . $parameter . '%')
-                    ->orWhere('b.title', 'LIKE', '%' . $parameter . '%');
+				$query->where(function($query) use ($parameter) {
+					$query->where('b.writer', 'LIKE', '%' . $parameter . '%')
+						  ->orWhere('b.isbn', 'LIKE', '%' . $parameter . '%')
+						  ->orWhere('b.title', 'LIKE', '%' . $parameter . '%');
+				});
 			})
             ->when(count($category)>0, function($query) use ($category) {
 				$query->whereIn('b.category_id', $category);
