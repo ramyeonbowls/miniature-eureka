@@ -30,7 +30,7 @@
 								<div class="card-body">
 									<div class="card-title">
 										<a href="#">
-											<h5> Game Scramble Word </h5>
+											<h5> Game Susun Kata </h5>
 										</a>
 									</div>
 									<p>
