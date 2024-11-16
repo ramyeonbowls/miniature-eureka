@@ -221,18 +221,28 @@
 										></iframe>
 									</div>
 									<div class="col-12 col-sm-6">
+										<!-- web -->
 										<div class=" d-none d-sm-block">
 											<h4>{{ item.title }}</h4>
-											<div class="d-flex justify-content-left mb-0 mt-3">
+											<div class="d-flex justify-content-left mb-0 mt-5">
 												{{ item.description }}
 											</div>
 										</div>
+										<!-- mobile -->
 										<div class="d-block d-sm-none">
 											<div class="divider mb-0">
 												<h4>{{ item.title }}</h4>
 											</div>
 											<div class="text-center mb-0 mt-3">
-												{{ item.description }}
+												<p v-if="isLongDescription(item.description)">
+													{{ isFullDescription(index) ? item.description : truncatedDescription(item.description) }}
+													<a href="#" @click.prevent="toggleDescription(index)">
+														{{ isFullDescription(index) ? 'Ringkas Deskripsi' : 'Baca Selengkapnya' }}
+													</a>
+													</p>
+													<p v-else>
+													{{ item.description }}
+												</p>
 											</div>
 										</div>
 									</div>
@@ -754,6 +764,7 @@ export default {
                     spaceBetween: 10
                 }
             },
+			fullDescriptionIndexes: []
         };
     },
 
@@ -768,7 +779,6 @@ export default {
 
     mounted() {
         this.initializeSubMenu();
-		this.loadYouTubeAPI();
     },
 
     methods: {
@@ -916,6 +926,7 @@ export default {
             .get('/getVideo')
             .then((response) => {
                 this.video = response.data;
+				this.loadYouTubeAPI();
             })
             .catch((e) => {
                 console.error(e)
@@ -949,7 +960,24 @@ export default {
 			}else{
 				this.$router.push('/mlogin');
 			}
-        }
+        },
+
+		isLongDescription(description) {
+			return description && description.length > 110;
+		},
+		truncatedDescription(description) {
+			return description ? description.slice(0, 110) + '...' : '';
+		},
+		toggleDescription(index) {
+			if (this.fullDescriptionIndexes.includes(index)) {
+				this.fullDescriptionIndexes = this.fullDescriptionIndexes.filter(i => i !== index);
+			} else {
+				this.fullDescriptionIndexes.push(index);
+			}
+		},
+		isFullDescription(index) {
+			return this.fullDescriptionIndexes.includes(index);
+		}
     },
 
     computed: {
@@ -958,7 +986,7 @@ export default {
         },
         otherNews() {
             return this.news.slice(1);
-        }
+        },
     }
 };
 </script>

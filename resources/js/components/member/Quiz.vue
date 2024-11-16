@@ -58,8 +58,8 @@ export default {
     },
 
     mounted() {
-        this.getQuiz();
 		this.getParam();
+        this.getQuiz();
     },
 
     methods: {
@@ -69,7 +69,8 @@ export default {
             axios.get('/getParam')
             .then((response) => {
                 this.param.additional_features = response.data.additional_features;
-				if (this.param.additional_features!=2 || this.param.additional_features!=3) {
+
+				if (this.param.additional_features!=2 && this.param.additional_features!=3) {
 					this.$swal({
 						title: "Access Denied",
 						icon: 'error',

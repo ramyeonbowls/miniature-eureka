@@ -34,7 +34,6 @@
                                         <thead>
                                             <tr>
                                                 <th>Judul</th>
-                                                <th>Deskripsi</th>
                                                 <th>Aktif</th>
                                                 <th>dibuat oleh</th>
                                                 <th>dibuat pada</th>
@@ -74,7 +73,7 @@
                                                                             <label for="desc">Deskripsi <span class="text-danger">*</span></label>
                                                                         </div>
                                                                         <div class="col-md-10 form-group">
-                                                                            <textarea class="form-control" id="description" v-model="form.field.description" name="description" rows="3" maxlength="200"></textarea>
+                                                                            <textarea class="form-control" id="description" v-model="form.field.description" name="description" rows="3" maxlength="500"></textarea>
                                                                             <br><small class="text-muted">{{ remainingCharacters }}/{{ maxLength }}</small>
                                                                             <ErrorMessage name="description" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
                                                                         </div>
@@ -155,7 +154,7 @@ export default {
                     file: ''
                 }
             },
-            maxLength: 200
+            maxLength: 500
         }
     },
 
@@ -179,7 +178,6 @@ export default {
             ajax: "/setting/video-mst",
             columns: [
                 { data: "title" },
-                { data: "description" },
                 { data: "flag_aktif" },
                 { data: "created_by" },
                 { data: "created_at", class: "text-center" },

@@ -27,7 +27,7 @@ class StoreVideoMasterRequest extends FormRequest
         return [
             'id' => 'required|unique:tvideo,id|max:50',
             'title' => 'required|max:100',
-            'description' => 'required|max:200',
+            'description' => 'required|max:500',
             'flag_aktif' => 'required|max:5',
             'file' => 'required'
         ];

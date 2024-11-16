@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tvideo', function (Blueprint $table) {
             $table->string('id', 50);
             $table->string('title', 100)->nullable();
-            $table->string('description', 200)->nullable();
+            $table->text('description')->nullable();
             $table->text('file')->nullable();
             $table->string('flag_aktif', 1)->default('Y');
             $table->string('flag_platform', 1)->default('N');
