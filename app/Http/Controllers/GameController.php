@@ -46,7 +46,7 @@ class GameController extends Controller
 			])
 			->where('a.client_id','=', $this->client_id)
 			->where('a.user_id','=', $user->id)
-			->whereRaw("a.start_read = CONVERT(NOW(), DATE)")
+			->whereRaw("CONVERT(a.start_read, DATE) = CONVERT(NOW(), DATE)")
 			->first();
 
         if($results){
