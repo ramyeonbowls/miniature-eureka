@@ -10,7 +10,8 @@
 							<div class="team">
 								<i class="bi bi-check-square-fill text-white mx-2 mb-2" width="16" height="20"></i>
 								<span class="name mx-2">Nilai anda</span>
-								<span class="score mx-2">{{ nilai }}</span></div>
+								<span class="score mx-2">{{ nilai }}</span>
+							</div>
 						</template>
 					</div>
 					<div class="card-body">

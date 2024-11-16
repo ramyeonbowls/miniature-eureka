@@ -8,7 +8,7 @@ const _routes = [
         path: '/',
         name: 'main',
         component: () => import(/* webpackChunkName: "/usr/home" */ './components/member/HomeMain.vue'),
-        props: route => ({ isAuthenticated: route.meta.isAuthenticated})
+        props: route => ({ isAuthenticated: route.meta.isAuthenticated, additional_features: route.meta.additional_features})
     },
     {
         path: '/mlogin',

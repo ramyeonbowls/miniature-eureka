@@ -13,14 +13,25 @@
 	  <!-- Game UI -->
 	  <div v-if="!gameOver">
 		<h2>Susun huruf untuk membentuk kata dalam Bahasa Indonesia!</h2>
-		<p class="text-start">
-			<h4 class="text-muted">Skor: {{ currentScore }}</h4>
+		<p class="d-flex justify-content-center">
+			<div class="team">
+				<span class="name mx-2">Skor</span>
+				<span class="score mx-2">{{ currentScore }}</span>
+			</div>
 		</p>
-		<div id="scrambled-word">
-		  <h2>{{ scrambledWord }}</h2>
+		<div class="d-flex justify-content-center mb-2">
+			<div id="scrambled-word" class="captcha-container">
+				<h2 class="captcha">
+					<span v-for="(char, index) in scrambledWord" :key="index" :style="generateStyle(index)">
+						{{ char }}
+					</span>
+				</h2>
+			</div>
 		</div>
 		<div v-if="feedback" class="feedback">
-			<h4 :class="isCorrectAnswer ? 'text-success' : 'text-danger'">{{ feedback }}</h4>
+			<h4 :class="[isCorrectAnswer ? 'text-success' : 'text-danger', 'animated-feedback']">
+			{{ feedback }}
+			</h4>
 		</div>
 		<input 
 		  type="text" 
@@ -222,6 +233,18 @@ export default {
 		}
     });
 
+	const generateStyle = (index) => {
+      const rotate = Math.floor(Math.random() * 21) - 10; // Random rotation between -10 and 10 degrees
+      const scale = Math.random() * 0.4 + 0.8; // Random scale between 0.8 and 1.2
+      const colors = ['#ff6666', '#66b2ff', '#66ff66', '#ff66b2', '#b266ff', '#ff3366'];
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      return {
+        '--rotate': rotate,
+        '--scale': scale,
+        '--color': color,
+      };
+    };
+
     onBeforeUnmount(() => {
       // Cleanup
     });
@@ -236,6 +259,7 @@ export default {
 		showModal,
 		isCorrectAnswer,
 		isIncorrectAnswer,
+		generateStyle
     };
   },
 };
@@ -244,7 +268,7 @@ export default {
   
   <style scoped>
   .full-screen-card {
-	height: 75vh; /* Adjust the 100px as needed for additional height */
+	height: 85vh; /* Adjust the 100px as needed for additional height */
 	overflow-y: auto;
 	}
   .game-container {
@@ -334,6 +358,85 @@ export default {
 
 	#modalContent button {
 	margin: 10px;
+	}
+
+	.team {
+		width: 30%;
+		height: 60px;
+		background: #42a5f5;
+		box-shadow: 0 3px 5px #0000001f;
+		display: flex;
+		align-items: center;
+		border-radius: 10px;
+
+	}
+
+	.name {
+		width: 50%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		margin: 20px 0;
+		font-size: 1.1rem;
+		color: #fff;
+		font-weight: 600;
+		text-transform: capitalize;
+	}
+
+	.score {
+		width: var(--team-height);
+		margin: 20px 0;
+		font-size: 1.4rem;
+		color: #fff;
+		font-weight: 600;
+	}
+
+	@keyframes fadeInOut {
+		0% {
+			opacity: 0;
+			transform: translateY(-10px);
+		}
+		10% {
+			opacity: 1;
+			transform: translateY(0);
+		}
+		90% {
+			opacity: 1;
+			transform: translateY(0);
+		}
+		100% {
+			opacity: 0;
+			transform: translateY(-10px);
+		}
+	}
+
+	.feedback h4 {
+		animation: fadeInOut 3s ease-in-out;
+	}
+
+	#scrambled-word h2.captcha {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-top: 20px;
+	}
+
+	#scrambled-word h2.captcha span {
+		display: inline-block;
+		margin: 0 5px;
+		font-size: 2rem;
+		color: var(--color);
+		transform: rotate(var(--rotate)deg) scale(var(--scale));
+	}
+
+	.captcha-container {
+		background-color:#f9f9f9;
+	border:2px solid #d3d3d3;
+	border-radius:5px;
+	color:#4c4a4b;
+	display:flex;
+	justify-content:center;
+	align-items:center;
 	}
   </style>
   

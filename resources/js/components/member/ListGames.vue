@@ -6,18 +6,15 @@
 					<router-link :to="{ name: 'game-math' }">
 						<div class="card h-100 mb-0 hover-shadow">
 							<div class="card-content d-flex flex-column">
-								<!-- <div class="product-image mb-0 pb-0">
-									<img src="" class="img-fluid" style="border-radius: 5px 5px 0 0 !important;">
-								</div> -->
+								<div class="product-image mb-0 pb-0">
+									<img src="game/math/math.png" class="img-fluid" style="border-radius: 5px 5px 0 0 !important;">
+								</div>
 								<div class="card-body">
 									<div class="card-title">
 										<a href="#">
 											<h5> Game Perhitungan </h5>
 										</a>
 									</div>
-									<p>
-										<span>game untuk mengasah perhitungan</span>
-									</p>
 								</div>
 							</div>
 						</div>
@@ -27,15 +24,15 @@
 					<router-link :to="{ name: 'word-scramble' }">
 						<div class="card h-100 mb-0 hover-shadow">
 							<div class="card-content d-flex flex-column">
+								<div class="product-image mb-0 pb-0">
+									<img src="game/scramble/scramble.png" class="img-fluid" style="border-radius: 5px 5px 0 0 !important;">
+								</div>
 								<div class="card-body">
 									<div class="card-title">
 										<a href="#">
 											<h5> Game Susun Kata </h5>
 										</a>
 									</div>
-									<p>
-										<span>game untuk mengasah kemampuan</span>
-									</p>
 								</div>
 							</div>
 						</div>
@@ -45,15 +42,15 @@
 					<router-link :to="{ name: 'flying-bird' }">
 						<div class="card h-100 mb-0 hover-shadow">
 							<div class="card-content d-flex flex-column">
+								<div class="product-image mb-0 pb-0">
+									<img src="game/flyingbird/flyingbird.png" class="img-fluid" style="border-radius: 5px 5px 0 0 !important;">
+								</div>
 								<div class="card-body">
 									<div class="card-title">
 										<a href="#">
 											<h5> Game Flying Bird </h5>
 										</a>
 									</div>
-									<p>
-										<span>game untuk bersenang senang</span>
-									</p>
 								</div>
 							</div>
 						</div>

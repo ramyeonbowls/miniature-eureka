@@ -197,6 +197,74 @@
                 </div>
             </div>
         </section>
+		<section v-if="show_game" class="row">
+            <div class="col-12">
+				<div class="row">
+					<swiper
+                        :modules="modules"
+                        :slides-per-view="3"
+                        :space-between="5"
+                        :breakpoints="swiperBreakpointsgame"
+                        navigation
+                        :scrollbar="{ draggable: true }"
+                        @swiper="onSwiper"
+                        @slideChange="onSlideChange"
+                        :autoplay= "{ delay: 4000 }"
+                        class="swiper-container px-2"
+                        loop
+                    >
+                        <swiper-slide>
+							<div class="card hover-shadow" @click="goToGame('game-math')">
+								<div class="card-content d-flex flex-column">
+									<div class="mb-0 pb-0">
+										<img src="game/math/math.png" class="img-fluid" style="border-radius: 5px 5px 0 0 !important;">
+									</div>
+									<div class="card-body">
+										<div class="card-title">
+											<a href="#">
+												<h5> Game Perhitungan </h5>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</swiper-slide>
+						<swiper-slide>
+							<div class="card hover-shadow" @click="goToGame('word-scramble')">
+								<div class="card-content d-flex flex-column">
+									<div class="mb-0 pb-0">
+										<img src="game/scramble/scramble.png" class="img-fluid" style="border-radius: 5px 5px 0 0 !important;">
+									</div>
+									<div class="card-body">
+										<div class="card-title">
+											<a href="#">
+												<h5> Game Susun Kata </h5>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</swiper-slide>
+						<swiper-slide>
+							<div class="card hover-shadow" @click="goToGame('flying-bird')">
+								<div class="card-content d-flex flex-column">
+									<div class="mb-0 pb-0">
+										<img src="game/flyingbird/flyingbird.png" class="img-fluid" style="border-radius: 5px 5px 0 0 !important;">
+									</div>
+									<div class="card-body">
+										<div class="card-title">
+											<a href="#">
+												<h5> Game Flying Bird </h5>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+                        </swiper-slide>
+                    </swiper>
+				</div>
+			</div>
+        </section>
 		<section v-if="video.length>0" class="row mt-4">
 			<div class="col-12 col-lg-12">
 				<!-- Video Carousel -->
@@ -653,6 +721,10 @@ export default {
         isAuthenticated: {
             type: Boolean,
             required: true
+        },
+		additional_features: {
+            type: Number,
+            required: true
         }
     },
 
@@ -746,6 +818,24 @@ export default {
                     spaceBetween: 20
                 }
             },
+            swiperBreakpointsgame: {
+                320: {
+                    slidesPerView: 1,
+                    spaceBetween: 5
+                },
+                640: {
+                    slidesPerView: 1,
+                    spaceBetween: 5
+                },
+                768: {
+                    slidesPerView: 1,
+                    spaceBetween: 5
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 5
+                }
+            },
             swiperBreakpointlayarpenulis: {
                 320: {
                     slidesPerView: 1,
@@ -764,7 +854,8 @@ export default {
                     spaceBetween: 10
                 }
             },
-			fullDescriptionIndexes: []
+			fullDescriptionIndexes: [],
+			show_game: false
         };
     },
 
@@ -773,15 +864,25 @@ export default {
         this.getNewCollection();
         this.getBanner();
         this.getAllArticle();
-        this.getQuiz();
         this.getVideo();
     },
 
     mounted() {
         this.initializeSubMenu();
+		this.initFeatures();
     },
 
     methods: {
+		initFeatures(){
+			if(this.additional_features==2 || this.additional_features==3){
+				this.getQuiz()
+			}
+
+			if(this.additional_features==1 || this.additional_features==3){
+				this.show_game = true
+			}
+		},
+
 		loadYouTubeAPI() {
 			// Create script element for YouTube IFrame API
 			const tag = document.createElement('script');
@@ -961,6 +1062,14 @@ export default {
 				this.$router.push('/mlogin');
 			}
         },
+		
+		goToGame(game) {
+			if(this.isAuthenticated){
+				this.$router.push({ name: game });
+			}else{
+				this.$router.push('/mlogin');
+			}
+        },
 
 		isLongDescription(description) {
 			return description && description.length > 110;
@@ -987,7 +1096,16 @@ export default {
         otherNews() {
             return this.news.slice(1);
         },
-    }
+    },
+
+	watch: {
+		// Watch for changes in the 'additional_features' prop
+		additional_features(newValue) {
+			if (newValue === 2 || newValue === 3) {
+				this.initFeatures()
+			}
+		}
+	}
 };
 </script>
 
@@ -1197,5 +1315,56 @@ export default {
         .gambar-kotak {
             height: auto;
         }
+    }
+
+	.hover-scale {
+        transition: all .05s ease-out;
+        position: relative;
+        transform-origin: center center;
+    }
+    .hover-scale:hover {
+        transition: all .1s;
+        transform: scale(1.025) !important;
+    }
+    .hover-shadow {
+        transition: all .05s ease-out;
+        box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
+    }
+    .hover-shadow:hover {
+        transition: all .1s;
+        box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+    }
+    .hover-border {
+        transition: all .05s ease-out;
+        border: 2px solid transparent;
+    }
+    .hover-border:hover {
+        transition: all .1s;
+        border-color: #00afff
+    }
+    .hover-pointer:hover {
+        cursor: pointer !important;
+    }
+
+    .hover-child-scale > .hover-target {
+        transition: all .05s ease-out;
+        position: relative;
+        transform-origin: center center;
+    }
+    .hover-child-scale:hover > .hover-target {
+        transition: all .1s;
+        transform: scale(1.025) !important;
+    }
+    .hover-child-shadow > .hover-target {
+        transition: all .05s ease-out;
+        box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
+    }
+    .hover-child-shadow:hover > .hover-target {
+        transition: all .1s;
+        box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+    }
+    .hover-child-border > .hover-target {
+        transition: all .05s ease-out;
+        border: 2px solid transparent;
     }
 </style>
