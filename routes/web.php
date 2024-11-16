@@ -141,6 +141,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 			Route::get('/getQuiz', [App\Http\Controllers\QuizTransactionController::class, 'index'])->name('getQuiz');
 			Route::post('/setQuiz', [App\Http\Controllers\QuizTransactionController::class, 'store'])->name('setQuiz');
 			Route::get('/getDetailQuiz', [App\Http\Controllers\QuizTransactionController::class, 'getDetailQuiz'])->name('getDetailQuiz');
+			Route::get('/getInfoBaca', [App\Http\Controllers\GameController::class, 'getInfoBaca'])->name('getInfoBaca');
         });
 
         Route::controller(App\Http\Controllers\HomeController::class)->group(function () {

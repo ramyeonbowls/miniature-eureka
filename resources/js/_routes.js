@@ -71,9 +71,19 @@ const _routes = [
         component: () => import(/* webpackChunkName: "usr/quiz-test" */ './components/member/QuizTest.vue'),
     },
     {
+        path: '/list-games',
+        name: 'list-games',
+        component: () => import(/* webpackChunkName: "usr/list-games" */ './components/member/ListGames.vue'),
+    },
+	{
         path: '/game-math',
         name: 'game-math',
         component: () => import(/* webpackChunkName: "usr/game-math" */ './components/member/GameMath.vue'),
+    },
+	{
+        path: '/game-word-scramble',
+        name: 'game-word-scramble',
+        component: () => import(/* webpackChunkName: "usr/game-word-scramble" */ './components/member/GameWordScramble.vue'),
     },
 ]
 

@@ -128,7 +128,7 @@
 						</template>
 						<template v-if="additional_features==1 || additional_features==3">
 							<li class="menu-item ">
-								<router-link to="/game-math" class='menu-link'>
+								<router-link to="/list-games" class='menu-link'>
 									<span> Permainan</span>
 								</router-link>
 							</li>
