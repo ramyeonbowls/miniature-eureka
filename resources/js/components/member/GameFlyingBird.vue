@@ -42,6 +42,9 @@
 				maxPipeSpeed: 6,
 				birdWidth: 50,
 				birdHeight: 50,
+				backgroundmusic: new Audio('game/flyingbird/background.mp3'),
+				deathmusic: new Audio('game/flyingbird/gameover2.mp3'),
+				scoremusic: new Audio('game/flyingbird/score.mp3'),
 			};
 		},
 		methods: {
@@ -124,6 +127,9 @@
 				this.addGround();
 				this.app.ticker.add(this.gameLoop);
 				window.addEventListener('resize', this.onResize);
+
+				this.backgroundmusic.loop = true; // Set backgroundmusic to loop
+      			this.backgroundmusic.play();
 			},
 		
 			increaseDifficulty() {
@@ -175,6 +181,7 @@
 				if (pipe.top.x + pipe.top.width < this.bird.x && !pipe.scored) {
 					pipe.scored = true;
 					this.score++;
+					this.playScoreMusic();
 				}
 				});
 			},
@@ -223,6 +230,13 @@
 				this.gameOver = true;
 				clearInterval(this.pipeInterval);
 				clearInterval(this.speedIncreaseInterval);
+
+				this.backgroundmusic.pause();
+				this.deathmusic.play();
+			},
+
+			playScoreMusic() {
+				this.scoremusic.play(); // Play the score music
 			},
 		
 			restartGame() {
@@ -233,6 +247,9 @@
 				this.gameStarted = false;
 		
 				this.initGame();
+
+				this.backgroundmusic.currentTime = 0; // Reset backgroundmusic to start
+      			this.backgroundmusic.play();
 			},
 		
 			onResize() {

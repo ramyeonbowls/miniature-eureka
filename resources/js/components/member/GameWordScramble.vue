@@ -117,11 +117,29 @@ export default {
     const checkAnswer = () => {
 		if(userGuess.value != ''){
 			if (userGuess.value.toLowerCase() === correctAnswer.value.toLowerCase()) {
+				const correctSound = new Audio('game/scramble/yay.mp3'); // Path to your sound file
+				correctSound.play(); // Play the sound immediately
+
+				// Stop the sound after 5 seconds
+				setTimeout(() => {
+					correctSound.pause(); // Pause the sound after 5 seconds
+					correctSound.currentTime = 0; // Reset to the start of the sound
+				}, 5000);
+
 				feedback.value = 'Benar! Selamat!';
 				score.value++;
 				isCorrectAnswer.value = true;
 				isIncorrectAnswer.value = false;
 			} else {
+				const incorrectSound = new Audio('game/scramble/boo.mp3'); // Path to your sound file
+				incorrectSound.play(); // Play the sound immediately
+
+				// Stop the sound after 5 seconds
+				setTimeout(() => {
+					incorrectSound.pause(); // Pause the sound after 5 seconds
+					incorrectSound.currentTime = 0; // Reset to the start of the sound
+				}, 5000);
+
 				feedback.value = 'Salah, coba lagi!';
 				isCorrectAnswer.value = false;
 				isIncorrectAnswer.value = true;
@@ -143,7 +161,7 @@ export default {
 				feedback.value = ''; 
 				isCorrectAnswer.value = false;
 				isIncorrectAnswer.value = false;
-			}, 5000); // 3 seconds delay
+			}, 3000); // 3 seconds delay
 			userGuess.value = ''; // Clear the input
 		}
     };
