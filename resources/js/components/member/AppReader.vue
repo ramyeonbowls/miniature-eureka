@@ -5,6 +5,16 @@
         </nav>
 
         <div class="d-flex justify-content-center align-items-center position-relative">
+            <!-- PDF Viewer -->
+            <canvas ref="pdfCanvas"  style="height: 100vh; width: 95vw;"></canvas>
+            
+            <!-- Tooltip -->
+            <div v-if="showTooltip" class="tooltip" :style="{ top: tooltipY + 'px', left: tooltipX + 'px' }">
+                <p>Click to copy</p>
+            </div>
+        </div>
+
+		<div class="navbar d-flex justify-content-end">
             <!-- Floating Pagination -->
             <nav aria-label="Page navigation example" class="pagination-float">
                 <ul class="pagination pagination-primary justify-content-center">
@@ -24,14 +34,6 @@
                         </select></li>
                 </ul>
             </nav>
-            
-            <!-- PDF Viewer -->
-            <canvas ref="pdfCanvas"></canvas>
-            
-            <!-- Tooltip -->
-            <div v-if="showTooltip" class="tooltip" :style="{ top: tooltipY + 'px', left: tooltipX + 'px' }">
-                <p>Click to copy</p>
-            </div>
         </div>
 
         <loading
@@ -390,21 +392,10 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-.section {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-canvas {
-    width: 100%;
-    height: 100%;
-}
 .pagination-float {
     position: absolute;
     z-index: 10;
-    bottom: -80px;
+    bottom: -10px;
     left: 50%;
     transform: translateX(-50%);
     opacity: 0.3; /* Makes the pagination transparent */
@@ -468,7 +459,7 @@ canvas {
     .pagination-float {
         position: absolute;
         z-index: 10;
-        bottom: -80px;
+        bottom: -10px;
         left: 50%;
         opacity: 0.7;
     }
