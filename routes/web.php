@@ -126,6 +126,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 						Route::get('quiz-dtl', 'QuizReportController@detail')->name('quiz-dtl');
                         Route::post('quiz-xls', 'QuizReportController@ExportXLS')->name('quiz-xls');
                     });
+
+                    Route::prefix('transaction')->namespace('Transaction')->group(function() {
+                        Route::apiResource('appr-user', ApporvalUserController::class);
+                    });
                 });
             }); 
         });
