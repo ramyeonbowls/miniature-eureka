@@ -81,9 +81,9 @@ const _routes = [
         component: () => import(/* webpackChunkName: "usr/game-math" */ './components/member/GameMath.vue'),
     },
 	{
-        path: '/game-word-scramble',
-        name: 'game-word-scramble',
-        component: () => import(/* webpackChunkName: "usr/game-word-scramble" */ './components/member/GameWordScramble.vue'),
+        path: '/word-scramble',
+        name: 'word-scramble',
+        component: () => import(/* webpackChunkName: "usr/word-scramble" */ './components/member/GameWordScramble.vue'),
     },
 ]
 

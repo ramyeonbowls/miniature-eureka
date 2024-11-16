@@ -24,7 +24,7 @@
 					</router-link>
 				</div>
 				<div  class="col-12 col-lg-4 mb-2 mt-2">
-					<router-link :to="{ name: 'game-math' }">
+					<router-link :to="{ name: 'word-scramble' }">
 						<div class="card h-100 mb-0 hover-shadow">
 							<div class="card-content d-flex flex-column">
 								<!-- <div class="product-image mb-0 pb-0">
