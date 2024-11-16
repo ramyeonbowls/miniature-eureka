@@ -46,9 +46,9 @@
   </template>
   
   
-  <script>
-  import { ref, onMounted, onBeforeUnmount } from 'vue';
-import Swal from 'sweetalert2';
+<script>
+  	import { ref, onMounted, onBeforeUnmount } from 'vue';
+	import Swal from 'sweetalert2';
 
 export default {
   setup() {

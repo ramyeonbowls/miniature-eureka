@@ -18,6 +18,7 @@
   
   <script>
 	import * as PIXI from 'pixi.js';
+	import Swal from 'sweetalert2';
 
 	export default {
 		name: 'Game',
