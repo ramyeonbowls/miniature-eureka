@@ -160,6 +160,11 @@ const routes = [
         name: 'video',
         component: () => import(/* webpackChunkName: "setting/video" */ './components/setting/Video.vue'),
     },
+    {
+        path: '/approval/appr-users',
+        name: 'appr_users',
+        component: () => import(/* webpackChunkName: "setting/appr_users" */ './components/transaction/ApprUsers.vue'),
+    },
 ]
 
 export default routes
