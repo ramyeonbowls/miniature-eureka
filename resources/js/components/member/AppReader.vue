@@ -4,8 +4,8 @@
             <button class="btn btn-danger" @click="SelesaiBaca">Selesai Baca</button>
         </nav>
 
-        <div class="d-flex justify-content-center align-items-center position-relative">
-			<!-- Floating Pagination -->
+        <div class="d-flex justify-content-center align-items-center position-relative" id="pdf-container" style="height: 90vh; width: 100vw;">
+            <!-- Floating Pagination -->
             <nav aria-label="Page navigation example" class="pagination-float">
                 <ul class="pagination pagination-primary justify-content-center">
                     <li class="page-item"><a style="background-color: #435ebe; color: white;" class="page-link" href="javascript:void(0);" @click="prevPage">Prev</a></li>
@@ -24,9 +24,9 @@
                         </select></li>
                 </ul>
             </nav>
-
+            
             <!-- PDF Viewer -->
-            <canvas ref="pdfCanvas"  style="height: 100vh; width: 95vw;"></canvas>
+            <canvas ref="pdfCanvas"></canvas>
             
             <!-- Tooltip -->
             <div v-if="showTooltip" class="tooltip" :style="{ top: tooltipY + 'px', left: tooltipX + 'px' }">
@@ -120,31 +120,43 @@ const loadDecryptedPdf = async (id) => {
 // Render the current page
 const renderPage = async () => {
     try{
-        const page = await pdfDocument.getPage(currentPage.value);
-        const viewport = page.getViewport({ scale: zoom.value });
+        // Assume zoom.value is the zoom factor that users can adjust, e.g., 1 for 100%, 1.5 for 150%, etc.
+const page = await pdfDocument.getPage(currentPage.value);
 
-        const canvas = pdfCanvas.value;
-        const context = canvas.getContext('2d');
-        
-        const outputScale = window.devicePixelRatio || 1;
+// Get the container dimensions
+const container = document.getElementById('pdf-container'); // Adjust this to your container element
+const containerWidth = container.clientWidth;
+const containerHeight = container.clientHeight;
 
-        canvas.width = Math.floor(viewport.width * outputScale);
-        canvas.height = Math.floor(viewport.height * outputScale);
-        if (window.innerWidth < 768) {
-			canvas.style.width = window.innerWidth + 'px';
-			canvas.style.height = window.innerHeight + 'px';
-		} else {
-			canvas.style.width = (window.innerHeight * 0.5) + 'px';
-			canvas.style.width = (window.innerWidth * 0.5) + 'px';
-		}
+// Calculate the initial scale to fit the container
+const initialViewport = page.getViewport({ scale: 1 });
+const scaleX = containerWidth / initialViewport.width;
+const scaleY = containerHeight / initialViewport.height;
+const baseScale = Math.min(scaleX, scaleY); // Choose the smaller scale to fit the container
 
-        context.scale(outputScale, outputScale);
+// Apply the zoom factor
+const scale = baseScale * zoom.value;
 
-        const renderContext = {
-            canvasContext: context,
-            viewport: viewport
-        };
-        await page.render(renderContext).promise;
+// Update the viewport with the new scale
+const viewport = page.getViewport({ scale });
+
+const canvas = pdfCanvas.value;
+const context = canvas.getContext('2d');
+
+const outputScale = window.devicePixelRatio || 1;
+
+canvas.width = Math.floor(viewport.width * outputScale);
+canvas.height = Math.floor(viewport.height * outputScale);
+canvas.style.width = Math.floor(viewport.width) + 'px';
+canvas.style.height = Math.floor(viewport.height) + 'px';
+
+context.scale(outputScale, outputScale);
+
+const renderContext = {
+    canvasContext: context,
+    viewport: viewport
+};
+await page.render(renderContext).promise;
     } finally {
 
     }
@@ -344,19 +356,6 @@ const resetTimerOnActivity = () => {
     resetInactivityTimer();
 }
 
-function handleResize() {
-	const canvas = pdfCanvas.value;
-	if (canvas.value) {
-		if (window.innerWidth < 768) {
-			canvas.style.width = window.innerWidth + 'px';
-			canvas.style.height = window.innerHeight + 'px';
-		} else {
-			canvas.style.width = (window.innerHeight * 0.5) + 'px';
-			canvas.style.width = (window.innerWidth * 0.5) + 'px';
-		}
-	}
-}
-
 onMounted(() => {
     document.addEventListener('selectionchange', handleTextSelection)
     document.addEventListener('click', hideTooltip)
@@ -380,8 +379,6 @@ onMounted(() => {
     document.addEventListener('keydown', resetTimerOnActivity);
     document.addEventListener('click', resetTimerOnActivity);
     document.addEventListener('scroll', resetTimerOnActivity);
-
-	window.addEventListener('resize', handleResize);
 })
 
 onUnmounted(() => {
@@ -406,7 +403,6 @@ onUnmounted(() => {
     document.removeEventListener('keydown', resetTimerOnActivity);
     document.removeEventListener('click', resetTimerOnActivity);
     document.removeEventListener('scroll', resetTimerOnActivity);
-	window.removeEventListener('resize', handleResize);
 })
 </script>
 
@@ -414,7 +410,7 @@ onUnmounted(() => {
 .pagination-float {
     position: absolute;
     z-index: 10;
-    bottom: -50px;
+    bottom: -80px;
     left: 50%;
     transform: translateX(-50%);
     opacity: 0.3; /* Makes the pagination transparent */
@@ -478,7 +474,7 @@ onUnmounted(() => {
     .pagination-float {
         position: absolute;
         z-index: 10;
-        bottom: -10px;
+        bottom: -80px;
         left: 50%;
         opacity: 0.7;
     }
