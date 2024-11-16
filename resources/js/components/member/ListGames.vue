@@ -2,7 +2,7 @@
     <div class="page-content">
 		<div class="col-12">
 			<div class="row">
-				<div  class="col-12 col-lg-4 mb-2 mt-2">
+				<div class="col-12 col-lg-4 mb-2 mt-2">
 					<router-link :to="{ name: 'game-math' }">
 						<div class="card h-100 mb-0 hover-shadow">
 							<div class="card-content d-flex flex-column">
@@ -23,13 +23,10 @@
 						</div>
 					</router-link>
 				</div>
-				<div  class="col-12 col-lg-4 mb-2 mt-2">
+				<div class="col-12 col-lg-4 mb-2 mt-2">
 					<router-link :to="{ name: 'word-scramble' }">
 						<div class="card h-100 mb-0 hover-shadow">
 							<div class="card-content d-flex flex-column">
-								<!-- <div class="product-image mb-0 pb-0">
-									<img src="" class="img-fluid" style="border-radius: 5px 5px 0 0 !important;">
-								</div> -->
 								<div class="card-body">
 									<div class="card-title">
 										<a href="#">
@@ -38,6 +35,24 @@
 									</div>
 									<p>
 										<span>game untuk mengasah kemampuan</span>
+									</p>
+								</div>
+							</div>
+						</div>
+					</router-link>
+				</div>
+				<div class="col-12 col-lg-4 mb-2 mt-2">
+					<router-link :to="{ name: 'flying-bird' }">
+						<div class="card h-100 mb-0 hover-shadow">
+							<div class="card-content d-flex flex-column">
+								<div class="card-body">
+									<div class="card-title">
+										<a href="#">
+											<h5> Game Flying Bird </h5>
+										</a>
+									</div>
+									<p>
+										<span>game untuk bersenang senang</span>
 									</p>
 								</div>
 							</div>

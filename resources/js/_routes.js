@@ -85,6 +85,11 @@ const _routes = [
         name: 'word-scramble',
         component: () => import(/* webpackChunkName: "usr/word-scramble" */ './components/member/GameWordScramble.vue'),
     },
+	{
+        path: '/flying-bird',
+        name: 'flying-bird',
+        component: () => import(/* webpackChunkName: "usr/flying-bird" */ './components/member/GameFlyingBird.vue'),
+    },
 ]
 
 export default _routes

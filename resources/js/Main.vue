@@ -160,7 +160,7 @@ export default {
             axios.get('/getParam')
             .then((response) => {
                 this.param.register = (response.data.reg_member==1) ? true : false;
-                this.param.additional_features = response.data.additional_features;
+                this.param.additional_features = parseInt(response.data.additional_features);
             })
             .catch((e) => {
                 console.error(e)
