@@ -132,7 +132,7 @@ export default {
 	  
 			questionCount.value++;
 	  
-			if (questionCount.value >= 1) {
+			if (questionCount.value >= 10) {
 			  	showModal();
 			} else {
 			  	setTimeout(() => generateWord(), 3000); // Generate a new word after a short delay
