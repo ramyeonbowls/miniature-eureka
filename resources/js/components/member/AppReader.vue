@@ -5,17 +5,7 @@
         </nav>
 
         <div class="d-flex justify-content-center align-items-center position-relative">
-            <!-- PDF Viewer -->
-            <canvas ref="pdfCanvas"  style="height: 100vh; width: 95vw;"></canvas>
-            
-            <!-- Tooltip -->
-            <div v-if="showTooltip" class="tooltip" :style="{ top: tooltipY + 'px', left: tooltipX + 'px' }">
-                <p>Click to copy</p>
-            </div>
-        </div>
-
-		<div class="navbar d-flex justify-content-end">
-            <!-- Floating Pagination -->
+			<!-- Floating Pagination -->
             <nav aria-label="Page navigation example" class="pagination-float">
                 <ul class="pagination pagination-primary justify-content-center">
                     <li class="page-item"><a style="background-color: #435ebe; color: white;" class="page-link" href="javascript:void(0);" @click="prevPage">Prev</a></li>
@@ -34,6 +24,14 @@
                         </select></li>
                 </ul>
             </nav>
+
+            <!-- PDF Viewer -->
+            <canvas ref="pdfCanvas"  style="height: 100vh; width: 95vw;"></canvas>
+            
+            <!-- Tooltip -->
+            <div v-if="showTooltip" class="tooltip" :style="{ top: tooltipY + 'px', left: tooltipX + 'px' }">
+                <p>Click to copy</p>
+            </div>
         </div>
 
         <loading
@@ -132,8 +130,13 @@ const renderPage = async () => {
 
         canvas.width = Math.floor(viewport.width * outputScale);
         canvas.height = Math.floor(viewport.height * outputScale);
-        canvas.style.width = Math.floor(viewport.width) + 'px';
-        canvas.style.height = Math.floor(viewport.height) + 'px';
+        if (window.innerWidth < 768) {
+			canvas.style.width = window.innerWidth + 'px';
+			canvas.style.height = window.innerHeight + 'px';
+		} else {
+			canvas.style.width = (window.innerHeight * 0.5) + 'px';
+			canvas.style.width = (window.innerWidth * 0.5) + 'px';
+		}
 
         context.scale(outputScale, outputScale);
 
@@ -341,6 +344,19 @@ const resetTimerOnActivity = () => {
     resetInactivityTimer();
 }
 
+function handleResize() {
+	const canvas = pdfCanvas.value;
+	if (canvas.value) {
+		if (window.innerWidth < 768) {
+			canvas.style.width = window.innerWidth + 'px';
+			canvas.style.height = window.innerHeight + 'px';
+		} else {
+			canvas.style.width = (window.innerHeight * 0.5) + 'px';
+			canvas.style.width = (window.innerWidth * 0.5) + 'px';
+		}
+	}
+}
+
 onMounted(() => {
     document.addEventListener('selectionchange', handleTextSelection)
     document.addEventListener('click', hideTooltip)
@@ -364,6 +380,8 @@ onMounted(() => {
     document.addEventListener('keydown', resetTimerOnActivity);
     document.addEventListener('click', resetTimerOnActivity);
     document.addEventListener('scroll', resetTimerOnActivity);
+
+	window.addEventListener('resize', handleResize);
 })
 
 onUnmounted(() => {
@@ -388,6 +406,7 @@ onUnmounted(() => {
     document.removeEventListener('keydown', resetTimerOnActivity);
     document.removeEventListener('click', resetTimerOnActivity);
     document.removeEventListener('scroll', resetTimerOnActivity);
+	window.removeEventListener('resize', handleResize);
 })
 </script>
 
@@ -395,7 +414,7 @@ onUnmounted(() => {
 .pagination-float {
     position: absolute;
     z-index: 10;
-    bottom: -10px;
+    bottom: -50px;
     left: 50%;
     transform: translateX(-50%);
     opacity: 0.3; /* Makes the pagination transparent */
