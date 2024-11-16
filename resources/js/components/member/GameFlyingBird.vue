@@ -67,6 +67,7 @@
 		this.app.stage.addChild(this.bird);
   
 		window.addEventListener('click', this.flapBird);
+		window.addEventListener('touchstart', this.flapBird);
 		this.pipeInterval = setInterval(this.createPipe, 1500);
 		this.speedIncreaseInterval = setInterval(this.increaseDifficulty, 5000);
 		this.addGround();
