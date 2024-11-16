@@ -6,7 +6,7 @@
 	  <div v-if="gameOver" class="game-over">
 		<h1 class="text-white">Permainan Berakhir!</h1>
 		<p>Skor Anda: {{ score }}</p>
-		<button @click="restartGame">Mulai Ulang Game</button>
+		<button @click="restartGame">Mulai Ulang Peermainan</button>
 	  </div>
 	  
 	  <!-- Score Display -->
