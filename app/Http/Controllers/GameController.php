@@ -71,4 +71,30 @@ class GameController extends Controller
             'message' => $message
         ], 200);
     }
+
+	public function getWords()
+    {
+        $user = auth()->user();
+
+        // $logs = new Logs(Arr::last(explode("\\", get_class())) . 'Log');
+        // $logs->write(__FUNCTION__, 'START');
+        // DB::enableQueryLog();
+
+        $results = DB::table('tkamus_kata as a')
+			->select([
+				"a.word"
+			])
+			->get()
+			->pluck('word')
+    		->toArray();
+
+        // $queries = DB::getQueryLog();
+        // for($q = 0; $q < count($queries); $q++) {
+        // 	$sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
+        // 	$logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+        // 	$logs->write('SQL', $sql);
+        // }
+
+        return response()->json($results, 200);
+    }
 }

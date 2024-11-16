@@ -3,6 +3,7 @@
 	  <!-- Modal -->
 	  <div id="modal">
 		<div id="modalContent">
+		  <h4 :class="(currentScore >= 8 ? 'text-success' : (currentScore <= 7 && currentScore >= 5 ? 'text-warning' : 'text-danger'))">Skor Anda : {{ currentScore }}</h4>
 		  <h2>Apakah Anda ingin bermain lagi?</h2>
 		  <button id="playAgainBtn">Ya</button>
 		  <button id="exitBtn">Tidak</button>
@@ -18,6 +19,9 @@
 		<div id="scrambled-word">
 		  <h2>{{ scrambledWord }}</h2>
 		</div>
+		<div v-if="feedback" class="feedback">
+			<h4 :class="isCorrectAnswer ? 'text-success' : 'text-danger'">{{ feedback }}</h4>
+		</div>
 		<input 
 		  type="text" 
 		  v-model="userGuess" 
@@ -27,7 +31,6 @@
 		<button @click="checkAnswer">Periksa Jawaban</button>
 
 		<div v-if="feedback" class="feedback">
-			<p>{{ feedback }}</p>
 			<img 
 				v-if="isCorrectAnswer" 
 				src="game/scramble/correct.webp" 
@@ -52,12 +55,7 @@
 
 export default {
   setup() {
-    const words = [
-		'Indonesia', 'Sate', 'Cendol', 'Merdeka', 'Pahlawan', 'Batik', 'Gamelan', 'Rendang', 'Pantai', 'Gunung', 
-		'Taman', 'Masjid', 'Banjir', 'Bajakan', 'Hutan', 'Kopi', 'Bola', 'Matahari', 'Sungai', 'Laut', 
-		// Add more Indonesian words as necessary
-    ];
-
+    const words = ref([]);
     const correctAnswer = ref('');
     const scrambledWord = ref('');
     const score = ref(0);
@@ -89,6 +87,17 @@ export default {
 		}
 	};
 
+	// Fetch words from API
+	const fetchWords = async () => {
+        try {
+          const response = await axios.get('/getWords');  // Your API endpoint to get words
+          words.value = response.data;  // Assume response contains { words: [...] }
+          generateWord();  // Generate a word as soon as the words are fetched
+        } catch (error) {
+          console.error('Error fetching words:', error);
+        }
+    };
+
     // Function to scramble the word
     const scrambleWord = (word) => {
 		const scrambled = word.split('').sort(() => Math.random() - 0.5).join('');
@@ -97,7 +106,7 @@ export default {
 
     // Function to generate a random word and scramble it
     const generateWord = () => {
-		const randomWord = words[Math.floor(Math.random() * words.length)];
+		const randomWord = words.value[Math.floor(Math.random() * words.value.length)];
 		correctAnswer.value = randomWord;
 		scrambledWord.value = scrambleWord(randomWord);
 		isCorrectAnswer.value = false;
@@ -123,7 +132,7 @@ export default {
 	  
 			questionCount.value++;
 	  
-			if (questionCount.value >= 10) {
+			if (questionCount.value >= 1) {
 			  	showModal();
 			} else {
 			  	setTimeout(() => generateWord(), 3000); // Generate a new word after a short delay
@@ -168,7 +177,7 @@ export default {
 			const baca = await fetchBaca();
 
 				if(baca.code==1){
-      				generateWord();
+					fetchWords();
 				}else{
 					Swal.fire({
 						icon: 'warning',
