@@ -9,8 +9,8 @@
             </div>
             <!-- Dropdown button to toggle filter options -->
 			<div class="col-12 text-start mb-3">
-				<div class="btn-group dropend">
-					<button type="button" class="btn btn-primary dropdown-toggle px-5 py-2" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="0,20">
+				<div class="btn-group">
+					<button type="button" class="btn btn-primary dropdown-toggle px-5 py-2" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="0,15">
 						Kategori
 					</button>
 					<ul class="dropdown-menu">
