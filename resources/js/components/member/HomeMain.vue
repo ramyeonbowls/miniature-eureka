@@ -198,7 +198,7 @@
             </div>
         </section>
 		<section v-if="show_game" class="row">
-            <div class="col-12">
+            <div class="col-12 mt-4">
 				<div class="row">
 					<swiper
                         :modules="modules"
