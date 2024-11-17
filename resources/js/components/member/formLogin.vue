@@ -52,8 +52,6 @@
 </template>
 
 <script>
-import { register } from 'swiper/element';
-
 export default {
     props: {
         register: {

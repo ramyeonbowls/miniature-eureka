@@ -4,7 +4,7 @@
             <headerItems :isAuthenticated="isAuthenticated" :name="user.name" :avatar="user.avatar" :appname="appname" :register="param.register" :additional_features="param.additional_features"></headerItems>
         
             <div class="content-wrapper container">
-                <router-view :isAuthenticated="isAuthenticated" :additional_features="param.additional_features"></router-view>
+                <router-view :isAuthenticated="isAuthenticated" :register="param.register"  :additional_features="param.additional_features"></router-view>
             </div>
 
             <nav class="navbar-dark navbar-expand d-block d-xs-block d-xl-none fixed-bottom" role="navigation" style="border-radius: 10px 10px 0 0 !important;  background: rgb(21,47,74); background: linear-gradient(180deg, rgba(21,47,74,1) 0%, rgba(69,62,190,1) 100%);">
