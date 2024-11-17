@@ -334,7 +334,7 @@
 						showCloseButton: false,
 						showCancelButton: false
 					}).then((result) => {
-						window.location.href = '/';
+						window.location.href = '/koleksi-buku';
 					});
 				}
 			}else{
