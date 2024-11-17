@@ -330,13 +330,18 @@ class MainController extends Controller
     public function getCategory()
     {
         $results = DB::table('tmapping_book as a')
-        ->select('c.id', 'c.description')
+        ->select(
+			'c.id',
+			'c.description',
+			DB::raw("count(distinct a.book_id) as total")
+		)
         ->join('tbook as b', function ($join) {
             $join->on('a.book_id', '=', 'b.book_id');
         })
         ->join('tbook_category as c', 'b.category_id', '=', 'c.id')
         ->where('a.client_id', '=', $this->client_id)
         ->distinct()
+		->groupBy('c.id', 'c.description')
         ->orderBy('c.description', 'ASC')
         ->get();
 

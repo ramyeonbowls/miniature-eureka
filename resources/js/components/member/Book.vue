@@ -7,28 +7,28 @@
                     <p>hasil pencarian buku dengan kata kunci <b>"{{ seeks }}"</b></p>
                 </div>
             </div>
-            <div class="col-12 col-xl-3 mb-3">
-                <div class="accordion accordion-flush" id="accordionFlush">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="flush-headingOne">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseCategory" aria-expanded="false" aria-controls="flush-collapseCategory"> Kategori </button>
-                        </h2>
-                        <div id="flush-collapseCategory" class="accordion-collapse collapse overflow-auto" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlush" style="max-height: 330px;">
-                            <div class="accordion-body">
-                                <ul class="list-group">
-                                    <li class="d-inline-block mb-1" v-for="cat in category" :key="cat.id">
-                                        <input type="checkbox" :id="cat.id" class="form-check-input me-2" :value="cat.id" v-model="selectedCategories" @change="filterBooks">
-                                        <label :for="cat.id">{{ cat.description }}</label>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-xl-9">
+            <!-- Dropdown button to toggle filter options -->
+			<div class="col-12 text-start mb-3">
+				<div class="btn-group dropend">
+					<button type="button" class="btn btn-primary dropdown-toggle px-5 py-2" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="0,20">
+						Kategori
+					</button>
+					<ul class="dropdown-menu">
+						<li v-for="cat in category" :key="cat.id" class="dropdown-item py-3">
+							<input type="checkbox" :id="cat.id" class="form-check-input me-2" :value="cat.id" v-model="selectedCategories" @change="filterBooks">
+							<label :for="cat.id">
+								<span class="text-start">{{ cat.description }}</span>
+								<span class="text-muted text-end">
+									( {{ cat.total }} )
+								</span>
+							</label>
+						</li>
+					</ul>
+				</div>
+			</div>
+            <div class="col-12">
                 <template v-if="paginatedBuku.length > 0">
-                    <div class="row row-cols-2 row-cols-md-5">
+                    <div class="row row-cols-2 row-cols-md-6">
                         <template v-for="(group, groupIndex) in paginatedBuku" :key="groupIndex">
                             <div v-for="buku in group" :key="buku.id" class="col">
                                 <router-link :to="{ name: 'detail-buku', params: { idb: buku.isbn } }">
@@ -68,7 +68,7 @@
                     </div>
                 </template>
                 <template v-else>
-                    <div class="row">
+                    <div class="row text-center">
                         <h6>Buku Tidak tersedia</h6>
                     </div>
                 </template>
@@ -86,7 +86,7 @@ export default {
             seeks: '',
             selectedCategories: [], 
             currentPage: 1,
-            itemsPerPage: 15
+            itemsPerPage: 18
         }
     },
 
@@ -234,5 +234,19 @@ export default {
         .product-image img {
             width: 70%;
         }
+    }
+
+	.dropdown-menu {
+        max-height: 350px; /* Limit height */
+        overflow-y: auto;  /* Enable vertical scrolling */
+    }
+
+    .dropdown-item {
+        display: flex;
+        align-items: center;
+    }
+
+    .form-check-input {
+        margin-right: 5px; /* Adjust checkbox spacing */
     }
 </style>
