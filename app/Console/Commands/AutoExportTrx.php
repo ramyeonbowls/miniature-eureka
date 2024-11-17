@@ -121,7 +121,7 @@ class AutoExportTrx extends Command
 						$remote_file = basename($file);
 
 						if (ftp_put($conn_id, $remote_file, $file, FTP_ASCII)) {
-							$logs->write("Error", "File uploaded successfully to FTP server.");
+							$logs->write("Success", "File uploaded successfully to FTP server.");
 						} else {
 							$logs->write("Error", "uploading the file to FTP.");
 						}
@@ -213,7 +213,7 @@ class AutoExportTrx extends Command
 						$remote_file = basename($file);
 
 						if (ftp_put($conn_id, $remote_file, $file, FTP_ASCII)) {
-							$logs->write("Error", "File uploaded successfully to FTP server.");
+							$logs->write("Success", "File uploaded successfully to FTP server.");
 						} else {
 							$logs->write("Error", "uploading the file to FTP.");
 						}
@@ -302,7 +302,7 @@ class AutoExportTrx extends Command
 						$remote_file = basename($file);
 
 						if (ftp_put($conn_id, $remote_file, $file, FTP_ASCII)) {
-							$logs->write("Error", "File uploaded successfully to FTP server.");
+							$logs->write("Success", "File uploaded successfully to FTP server.");
 						} else {
 							$logs->write("Error", "uploading the file to FTP.");
 						}
@@ -393,7 +393,7 @@ class AutoExportTrx extends Command
 						$remote_file = basename($file);
 
 						if (ftp_put($conn_id, $remote_file, $file, FTP_ASCII)) {
-							$logs->write("Error", "File uploaded successfully to FTP server.");
+							$logs->write("Success", "File uploaded successfully to FTP server.");
 						} else {
 							$logs->write("Error", "uploading the file to FTP.");
 						}
@@ -481,7 +481,7 @@ class AutoExportTrx extends Command
 						$remote_file = basename($file);
 
 						if (ftp_put($conn_id, $remote_file, $file, FTP_ASCII)) {
-							$logs->write("Error", "File uploaded successfully to FTP server.");
+							$logs->write("Success", "File uploaded successfully to FTP server.");
 						} else {
 							$logs->write("Error", "uploading the file to FTP.");
 						}
