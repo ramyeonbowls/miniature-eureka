@@ -265,7 +265,7 @@
 				</div>
 			</div>
         </section>
-		<section v-if="video.length>0" class="row mt-4">
+		<section v-if="video.length>0" class="row mt-2">
 			<div class="col-12 col-lg-12">
 				<!-- Video Carousel -->
 				<div class="card">
