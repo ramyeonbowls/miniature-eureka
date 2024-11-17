@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Auth;
 use App\Logs;
 use Carbon\Carbon;
 use App\Models\User;
+use App\NetworkHelper;
 use App\Models\Parameter;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
@@ -136,11 +138,19 @@ class RegisterController extends Controller
             // $logs->write(__FUNCTION__, "STOP\r\n");
             \DB::commit();
 
-            event(new Registered($user));
+            if (NetworkHelper::hasInternetConnection()) {
+				event(new Registered($user));
 
-            $user->sendEmailVerificationNotification();
+            	$user->sendEmailVerificationNotification();
+				$message = 'Pendaftaran berhasil! Silahkan konfirmasi email anda.';
+				$statusCode = 201;
+			} else {
+				Log::warning('Email verification could not be sent for user ' . $user->email . ' because there is no internet connection.');
+				$message = 'Pendaftaran berhasil!.';
+				$statusCode = 201;
+			}
 
-            return response()->json('Pendaftaran berhasil! Silahkan konfirmasi email anda.', 201);
+            return response()->json($message, $statusCode);
         } catch (\Exception $e) {
             // $logs->write('error', $e);
             // $logs->write(__FUNCTION__, "STOP\r\n");

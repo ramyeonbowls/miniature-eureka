@@ -335,7 +335,7 @@ export default {
             .catch((e) => {
                 loader.hide();
 
-                if(e.response.data.message == 'Your email address is not verified.'){
+                if(e.response.data.message == 'Email anda belum terverifikasi.'){
                     this.$swal({
                         title: e.response.data.message,
                         text: "Silahkan verifikasi email, jika klik Kirim Email jika ingin kirim ulang email verifikasi",
