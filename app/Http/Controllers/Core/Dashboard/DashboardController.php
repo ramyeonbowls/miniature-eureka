@@ -57,6 +57,7 @@ class DashboardController extends Controller
                 DB::raw('COUNT(a.id) as member')
             ])
             ->whereIn('a.client_id', $client_id)
+			->where('a.role', 'member')
 			->first();
 
 		$po = 0;
