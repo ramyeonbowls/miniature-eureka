@@ -30,9 +30,9 @@
                 <template v-if="paginatedBuku.length > 0">
                     <div class="row row-cols-2 row-cols-md-6">
                         <template v-for="(group, groupIndex) in paginatedBuku" :key="groupIndex">
-                            <div v-for="buku in group" :key="buku.id" class="col">
+                            <div v-for="buku in group" :key="buku.id" class="col mb-4">
                                 <router-link :to="{ name: 'detail-buku', params: { idb: buku.isbn } }">
-                                    <div class="card">
+                                    <div class="card h-100">
                                         <div class="card-content">
                                             <div class="product-image">
                                                 <img :src="buku.image" :alt="buku.alt" class="img-fluid">
@@ -53,14 +53,39 @@
                         <div class="col-12">
                             <nav aria-label="Page navigation">
                                 <ul class="pagination justify-content-center">
+                                    <!-- Tombol Previous -->
                                     <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                                        <a class="page-link" href="#" @click.prevent="previousPage">Previous</a>
+                                        <a class="page-link" href="#" @click.prevent="previousPage">Sebelumnya</a>
                                     </li>
-                                    <li class="page-item" v-for="page in totalPages" :key="page" :class="{ active: currentPage === page }">
+
+                                    <!-- Tombol halaman pertama (1) -->
+                                    <li v-if="currentPage > 3" class="page-item">
+                                        <a class="page-link" href="#" @click.prevent="goToPage(1)">1</a>
+                                    </li>
+
+                                    <!-- Tombol titik-titik ("...") jika ada halaman yang terlewat sebelum halaman aktif -->
+                                    <li v-if="currentPage > 4" class="page-item disabled">
+                                        <span class="page-link">...</span>
+                                    </li>
+
+                                    <!-- Halaman sekitar halaman aktif (misalnya 2 halaman sebelumnya dan 2 halaman setelahnya) -->
+                                    <li v-for="page in visiblePages" :key="page" :class="{ active: currentPage === page }" class="page-item">
                                         <a class="page-link" href="#" @click.prevent="goToPage(page)">{{ page }}</a>
                                     </li>
+
+                                    <!-- Tombol titik-titik ("...") jika ada halaman yang terlewat setelah halaman aktif -->
+                                    <li v-if="currentPage < totalPages - 3" class="page-item disabled">
+                                        <span class="page-link">...</span>
+                                    </li>
+
+                                    <!-- Tombol halaman terakhir -->
+                                    <li v-if="currentPage < totalPages - 2" class="page-item">
+                                        <a class="page-link" href="#" @click.prevent="goToPage(totalPages)">{{ totalPages }}</a>
+                                    </li>
+
+                                    <!-- Tombol Next -->
                                     <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-                                        <a class="page-link" href="#" @click.prevent="nextPage">Next</a>
+                                        <a class="page-link" href="#" @click.prevent="nextPage">Selanjutnya</a>
                                     </li>
                                 </ul>
                             </nav>
@@ -132,20 +157,23 @@ export default {
             });
         },
 
+        goToPage(page) {
+            this.currentPage = page;
+            // Lakukan sesuatu dengan halaman baru, seperti mengupdate data atau memanggil API
+        },
+        // Navigasi ke halaman sebelumnya
         previousPage() {
             if (this.currentPage > 1) {
                 this.currentPage--;
+                // Lakukan sesuatu setelah halaman sebelumnya dipilih
             }
         },
-
+        // Navigasi ke halaman berikutnya
         nextPage() {
             if (this.currentPage < this.totalPages) {
                 this.currentPage++;
+                // Lakukan sesuatu setelah halaman berikutnya dipilih
             }
-        },
-
-        goToPage(page) {
-            this.currentPage = page;
         }
     },
 
@@ -175,6 +203,18 @@ export default {
             }
 
             return grouped;
+        },
+
+        visiblePages() {
+            const range = 2;  // Menampilkan 2 halaman di sebelah kiri dan kanan halaman aktif
+            let start = Math.max(1, this.currentPage - range);
+            let end = Math.min(this.totalPages, this.currentPage + range);
+
+            const pages = [];
+            for (let i = start; i <= end; i++) {
+                pages.push(i);
+            }
+            return pages;
         }
     },
 
