@@ -5,7 +5,7 @@
 				<div class="card">
 					<div class="card-content">
 						<div class="product-image">
-							<img :src="slide.image.replace('&amp;', '&')" :alt="slide.alt" class="img-fluid">
+							<img :src="slide.image.replace('&amp;', '&')" :alt="slide.alt" class="img-fluid" style="width: 150px; height: 220px;">
 						</div>
 						<div class="card-body">
 							<p class="card-title mb-0" style="text-align: left; font-size: 13px; color: #435ebe;">{{ slide.writer }}</p>

@@ -6,7 +6,7 @@
                     <div class="card h-100">
                         <div class="card-body">
                             <div class="card-content text-center mb-2">
-                                <img :src="detail.image" class="img-fluid img-detail" :alt="detail.title" height="80%" width="80%" style="border-radius: 10px 10px 10px 10px !important;">
+                                <img v-if="detail.image" :src="detail.image.replace('&amp;', '&')" class="img-fluid img-detail" :alt="detail.title" height="80%" width="80%" style="border-radius: 10px 10px 10px 10px !important;">
                             </div>
                             <div class="buttons mt-3">
                                 <button class="btn btn-primary btn-md me-2" @click="bacaBuku"><i class="bi bi-book-fill"></i> Baca</button>
@@ -102,7 +102,7 @@
                                 <div class="form-group">
                                     <div class="comment-body">
                                     <div class="comment-profileName mb-0">Penerbit </div>
-                                    <div class="comment-time mt-0">Elementa Agro Lestari</div>
+                                    <div class="comment-time mt-0">{{ detail.publisher }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -138,7 +138,7 @@
                                         <router-link :to="{ name: 'detail-buku', params: { idb: item.isbn } }">
                                             <div class="card">
                                                 <div class="product-image">
-                                                    <img :src="item.image" class="img-fluid" :alt="item.alt">
+                                                    <img :src="item.image.replace('&amp;', '&')" class="img-fluid" :alt="item.alt" style="width: 150px; height: 220px;">
                                                 </div>
                                                 <div class="card-body py-2">
                                                     <p class="card-title mb-0">{{ item.writer }}</p>
@@ -458,6 +458,7 @@ export default {
 
             this.initializeSubMenu();
             this.activeTab = 'sinopsis';
+			window.scrollTo({ top: 0, behavior: 'smooth' });
         },
 
         initializeSubMenu() {

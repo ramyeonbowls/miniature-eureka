@@ -35,7 +35,7 @@
                                     <div class="card h-100">
                                         <div class="card-content">
                                             <div class="product-image">
-                                                <img :src="buku.image" :alt="buku.alt" class="img-fluid">
+                                                <img :src="buku.image.replace('&amp;', '&')" :alt="buku.alt" class="img-fluid" style="width: 150px; height: 220px;">
                                             </div>
                                             <div class="card-body pt-0">
                                                 <p class="card-title mb-0">{{ buku.writer }}</p>

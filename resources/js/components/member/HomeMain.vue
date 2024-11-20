@@ -65,7 +65,7 @@
                             <div class="card h-100 mb-0 hover-shadow">
                                 <div class="card-content">
                                     <div class="product-image mt-3 mb-0 pb-0">
-                                        <img :src="buku.image" :alt="buku.title" class="img-fluid">
+                                        <img :src="buku.image.replace('&amp;', '&')" class="img-fluid" style="width: 150px; height: 220px;">
                                     </div>
                                     <div class="card-body mt-0 mb-0 mx-0 px-2">
                                         <p class="card-title mb-0">{{ buku.writer }}</p>
@@ -112,7 +112,7 @@
                                     <router-link :to="{ name: 'detail-buku', params: { idb: item.isbn } }">
                                         <div class="card">
                                             <div class="product-image">
-                                                <img :src="item.image" class="img-fluid" :alt="item.title">
+                                                <img :src="item.image.replace('&amp;', '&')" class="img-fluid" :alt="item.title" style="width: 150px; height: 220px;">
                                             </div>
                                             <div class="card-body py-2">
                                                 <p class="card-title mb-0">{{ item.writer }}</p>
