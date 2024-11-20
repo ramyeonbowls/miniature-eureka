@@ -263,7 +263,7 @@ class MainController extends Controller
                 'b.year',
                 'b.page',
                 DB::raw("a.copy - IFNULL(d.total, 0) as remaining"),
-				'e.description as publisher'
+				'f.description as publisher'
             ])
             ->join('tbook as b', function($join) {
                 $join->on('a.book_id', '=', 'b.book_id');
