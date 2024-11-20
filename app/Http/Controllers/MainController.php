@@ -271,8 +271,8 @@ class MainController extends Controller
             ->join('tbook_category as c', function($join) {
                 $join->on('b.category_id', '=', 'c.id');
             })
-            ->join('tpublisher as e', function($join) {
-                $join->on('b.publisher_id', '=', 'e.id');
+            ->join('tpublisher as f', function($join) {
+                $join->on('b.publisher_id', '=', 'f.id');
             })
             ->leftJoin(DB::raw("(
                     SELECT
