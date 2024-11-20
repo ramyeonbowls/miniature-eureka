@@ -131,8 +131,8 @@ const renderPage = async () => {
 
 		// Calculate the initial scale to fit the container
 		const initialViewport = page.getViewport({ scale: 1 });
-		const scaleX = containerWidth / initialViewport.width;
-		const scaleY = containerHeight / initialViewport.height;
+		const scaleX = window.innerWidth / initialViewport.width;
+		const scaleY = window.innerHeight / initialViewport.height;
 		const baseScale = Math.min(scaleX, scaleY); // Choose the smaller scale to fit the container
 
 		// Apply the zoom factor
@@ -413,7 +413,7 @@ onUnmounted(() => {
   position: relative;
   overflow: hidden;
   width: 100%;
-  height: 100%;
+  height: 90%;
   min-height: 90vh;
 }
 .pagination-float {
