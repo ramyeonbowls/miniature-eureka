@@ -1,10 +1,11 @@
 <template>
-    <section class="section">
-        <nav class="navbar py-2 d-flex justify-content-end" style="background-color: #435ebe; color: white;">
-            <button class="btn btn-danger" @click="SelesaiBaca">Selesai Baca</button>
-        </nav>
-
-        <div class="d-flex justify-content-center align-items-center position-relative overflow-auto" id="pdf-container">
+	<section class="row">
+		<nav class="navbar py-2 d-flex justify-content-end" style="background-color: #435ebe; color: white;">
+			<button class="btn btn-danger" @click="SelesaiBaca">Selesai Baca</button>
+		</nav>
+	</section>
+    <section class="section" id="pdf-container">
+        <div class="d-flex justify-content-center align-items-center position-relative overflow-auto">
             <!-- Floating Pagination -->
             <nav aria-label="Page navigation example" class="pagination-float">
                 <ul class="pagination pagination-primary justify-content-center">
@@ -121,42 +122,42 @@ const loadDecryptedPdf = async (id) => {
 const renderPage = async () => {
     try{
         // Assume zoom.value is the zoom factor that users can adjust, e.g., 1 for 100%, 1.5 for 150%, etc.
-const page = await pdfDocument.getPage(currentPage.value);
+		const page = await pdfDocument.getPage(currentPage.value);
 
-// Get the container dimensions
-const container = document.getElementById('pdf-container'); // Adjust this to your container element
-const containerWidth = container.clientWidth;
-const containerHeight = container.clientHeight;
+		// Get the container dimensions
+		const container = document.getElementById('pdf-container'); // Adjust this to your container element
+		const containerWidth = container.clientWidth;
+		const containerHeight = container.clientHeight;
 
-// Calculate the initial scale to fit the container
-const initialViewport = page.getViewport({ scale: 1 });
-const scaleX = containerWidth / initialViewport.width;
-const scaleY = containerHeight / initialViewport.height;
-const baseScale = Math.min(scaleX, scaleY); // Choose the smaller scale to fit the container
+		// Calculate the initial scale to fit the container
+		const initialViewport = page.getViewport({ scale: 1 });
+		const scaleX = containerWidth / initialViewport.width;
+		const scaleY = containerHeight / initialViewport.height;
+		const baseScale = Math.min(scaleX, scaleY); // Choose the smaller scale to fit the container
 
-// Apply the zoom factor
-const scale = baseScale * zoom.value;
+		// Apply the zoom factor
+		const scale = baseScale * zoom.value;
 
-// Update the viewport with the new scale
-const viewport = page.getViewport({ scale });
+		// Update the viewport with the new scale
+		const viewport = page.getViewport({ scale });
 
-const canvas = pdfCanvas.value;
-const context = canvas.getContext('2d');
+		const canvas = pdfCanvas.value;
+		const context = canvas.getContext('2d');
 
-const outputScale = window.devicePixelRatio || 1;
+		const outputScale = window.devicePixelRatio || 1;
 
-canvas.width = Math.floor(viewport.width * outputScale);
-canvas.height = Math.floor(viewport.height * outputScale);
-canvas.style.width = Math.floor(viewport.width) + 'px';
-canvas.style.height = Math.floor(viewport.height) + 'px';
+		canvas.width = Math.floor(viewport.width * outputScale);
+		canvas.height = Math.floor(viewport.height * outputScale);
+		canvas.style.width = Math.floor(viewport.width) + 'px';
+		canvas.style.height = Math.floor(viewport.height) + 'px';
 
-context.scale(outputScale, outputScale);
+		context.scale(outputScale, outputScale);
 
-const renderContext = {
-    canvasContext: context,
-    viewport: viewport
-};
-await page.render(renderContext).promise;
+		const renderContext = {
+			canvasContext: context,
+			viewport: viewport
+		};
+		await page.render(renderContext).promise;
     } finally {
 
     }
@@ -407,11 +408,13 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+
 #pdf-container {
   position: relative;
   overflow: hidden;
-  height: 90vh;
-  width: 100vw;
+  width: 100%;
+  height: 100%;
+  min-height: 90vh;
 }
 .pagination-float {
     position: fixed; /* Use fixed to make it always visible at the bottom */
