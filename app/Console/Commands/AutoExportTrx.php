@@ -75,41 +75,41 @@ class AutoExportTrx extends Command
 
 		ALLTRX:
 		/* Execute all blocks */
-			$this->exportUsers($logs);
-			$this->exportAttr($logs);
-			$this->exportRead($logs);
-			$this->exportRent($logs);
-			$this->exportVisit($logs);
+			$this->exportUsers($logs, $client_id);
+			$this->exportAttr($logs, $client_id);
+			$this->exportRead($logs, $client_id);
+			$this->exportRent($logs, $client_id);
+			$this->exportVisit($logs, $client_id);
 			goto SELESAI;
 		/* ALLTRX */
 
 		USERS:
 		/* USERS */
-			$this->exportUsers($logs);
+			$this->exportUsers($logs, $client_id);
 			if (!($filter_block=='' || $filter_block=='ALLBLOCK')) goto SELESAI;
 		/* USERS */
 
 		ATTR:
 		/* ATTR */
-			$this->exportAttr($logs);
+			$this->exportAttr($logs, $client_id);
 			if (!($filter_block=='' || $filter_block=='ALLBLOCK')) goto SELESAI;
 		/* ATTR */
 
 		READ:
 		/* READ */
-			$this->exportRead($logs);
+			$this->exportRead($logs, $client_id);
 			if (!($filter_block=='' || $filter_block=='ALLBLOCK')) goto SELESAI;
 		/* READ */
 
 		RENT:
 		/* RENT */
-			$this->exportRent($logs);
+			$this->exportRent($logs, $client_id);
 			if (!($filter_block=='' || $filter_block=='ALLBLOCK')) goto SELESAI;
 		/* RENT */
 
 		VISIT:
 		/* VISIT */
-			$this->exportVisit($logs);
+			$this->exportVisit($logs, $client_id);
 			if (!($filter_block=='' || $filter_block=='ALLBLOCK')) goto SELESAI;
 		/* VISIT */
 
@@ -119,7 +119,7 @@ class AutoExportTrx extends Command
 		/* SELESAI */
 	}
 
-	private function exportUsers($logs)
+	private function exportUsers($logs, $client_id)
 	{
 		$SECTIONNAME = "USERS";
 		if($this->debug) DB::enableQueryLog();
@@ -168,7 +168,19 @@ class AutoExportTrx extends Command
 				$login		= ftp_login($conn_id, $this->ftp_username, $this->ftp_password);
 
 				if ($login) {
-					$remote_file = basename($file);
+					$remote_dir = '/'.$client_id;
+					// Check if the directory exists
+					if (!@ftp_chdir($conn_id, $remote_dir)) {
+						// If it doesn't exist, create it
+						if (ftp_mkdir($conn_id, $remote_dir)) {
+							$logs->write("Success", "Created directory: $remote_dir");
+						} else {
+							$logs->write("Error", "Failed to create directory: $remote_dir");
+						}
+					}
+
+					// Upload the file to the client_id directory
+					$remote_file = $remote_dir.'/'.basename($file);
 
 					if (ftp_put($conn_id, $remote_file, $file, FTP_ASCII)) {
 						$logs->write("Success", "File uploaded successfully to FTP server.");
@@ -205,7 +217,7 @@ class AutoExportTrx extends Command
 		}
 	}
 
-	private function exportAttr($logs)
+	private function exportAttr($logs, $client_id)
 	{
 		$SECTIONNAME = "ATTR";
 		if($this->debug) DB::enableQueryLog();
@@ -258,7 +270,19 @@ class AutoExportTrx extends Command
 				$login		= ftp_login($conn_id, $this->ftp_username, $this->ftp_password);
 
 				if ($login) {
-					$remote_file = basename($file);
+					$remote_dir = '/'.$client_id;
+					// Check if the directory exists
+					if (!@ftp_chdir($conn_id, $remote_dir)) {
+						// If it doesn't exist, create it
+						if (ftp_mkdir($conn_id, $remote_dir)) {
+							$logs->write("Success", "Created directory: $remote_dir");
+						} else {
+							$logs->write("Error", "Failed to create directory: $remote_dir");
+						}
+					}
+
+					// Upload the file to the client_id directory
+					$remote_file = $remote_dir.'/'.basename($file);
 
 					if (ftp_put($conn_id, $remote_file, $file, FTP_ASCII)) {
 						$logs->write("Success", "File uploaded successfully to FTP server.");
@@ -295,7 +319,7 @@ class AutoExportTrx extends Command
 		}
 	}
 
-	private function exportRead($logs)
+	private function exportRead($logs, $client_id)
 	{
 		$SECTIONNAME = "READ";
 		if($this->debug) DB::enableQueryLog();
@@ -345,7 +369,19 @@ class AutoExportTrx extends Command
 				$login		= ftp_login($conn_id, $this->ftp_username, $this->ftp_password);
 
 				if ($login) {
-					$remote_file = basename($file);
+					$remote_dir = '/'.$client_id;
+					// Check if the directory exists
+					if (!@ftp_chdir($conn_id, $remote_dir)) {
+						// If it doesn't exist, create it
+						if (ftp_mkdir($conn_id, $remote_dir)) {
+							$logs->write("Success", "Created directory: $remote_dir");
+						} else {
+							$logs->write("Error", "Failed to create directory: $remote_dir");
+						}
+					}
+
+					// Upload the file to the client_id directory
+					$remote_file = $remote_dir.'/'.basename($file);
 
 					if (ftp_put($conn_id, $remote_file, $file, FTP_ASCII)) {
 						$logs->write("Success", "File uploaded successfully to FTP server.");
@@ -382,7 +418,7 @@ class AutoExportTrx extends Command
 		}
 	}
 
-	private function exportRent($logs)
+	private function exportRent($logs, $client_id)
 	{
 		$SECTIONNAME = "RENT";
 		if($this->debug) DB::enableQueryLog();
@@ -434,7 +470,19 @@ class AutoExportTrx extends Command
 				$login		= ftp_login($conn_id, $this->ftp_username, $this->ftp_password);
 
 				if ($login) {
-					$remote_file = basename($file);
+					$remote_dir = '/'.$client_id;
+					// Check if the directory exists
+					if (!@ftp_chdir($conn_id, $remote_dir)) {
+						// If it doesn't exist, create it
+						if (ftp_mkdir($conn_id, $remote_dir)) {
+							$logs->write("Success", "Created directory: $remote_dir");
+						} else {
+							$logs->write("Error", "Failed to create directory: $remote_dir");
+						}
+					}
+
+					// Upload the file to the client_id directory
+					$remote_file = $remote_dir.'/'.basename($file);
 
 					if (ftp_put($conn_id, $remote_file, $file, FTP_ASCII)) {
 						$logs->write("Success", "File uploaded successfully to FTP server.");
@@ -471,7 +519,7 @@ class AutoExportTrx extends Command
 		}
 	}
 
-	private function exportVisit($logs)
+	private function exportVisit($logs, $client_id)
 	{
 		$SECTIONNAME = "VISIT";
 		if($this->debug) DB::enableQueryLog();
@@ -520,7 +568,19 @@ class AutoExportTrx extends Command
 				$login		= ftp_login($conn_id, $this->ftp_username, $this->ftp_password);
 
 				if ($login) {
-					$remote_file = basename($file);
+					$remote_dir = '/'.$client_id;
+					// Check if the directory exists
+					if (!@ftp_chdir($conn_id, $remote_dir)) {
+						// If it doesn't exist, create it
+						if (ftp_mkdir($conn_id, $remote_dir)) {
+							$logs->write("Success", "Created directory: $remote_dir");
+						} else {
+							$logs->write("Error", "Failed to create directory: $remote_dir");
+						}
+					}
+
+					// Upload the file to the client_id directory
+					$remote_file = $remote_dir.'/'.basename($file);
 
 					if (ftp_put($conn_id, $remote_file, $file, FTP_ASCII)) {
 						$logs->write("Success", "File uploaded successfully to FTP server.");
