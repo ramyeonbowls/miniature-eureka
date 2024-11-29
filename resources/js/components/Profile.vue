@@ -66,15 +66,15 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="name" class="form-label">Kabupaten/Kota</label>
-                                        <input type="text" name="name" id="name" class="form-control" v-model="form.field.info.kabupaten_name" placeholder="Kabupaten/Kota" readonly/>
+                                        <input type="text" name="name" id="name" class="form-control" v-model="form.field.info.kabupaten_name" placeholder="Kabupaten/Kota"/>
                                     </div>
                                     <div class="form-group">
                                         <label for="phone" class="form-label">Nama Penandatangan MOU <small class="text-danger">*</small></label>
-                                        <input type="text" name="phone" id="phone" class="form-control" v-model="form.field.info.mou_sign_name" placeholder="Nama Penandatangan MOU" readonly/>
+                                        <input type="text" name="phone" id="phone" class="form-control" v-model="form.field.info.mou_sign_name" placeholder="Nama Penandatangan MOU"/>
                                     </div>
                                     <div class="form-group">
                                         <label for="phone" class="form-label">Nama Penanggung Jawab <small class="text-danger">*</small></label>
-                                        <input type="text" name="phone" id="phone" class="form-control" v-model="form.field.info.pers_responsible" placeholder="Nama Penanggung Jawab" readonly/>
+                                        <input type="text" name="phone" id="phone" class="form-control" v-model="form.field.info.pers_responsible" placeholder="Nama Penanggung Jawab"/>
                                     </div>
                                     <div class="form-group">
                                         <label for="phone" class="form-label">Nama Pengelola (Admin) <small class="text-danger">*</small></label>
@@ -107,11 +107,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="phone" class="form-label">Jabatan Penandatangan MOU <small class="text-danger">*</small></label>
-                                        <input type="text" name="phone" id="phone" class="form-control" v-model="form.field.info.pos_sign_name" placeholder="Jabatan Penandatangan MOU" readonly/>
+                                        <input type="text" name="phone" id="phone" class="form-control" v-model="form.field.info.pos_sign_name" placeholder="Jabatan Penandatangan MOU"/>
                                     </div>
                                     <div class="form-group">
                                         <label for="phone" class="form-label">Jabatan Penanggung Jawab <small class="text-danger">*</small></label>
-                                        <input type="text" name="phone" id="phone" class="form-control" v-model="form.field.info.pos_pers_responsible" placeholder="Jabatan Penanggung Jawab" readonly/>
+                                        <input type="text" name="phone" id="phone" class="form-control" v-model="form.field.info.pos_pers_responsible" placeholder="Jabatan Penanggung Jawab"/>
                                     </div>
                                     <div class="form-group">
                                         <label for="phone" class="form-label">Nomor HP/WA (Admin) <small class="text-danger">*</small></label>

@@ -164,6 +164,10 @@ class ProfileMasterController extends Controller
                 'npwp'                  => $request->npwp,
                 'administrator_name'    => $request->administrator_name,
                 'administrator_phone'   => $request->administrator_phone,
+                'mou_sign_name'   		=> $request->mou_sign_name,
+                'pers_responsible'   	=> $request->pers_responsible,
+                'pos_sign_name'   		=> $request->pos_sign_name,
+                'pos_pers_responsible'  => $request->pos_pers_responsible,
                 'updated_at'            => Carbon::now('Asia/Jakarta')
             ];
 
