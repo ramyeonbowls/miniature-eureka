@@ -5,7 +5,7 @@
 		</p>
 		<h4>Selamat datang di {{ user.appname }}</h4>
 		<div class="buttons text-start">
-			<h5>Manual Book Dashboard Admin {{ user.appname }}
+			<h5 class="text-muted">Manual Book Dashboard Admin Perpustakaan Digital
 				<button type="button" class="btn btn-danger mx-3 btn-lg" @click="downloadManualguide">
 					<i class="bi bi-file-earmark-pdf-fill" height="150" width="150"></i>
 				</button>
