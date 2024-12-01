@@ -622,7 +622,7 @@ export default {
         },
 
 		downloadManualguide() {
-			const fileUrl = '/storage/Manual Guide V1.pdf';
+			const fileUrl = '/storage/manual/Manual Guide V1.pdf';
 
 			const link = document.createElement('a');
 			link.href = fileUrl;
