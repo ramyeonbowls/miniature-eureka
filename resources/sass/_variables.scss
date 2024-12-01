@@ -165,6 +165,8 @@ $warning:       $yellow !default;
 $danger:        $red !default;
 $light:         $gray-400 !default;
 $dark:          $body-bg;
+$sd:          	#FFA500;
+$smp:          	$blue !default;
 
 
 // Mazer Variables
@@ -193,7 +195,7 @@ $swal-confirm-button-bg-hover:  #187de4;
 
 // Layout Horizontal
 $horizontal-header-bg: $white !default;
-$horizontal-navbar-bg: $primary !default;
+$horizontal-navbar-bg: $smp !default;
 $horizontal-submenu-bg: $white !default;
 $horizontal-submenu-link-color: $gray-600 !default;
 $horizontal-submenu-link-hover-bg: #1b1b28 !default;
