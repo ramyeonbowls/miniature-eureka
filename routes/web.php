@@ -125,6 +125,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 						Route::get('quiz-rpt', 'QuizReportController@index')->name('quiz-rpt');
 						Route::get('quiz-dtl', 'QuizReportController@detail')->name('quiz-dtl');
                         Route::post('quiz-xls', 'QuizReportController@ExportXLS')->name('quiz-xls');
+						Route::get('po-rpt', 'POReportController@index')->name('po-rpt');
+						Route::get('po-rpt-dtl', 'POReportController@detail')->name('po-rpt-dtl');
+                        Route::post('po-xls', 'POReportController@ExportXLS')->name('po-xls');
                     });
 
                     Route::prefix('transaction')->namespace('Transaction')->group(function() {
