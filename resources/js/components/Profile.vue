@@ -24,11 +24,6 @@
                                 <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#QrCodeModalOffline">
                                     QR Code Pengunjung Fisik
                                 </button>
-
-								<button type="button" class="btn btn-info me-2" @click="downloadManualguide">
-									Unduh Manual Guide
-								</button>
-
                             </div>
                         </div>
                     </div>
@@ -266,7 +261,7 @@
     </div>
     <!-- Modal for QRcode Preview Offline -->
 
-    <!-- Modal for QRcode Preview Offline -->
+    <!-- Modal for QRcode Preview Offline Server -->
     <div class="modal fade text-left" id="QrCodeModalOfflineServer" tabindex="-1" role="dialog" aria-labelledby="QrCodeModalOfflineServerLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-full" role="document">
             <div class="modal-content">
@@ -303,7 +298,7 @@
             </div>
         </div>
     </div>
-    <!-- Modal for QRcode Preview Offline -->
+    <!-- Modal for QRcode Preview Offline Server -->
 
     <div id="printableArea" style="display: none;">
         <div id="printableContent"></div>
@@ -619,16 +614,7 @@ export default {
                 printWindow.print();
                 printWindow.close();
             };
-        },
-
-		downloadManualguide() {
-			const fileUrl = '/storage/manual/Manual Guide V1.pdf';
-
-			const link = document.createElement('a');
-			link.href = fileUrl;
-			link.download = 'Manual Guide V1.pdf';
-			link.click();
-		}
+        }
     },
 
     computed: {
@@ -724,7 +710,7 @@ export default {
 
 .textb {
     position: absolute;
-    bottom: 10%;
+    bottom: 5%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: #ffc107;

@@ -4,6 +4,13 @@
 			<h5 class="text-muted">Halo, {{ user.name }}</h5>
 		</p>
 		<h4>Selamat datang di {{ user.appname }}</h4>
+		<div class="buttons text-start">
+			<h5>Manual Book Dashboard Admin {{ user.appname }}
+				<button type="button" class="btn btn-danger mx-3 btn-lg" @click="downloadManualguide">
+					<i class="bi bi-file-earmark-pdf-fill" height="150" width="150"></i>
+				</button>
+			</h5>
+		</div>
 	</div>
     <div class="page-content">
 		<template v-if="user.role=='admin'">
@@ -837,6 +844,15 @@ export default {
 			ApexCharts.exec('VisitMonthly', 'resize');
 			ApexCharts.exec('GrowthMember', 'resize');
 		},
+
+		downloadManualguide() {
+			const fileUrl = '/storage/manual/Manual Guide V1.pdf';
+
+			const link = document.createElement('a');
+			link.href = fileUrl;
+			link.download = 'Manual Guide V1.pdf';
+			link.click();
+		}
     },
 
 	watch: {
