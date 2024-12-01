@@ -30,8 +30,9 @@ class ProfileMasterController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->client_id    = config('app.client_id', '');
-        $this->app_url      = config('app.url', '');
+        $this->client_id    	= config('app.client_id', '');
+        $this->app_url      	= config('app.url', '');
+        $this->app_url_offline	= config('app.url_offline', '');
     }
 
 
@@ -57,7 +58,8 @@ class ProfileMasterController extends Controller
                     'c.kabupaten_name',
                     'd.kecamatan_name',
                     'e.kelurahan_name',
-                    DB::raw("'".$this->app_url."' as app_url")
+                    DB::raw("'".$this->app_url."' as app_url"),
+                    DB::raw("'".$this->app_url_offline."' as app_url_offline")
                 ])
                 ->join('tprovinsi as b', 'a.provinsi_id', '=', 'b.provinsi_id')
                 ->join('tkabupaten as c', 'a.kabupaten_id', '=', 'c.kabupaten_id')

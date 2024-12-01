@@ -54,6 +54,7 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
+    'url_offline' => env('APP_URL_OFFLINE', 'http://localhost'),
 
     /*
     |--------------------------------------------------------------------------

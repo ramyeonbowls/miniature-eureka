@@ -16,10 +16,13 @@
 
                             <div class="user-dropdown d-flex align-items-center dropend">
                                 <button type="button" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#QrCodeModal">
-                                    QR Code Perpustakaan
+                                    QR Code Perpustakaan Online
                                 </button>
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#QrCodeModalOffline">
-                                    QR Code Pengunjung Offline
+								<button type="button" class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#QrCodeModalOfflineServer">
+									QR Code Perpustakaan Offline
+								</button>
+                                <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#QrCodeModalOffline">
+                                    QR Code Pengunjung Fisik
                                 </button>
                             </div>
                         </div>
@@ -66,7 +69,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="name" class="form-label">Kabupaten/Kota</label>
-                                        <input type="text" name="name" id="name" class="form-control" v-model="form.field.info.kabupaten_name" placeholder="Kabupaten/Kota"/>
+                                        <input type="text" name="name" id="name" class="form-control" v-model="form.field.info.kabupaten_name" placeholder="Kabupaten/Kota" disabled/>
                                     </div>
                                     <div class="form-group">
                                         <label for="phone" class="form-label">Nama Penandatangan MOU <small class="text-danger">*</small></label>
@@ -218,7 +221,7 @@
         </div>
     </div>
     <!-- Modal for QRcode Preview -->
-     
+
     <!-- Modal for QRcode Preview Offline -->
     <div class="modal fade text-left" id="QrCodeModalOffline" tabindex="-1" role="dialog" aria-labelledby="QrCodeModalOfflineLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-full" role="document">
@@ -239,6 +242,45 @@
                             <div class="textb">
                                 {{ form.field.info.instansi_name }}
                                 <br>{{ form.field.info.app_url }}/offline-visitor
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary ms-1" @click="printModalContent()">
+                        <i class="bx bx-check d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Cetak</span>
+                    </button>
+                    <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                        <i class="bx bx-x d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Tutup</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal for QRcode Preview Offline -->
+
+    <!-- Modal for QRcode Preview Offline -->
+    <div class="modal fade text-left" id="QrCodeModalOfflineServer" tabindex="-1" role="dialog" aria-labelledby="QrCodeModalOfflineServerLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-full" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel20">QR Code Perpustakaan Offline</h4>
+                </div>
+                <div class="modal-body" id="modalBodyContent">
+                    <div class="qr-code-body">
+                        <div class="container-offline">
+                            <div class="texth">
+                                {{ form.field.info.application_name }}
+                                <br>Scan untuk mengunjungi aplikasi secara offline
+                            </div>
+                            <div class="qr-code">
+                                <img src="/storage/images/logo/qrcode_apps_offline.png" style="max-width: 200px; max-height: 200px;"/>
+                            </div>
+                            <div class="textb">
+                                {{ form.field.info.instansi_name }}
+                                <br>{{ form.field.info.app_url_offline }}
                             </div>
                         </div>
                     </div>

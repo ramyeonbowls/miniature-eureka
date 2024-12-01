@@ -40,21 +40,21 @@ class DashboardController extends Controller
 
         $visitor = DB::table('tvisitors as a')
             ->select([
-                DB::raw('COUNT(a.id) as visitor')
+                DB::raw('COUNT(DISTINCT a.id) as visitor')
             ])
             ->whereIn('a.client_id', $client_id)
 			->first();
 
 		$book = DB::table('tmapping_book as a')
             ->select([
-                DB::raw('COUNT(a.book_id) as book')
+                DB::raw('COUNT( DISTINCT a.book_id) as book')
             ])
             ->whereIn('a.client_id', $client_id)
 			->first();
 
 		$member = DB::table('users as a')
             ->select([
-                DB::raw('COUNT(a.id) as member')
+                DB::raw('COUNT( DISTINCT a.id) as member')
             ])
             ->whereIn('a.client_id', $client_id)
 			->where('a.role', 'member')

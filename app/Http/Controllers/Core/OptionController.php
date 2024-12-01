@@ -22,8 +22,8 @@ class OptionController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->client_id = config('app.client_id', '');
-        $this->isDinas      = Libraries::isDinas();
+        $this->client_id	= config('app.client_id', '');
+        $this->isDinas		= Libraries::isDinas();
     }
 
     public function option(Request $request)
@@ -227,6 +227,10 @@ class OptionController extends Controller
                 ->where('a.provinsi_id', $request->PROVINSI)
                 ->where('a.kabupaten_id', $request->KABUPATEN)
                 ->distinct();
+
+				if(!$this->isDinas['status']){
+					$sql->where('a.client_id', $this->client_id);
+				}
 
         $results = $sql->get();
 
