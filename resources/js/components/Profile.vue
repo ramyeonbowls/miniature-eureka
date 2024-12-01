@@ -24,6 +24,11 @@
                                 <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#QrCodeModalOffline">
                                     QR Code Pengunjung Fisik
                                 </button>
+
+								<button type="button" class="btn btn-info me-2" @click="downloadManualguide">
+									Unduh Manual Guide
+								</button>
+
                             </div>
                         </div>
                     </div>
@@ -614,7 +619,16 @@ export default {
                 printWindow.print();
                 printWindow.close();
             };
-        }
+        },
+
+		downloadManualguide() {
+			const fileUrl = '/storage/Manual Guide V1.pdf';
+
+			const link = document.createElement('a');
+			link.href = fileUrl;
+			link.download = 'Manual Guide V1.pdf';
+			link.click();
+		}
     },
 
     computed: {
