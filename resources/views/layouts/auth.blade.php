@@ -10,7 +10,7 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Favicon -->
-        <link rel="shortcut icon" href="{{ asset('storage/images/logo/favicon.svg?' . rand(10000, 99999)) }}" type="image/x-icon" />
+        <link rel="shortcut icon" href="{{ asset('storage/images/logo/favicon.png?' . rand(10000, 99999)) }}" type="image/x-icon" />
         <link rel="shortcut icon" href="{{ asset('storage/images/logo/favicon.png?' . rand(10000, 99999)) }}" type="image/png" />
         @yield('favicon')
 
