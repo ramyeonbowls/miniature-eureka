@@ -30,6 +30,7 @@ class POReportController extends Controller
     {
         $this->middleware('auth');
         $this->PO_service = new POReportService();
+		ini_set('max_execution_time', 0);
     }
 
     /**

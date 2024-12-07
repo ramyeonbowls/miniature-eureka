@@ -286,21 +286,11 @@ export default {
 
         openXLS(){
 			let loader      = this.$loading.show()
-			let start_date  = this.filter.date.split(' to ')[0] ?? ''
-			let end_date    = this.filter.date.split(' to ')[1] ?? ''
 
 			window.axios({
 				url: '/report/po-xls',
 				method: 'POST',
-				responseType: 'blob',
-				data: {
-					PROVINSI: this.filter.provinsi,
-					KABUPATEN: this.filter.kabupaten,
-					WL: this.filter.wl,
-					START_DATE: start_date,
-					END_DATE: end_date,
-					STATUS: this.filter.status
-				}
+				responseType: 'blob'
 			})
 			.then((response) => {
 				loader.hide()
@@ -308,7 +298,7 @@ export default {
 				const url = window.URL.createObjectURL(new Blob([response.data]));
 				const link = document.createElement('a');
 				link.href = url;
-				link.setAttribute('download', 'Laporan Pembelian ' + this.filter.date + '.xlsx');
+				link.setAttribute('download', 'Laporan Pembelian.xlsx');
 				document.body.appendChild(link);
 				link.click();
 			})

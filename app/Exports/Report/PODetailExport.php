@@ -55,7 +55,7 @@ class PODetailExport implements FromArray, WithHeadings, WithTitle, WithEvents, 
                         $det->writer,
                         $det->publisher,
                         $det->qty,
-                        $det->sellprice
+                        ($det->sellprice =='0') ? '0.00' : $det->sellprice
                     ];
                 }
             }

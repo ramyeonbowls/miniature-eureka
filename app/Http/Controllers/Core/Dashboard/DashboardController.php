@@ -60,20 +60,25 @@ class DashboardController extends Controller
 			->where('a.role', 'member')
 			->first();
 
-		$po = 0;
+		$po = DB::table('db_platform_ginesia.tpo_header as a')
+			->select(
+                DB::raw('SUM(a.po_amount) as po')
+			)
+			->whereIn('a.client_id', $client_id)
+			->first();
 
 		$results = [
 			'visitor'	=> number_format($visitor->visitor, 0, ',', '.'),
 			'book'		=> number_format($book->book, 0, ',', '.'),
 			'member'	=> number_format($member->member, 0, ',', '.'),
-			'po'		=> number_format($po, 0, ',', '.')
+			'po'		=> number_format($po->po, 0, ',', '.')
 		];
 
 		$queries = DB::getQueryLog();
         for($q = 0; $q < count($queries); $q++) {
             $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
             $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
-            $logs->write('SQL', $sql);
+            $logs->write('SQL', $sql."\r\n");
         }
 
         $logs->write(__FUNCTION__, "STOP\r\n");

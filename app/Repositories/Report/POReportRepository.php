@@ -77,6 +77,7 @@ class POReportRepository
             })
             ->where('a.po_number', '=', $PO_NUMBER)
             ->where('a.po_date', '=', $PO_DATE)
+			->orderBy('a.po_number', 'ASC')
             ->get();
     }
 

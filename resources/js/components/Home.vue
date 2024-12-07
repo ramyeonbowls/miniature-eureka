@@ -340,7 +340,6 @@ export default {
 					await this.__DailyChart();
 					await this.__Chart();
 
-					this.execDashBawah();
 					this.getProvinsi();
 				} catch (error) {
 					console.error("Error in dashboard execution:", error);
@@ -593,6 +592,8 @@ export default {
                 this.dashboard.atas.book	= response.data.book;
                 this.dashboard.atas.member	= response.data.member;
                 this.dashboard.atas.po		= response.data.po;
+
+				this.execDashBawah();
             })
             .catch((e) => {
 				loader.hide()
