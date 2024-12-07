@@ -262,11 +262,6 @@ export default {
                 message += ' Kabupaten, '
             }
 
-            if(this.filter.wl==''){
-                check = false
-                message += ' White Label, '
-            }
-
             if(!check){
                 this.$swal({
                     toast: true,
@@ -294,11 +289,6 @@ export default {
             if(this.filter.kabupaten==''){
                 check = false
                 message += ' Kabupaten, '
-            }
-
-            if(this.filter.wl==''){
-                check = false
-                message += ' White Label, '
             }
 
             if(!check){

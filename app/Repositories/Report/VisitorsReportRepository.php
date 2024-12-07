@@ -2,9 +2,10 @@
 
 namespace App\Repositories\Report;
 
+use App\Libraries;
 use App\Models\IconMenu\IconMenu;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class VisitorsReportRepository 
 {
@@ -14,7 +15,7 @@ class VisitorsReportRepository
      */
     public function get($filter): Collection
     {
-        $client_id = $this->getClientID($filter);
+        $client_id = $this->getClientID($filter) ?? [];
         extract($filter);
 
         return DB::table('tvisitors as a')
@@ -35,7 +36,7 @@ class VisitorsReportRepository
             ->join('tkabupaten as d', function ($join) {
                 $join->on('b.kabupaten_id', '=', 'd.kabupaten_id');
             })
-            ->where('a.client_id', '=', $client_id)
+            ->whereIn('a.client_id', $client_id)
             ->where('b.provinsi_id', '=', $PROVINSI)
             ->where('b.kabupaten_id', '=', $KABUPATEN)
             ->when(!empty($END_DATE), function ($query) use ($START_DATE, $END_DATE) {
@@ -44,7 +45,7 @@ class VisitorsReportRepository
                 return $query->where('a.date', '=', $START_DATE);
             })
             ->groupBy('b.instansi_name', 'b.provinsi_id', 'c.provinsi_name', 'b.kabupaten_id', 'd.kabupaten_name')
-            ->sharedLock()
+			->orderBy('b.instansi_name', 'ASC')
             ->get();
     }
     
@@ -52,15 +53,34 @@ class VisitorsReportRepository
     {
         extract($filter);
 
-        $query = DB::table('tclient as a')
-            ->select(
-                'a.client_id'
-            )
-            ->where('a.provinsi_id', '=', $PROVINSI)
-            ->where('a.kabupaten_id', '=', $KABUPATEN)
-            ->where('a.instansi_name', '=', $WL)
-            ->sharedLock()
-            ->get();
-        return $query[0]->client_id ?? '';
+		if($WL!=''){
+			$query = DB::table('tclient as a')
+				->select(
+					'a.client_id'
+				)
+				->where('a.provinsi_id', '=', $PROVINSI)
+				->where('a.kabupaten_id', '=', $KABUPATEN)
+				->where('a.instansi_name', '=', $WL)
+				->get()
+				->pluck('client_id');
+		}else{
+			$isDinas		= Libraries::isDinas();
+
+			$sql = DB::table('tclient as a')
+				->select(
+					'a.client_id'
+				);
+
+			if($isDinas['level'] != '6001'){
+				$sql->where('a.provinsi_id', $isDinas['provinsi']);
+			}
+
+			if($isDinas['level'] == '6003'){
+				$sql->where('a.kabupaten_id', $isDinas['kabupaten']);
+			}
+
+			$query = $sql->get()->pluck('client_id');
+		}
+        return $query;
     }
 }

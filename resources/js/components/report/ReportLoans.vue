@@ -297,11 +297,6 @@ export default {
                 message += ' Kabupaten, '
             }
 
-            if(this.filter.wl==''){
-                check = false
-                message += ' White Label, '
-            }
-
             if (this.filter.date === '' || this.filter.date === null) {
                 check = false
                 message += ' Tanggal, '
@@ -340,11 +335,6 @@ export default {
             if(this.filter.kabupaten==''){
                 check = false
                 message += ' Kabupaten, '
-            }
-
-            if(this.filter.wl==''){
-                check = false
-                message += ' White Label, '
             }
 
             if (this.filter.date === '' || this.filter.date === null) {

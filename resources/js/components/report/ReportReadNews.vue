@@ -70,7 +70,7 @@
     <!-- filter modal -->
 
     <section class="section">
-        <div class="card">
+        <div class="card overflow-auto">
             <div class="card-header">
                 <div class="buttons">
                     <a href="#" class="btn icon icon-left btn-primary" data-bs-toggle="modal" data-bs-target="#border-less"><i class="bi bi-filter-square-fill"></i> Filter</a>
@@ -280,11 +280,6 @@ export default {
                 message += ' Kabupaten, '
             }
 
-            if(this.filter.wl==''){
-                check = false
-                message += ' White Label, '
-            }
-
 			if (this.filter.date === '' || this.filter.date === null) {
                 check = false
                 message += ' Tanggal, '
@@ -322,11 +317,6 @@ export default {
             if(this.filter.kabupaten==''){
                 check = false
                 message += ' Kabupaten, '
-            }
-
-            if(this.filter.wl==''){
-                check = false
-                message += ' White Label, '
             }
 
             if (this.filter.date === '' || this.filter.date === null) {

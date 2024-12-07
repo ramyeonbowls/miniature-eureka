@@ -2,9 +2,10 @@
 
 namespace App\Repositories\Report;
 
+use App\Libraries;
 use App\Models\IconMenu\IconMenu;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class BookReportRepository 
 {
@@ -14,7 +15,7 @@ class BookReportRepository
      */
     public function get($filter): Collection
     {
-        $client_id = $this->getClientID($filter);
+        $client_id = $this->getClientID($filter) ?? [];
         extract($filter);
 
         return DB::table('tmapping_book as a')
@@ -53,10 +54,10 @@ class BookReportRepository
             ->join('tkabupaten as g', function ($join) {
                 $join->on('e.kabupaten_id', '=', 'g.kabupaten_id');
             })
-            ->where('a.client_id', '=', $client_id)
+            ->whereIn('a.client_id', $client_id)
             ->where('e.provinsi_id', '=', $PROVINSI)
             ->where('e.kabupaten_id', '=', $KABUPATEN)
-			->sharedLock()
+			->orderBy('e.instansi_name', 'ASC')
 			->get();
     }
 
@@ -64,15 +65,34 @@ class BookReportRepository
     {
         extract($filter);
 
-        $query = DB::table('tclient as a')
-            ->select(
-                'a.client_id'
-            )
-            ->where('a.provinsi_id', '=', $PROVINSI)
-            ->where('a.kabupaten_id', '=', $KABUPATEN)
-            ->where('a.instansi_name', '=', $WL)
-            ->sharedLock()
-            ->get();
-        return $query[0]->client_id ?? '';
+		if($WL!=''){
+			$query = DB::table('tclient as a')
+				->select(
+					'a.client_id'
+				)
+				->where('a.provinsi_id', '=', $PROVINSI)
+				->where('a.kabupaten_id', '=', $KABUPATEN)
+				->where('a.instansi_name', '=', $WL)
+				->get()
+				->pluck('client_id');
+		}else{
+			$isDinas		= Libraries::isDinas();
+
+			$sql = DB::table('tclient as a')
+				->select(
+					'a.client_id'
+				);
+
+			if($isDinas['level'] != '6001'){
+				$sql->where('a.provinsi_id', $isDinas['provinsi']);
+			}
+
+			if($isDinas['level'] == '6003'){
+				$sql->where('a.kabupaten_id', $isDinas['kabupaten']);
+			}
+
+			$query = $sql->get()->pluck('client_id');
+		}
+        return $query;
     }
 }

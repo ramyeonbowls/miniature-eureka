@@ -2,9 +2,10 @@
 
 namespace App\Repositories\Report;
 
+use App\Libraries;
 use App\Models\IconMenu\IconMenu;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class ReadBookUserRepository 
 {
@@ -14,7 +15,7 @@ class ReadBookUserRepository
      */
     public function get($filter): Collection
     {
-        $client_id = $this->getClientID($filter);
+        $client_id = $this->getClientID($filter) ?? [];
         extract($filter);
 
         return DB::table('ttrx_read as a')
@@ -25,7 +26,13 @@ class ReadBookUserRepository
                 'd.kabupaten_name',
                 'e.name',
                 DB::raw('COUNT(DISTINCT a.book_id) AS dibaca'),
-                DB::raw('SEC_TO_TIME(SUM(TIMESTAMPDIFF(SECOND, a.start_read, a.end_read))) AS durasi'),
+                DB::raw('SEC_TO_TIME(SUM(
+						CASE
+							WHEN a.end_read > a.start_read THEN TIMESTAMPDIFF(SECOND, a.start_read, a.end_read)
+							ELSE TIMESTAMPDIFF(SECOND, a.end_read, a.start_read)
+						END
+					)) AS durasi
+				'),
                 DB::raw("CONCAT(
                     FLOOR(SUM(TIMESTAMPDIFF(SECOND, a.start_read, a.end_read)) / 3600), ' jam ',
                     FLOOR((SUM(TIMESTAMPDIFF(SECOND, a.start_read, a.end_read)) % 3600) / 60), ' menit ',
@@ -46,7 +53,7 @@ class ReadBookUserRepository
                 $join->on('a.user_id', '=', 'e.id')
                     ->on('a.client_id', '=', 'e.client_id');
             })
-            ->where('a.client_id', '=', $client_id)
+            ->whereIn('a.client_id', $client_id)
             ->where('b.provinsi_id', '=', $PROVINSI)
             ->where('b.kabupaten_id', '=', $KABUPATEN)
             ->where('a.flag_end', '=', 'Y')
@@ -64,15 +71,34 @@ class ReadBookUserRepository
     {
         extract($filter);
 
-        $query = DB::table('tclient as a')
-            ->select(
-                'a.client_id'
-            )
-            ->where('a.provinsi_id', '=', $PROVINSI)
-            ->where('a.kabupaten_id', '=', $KABUPATEN)
-            ->where('a.instansi_name', '=', $WL)
-            ->sharedLock()
-            ->get();
-        return $query[0]->client_id ?? '';
+		if($WL!=''){
+			$query = DB::table('tclient as a')
+				->select(
+					'a.client_id'
+				)
+				->where('a.provinsi_id', '=', $PROVINSI)
+				->where('a.kabupaten_id', '=', $KABUPATEN)
+				->where('a.instansi_name', '=', $WL)
+				->get()
+				->pluck('client_id');
+		}else{
+			$isDinas		= Libraries::isDinas();
+
+			$sql = DB::table('tclient as a')
+				->select(
+					'a.client_id'
+				);
+
+			if($isDinas['level'] != '6001'){
+				$sql->where('a.provinsi_id', $isDinas['provinsi']);
+			}
+
+			if($isDinas['level'] == '6003'){
+				$sql->where('a.kabupaten_id', $isDinas['kabupaten']);
+			}
+
+			$query = $sql->get()->pluck('client_id');
+		}
+        return $query;
     }
 }
