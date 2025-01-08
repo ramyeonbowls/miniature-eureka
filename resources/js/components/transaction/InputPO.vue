@@ -112,19 +112,19 @@
     <!-- Modal for Book List -->
     <div class="modal fade text-left" id="BooksModal" tabindex="-1" role="dialog" aria-labelledby="BooksModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
-            <div class="modal-content">
+            <div class="modal-content overflow-auto">
 				<div class="modal-header">
 					<h4 class="modal-title" id="BooksModalLabel">Data Buku</h4>
 					<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
 						<i class="bi bi-x-lg text-black"></i>
 					</button>
 				</div>
-				<div class="modal-body overflow-auto">
+				<div class="modal-body">
                     <div class="row mb-3 px-2">
                         <div class="col-md-4 ms-auto">
                             <input type="text" class="form-control" v-model="searchQuery" placeholder="Cari Buku...">
                         </div>
-                        <table class="table table-striped" id="data_buku">
+                        <table class="table table-striped overflow-auto" id="data_buku">
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>
@@ -659,7 +659,8 @@ export default {
             if (this.searchQuery) {
                 return this.option.books.filter(book => 
                     book.title.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-                    book.publisher.toLowerCase().includes(this.searchQuery.toLowerCase())
+                    book.publisher.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+                    book.writer.toLowerCase().includes(this.searchQuery.toLowerCase())
                 );
             }
             return this.option.books;
