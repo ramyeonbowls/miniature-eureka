@@ -131,6 +131,7 @@
                                     <th class="text-center">Judul Buku</th>
                                     <th class="text-center">Cover</th>
                                     <th class="text-center">Harga Jual</th>
+                                    <th class="text-center">Penulis</th>
                                     <th class="text-center">Penerbit</th>
                                     <th class="text-center">Sinopsis</th>
                                 </tr>
@@ -151,6 +152,9 @@
                                     </td>
                                     <td class="text-right">
                                         <label style="cursor:pointer;" :for="'buku_'+ i">{{ buku.sellprice }}</label>
+                                    </td>
+                                    <td class="text-left">
+                                        <label style="cursor:pointer;" :for="'buku_'+ i">{{ buku.writer }}</label>
                                     </td>
                                     <td class="text-left">
                                         <label style="cursor:pointer;" :for="'buku_'+ i">{{ buku.publisher }}</label>
