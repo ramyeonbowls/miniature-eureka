@@ -17,8 +17,9 @@ class POReportRepository
     {
         $client_id = $this->getClientID($filter) ?? [];
         extract($filter);
+        $db_platorm = config('app.db_platform', '').'.';
 
-        return DB::table('db_platform_ginesia.tpo_header as a')
+        return DB::table($db_platorm.'tpo_header as a')
             ->select(
                 'b.instansi_name as wl_name',
                 'b.provinsi_id',
@@ -57,8 +58,9 @@ class POReportRepository
     public function getDetail($filter): Collection
     {
         extract($filter);
+        $db_platorm = config('app.db_platform', '').'.';
 
-        return DB::table('db_platform_ginesia.tpo_detail as a')
+        return DB::table($db_platorm.'tpo_detail as a')
             ->select(
                 'a.po_number',
                 'a.po_date',

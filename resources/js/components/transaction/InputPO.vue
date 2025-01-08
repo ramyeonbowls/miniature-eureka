@@ -147,13 +147,13 @@
                                         <label style="cursor:pointer;" :for="'buku_'+ i">{{ buku.title }}</label>
                                     </td>
                                     <td class="text-left">
-                                        <img :src="'/storage/images/books/' + buku.cover" class="cover thumbnail" :data-large="'/storage/images/banner/' + buku.cover" alt="Cover" style="width: 50px; cursor: pointer;" />
-                                    </td>
-                                    <td class="text-left">
-                                        <label style="cursor:pointer;" :for="'buku_'+ i">{{ buku.publisher }}</label>
+                                        <img :src="'/storage/covers/' + buku.cover" class="cover thumbnail" :data-large="'/storage/covers/' + buku.cover" alt="Cover" style="width: 50px; cursor: pointer;" />
                                     </td>
                                     <td class="text-right">
                                         <label style="cursor:pointer;" :for="'buku_'+ i">{{ buku.sellprice }}</label>
+                                    </td>
+                                    <td class="text-left">
+                                        <label style="cursor:pointer;" :for="'buku_'+ i">{{ buku.publisher }}</label>
                                     </td>
                                     <td class="text-right">
                                         <label style="cursor:pointer;" :for="'buku_'+ i">{{ buku.sinopsis }}</label>

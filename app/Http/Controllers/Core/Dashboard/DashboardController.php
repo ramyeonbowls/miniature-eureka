@@ -23,6 +23,7 @@ class DashboardController extends Controller
     {
         $this->middleware('auth');
         $this->client_id	= config('app.client_id', '');
+        $this->db_platorm   = config('app.db_platform', '').'.';
 		$this->isDinas		= Libraries::isDinas();
     }
 
@@ -60,7 +61,7 @@ class DashboardController extends Controller
 			->where('a.role', 'member')
 			->first();
 
-		$po = DB::table('db_platform_ginesia.tpo_header as a')
+		$po = DB::table($this->db_platorm.'tpo_header as a')
 			->select(
                 DB::raw('SUM(a.po_amount) as po')
 			)
