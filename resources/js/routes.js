@@ -163,7 +163,12 @@ const routes = [
     {
         path: '/approval/appr-users',
         name: 'appr_users',
-        component: () => import(/* webpackChunkName: "setting/appr_users" */ './components/transaction/ApprUsers.vue'),
+        component: () => import(/* webpackChunkName: "transaction/appr_users" */ './components/transaction/ApprUsers.vue'),
+    },
+    {
+        path: '/transaction/input-po',
+        name: 'input_po',
+        component: () => import(/* webpackChunkName: "transaction/input_po" */ './components/transaction/InputPO.vue'),
     },
 ]
 

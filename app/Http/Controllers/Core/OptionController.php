@@ -52,6 +52,10 @@ class OptionController extends Controller
             case 'WhiteLabel':
                 return response()->json($this->WhiteLabel($request), 200);
             break;
+
+            case 'Books':
+                return response()->json($this->Books($request), 200);
+            break;
         }
     }
 
@@ -231,6 +235,50 @@ class OptionController extends Controller
 				if(!$this->isDinas['status']){
 					$sql->where('a.client_id', $this->client_id);
 				}
+
+        $results = $sql->get();
+
+        // $queries = DB::getQueryLog();
+        // for($q = 0; $q < count($queries); $q++) {
+        //     $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
+        //     $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+        //     $logs->write('SQL', $sql);
+        // }
+
+        // $logs->write(__FUNCTION__, "STOP\r\n");
+        
+        return ($results);
+    }
+
+    public function Books(Request $request)
+    {
+        // $logs = new Logs(Arr::last(explode("\\", get_class())) . 'Log');
+        // $logs->write(__FUNCTION__, "START");
+        // DB::enableQueryLog();
+
+        $results = [];
+        $sql = DB::table('tbook as a')
+                ->select([
+                    'a.book_id',
+                    'a.sellprice',
+                    'a.isbn',
+                    'a.eisbn',
+                    'a.title',
+                    'a.writer',
+                    'a.size',
+                    'a.year',
+                    'a.volume',
+                    'a.edition',
+                    'a.page',
+                    'a.city',
+                    'a.cover',
+                    'b.description as publisher',
+                    'a.sinopsis'
+                ])
+                ->join('tpublisher as b', function($join) {
+                    $join->on('a.publisher_id', '=', 'b.id');
+                })
+                ->distinct();
 
         $results = $sql->get();
 

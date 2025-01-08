@@ -55,6 +55,7 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
     'url_offline' => env('APP_URL_OFFLINE', 'http://localhost'),
+    'db_platform' => env('APP_DB_PLATFORM', 'db_qa_platform_ginesia'),
 
     /*
     |--------------------------------------------------------------------------

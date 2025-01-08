@@ -8,7 +8,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title">Filter</h5>
                     <button type="button" class="close rounded-pill" data-bs-dismiss="modal" aria-label="Close">
-                        <i data-feather="x"></i>
+                        <i class="bi bi-x-lg text-black"></i>
                     </button>
                 </div>
                 <div class="modal-body">

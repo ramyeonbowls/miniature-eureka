@@ -357,7 +357,7 @@
                 <div class="modal-header">
                     <h4 class="modal-title" id="modal-kategori">Kategori</h4>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" @click="keyword = ''">
-                        <i data-feather="x"></i>
+                        <i class="bi bi-x-lg text-black"></i>
                     </button>
                 </div>
                 <div class="modal-body">

@@ -36,7 +36,7 @@
 				<div class="modal-header">
 					<h4 class="modal-title" id="detailModalLabel">Detail PO - {{ po_number }}</h4>
 					<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-						<i data-feather="x"></i>
+						<i class="bi bi-x-lg text-black"></i>
 					</button>
 				</div>
 				<div class="modal-body text-center">
@@ -71,7 +71,7 @@
 				<div class="modal-header">
 					<h4 class="modal-title" id="imageModalLabel">Preview</h4>
 					<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-						<i data-feather="x"></i>
+						<i class="bi bi-x-lg text-black"></i>
 					</button>
 				</div>
 				<div class="modal-body text-center">

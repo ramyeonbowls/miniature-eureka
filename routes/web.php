@@ -132,6 +132,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
                     Route::prefix('transaction')->namespace('Transaction')->group(function() {
                         Route::apiResource('appr-user', ApporvalUserController::class);
+                        Route::apiResource('po-mst', POMasterController::class);
                     });
                 });
             }); 
