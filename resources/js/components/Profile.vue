@@ -4,6 +4,10 @@
     <section class="section">
         <div class="row">
             <div class="col-12">
+                <div class="alert alert-info alert-dismissible fade show" role="alert" v-if="change_request =='Y'">
+                    Perubahan data sedang diajukan, anda tidak bisa mengajukan perubahan sebelum permintaan sebelumnya di setujui.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-center align-items-center flex-column">
@@ -134,52 +138,13 @@
                             </div>
                             <div class="col-md-12 mb-4">
                                 <div class="form-group my-2 d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                                    <button type="submit" class="btn btn-primary" :disabled="(change_request =='Y') ? true : false">Simpan Perubahan</button>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-            <!-- <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title">Konfirmasi</h5>
-                    </div>
-                    <div class="card-body">
-                        <form action="#" method="get">
-                            <div class="col-md-12 mb-4">
-                                <div class="form-check">
-                                    <div class="checkbox">
-                                        <input type="checkbox" id="iaggree" class="form-check-input" />
-                                        <label class="text-danger" for="iaggree">Konfirmasi Persutujuan</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12 mb-4">
-                                <div class="form-group mb-3">
-                                    <label for="exampleFormControlTextarea1" class="form-label">Deskripsi Tentang WL</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 mb-4">
-                                    <div class="form-group">
-                                        <label for="name" class="form-label">Jumlah Maksimal Buku dipinjam</label>
-                                        <input type="number" name="name" id="name" class="form-control" placeholder="1" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-4">
-                                    <div class="form-group">
-                                        <label for="name" class="form-label">Jumlah Maksimal Hari Pinjam Buku</label>
-                                        <input type="number" name="name" id="name" class="form-control" placeholder="1" />
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div> -->
         </div>
     </section>
 
@@ -334,6 +299,7 @@ export default {
             },
 
             user: {},
+            change_request: 'N',
             form:{
                 field:{
                     logo:{
@@ -353,6 +319,7 @@ export default {
         // this.__MENU()
         this.userinfo()
         this.getProfile()
+        this.getChangeRequest()
 
         const pondBig = FilePond.create(document.querySelector('.logo-big'), {
             credits: null,
@@ -614,7 +581,25 @@ export default {
                 printWindow.print();
                 printWindow.close();
             };
-        }
+        },
+
+        getChangeRequest() {
+            this.change_request = 'N';
+            let loader = this.$loading.show()
+            window.axios.get('/setting/profile/x0y0z0', {
+                params: {
+                    param: 'change-request',
+                }
+            })
+            .then((response) => {
+                loader.hide()
+                this.change_request = response.data.change_request
+            })
+            .catch((e) => {
+                loader.hide()
+                console.error(e)
+            });
+        },
     },
 
     computed: {

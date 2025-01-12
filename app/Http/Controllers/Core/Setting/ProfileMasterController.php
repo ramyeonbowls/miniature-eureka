@@ -33,6 +33,7 @@ class ProfileMasterController extends Controller
         $this->client_id    	= config('app.client_id', '');
         $this->app_url      	= config('app.url', '');
         $this->app_url_offline	= config('app.url_offline', '');
+        $this->db_platform      = config('app.db_platform', '').'.';
     }
 
 
@@ -101,11 +102,13 @@ class ProfileMasterController extends Controller
         $result['message'] = '';
         try {
             DB::enableQueryLog();
-            
+
+            $change_logo = 'N';
             if ($request->hasFile('logo')) {
                 try {
                     $extension = $request->file('logo')->getClientOriginalExtension();
                     $logo_name = 'logo.' . $extension;
+                    $change_logo = 'Y';
 
                     $request->file('logo')->move(public_path('images/logo'), $logo_name);
                 } catch (Throwable $th) {
@@ -118,6 +121,7 @@ class ProfileMasterController extends Controller
                     $extension          = $request->file('logo_small')->getClientOriginalExtension();
                     $logo_small_name    = 'logo_small.' . $extension;
                     $favicon_name       = 'favicon.' . $extension;
+                    $change_logo        = 'Y';
 
                     $logoSmallPath		= $request->file('logo_small')->move(public_path('images/logo'), $logo_small_name);
                     
@@ -160,17 +164,33 @@ class ProfileMasterController extends Controller
 
             $data = (object)$validated;
 
-            $updateData = [
-                'application_name'      => $request->application_name,
-                'address'               => $request->address,
-                'npwp'                  => $request->npwp,
-                'administrator_name'    => $request->administrator_name,
-                'administrator_phone'   => $request->administrator_phone,
-                'mou_sign_name'   		=> $request->mou_sign_name,
-                'pers_responsible'   	=> $request->pers_responsible,
-                'pos_sign_name'   		=> $request->pos_sign_name,
-                'pos_pers_responsible'  => $request->pos_pers_responsible,
-                'updated_at'            => Carbon::now('Asia/Jakarta')
+            $insertedData = [
+                'client_id'             => $this->client_id,
+                'instansi_name'         => ($request->instansi_name == 'null') ? null : $request->instansi_name,
+                'application_name'      => ($request->application_name == 'null') ? null : $request->application_name,
+                'address'               => ($request->address == 'null') ? null : $request->address,
+                'country_id'            => ($request->country_id == 'null') ? null : $request->country_id,
+                'provinsi_id'           => ($request->provinsi_id == 'null') ? null : $request->provinsi_id,
+                'kabupaten_id'          => ($request->kabupaten_id == 'null') ? null : $request->kabupaten_id,
+                'kecamatan_id'          => ($request->kecamatan_id == 'null') ? null : $request->kecamatan_id,
+                'kelurahan_id'          => ($request->kelurahan_id == 'null') ? null : $request->kelurahan_id,
+                'kodepos'               => ($request->kodepos == 'null') ? null : $request->kodepos,
+                'npwp'                  => ($request->npwp == 'null') ? null : $request->npwp,
+                'pers_responsible'      => ($request->pers_responsible == 'null') ? null : $request->pers_responsible,
+                'pos_pers_responsible'  => ($request->pos_pers_responsible == 'null') ? null : $request->pos_pers_responsible,
+                'mou_sign_name'         => ($request->mou_sign_name == 'null') ? null : $request->mou_sign_name,
+                'pos_sign_name'         => ($request->pos_sign_name == 'null') ? null : $request->pos_sign_name,
+                'administrator_name'    => ($request->administrator_name == 'null') ? null : $request->administrator_name,
+                'administrator_phone'   => ($request->administrator_phone == 'null') ? null : $request->administrator_phone,
+                'logo'                  => ($request->logo == 'null') ? null : $request->logo,
+                'logo_small'            => ($request->logo_small == 'null') ? null : $request->logo_small,
+                'company_id'            => ($request->company_id == 'null') ? null : $request->company_id,
+                'web_add'               => ($request->web_add == 'null') ? null : $request->web_add,
+                'agreement'             => ($request->agreement == 'null') ? null : $request->agreement,
+                'client_category'       => ($request->client_category == 'null') ? null : $request->client_category,
+                'client_level'          => ($request->client_level == 'null') ? null : $request->client_level,
+                'flag_appr'             => 'N',
+                'created_at'            => Carbon::now('Asia/Jakarta')
             ];
 
             if ($request->has('password')) {
@@ -179,15 +199,47 @@ class ProfileMasterController extends Controller
                 ]);
             }
 
-            $created = DB::table('tclient')
-                    ->where('client_id', $this->client_id)
-                    ->update($updateData);
-   
-            if ($created) {
-                $logs->write("INFO", "Successfully created");
+            $existingData = DB::table('tclient')
+                ->where('client_id', $this->client_id)
+                ->first();
 
-                $result['status'] = 201;
-                $result['message'] = "Successfully created.";
+            if ($existingData) {
+                $existingDataArray = (array) $existingData;
+                $compareData = $insertedData;
+                unset($compareData['created_at']);
+                unset($existingDataArray['created_at'], $existingDataArray['updated_at']);
+
+                // Sort both arrays by keys
+                ksort($compareData);
+                ksort($existingDataArray);
+                $differences = array_diff_assoc($compareData, $existingDataArray);
+                // $logs->write("INFO diffrence", print_r($differences, true));
+                // $logs->write("INFO change", print_r($compareData, true));
+                // $logs->write("INFO data", print_r($existingDataArray, true));
+
+                if (!empty($differences)) {
+                    $created = DB::table($this->db_platform.'tclient_temp')->insert($insertedData);
+
+                    if ($created) {
+                        $logs->write("INFO", "Request update Successfully");
+
+                        $result['status'] = 201;
+                        $result['message'] = "Permohonan perubahan data berhasil.";
+                    }
+                }else{
+                    if($change_logo == 'Y'){
+                        $logs->write("INFO", "Successfully Change Logo");
+    
+                        $result['status'] = 201;
+                        $result['message'] = "Perubahan logo berhasil.";
+                    }else{
+                        $logs->write("INFO", "No changes detected.");
+    
+                        $result['status'] = 201;
+                        $result['message'] = "Tidak ada perubahan data.";
+                    }
+                }
+
             }
 
             $queries = DB::getQueryLog();
@@ -217,15 +269,16 @@ class ProfileMasterController extends Controller
 
         if (request()->has('param') && request()->param != '') {
             switch (request()->param) {
-                case 'provinsi-mst':
+                case 'change-request':
                     DB::enableQueryLog();
 
-                    $provinsi = DB::table('tprovinsi as a')->sharedLock()
+                    $change_request = DB::table($this->db_platform.'tclient_temp as a')
                         ->select(
-                            'a.provinsi_id as id',
-                            'a.provinsi_name as name'
+                            DB::raw("case when a.flag_appr = 'N' then 'Y' else 'N' end as change_request")
                         )
-                        ->get();
+                        ->where('flag_appr', 'N')
+                        ->orderBy('created_at', 'ASC')
+                        ->first();
 
                     $queries = DB::getQueryLog();
                     for ($q = 0; $q < count($queries); $q++) {
@@ -234,159 +287,7 @@ class ProfileMasterController extends Controller
                         $logs->write('SQL', $sql);
                     }
 
-                    $results = [];
-                    if($provinsi) {
-                        $results = $provinsi->map(function($value, $key) {
-                            return [
-                                'id' => $value->id,
-                                'name' => $value->name
-                            ];
-                        });
-                    }
-
-                    return response()->json($results, 200);
-                break;
-
-                case 'kabupaten-mst':
-                    DB::enableQueryLog();
-
-                    $provinsi = request()->provinsi ?? '';
-                    $kabupaten = DB::table('tkabupaten as a')->sharedLock()
-                        ->select(
-                            'a.kabupaten_id as id',
-                            'a.kabupaten_name as name'
-                        )
-                        ->when(isset($provinsi) && $provinsi != '', function($query) use ($provinsi) {
-                            $query->where('a.provinsi_id', $provinsi);
-                        })
-                        ->get();
-
-                    $queries = DB::getQueryLog();
-                    for ($q = 0; $q < count($queries); $q++) {
-                        $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
-                        $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
-                        $logs->write('SQL', $sql);
-                    }
-
-                    $results = [];
-                    if($kabupaten) {
-                        $results = $kabupaten->map(function($value, $key) {
-                            return [
-                                'id' => $value->id,
-                                'name' => $value->name
-                            ];
-                        });
-                    }
-
-                    return response()->json($results, 200);
-                break;
-
-                case 'kecamatan-mst':
-                    DB::enableQueryLog();
-
-                    $provinsi = request()->provinsi ?? '';
-                    $kabupaten = request()->kabupaten ?? '';
-                    $kecamatan = DB::table('tkecamatan as a')->sharedLock()
-                        ->select(
-                            'a.kecamatan_id as id',
-                            'a.kecamatan_name as name'
-                        )
-                        ->when(isset($provinsi) && $provinsi != '', function($query) use ($provinsi) {
-                            $query->where('a.provinsi_id', $provinsi);
-                        })
-                        ->when(isset($kabupaten) && $kabupaten != '', function($query) use ($kabupaten) {
-                            $query->where('a.kabupaten_id', $kabupaten);
-                        })
-                        ->get();
-
-                    $queries = DB::getQueryLog();
-                    for ($q = 0; $q < count($queries); $q++) {
-                        $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
-                        $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
-                        $logs->write('SQL', $sql);
-                    }
-
-                    $results = [];
-                    if($kecamatan) {
-                        $results = $kecamatan->map(function($value, $key) {
-                            return [
-                                'id' => $value->id,
-                                'name' => $value->name
-                            ];
-                        });
-                    }
-
-                    return response()->json($results, 200);
-                break;
-
-                case 'kelurahan-mst':
-                    DB::enableQueryLog();
-
-                    $provinsi = request()->provinsi ?? '';
-                    $kabupaten = request()->kabupaten ?? '';
-                    $kecamatan = request()->kecamatan ?? '';
-                    $kelurahan = DB::table('tkelurahan as a')->sharedLock()
-                        ->select(
-                            'a.kelurahan_id as id',
-                            'a.kelurahan_name as name'
-                        )
-                        ->when(isset($provinsi) && $provinsi != '', function($query) use ($provinsi) {
-                            $query->where('a.provinsi_id', $provinsi);
-                        })
-                        ->when(isset($kabupaten) && $kabupaten != '', function($query) use ($kabupaten) {
-                            $query->where('a.kabupaten_id', $kabupaten);
-                        })
-                        ->when(isset($kecamatan) && $kecamatan != '', function($query) use ($kecamatan) {
-                            $query->where('a.kecamatan_id', $kecamatan);
-                        })
-                        ->get();
-
-                    $queries = DB::getQueryLog();
-                    for ($q = 0; $q < count($queries); $q++) {
-                        $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
-                        $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
-                        $logs->write('SQL', $sql);
-                    }
-
-                    $results = [];
-                    if($kelurahan) {
-                        $results = $kelurahan->map(function($value, $key) {
-                            return [
-                                'id' => $value->id,
-                                'name' => $value->name
-                            ];
-                        });
-                    }
-
-                    return response()->json($results, 200);
-                break;
-
-                case 'kategori-mst':
-                    DB::enableQueryLog();
-
-                    $ketegori = DB::table('tbook_category as a')->sharedLock()
-                        ->select(
-                            'a.id as id',
-                            'a.description as name'
-                        )
-                        ->get();
-
-                    $queries = DB::getQueryLog();
-                    for ($q = 0; $q < count($queries); $q++) {
-                        $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
-                        $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
-                        $logs->write('SQL', $sql);
-                    }
-
-                    $results = [];
-                    if($ketegori) {
-                        $results = $ketegori->map(function($value, $key) {
-                            return [
-                                'id' => $value->id,
-                                'name' => $value->name
-                            ];
-                        });
-                    }
+                    $results = ($change_request) ? $change_request : ['change_request' => 'N'];
 
                     return response()->json($results, 200);
                 break;
