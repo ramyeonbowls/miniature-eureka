@@ -68,7 +68,9 @@
                                         <img :src="buku.image.replace('&amp;', '&')" class="img-fluid" style="width: 150px; height: 220px;">
                                     </div>
                                     <div class="card-body mt-0 mb-0 mx-0 px-2">
-                                        <p class="card-title mb-0">{{ buku.writer }}</p>
+                                        <p class="card-title mb-0">
+                                            <div data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="buku.writer">{{ buku.writer }}</div>
+                                        </p>
                                         <a href="#">
                                             <div data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="buku.title">{{ buku.title }}</div>
                                         </a>
