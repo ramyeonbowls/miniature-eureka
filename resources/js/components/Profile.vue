@@ -4,9 +4,8 @@
     <section class="section">
         <div class="row">
             <div class="col-12">
-                <div class="alert alert-info alert-dismissible fade show" role="alert" v-if="change_request =='Y'">
+                <div class="alert alert-danger fade show" role="alert" v-if="change_request =='Y'">
                     Perubahan data sedang diajukan, anda tidak bisa mengajukan perubahan sebelum permintaan sebelumnya di setujui.
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 <div class="card">
                     <div class="card-body">
