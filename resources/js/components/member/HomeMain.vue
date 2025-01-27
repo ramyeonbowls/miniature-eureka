@@ -117,7 +117,9 @@
                                                 <img :src="item.image.replace('&amp;', '&')" class="img-fluid" :alt="item.title" style="width: 150px; height: 220px;">
                                             </div>
                                             <div class="card-body py-2">
-                                                <p class="card-title mb-0">{{ item.writer }}</p>
+                                                <p class="card-title mb-0">
+                                                    <div data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="item.writer">{{ item.writer }}</div>
+                                                </p>
                                                 <a href="#">
                                                     <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" 
                                                     style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" 
