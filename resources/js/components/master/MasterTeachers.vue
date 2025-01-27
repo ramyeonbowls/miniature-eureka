@@ -7,9 +7,11 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="buttons">
-                            <template v-if="!form.upload">
-                                <a href="#" class="btn icon icon-left btn-primary" @click="upload"><i class="bi bi-file-arrow-up-fill"></i> Unggah</a>
-                                <a href="#" class="btn icon icon-left btn-success" @click="DownloadTpl"><i class="bi bi-file-arrow-down-fill"></i> Unduh Template</a>
+                            <template v-if="!form.upload && !form.new && !form.edit">
+                                <a href="#" class="btn icon icon-left btn-primary" @click="create"><i class="bi bi-folder-fill"></i> Tambah</a>
+                                <a href="#" class="btn icon icon-left btn-success" @click="edit"><i class="bi bi-pen-fill"></i> Sunting</a>
+                                <a href="#" class="btn icon icon-left btn-light-warning" @click="upload"><i class="bi bi-file-arrow-up-fill"></i> Unggah</a>
+                                <a href="#" class="btn icon icon-left btn-light-success" @click="DownloadTpl"><i class="bi bi-file-arrow-down-fill"></i> Unduh Template</a>
                                 <a href="#" class="btn icon icon-left btn-danger" @click="destroy"><i class="bi bi-x-square-fill"></i> Hapus</a>
                             </template>
                             <template v-else>
@@ -21,14 +23,14 @@
                     <div class="card-body">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link" :class="form.upload ? 'disabled' : 'active'" id="data-tab" data-bs-toggle="tab" href="javascript:void(0);" role="tab" aria-controls="data" aria-selected="true">Data</a>
+                                <a class="nav-link" :class="form.upload || form.new || form.edit ? 'disabled' : 'active'" id="data-tab" data-bs-toggle="tab" href="javascript:void(0);" role="tab" aria-controls="data" aria-selected="true">Data</a>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link" :class="!form.upload ? 'disabled' : 'active'" id="form-tab" data-bs-toggle="tab" href="javascript:void(0);" role="tab" aria-controls="form" aria-selected="false">Form</a>
+                                <a class="nav-link" :class="!form.upload && !form.new && !form.edit ? 'disabled' : 'active'" id="form-tab" data-bs-toggle="tab" href="javascript:void(0);" role="tab" aria-controls="form" aria-selected="false">Form</a>
                             </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade" :class="!form.upload ? 'show active' : ''" id="data" role="tabpanel" aria-labelledby="data-tab">
+                            <div class="tab-pane fade" :class="!form.upload && !form.new && !form.edit ? 'show active' : ''" id="data" role="tabpanel" aria-labelledby="data-tab">
                                 <div class="table-responsive">
                                     <table class="table table-striped" id="data_rst">
                                         <thead>
@@ -45,19 +47,108 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade" :class="form.upload ? 'show active' : ''" id="form" role="tabpanel" aria-labelledby="form-tab">
-                                <form class="form form-vertical">
-                                    <div class="form-body">
-                                        <div class="row">
-											<p class="col-12"></p>
-                                            <div class="col-12">
-												<label for="upl" class="col-sm-4 col-form-label-sm">Upload File <span class="text-danger">*</span></label>
-												<div class="col-sm-8">
-													<input type="file" ref="file_upl" @change="onChangeFileUpload" accept=".xls,.xlsx">
-												</div>
+                                <VeeForm ref="formupl" v-slot="{ handleSubmit }" as="div">
+                                    <form class="form form-horizontal" @submit.prevent="handleSubmit($event, submit)">
+                                        <div class="form-body">
+                                            <div class="row">
+                                                <p class="col-12"></p>
+                                                <div class="col-12">
+                                                    <label for="upl" class="col-sm-4 col-form-label-sm">Upload File <span class="text-danger">*</span></label>
+                                                    <div class="col-sm-8">
+                                                        <Field name="file" v-slot="{ field, errors }" :rules="{ required: true }">
+                                                            <input type="file" ref="file_upl" v-bind="field" @change="onChangeFileUpload" accept=".xls,.xlsx" class="form-control" />
+                                                            <ErrorMessage name="file" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
+                                                        </Field>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </VeeForm>
+                            </div>
+                            <div class="tab-pane fade" :class="form.new || form.edit ? 'show active' : ''" id="form" role="tabpanel" aria-labelledby="form-tab">
+                                <section id="basic-horizontal-layouts">
+                                    <div class="row match-height">
+                                        <div class="col-md-8 col-12">
+                                            <div class="card">
+                                                <div class="card-content">
+                                                    <div class="card-body">
+                                                        <VeeForm ref="form" v-slot="{ handleSubmit }" as="div">
+                                                            <form class="form form-horizontal" @submit.prevent="handleSubmit($event, submit)">
+                                                                <div class="form-body">
+                                                                    <div class="row">
+                                                                        <div class="col-md-4">
+                                                                            <label for="name">Nama Lengkap <span class="text-danger">*</span></label>
+                                                                        </div>
+                                                                        <div class="col-md-8 form-group">
+                                                                            <Field type="text" id="name" v-model="form.field.name" class="form-control" name="name" rules="required" />
+                                                                            <ErrorMessage name="name" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
+                                                                        </div>
+                                                                        <div class="col-md-4">
+                                                                            <label for="nik">NIP</label>
+                                                                        </div>
+                                                                        <div class="col-md-8 form-group">
+                                                                            <Field id="nik" v-model="form.field.nik" class="form-control" name="nik" rules="numeric"/>
+                                                                            <ErrorMessage name="nik" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
+                                                                        </div>
+                                                                        <div class="col-md-4">
+                                                                            <label for="email">Email <span class="text-danger">*</span></label>
+                                                                        </div>
+                                                                        <div class="col-md-8 form-group">
+                                                                            <Field type="text" id="email" v-model="form.field.email" class="form-control" name="email" rules="required|email" :disabled="form.edit ? true : false"/>
+                                                                            <ErrorMessage name="email" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
+                                                                        </div>
+                                                                        <div class="col-md-4">
+                                                                            <label for="phone">No. HP <span class="text-danger">*</span></label>
+                                                                        </div>
+                                                                        <div class="col-md-8 form-group">
+                                                                            <Field type="text" id="phone" v-model="form.field.phone" class="form-control" name="phone" rules="required|numeric"/>
+                                                                            <ErrorMessage name="phone" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
+                                                                        </div><div class="col-md-4">
+                                                                            <label for="birthday">Tanggal Lahir <span class="text-danger">*</span></label>
+                                                                        </div>
+                                                                        <div class="col-md-8 form-group">
+                                                                            <Field name="birthday" v-slot="{ field, errors }" :rules="{ required: true }" >
+                                                                                <Flatpickr id="birthday" v-bind="field" v-model="form.field.birthday" class="form-control flatpickr-range" :config="configdate" placeholder="Select date.." 
+                                                                                />
+                                                                            </Field>
+                                                                            <ErrorMessage name="birthday" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
+                                                                        </div>
+                                                                        <div class="col-md-4">
+                                                                            <label for="gender">Jenis Kelamin <span class="text-danger">*</span></label>
+                                                                        </div>
+                                                                        <div class="col-md-8 form-group">
+                                                                            <Field as="select" class="form-select" id="gender" v-model="form.field.gender" name="gender" rules="required">
+                                                                                <option value="">--</option>
+                                                                                <option value="L">Laki - Laki</option>
+                                                                                <option value="P">Perempuan</option>
+                                                                            </Field>
+                                                                            <ErrorMessage name="gender" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
+                                                                        </div>
+                                                                        <div class="col-md-4">
+                                                                            <label for="password">Password <span class="text-danger" v-if="form.new">*</span></label>
+                                                                        </div>
+                                                                        <div class="col-md-8 form-group">
+                                                                            <Field type="password" id="password" v-model="form.field.password" class="form-control" name="password" :rules="passwordRules" />
+                                                                            <ErrorMessage name="password" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
+                                                                        </div>
+                                                                        <div class="col-md-4">
+                                                                            <label for="confirmPassword">Ulangi Kata Sandi <span class="text-danger" v-if="form.new">*</span></label>
+                                                                        </div>
+                                                                        <div class="col-md-8 form-group">
+                                                                            <Field type="password" id="confirmPassword" v-model="form.field.confirmPassword" class="form-control" name="confirmPassword" :rules="confirmpasswordRules" />
+                                                                            <ErrorMessage name="confirmPassword" class="invalid-feedback animated fadeIn mt-0 mb-1" style="display:block;" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </VeeForm>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </form>
+                                </section>
                             </div>
                         </div>
                     </div>
@@ -92,8 +183,15 @@
 </template>
 
 <script>
-import { Form as VeeForm, Field, ErrorMessage } from 'vee-validate'
-import 'choices.js/public/assets/styles/choices.min.css'
+import { Field, Form as VeeForm, ErrorMessage } from 'vee-validate';
+import { required, email, confirmed, numeric, min } from '@vee-validate/rules';
+import { defineRule } from 'vee-validate';
+
+defineRule('required', required);
+defineRule('email', email);
+defineRule('confirmed', confirmed);
+defineRule('numeric', numeric);
+defineRule('min', min);
 
 let table
 export default {
@@ -117,12 +215,29 @@ export default {
                     approve: false,
                 },
             },
+            errors: {},
             selected: [],
             form: {
-				field:{
-					file: ''
-				},
-                upload: false
+                submitted: false,
+                new: false,
+                edit: false,
+                upload: false,
+                field: {
+                    id: '',
+                    name: '',
+                    phone: '',
+                    birthday: '',
+                    password: '',
+                    email: '',
+                    gender: '',
+                    nik: '',
+                    passwordConfirm: '',
+                    file: '',
+                }
+            },
+            configdate: {
+                dateFormat: 'Y-m-d',
+                disableMobile: true
             },
         }
     },
@@ -214,9 +329,57 @@ export default {
                 })
         },
 
+        clearForm() {
+            this.form.field.id              = ''
+            this.form.field.name            = ''
+            this.form.field.phone           = ''
+            this.form.field.birthday        = ''
+            this.form.field.password        = ''
+            this.form.field.email           = ''
+            this.form.field.gender          = ''
+            this.form.field.nik             = ''
+            this.form.field.passwordConfirm = ''
+            this.form.field.file            = ''
+            this.errors                     = {}
+        },
+
+        create() {
+            this.form.new = true
+            this.form.edit = false
+            this.form.upload = false
+
+            this.clearForm()
+        },
+
         upload() {
             this.form.upload = true
-			this.form.field.file = ''
+            this.form.new = false
+            this.form.edit = false
+			this.clearForm()
+        },
+
+        edit() {
+            if (this.selected.length > 0) {
+                this.form.new = false
+                this.form.edit = true
+                this.form.upload = false
+                this.submitted = false
+
+                this.form.field.id              = this.selected[0].id
+                this.form.field.name            = this.selected[0].name
+                this.form.field.phone           = this.selected[0].phone
+                this.form.field.birthday        = this.selected[0].birthday
+                this.form.field.email           = this.selected[0].email
+                this.form.field.gender          = this.selected[0].gender
+                this.form.field.nik             = this.selected[0].nik
+                this.form.field.file            = ''
+            } else {
+                this.$swal({
+                    toast: true,
+                    icon: 'warning',
+                    text: 'Tidak ada baris yang dipilih!'
+                });
+            }
         },
 
         destroy() {
@@ -262,46 +425,128 @@ export default {
         },
 
         submit() {
-			if(this.form.upload) {
-				let loader = this.$loading.show()
+            if(!this.form.submitted) {
+                this.form.submitted = true;
 
-				let form_data = new FormData();
-				form_data.append('file', this.form.field.file);
+                if(this.form.upload) {
+                    this.$refs.formupl.validate().then(result => {
+                        if(result.valid) {
+                            let loader = this.$loading.show()
 
-				window.axios.post('/master/teacher-mst?menufn='+ this.$route.name, form_data, {
-					headers: {
-						'Content-Type': 'multipart/form-data'
-					}
-				})
-				.then((response) => {
-					loader.hide()
-					table.ajax.reload();
+                            let form_data = new FormData();
+                            form_data.append('file', this.form.field.file);
 
-					this.submit_count = 0;
-					this.cancel();
+                            window.axios.post('/master/teacher-mst?menufn='+ this.$route.name+'&type=upl', form_data, {
+                                headers: {
+                                    'Content-Type': 'multipart/form-data'
+                                }
+                            })
+                            .then((response) => {
+                                loader.hide()
+                                table.ajax.reload();
 
-					this.$swal({
-						toast: true,
-						position: 'top',
-						icon: response.status === 201 ? 'success' : 'info',
-						html: response.data
-					});
-				})
-				.catch((e) => {
-					loader.hide()
+                                this.submit_count = 0;
+                                this.cancel();
 
-					this.submit_count = 0;
-					console.error(e);
-				});
-			}
-            this.cancel()
-        },
+                                this.$swal({
+                                    toast: true,
+                                    position: 'top',
+                                    icon: response.status === 201 ? 'success' : 'info',
+                                    html: response.data
+                                });
+                            })
+                            .catch((e) => {
+                                loader.hide()
 
-        cancel() {
-            this.form.upload = false
-			this.form.field.file = ''
-			this.$refs.file_upl.value = '';
-            table.ajax.reload(null, false)
+                                this.submit_count = 0;
+                                console.error(e);
+                            });
+
+                            this.cancel()
+                        } else {
+                            this.form.submitted = false;
+                        }
+                    });
+                }else{
+                    this.$refs.form.validate().then(result => {
+                        if(result.valid) {
+                            let loader = this.$loading.show()
+
+                            if(this.form.new) {
+                                let form_data = new FormData();
+                                form_data.append('name', this.form.field.name);
+                                form_data.append('nik', this.form.field.nik);
+                                form_data.append('email', this.form.field.email);
+                                form_data.append('phone', this.form.field.phone);
+                                form_data.append('birthday', this.form.field.birthday);
+                                form_data.append('gender', this.form.field.gender);
+                                form_data.append('password', this.form.field.password);
+                                form_data.append('confirmPassword', this.form.field.confirmPassword);
+
+                                window.axios.post('/master/teacher-mst?menufn='+ this.$route.name+'&type=new', form_data)
+                                .then((response) => {
+                                    loader.hide()
+                                    table.ajax.reload();
+
+                                    this.submit_count = 0;
+                                    this.cancel();
+
+                                    this.$swal({
+                                        toast: true,
+                                        position: 'top',
+                                        icon: response.status === 201 ? 'success' : 'info',
+                                        html: response.data
+                                    });
+                                })
+                                .catch((e) => {
+                                    loader.hide()
+
+                                    this.submit_count = 0;
+                                    console.error(e);
+                                });
+                            } else {
+                                let form_data = new FormData();
+                                form_data.append('_method', 'PUT');
+                                form_data.append('id', this.form.field.id);
+                                form_data.append('name', this.form.field.name);
+                                form_data.append('nik', this.form.field.nik);
+                                form_data.append('email', this.form.field.email);
+                                form_data.append('phone', this.form.field.phone);
+                                form_data.append('birthday', this.form.field.birthday);
+                                form_data.append('gender', this.form.field.gender);
+                                form_data.append('password', this.form.field.password);
+                                form_data.append('confirmPassword', this.form.field.confirmPassword);
+
+                                window.axios.post('/master/teacher-mst/'+this.form.field.id+'?menufn='+ this.$route.name, form_data)
+                                .then((response) => {
+                                    loader.hide()
+                                    table.ajax.reload();
+
+                                    this.submit_count = 0;
+                                    this.cancel();
+
+                                    this.$swal({
+                                        toast: true,
+                                        position: 'top',
+                                        icon: response.status === 201 ? 'success' : 'info',
+                                        html: response.data
+                                    });
+                                })
+                                .catch((e) => {
+                                    loader.hide()
+
+                                    this.submit_count = 0;
+                                    console.error(e);
+                                });
+                            }
+
+                            this.cancel()
+                        } else {
+                            this.form.submitted = false;
+                        }
+                    });
+                }
+            }
         },
 
         DownloadTpl(){
@@ -331,6 +576,26 @@ export default {
 		async onChangeFileUpload(e) {
 			this.form.field.file = this.$refs.file_upl.files[0];
 		},
+
+        cancel() {
+            this.form.new = false
+            this.form.edit = false
+            this.form.upload = false
+            this.form.submitted = false
+
+            this.selected = []
+            this.clearForm()
+            this.$refs.form.resetForm()
+            table.ajax.reload(null, false)
+        },
+
+        filterInput(event, param) {
+            if(param=='nik'){
+                this.form.field.nik = event.target.value.replace(/\D/g, '');
+            }else if(param=='phone'){
+                this.form.field.phone = event.target.value.replace(/\D/g, '');
+            }
+        },
     },
 
     computed: {
@@ -357,6 +622,37 @@ export default {
         aPermitted() {
             return this.menu.permission.approve
         },
+
+        passwordRules() {
+            return this.form.new ? { required: true, min:8 } : '';
+        },
+
+        confirmpasswordRules() {
+            return this.form.field.password != '' ? 'confirmed:@password' : '';
+        },
+    },
+
+    watch: {
+        'form.field.password'(newValue, oldValue) {
+            if (this.errors.password) {
+                this.errors.password = null;
+            }
+            if (newValue !== this.form.field.passwordConfirm) {
+                this.errors.passwordConfirm = ['Kata sandi tidak sesuai!'];
+            } else {
+                this.errors.passwordConfirm = null;
+            }
+        },
+        'form.field.passwordConfirm'(newValue, oldValue) {
+            if (this.errors.passwordConfirm) {
+                this.errors.passwordConfirm = null;
+            }
+            if (newValue !== this.form.field.password) {
+                this.errors.passwordConfirm = ['Kata sandi tidak sesuai!'];
+            } else {
+                this.errors.passwordConfirm = null;
+            }
+        }
     },
 
     beforeRouteLeave (to, from, next) {

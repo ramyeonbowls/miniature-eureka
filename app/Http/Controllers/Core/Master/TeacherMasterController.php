@@ -93,96 +93,124 @@ class TeacherMasterController extends Controller
 			$check = true;
 			$messages = '';
 
-            try {
-				DB::beginTransaction();
-                DB::enableQueryLog();
+            if($request->has('type') && $request->type == 'new') {
+                $logs->write(__FUNCTION__, 'New');
 
-				$spreadsheet         = IOFactory::load($request->file('file'));
-				$Sheetheader         = $spreadsheet->getSheet(0);
-				$H_worksheetTitle    = $Sheetheader->getTitle();
-				$H_highestRow        = $Sheetheader->getHighestRow();
-				$H_worksheetTitle_A  = explode(" ", $H_worksheetTitle);
-				if(strtolower($H_worksheetTitle_A[0])=="teacher"){
-					for ($row = 2; $row <= $H_highestRow; ++ $row) {
-						$name		= trim($Sheetheader->getCellByColumnAndRow(1, $row)->getFormattedValue());
-						$email		= trim($Sheetheader->getCellByColumnAndRow(2, $row)->getFormattedValue());
-						$phone		= trim($Sheetheader->getCellByColumnAndRow(3, $row)->getFormattedValue());
-						$gender		= trim($Sheetheader->getCellByColumnAndRow(4, $row)->getFormattedValue());
-						$birthday	= trim($Sheetheader->getCellByColumnAndRow(5, $row)->getFormattedValue());
-						$nik		= trim($Sheetheader->getCellByColumnAndRow(6, $row)->getFormattedValue());
-						$password	= trim($Sheetheader->getCellByColumnAndRow(7, $row)->getFormattedValue());
+                try {
+                    DB::enableQueryLog();
 
-						$data = [
-							'name'		=> $name,
-							'email'		=> $email,
-							'phone'		=> $phone,
-							'gender'	=> $gender,
-							'birthday'	=> $birthday,
-							'nik'		=> $nik,
-							'password'	=> $password
-						];
-					
-						$validator = Validator::make($data, [
-							'name' => ['required', 'string', 'max:255'],
-							'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-							'nik' => 'nullable|string|max:20',
-							'phone' => 'required|string|max:15',
-							'birthday' => 'required|date',
-							'gender' => 'required|string|in:L,P',
-							'password' => ['required', 'string', 'min:8'],
-						]);
+                    $created = $this->Teacher_service->store($request);
+                    if ($created) {
+                        $logs->write("INFO", "Successfully updated");
 
-						if ($validator->fails()) {
-							$check		= false;
-							$errors = '';
-							foreach ($validator->errors()->all() as $error) {
-								$errors .= "Errors in row ".$row.": ".$error . "<br>";
-							}
-							$messages	.= $errors;
-						}
+                        $result['status'] = 201;
+                        $result['message'] = "Data berhasil dibuat.";
+                    }
 
-						if($check){
-							try {
-								$created = $this->Teacher_service->store((object)$data);
-								if (!$created) {
-									$check		= false;
-									$messages	= "Data gagal dibuat.";
-								}
-							}catch (Throwable $e) {
-								$check		= false;
-								$messages	= "Data gagal dibuat.";
-								$logs->write("ERROR", $e->getMessage());
-							}
-						}
+                    $queries = DB::getQueryLog();
+                    for($q = 0; $q < count($queries); $q++) {
+                        $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
+                        $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+                        $logs->write('SQL', $sql);
+                    }
+                } catch (Throwable $th) {
+                    $logs->write("ERROR", $th->getMessage());
 
-					}
-				}else{
-					$check		= false;
-					$messages	= "Salah Template!";
-					$this->logs->write("ERROR", "Wrong Template!");
-				}
-
-				if(!$check){
-					DB::rollBack();
-					$logs->write("Failed", $result['message']);
-					$result['message']	= $messages;
-				}else {
-					DB::commit();
-					$logs->write("INFO", "Successfully created");
-					$result['status']	= 201;
-					$result['message']	= "Data berhasil dibuat.";
-				}
-
-                $queries = DB::getQueryLog();
-				for($q = 0; $q < count($queries); $q++) {
-					$sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
-					$logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
-					$logs->write('SQL', $sql);
-				}
-            } catch (Throwable $th) {
-                $logs->write("ERROR", $th->getMessage());
-
-                $result['message'] = "Data gagal dibuat.<br>" . $th->getMessage();
+                    $result['message'] = "Data gagal dibuat.<br>" . $th->getMessage();
+                }
+            }else{
+                $logs->write(__FUNCTION__, 'Upload');
+                try {
+                    DB::beginTransaction();
+                    DB::enableQueryLog();
+    
+                    $spreadsheet         = IOFactory::load($request->file('file'));
+                    $Sheetheader         = $spreadsheet->getSheet(0);
+                    $H_worksheetTitle    = $Sheetheader->getTitle();
+                    $H_highestRow        = $Sheetheader->getHighestRow();
+                    $H_worksheetTitle_A  = explode(" ", $H_worksheetTitle);
+                    if(strtolower($H_worksheetTitle_A[0])=="teacher"){
+                        for ($row = 2; $row <= $H_highestRow; ++ $row) {
+                            $name		= trim($Sheetheader->getCellByColumnAndRow(1, $row)->getFormattedValue());
+                            $email		= trim($Sheetheader->getCellByColumnAndRow(2, $row)->getFormattedValue());
+                            $phone		= trim($Sheetheader->getCellByColumnAndRow(3, $row)->getFormattedValue());
+                            $gender		= trim($Sheetheader->getCellByColumnAndRow(4, $row)->getFormattedValue());
+                            $birthday	= trim($Sheetheader->getCellByColumnAndRow(5, $row)->getFormattedValue());
+                            $nik		= trim($Sheetheader->getCellByColumnAndRow(6, $row)->getFormattedValue());
+                            $password	= trim($Sheetheader->getCellByColumnAndRow(7, $row)->getFormattedValue());
+    
+                            $data = [
+                                'name'		=> $name,
+                                'email'		=> $email,
+                                'phone'		=> $phone,
+                                'gender'	=> $gender,
+                                'birthday'	=> $birthday,
+                                'nik'		=> $nik,
+                                'password'	=> $password
+                            ];
+                        
+                            $validator = Validator::make($data, [
+                                'name' => ['required', 'string', 'max:255'],
+                                'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+                                'nik' => 'nullable|string|max:20',
+                                'phone' => 'required|string|max:15',
+                                'birthday' => 'required|date',
+                                'gender' => 'required|string|in:L,P',
+                                'password' => ['required', 'string', 'min:8'],
+                            ]);
+    
+                            if ($validator->fails()) {
+                                $check		= false;
+                                $errors = '';
+                                foreach ($validator->errors()->all() as $error) {
+                                    $errors .= "Errors in row ".$row.": ".$error . "<br>";
+                                }
+                                $messages	.= $errors;
+                            }
+    
+                            if($check){
+                                try {
+                                    $created = $this->Teacher_service->store((object)$data);
+                                    if (!$created) {
+                                        $check		= false;
+                                        $messages	= "Data gagal dibuat.";
+                                    }
+                                }catch (Throwable $e) {
+                                    $check		= false;
+                                    $messages	= "Data gagal dibuat.";
+                                    $logs->write("ERROR", $e->getMessage());
+                                }
+                            }
+    
+                        }
+                    }else{
+                        $check		= false;
+                        $messages	= "Salah Template!";
+                        $this->logs->write("ERROR", "Wrong Template!");
+                    }
+    
+                    if(!$check){
+                        DB::rollBack();
+                        $logs->write("Failed", $messages);
+                        $result['message']	= $messages;
+                    }else {
+                        DB::commit();
+                        $logs->write("INFO", "Successfully created");
+                        $result['status']	= 201;
+                        $result['message']	= "Data berhasil dibuat.";
+                    }
+    
+                    $queries = DB::getQueryLog();
+                    for($q = 0; $q < count($queries); $q++) {
+                        $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
+                        $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+                        $logs->write('SQL', $sql);
+                    }
+                } catch (Throwable $th) {
+                    $logs->write("ERROR", $th->getMessage());
+    
+                    $result['message'] = "Data gagal dibuat.<br>" . $th->getMessage();
+                }
             }
             $logs->write(__FUNCTION__, "STOP\r\n");
 
@@ -204,14 +232,12 @@ class TeacherMasterController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param UpdateTeacherMasterRequest $request
+     * @param Request $request
      * @param string $id
      * @return JsonResponse
      */
-    public function update(UpdateTeacherMasterRequest $request, string $id): JsonResponse
+    public function update(Request $request, string $id): JsonResponse
     {
-        $validated = $request->validated();
-
         $logs = new Logs(Arr::last(explode("\\", get_class())) . 'Log');
         $logs->write(__FUNCTION__, 'START');
 
@@ -220,20 +246,7 @@ class TeacherMasterController extends Controller
         try {
             DB::enableQueryLog();
 
-            if ($request->hasFile('file')) {
-                try {
-                    $Teacher_file = $request->file('file')->getClientOriginalName();
-                    $extension = $request->file('file')->getClientOriginalExtension();
-                    $Teacher_name = explode('.', str_replace(' ', '', $Teacher_file))[0] . '-' . now('Asia/Jakarta')->format('YmdHis') . '-' . rand(100000, 999999) . '.' . $extension;
-                    $request->file('file')->storeAs('/public/images/Teacher', $Teacher_name);
-
-                    $validated['file'] = $Teacher_name;
-                } catch (Throwable $th) {
-                    $logs->write("ERROR", $th->getMessage());
-                }
-            }
-
-            $updated = $this->Teacher_service->update((object)$validated, $id);
+            $updated = $this->Teacher_service->update($request, $id);
             if ($updated) {
                 $logs->write("INFO", "Successfully updated");
 

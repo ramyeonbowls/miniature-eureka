@@ -41,6 +41,20 @@ class TeacherMasterService
         return $this->Teacher_repo->store($data, $this->client_id);
     }
 
+    /**
+     * @param object $data
+     * @return bool
+     */
+    public function create(object $data): bool
+    {
+        $datetime_now = Carbon::now("Asia/Jakarta");
+
+        $data->create_date      = $datetime_now;
+        $data->modified_date    = $datetime_now;
+
+        return $this->Teacher_repo->create($data, $this->client_id);
+    }
+
      /**
      * @param object $data
      * @param string $id
@@ -49,14 +63,12 @@ class TeacherMasterService
     public function update(object $data, string $id): bool
     {
         $datetime_now = Carbon::now("Asia/Jakarta");
-        $username = auth()->user()->email;
-
-        $data->file = $data->file ?? $data->current_file;
+        $username   = auth()->user()->email;
 
         $data->modified_by 		= $username;
         $data->modified_date 	= $datetime_now;
 
-        return $this->Teacher_repo->update($data, $id);
+        return $this->Teacher_repo->update($data, $id, $this->client_id);
     }
 
     /**
@@ -66,14 +78,5 @@ class TeacherMasterService
     public function delete(string $id)
     {
         return $this->Teacher_repo->delete($id, $this->client_id);
-    }
-    
-    /**
-     * @param string $id
-     * @return mixed
-     */
-    public function check(string $id)
-    {
-        return $this->Teacher_repo->check($id, $this->client_id);
     }
 }
