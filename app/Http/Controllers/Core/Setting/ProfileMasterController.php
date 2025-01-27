@@ -277,7 +277,7 @@ class ProfileMasterController extends Controller
                             DB::raw("case when a.flag_appr = 'N' then 'Y' else 'N' end as change_request")
                         )
                         ->where('flag_appr', 'N')
-                        ->orderBy('created_at', 'ASC')
+                        ->orderBy('created_at', 'DESC')
                         ->first();
 
                     $queries = DB::getQueryLog();
