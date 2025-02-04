@@ -47,7 +47,7 @@ class POMasterRepository
      * @param array $data
      * @return bool
      */
-    public function store(array $data, $client_id, $db_platform): bool
+    public function store(array $data, $client_id, $db_platform, $dist_id): bool
     {
         $failed = false;
         $po_amount = 0;
@@ -78,6 +78,7 @@ class POMasterRepository
                 'po_date' => $data['po_date'],
                 'po_type' => 1,
                 'po_amount' => $po_amount,
+                'distributor_id' => $dist_id,
                 'po_discount' => 0,
                 'status' => 0,
                 'persentase_supplier' => 40,
@@ -212,5 +213,15 @@ class POMasterRepository
             ->where('a.po_date', '=', $po_date)
 			->orderBy('a.po_number', 'ASC')
             ->get();
+    }
+
+    public function getDistId($client_id)
+    {
+        return DB::table('tclient as a')
+            ->select(
+                'a.company_id'
+            )
+            ->where('a.client_id', '=', $client_id)
+            ->first();
     }
 }

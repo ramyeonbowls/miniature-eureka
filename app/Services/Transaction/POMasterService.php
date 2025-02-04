@@ -44,8 +44,10 @@ class POMasterService
         $data['modified_date']    = $datetime_now;
         $data['po_date']          = $datetime_now->format('Y-m-d');
         $data['po_number']        = 'PO-'.$datetime_now->format('YmdHis');
+        $company                  = $this->PO_repo->getDistId($this->client_id);
+        $dist_id                  = $company->company_id;
 
-        return $this->PO_repo->store($data, $this->client_id, $this->db_platorm);
+        return $this->PO_repo->store($data, $this->client_id, $this->db_platorm, $dist_id);
     }
 
      /**
