@@ -27,7 +27,7 @@
                 <div class="card h-100">
                     <div class="card-header">
                         <p class="text-subtitle text-muted">{{ detail.writer }}</p>
-                        <h3 class="mt-1">{{ detail.title }}</h3>
+                        <h3 style="color: #1995ad;" class="mt-1">{{ detail.title }}</h3>
                     </div>
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
@@ -58,25 +58,25 @@
                                 <div class="form-group">
                                     <div class="comment-body">
                                     <div class="comment-profileName mb-0">Copy </div>
-                                    <div class="comment-time mt-0">{{ detail.remaining }}/{{ detail.copy }}</div>
+                                    <div class="comment-time mt-0" style="color: #1995ad;">{{ detail.remaining }}/{{ detail.copy }}</div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="comment-body">
                                     <div class="comment-profileName mb-0">Jumlah Halaman </div>
-                                    <div class="comment-time mt-0">{{ detail.page }}</div>
+                                    <div class="comment-time mt-0" style="color: #1995ad;">{{ detail.page }}</div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="comment-body">
                                     <div class="comment-profileName mb-0">Kategori </div>
-                                    <div class="comment-time mt-0">{{ detail.category }}</div>
+                                    <div class="comment-time mt-0" style="color: #1995ad;">{{ detail.category }}</div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="comment-body">
                                     <div class="comment-profileName mb-0">ISBN </div>
-                                    <div class="comment-time mt-0">{{ detail.isbn }}</div>
+                                    <div class="comment-time mt-0" style="color: #1995ad;">{{ detail.isbn }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -84,25 +84,25 @@
                                 <div class="form-group">
                                     <div class="comment-body">
                                     <div class="comment-profileName mb-0">Penulis </div>
-                                    <div class="comment-time mt-0">{{ detail.writer }}</div>
+                                    <div class="comment-time mt-0" style="color: #1995ad;">{{ detail.writer }}</div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="comment-body">
                                     <div class="comment-profileName mb-0">Tahun Terbit </div>
-                                    <div class="comment-time mt-0">{{ detail.year }}</div>
+                                    <div class="comment-time mt-0" style="color: #1995ad;">{{ detail.year }}</div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="comment-body">
                                     <div class="comment-profileName mb-0">Batas Umur </div>
-                                    <div class="comment-time mt-0">{{ detail.age }} Tahun</div>
+                                    <div class="comment-time mt-0" style="color: #1995ad;">{{ detail.age }} Tahun</div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="comment-body">
                                     <div class="comment-profileName mb-0">Penerbit </div>
-                                    <div class="comment-time mt-0">{{ detail.publisher }}</div>
+                                    <div class="comment-time mt-0" style="color: #1995ad;">{{ detail.publisher }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -117,7 +117,7 @@
                 <div class="card">
                     <div class="row mb-2 py-0 px-0 mx-0 my-0">
                         <div class="divider divider-left-center">
-                            <h2>BUKU TERPOPULER</h2>
+                            <h2 style="color: #1995ad;">BUKU TERPOPULER</h2>
                         </div>
                         <div class="col-12">
                             <div class="row">
@@ -146,7 +146,7 @@
                                                     </p>
                                                     <a href="#">
                                                         <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" 
-                                                        style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" 
+                                                        style="color: #1995ad; display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" 
                                                             :title="item.title">
                                                             {{ item.title }}
                                                         </h6>

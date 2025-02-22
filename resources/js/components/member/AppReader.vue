@@ -1,6 +1,6 @@
 <template>
 	<section class="row">
-		<nav class="navbar py-2 d-flex justify-content-end" style="background-color: #435ebe; color: white;">
+		<nav class="navbar py-2 d-flex justify-content-end" style="background-color: #1995ad; color: white;">
 			<button class="btn btn-danger" @click="SelesaiBaca">Selesai Baca</button>
 		</nav>
 	</section>
@@ -9,13 +9,13 @@
             <!-- Floating Pagination -->
             <nav aria-label="Page navigation example" class="pagination-float">
                 <ul class="pagination pagination-primary justify-content-center">
-                    <li class="page-item"><a style="background-color: #435ebe; color: white;" class="page-link" href="javascript:void(0);" @click="prevPage">Prev</a></li>
-                    <li class="page-item"><a style="background-color: #435ebe; color: white;" class="page-link disabled" href="javascript:void(0);">{{ currentPage }}</a></li>
-                    <li class="page-item"><a style="background-color: #435ebe; color: white;" class="page-link disabled" href="javascript:void(0);">/</a></li>
-                    <li class="page-item"><a style="background-color: #435ebe; color: white;" class="page-link disabled" href="javascript:void(0);">{{ totalPages }}</a></li>
-                    <li class="page-item"><a style="background-color: #435ebe; color: white;" class="page-link" href="javascript:void(0);" @click="nextPage">Next</a></li>
+                    <li class="page-item"><a style="background-color: #1995ad; color: white;" class="page-link" href="javascript:void(0);" @click="prevPage">Prev</a></li>
+                    <li class="page-item"><a style="background-color: #1995ad; color: white;" class="page-link disabled" href="javascript:void(0);">{{ currentPage }}</a></li>
+                    <li class="page-item"><a style="background-color: #1995ad; color: white;" class="page-link disabled" href="javascript:void(0);">/</a></li>
+                    <li class="page-item"><a style="background-color: #1995ad; color: white;" class="page-link disabled" href="javascript:void(0);">{{ totalPages }}</a></li>
+                    <li class="page-item"><a style="background-color: #1995ad; color: white;" class="page-link" href="javascript:void(0);" @click="nextPage">Next</a></li>
                     <li class="page-item">
-                        <select id="zoom" v-model="zoom" @change="renderPage" class="page-link h-100" style="background-color: #435ebe; color: white;">
+                        <select id="zoom" v-model="zoom" @change="renderPage" class="page-link h-100" style="background-color: #1995ad; color: white;">
                             <option value="0.25">25%</option>
                             <option value="0.5">50%</option>
                             <option value="0.75">75%</option>

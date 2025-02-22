@@ -1,7 +1,7 @@
 <template>
     <div class="page-heading">
         <div class="row">
-            <h1 class="auth-title">Daftar Member</h1>
+            <h1 style="color: #1995ad;" class="auth-title">Daftar Member</h1>
             <p class="auth-subtitle mb-4">Masukkan data untuk jadi member perpustakaan</p>
             <form class="form" @submit.prevent="handleRegister">
                 <div class="row">

@@ -19,7 +19,7 @@
                                 </div>
                                 <div class="card-body pb-0">
                                     <a href="#">
-                                        <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="data.title">
+                                        <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="color: #1995ad; display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="data.title">
                                             {{ data.title }}
                                         </h5>
                                     </a>
@@ -45,7 +45,7 @@
                                     <div class="card-body">
                                         <div class="card-title">
                                             <a href="#">
-                                                <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="data.title">
+                                                <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="color: #1995ad; display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="data.title">
                                                     {{ data.title }}
                                                 </h5>
                                             </a>

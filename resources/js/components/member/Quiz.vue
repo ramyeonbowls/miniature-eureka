@@ -5,7 +5,7 @@
 				<div class="card" style="height: 400px;">
 					<p></p>
 					<div class="card-content d-flex flex-column text-center">
-						<h1>Tidak Ada Quiz</h1>
+						<h1 style="color: #1995ad;">Tidak Ada Quiz</h1>
 					</div>
 				</div>
 			</div>
@@ -14,7 +14,7 @@
 					<div class="card hover-shadow">
 						<div class="card-content d-flex flex-column">
 							<div class="d-flex justify-content-center align-items-center flex-column mt-3 mb-0 mx-4 mb-0 py-1" style="height: 55px; max-height: 55px;" :title="data.title">
-								<h6 class="mb-0">{{ data.title }}</h6>
+								<h6 style="color: #1995ad;" class="mb-0">{{ data.title }}</h6>
 							</div>
 							<hr>
 							<div class="card-body-quiz" style="height: 125px;">

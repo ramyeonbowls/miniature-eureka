@@ -4,8 +4,8 @@
 			<div class="card">
 				<div class="card-content d-flex flex-column">
 					<div class="card-header">
-						<h4 class="card-title"><strong>{{ header.title }}</strong></h4>
-						<h4 class="card-title pt-2 pb-3 text-muted">{{ header.description }}</h4>
+						<h4 style="color: #1995ad;" class="card-title"><strong>{{ header.title }}</strong></h4>
+						<h4 style="color: #1995ad;" class="card-title pt-2 pb-3 text-muted">{{ header.description }}</h4>
 						<template v-if="finished">
 							<div class="team">
 								<i class="bi bi-check-square-fill text-white mx-2 mb-2" width="16" height="20"></i>

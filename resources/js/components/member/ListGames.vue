@@ -12,7 +12,7 @@
 								<div class="card-body">
 									<div class="card-title">
 										<a href="#">
-											<h5> Game Perhitungan </h5>
+											<h5 style="color: #1995ad;"> Game Perhitungan </h5>
 										</a>
 									</div>
 								</div>
@@ -30,7 +30,7 @@
 								<div class="card-body">
 									<div class="card-title">
 										<a href="#">
-											<h5> Game Susun Kata </h5>
+											<h5 style="color: #1995ad;"> Game Susun Kata </h5>
 										</a>
 									</div>
 								</div>
@@ -48,7 +48,7 @@
 								<div class="card-body">
 									<div class="card-title">
 										<a href="#">
-											<h5> Game Flying Bird </h5>
+											<h5 style="color: #1995ad;"> Game Flying Bird </h5>
 										</a>
 									</div>
 								</div>

@@ -2,7 +2,7 @@
     <section class="section">
         <div class="card overflow-auto">
             <div class="card-header text-center">
-                <h2>Riwayat Peminjaman</h2>
+                <h2 style="color: #1995ad;">Riwayat Peminjaman</h2>
             </div>
             <div class="card-body">
                 <table class="table table-striped responsive-table" id="data_rst">
@@ -25,7 +25,7 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-md" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="imageModalLabel">Preview</h4>
+                    <h4 style="color: #1995ad;" class="modal-title" id="imageModalLabel">Preview</h4>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <i class="bi bi-x-lg text-black"></i>
                     </button>

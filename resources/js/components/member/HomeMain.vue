@@ -49,7 +49,7 @@
     <div class="page-content">
         <section class="row">
             <div class="divider divider-left-center mb-0">
-                <h2>BUKU POPULER</h2>
+                <h2 style="color: #1995ad;">BUKU POPULER</h2>
             </div>
             <div class="col-xl-3 d-none d-xl-block mb-0 mt-3">
                 <div class="card h-100">
@@ -87,7 +87,7 @@
                 <div class="card hover-shadow">
                     <div class="row mb-3 px-3">
                         <div class="col-7 text-start pt-3 pe-0">
-                            <h2>KOLEKSI BUKU</h2>
+                            <h2 style="color: #1995ad;">KOLEKSI BUKU</h2>
                         </div>
                         <div class="col-5 text-end pt-3">
                             <router-link to="/koleksi-buku" class='menu-link'>
@@ -274,7 +274,7 @@
 				<!-- Video Carousel -->
 				<div class="card">
 					<div class="text-start pt-3 px-3 pe-0 mb-3">
-						<h2>VIDEO</h2>
+						<h2 style="color: #1995ad;">VIDEO</h2>
 					</div>
 					<div id="videoCarousel" class="carousel slide mb-3 mx-3" data-bs-ride="carousel">
 						<div class="carousel-inner">
@@ -295,7 +295,7 @@
 									<div class="col-12 col-sm-6">
 										<!-- web -->
 										<div class=" d-none d-sm-block">
-											<h4>{{ item.title }}</h4>
+											<h4 style="color: #1995ad;">{{ item.title }}</h4>
 											<div class="d-flex justify-content-left mb-0 mt-5">
 												{{ item.description }}
 											</div>
@@ -303,7 +303,7 @@
 										<!-- mobile -->
 										<div class="d-block d-sm-none">
 											<div class="divider mb-0">
-												<h4>{{ item.title }}</h4>
+												<h4 style="color: #1995ad;">{{ item.title }}</h4>
 											</div>
 											<div class="text-center mb-0 mt-3">
 												<p v-if="isLongDescription(item.description)">
@@ -338,7 +338,7 @@
                 <div class="card py-2 px-4 hover-shadow">
                     <div class="row">
                         <div class="col-7 text-start pt-3 pe-0">
-                            <h2>TAJUK UTAMA</h2>
+                            <h2 style="color: #1995ad;">TAJUK UTAMA</h2>
                         </div>
                         <div class="col-5 text-end pt-3">
                             <router-link :to="{ name: 'artikel', params: { idart: 'TU' } }">
@@ -357,7 +357,7 @@
                                             </a>
                                         </div>
                                         <a href="#">
-                                            <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="mainNews.title">
+                                            <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="color: #1995ad; display: -webkit-box; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="mainNews.title">
                                                 {{ mainNews.title }}
                                             </h5>
                                         </a>
@@ -366,7 +366,7 @@
                                             <span v-html="mainNews.content"></span>
                                         </p>
                                         <a href="#">
-                                            <h6>Lanjutkan Membaca </h6>
+                                            <h6 style="color: #1995ad;">Lanjutkan Membaca </h6>
                                         </a>
                                     </div>
                                 </router-link>
@@ -444,7 +444,7 @@
             <div class="col-12 col-lg-12">
                 <div class="row mb-3">
                     <div class="col-6 text-start pt-3">
-                        <h2>WAWASAN</h2>
+                        <h2 style="color: #1995ad;">WAWASAN</h2>
                     </div>
                     <div class="col-6 text-end pt-3">
                         <router-link :to="{ name: 'artikel', params: { idart: 'WA' } }">
@@ -474,7 +474,7 @@
                                     </div>
                                     <div class="card-body pb-0">
                                         <a href="#">
-                                            <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="value.title">
+                                            <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="color: #1995ad; display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="value.title">
                                                 {{ value.title }}
                                             </h5>
                                         </a>
@@ -482,7 +482,7 @@
                                             <span v-html="value.content"></span>
                                         </p>
                                         <a href="#">
-                                            <h6>Lanjutkan Membaca </h6>
+                                            <h6 style="color: #1995ad;">Lanjutkan Membaca </h6>
                                         </a>
                                     </div>
                                 </div>
@@ -496,7 +496,7 @@
             <div class="col-12 col-lg-12">
                 <div class="row mb-3">
                     <div class="col-8 text-start pt-3">
-                        <h2>REVIEW BUKU</h2>
+                        <h2 style="color: #1995ad;">REVIEW BUKU</h2>
                     </div>
                     <div class="col-4 text-end pt-3">
                         <router-link :to="{ name: 'artikel', params: { idart: 'RB' } }">
@@ -526,7 +526,7 @@
                                     </div>
                                     <div class="card-body pb-0">
                                         <a href="#">
-                                            <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="value.title">
+                                            <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="color: #1995ad; display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="value.title">
                                                 {{ value.title }}
                                             </h5>
                                         </a>
@@ -535,7 +535,7 @@
                                             <span v-html="value.content"></span>
                                         </p>
                                         <a href="#">
-                                            <h6>Lanjutkan Membaca </h6>
+                                            <h6 style="color: #1995ad;">Lanjutkan Membaca </h6>
                                         </a>
                                     </div>
                                 </div>
@@ -549,7 +549,7 @@
             <div class="col-12 col-lg-12">
                 <div class="row mb-3">
                     <div class="col-8 text-start pt-3">
-                        <h2>LAYAR PENULIS</h2>
+                        <h2 style="color: #1995ad;">LAYAR PENULIS</h2>
                     </div>
                     <div class="col-4 text-end pt-3">
                         <router-link :to="{ name: 'artikel', params: { idart: 'LP' } }">
@@ -581,7 +581,7 @@
                                     </div>
                                     <div class="card-body pb-0">
                                         <a href="#">
-                                            <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="value.title">
+                                            <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="color: #1995ad; display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="value.title">
                                                 {{ value.title }}
                                             </h5>
                                         </a>
@@ -589,7 +589,7 @@
                                             <span v-html="value.content"></span>
                                         </p>
                                         <a href="#">
-                                            <h6>Lanjutkan Membaca </h6>
+                                            <h6 style="color: #1995ad;">Lanjutkan Membaca </h6>
                                         </a>
                                     </div>
                                 </div>
@@ -603,7 +603,7 @@
             <div class="col-12 col-lg-12">
                 <div class="row mb-3">
                     <div class="col-8 text-start pt-3">
-                        <h2>TITIK FOKUS</h2>
+                        <h2 style="color: #1995ad;">TITIK FOKUS</h2>
                     </div>
                     <div class="col-4 text-end pt-3">
                         <router-link :to="{ name: 'artikel', params: { idart: 'TF' } }">
@@ -633,7 +633,7 @@
                                     </div>
                                     <div class="card-body pb-0">
                                         <a href="#">
-                                            <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="value.title">
+                                            <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="color: #1995ad; display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="value.title">
                                                 {{ value.title }}
                                             </h5>
                                         </a>
@@ -642,7 +642,7 @@
                                             <span v-html="value.content"></span>
                                         </p>
                                         <a href="#">
-                                            <h6>Lanjutkan Membaca </h6>
+                                            <h6 style="color: #1995ad;">Lanjutkan Membaca </h6>
                                         </a>
                                     </div>
                                 </div>
@@ -656,7 +656,7 @@
             <div class="col-12 col-lg-12">
                 <div class="row mb-3">
                     <div class="col-8 text-start pt-3">
-                        <h2>HUMORIA</h2>
+                        <h2 style="color: #1995ad;">HUMORIA</h2>
                     </div>
                     <div class="col-4 text-end pt-3">
                         <router-link :to="{ name: 'artikel', params: { idart: 'HU' } }">
@@ -686,7 +686,7 @@
                                     </div>
                                     <div class="card-body pb-0">
                                         <a href="#">
-                                            <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="value.title">
+                                            <h5 data-bs-toggle="tooltip" data-bs-placement="bottom" style="color: #1995ad; display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="value.title">
                                                 {{ value.title }}
                                             </h5>
                                         </a>
@@ -695,7 +695,7 @@
                                             <span v-html="value.content"></span>
                                         </p>
                                         <a href="#">
-                                            <h6>Lanjutkan Membaca </h6>
+                                            <h6 style="color: #1995ad;">Lanjutkan Membaca </h6>
                                         </a>
                                     </div>
                                 </div>
@@ -1185,7 +1185,7 @@ export default {
     }
 
     .testimonial-slider {
-        background-color: #fab040;
+        background-color: #FF6F61;
         padding: 2em 2em 0em;
         border-radius: 10px;
     }

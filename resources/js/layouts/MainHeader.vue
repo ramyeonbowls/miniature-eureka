@@ -36,7 +36,7 @@
                                         <img :src="avatar">
                                     </div>
                                     <div class="text">
-                                        <h6 class="user-dropdown-name">{{ name }}</h6>
+                                        <h6 class="user-dropdown-name" style="color: #1995ad;">{{ name }}</h6>
                                         <p class="user-dropdown-status text-sm text-muted">Member</p>
                                     </div>
                             </a>
@@ -263,31 +263,31 @@ export default {
 }
 .reg {
   color: white;
-  background-color: #435ebe;
+  background-color: #1995ad;
 }
 
 .log {
-  color: rgb(104, 85, 224);
-  background-color: rgba(255, 255, 255, 1);
-  border: 1px solid #435ebe;
+  color: #1995ad;
+  background-color: #f1f1f1;
+  border: 1px solid #1995ad;
 }
 
 .log:hover {
   color: white;
   box-shadow: 0 0 20px rgba(104, 85, 224, 0.6);
-  background-color: #435ebe;
+  background-color: #1995ad;
 }
 .reg:hover {
   color: #ffffff;
   box-shadow: 0 0 20px #dec7a3;
-  background-color: #fab040;
+  background-color: #FF6F61;
 }
 .header-title {
     font-size: 23px;
     margin: 0px 0px 0px;
     font-family: 'Libre Franklin';
     font-weight: 800;
-    color: #5271FF;
+    color: #FF6F61;
 }
 .svg-color {
     color: #ffffff;

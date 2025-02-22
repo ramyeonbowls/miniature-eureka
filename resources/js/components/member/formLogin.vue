@@ -2,7 +2,7 @@
     <div class="page-heading">
             <div class="col-md-5 col-12">
             <div id="auth-left">
-                <h1 class="auth-title">Masuk</h1>
+                <h1 style="color: #1995ad;" class="auth-title">Masuk</h1>
                 <p class="auth-subtitle mb-4">Masuk dengan email yang di daftarkan</p>
 
                 <form @submit.prevent="handleLogin">

@@ -2,7 +2,7 @@
     <div class="page-content">
         <section class="row">
             <div class="divider divider-left-center">
-                <h2>KOLEKSI BUKU</h2>
+                <h2 style="color: #1995ad;">KOLEKSI BUKU</h2>
                 <div v-if="seeks">
                     <p>hasil pencarian buku dengan kata kunci <b>"{{ seeks }}"</b></p>
                 </div>
@@ -42,7 +42,7 @@
                                                     <div data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="buku.writer">{{ buku.writer }}</div>
                                                 </p>
                                                 <a href="#">
-                                                    <h6 class="card-title mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="buku.title">{{ buku.title }}</h6>
+                                                    <h6 class="card-title mt-2" data-bs-toggle="tooltip" data-bs-placement="bottom" style="color: #1995ad; display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="buku.title">{{ buku.title }}</h6>
                                                 </a>
                                             </div>
                                         </div>
@@ -96,7 +96,7 @@
                 </template>
                 <template v-else>
                     <div class="row text-center">
-                        <h6>Buku Tidak tersedia</h6>
+                        <h6 style="color: #1995ad;">Buku Tidak tersedia</h6>
                     </div>
                 </template>
             </div>

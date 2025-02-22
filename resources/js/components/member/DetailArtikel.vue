@@ -8,7 +8,7 @@
                     </div>
                     <div class="card-body">
                         <div class="card-title mb-3">
-                            <h5>
+                            <h5 style="color: #1995ad;">
                                 {{ article[0].title }}
                             </h5>
                             <div v-if="idart=='TU' || idart=='RB'">
