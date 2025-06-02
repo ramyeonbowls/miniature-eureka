@@ -808,10 +808,10 @@ class MainController extends Controller
         $category   = $request->categories ?? [];
         $parameter  = $request->search ?? '';
 
-        $results = DB::table('tmapping_book as a')
+        $results = DB::table('tbook as b')
             ->select([
                 'b.book_id',
-                'a.copy',
+                DB::raw('4 as copy'),
                 'b.isbn',
                 'b.title',
                 'b.sinopsis',
@@ -820,9 +820,6 @@ class MainController extends Controller
                 'b.age',
                 'c.description as category'
             ])
-            ->join('tbook as b', function($join) {
-                $join->on('a.book_id', '=', 'b.book_id');
-            })
             ->join('tbook_category as c', function($join) {
                 $join->on('b.category_id', '=', 'c.id');
             })
@@ -836,7 +833,7 @@ class MainController extends Controller
             ->when(count($category)>0, function($query) use ($category) {
 				$query->whereIn('b.category_id', $category);
 			})
-            ->where('a.client_id', '=', $this->client_id)
+            ->whereRaw("b.book_id IN ('264fd0fc-2245-405f-888a-a46083e8d765','23c1d145-c7d1-43de-806d-b33d88d54c96','9a0e60da-ae4f-4560-ab7c-f61ed85e3aac')")
             ->get()
             ->map(function ($value) {
                 return [
@@ -871,10 +868,10 @@ class MainController extends Controller
         $category   = $request->categories ?? [];
         $parameter  = $request->search ?? '';
 
-        $results = DB::table('tmapping_book as a')
+        $results = DB::table('tbook as b')
             ->select([
                 'b.book_id',
-                'a.copy',
+                DB::raw('4 as copy'),
                 'b.isbn',
                 'b.title',
                 'b.sinopsis',
@@ -883,9 +880,6 @@ class MainController extends Controller
                 'b.age',
                 'c.description as category'
             ])
-            ->join('tbook as b', function($join) {
-                $join->on('a.book_id', '=', 'b.book_id');
-            })
             ->join('tbook_category as c', function($join) {
                 $join->on('b.category_id', '=', 'c.id');
             })
@@ -899,7 +893,7 @@ class MainController extends Controller
             ->when(count($category)>0, function($query) use ($category) {
 				$query->whereIn('b.category_id', $category);
 			})
-            ->where('a.client_id', '=', $this->client_id)
+            ->whereRaw("b.book_id IN ('19d36c7a-449a-4561-b5e3-592341591587','5de8a187-555f-4d36-94dc-39bdfae442e2','b8f74377-33ac-4256-a267-2e607934def4')")
             ->get()
             ->map(function ($value) {
                 return [

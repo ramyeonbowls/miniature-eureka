@@ -165,7 +165,7 @@
                                 class="swiper-container"
                                 loop
                             >
-                                <swiper-slide v-for="(item, index) in buku" :key="index" class="col-md-3 col-6">
+                                <swiper-slide v-for="(item, index) in audiobuku" :key="index" class="col-md-3 col-6">
                                     <router-link :to="{ name: 'detail-buku-audio', params: { idb: item.isbn } }">
                                         <div class="card">
                                             <div class="product-image">
@@ -220,7 +220,7 @@
                                 class="swiper-container"
                                 loop
                             >
-                                <swiper-slide v-for="(item, index) in buku" :key="index" class="col-md-3 col-6">
+                                <swiper-slide v-for="(item, index) in videobuku" :key="index" class="col-md-3 col-6">
                                     <router-link :to="{ name: 'detail-buku-video', params: { idb: item.isbn } }">
                                         <div class="card">
                                             <div class="product-image">
@@ -861,6 +861,8 @@ export default {
             banner: [],
             buku_populer: [],
             buku: [],
+            audiobuku: [],
+            videobuku: [],
             news: [],
             frasa: [],
             wawasan: [],
@@ -979,6 +981,8 @@ export default {
         this.getBanner();
         this.getAllArticle();
         this.getVideo();
+        this.getNewCollectionAudio()
+        this.getNewCollectionVideo()
     },
 
     mounted() {
@@ -1063,6 +1067,32 @@ export default {
             .get('/getNewCollection')
             .then((response) => {
                 this.buku = response.data;
+            })
+            .catch((e) => {
+                console.error(e)
+            });
+        },
+
+        getNewCollectionAudio() {
+            this.audiobuku = [];
+
+            window.axios
+            .get('/getAudioBook')
+            .then((response) => {
+                this.audiobuku = response.data;
+            })
+            .catch((e) => {
+                console.error(e)
+            });
+        },
+
+        getNewCollectionVideo() {
+            this.videobuku = [];
+
+            window.axios
+            .get('/getVideoBook')
+            .then((response) => {
+                this.videobuku = response.data;
             })
             .catch((e) => {
                 console.error(e)
