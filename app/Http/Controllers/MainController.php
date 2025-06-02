@@ -919,6 +919,182 @@ class MainController extends Controller
         return response()->json($results, 200);
     }
 
+    public function getDetailVideoBook(Request $request)
+    {
+        $isbn = $request->id;
+        $user = auth()->user();
+
+        // $logs = new Logs( Arr::last(explode("\\", get_class())) );
+        // $logs->write(__FUNCTION__, "START");
+        // DB::enableQueryLog();
+
+        $query = DB::table('tbook as b')
+            ->select([
+                'b.book_id',
+                DB::raw('4 as copy'),
+                'b.isbn',
+                'b.title',
+                'b.sinopsis',
+                'b.cover as image',
+                'b.writer',
+                'b.age',
+                'c.description as category',
+                'b.year',
+                'b.page',
+                DB::raw("4 - IFNULL(d.total, 0) as remaining"),
+				'f.description as publisher'
+            ])
+            ->join('tbook_category as c', function($join) {
+                $join->on('b.category_id', '=', 'c.id');
+            })
+            ->join('tpublisher as f', function($join) {
+                $join->on('b.publisher_id', '=', 'f.id');
+            })
+            ->leftJoin(DB::raw("(
+                    SELECT
+                        src.book_id,
+                        SUM(CASE WHEN src.total > 1 THEN 1 ELSE src.total END) AS total
+                    FROM (
+                        SELECT sr.book_id, COUNT(sr.book_id) AS total, sr.user_id
+                        FROM (
+                            SELECT book_id, user_id
+                            FROM ttrx_read
+                            WHERE
+                                client_id = '".$this->client_id."'
+                                AND flag_end != 'Y'
+                            
+                            UNION ALL
+                            
+                            SELECT book_id, user_id
+                            FROM trent_book
+                            WHERE
+                                client_id = '".$this->client_id."'
+                                AND flag_end != 'Y'
+                        ) sr
+                        group by sr.book_id, sr.user_id
+                    )src
+                    GROUP BY src.book_id) as d"), function($join) {
+                $join->on('b.book_id', '=', 'd.book_id');
+            });
+
+            if ($user) {
+                $query->selectRaw("CASE WHEN IFNULL(e.book_id, '') = '' THEN 'N' ELSE 'Y' END as rent")
+                ->leftJoin('trent_book as e', function($join) use ($user) {
+                    $join->on('b.book_id', '=', 'e.book_id')
+                        ->where('e.flag_end', '=', 'N')
+                        ->where('e.user_id', '=', $user->id);
+                });
+            }else{
+                $query->selectRaw("'N' as rent");
+            }
+
+            // $results = $query->where('a.client_id', '=', $this->client_id)
+            $results = $query->where('b.isbn', '=', $isbn)
+            ->first();
+
+        if ($results) {
+            $results->image = (isset($results->image) && file_exists(public_path('/storage/covers/' . $results->image))) ? "/storage/covers/" . $results->image : '/storage/covers/default-cover.jpg';
+        }
+
+        // $queries = DB::getQueryLog();
+        // for($q = 0; $q < count($queries); $q++) {
+        //     $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
+        //     $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+        //     $logs->write('SQL', $sql);
+        // }
+        // $logs->write(__FUNCTION__, "STOP\r\n");
+
+        return response()->json($results, 200);
+    }
+
+    public function getDetailAudioBook(Request $request)
+    {
+        $isbn = $request->id;
+        $user = auth()->user();
+
+        // $logs = new Logs( Arr::last(explode("\\", get_class())) );
+        // $logs->write(__FUNCTION__, "START");
+        // DB::enableQueryLog();
+
+        $query = DB::table('tbook as b')
+            ->select([
+                'b.book_id',
+                DB::raw('4 as copy'),
+                'b.isbn',
+                'b.title',
+                'b.sinopsis',
+                'b.cover as image',
+                'b.writer',
+                'b.age',
+                'c.description as category',
+                'b.year',
+                'b.page',
+                DB::raw("4 - IFNULL(d.total, 0) as remaining"),
+				'f.description as publisher'
+            ])
+            ->join('tbook_category as c', function($join) {
+                $join->on('b.category_id', '=', 'c.id');
+            })
+            ->join('tpublisher as f', function($join) {
+                $join->on('b.publisher_id', '=', 'f.id');
+            })
+            ->leftJoin(DB::raw("(
+                    SELECT
+                        src.book_id,
+                        SUM(CASE WHEN src.total > 1 THEN 1 ELSE src.total END) AS total
+                    FROM (
+                        SELECT sr.book_id, COUNT(sr.book_id) AS total, sr.user_id
+                        FROM (
+                            SELECT book_id, user_id
+                            FROM ttrx_read
+                            WHERE
+                                client_id = '".$this->client_id."'
+                                AND flag_end != 'Y'
+                            
+                            UNION ALL
+                            
+                            SELECT book_id, user_id
+                            FROM trent_book
+                            WHERE
+                                client_id = '".$this->client_id."'
+                                AND flag_end != 'Y'
+                        ) sr
+                        group by sr.book_id, sr.user_id
+                    )src
+                    GROUP BY src.book_id) as d"), function($join) {
+                $join->on('b.book_id', '=', 'd.book_id');
+            });
+
+            if ($user) {
+                $query->selectRaw("CASE WHEN IFNULL(e.book_id, '') = '' THEN 'N' ELSE 'Y' END as rent")
+                ->leftJoin('trent_book as e', function($join) use ($user) {
+                    $join->on('b.book_id', '=', 'e.book_id')
+                        ->where('e.flag_end', '=', 'N')
+                        ->where('e.user_id', '=', $user->id);
+                });
+            }else{
+                $query->selectRaw("'N' as rent");
+            }
+
+            // $results = $query->where('a.client_id', '=', $this->client_id)
+            $results = $query->where('b.isbn', '=', $isbn)
+            ->first();
+
+        if ($results) {
+            $results->image = (isset($results->image) && file_exists(public_path('/storage/covers/' . $results->image))) ? "/storage/covers/" . $results->image : '/storage/covers/default-cover.jpg';
+        }
+
+        // $queries = DB::getQueryLog();
+        // for($q = 0; $q < count($queries); $q++) {
+        //     $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
+        //     $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+        //     $logs->write('SQL', $sql);
+        // }
+        // $logs->write(__FUNCTION__, "STOP\r\n");
+
+        return response()->json($results, 200);
+    }
+
 	private function getResult($client_id, $survey_id, $user_id){
 		return DB::table('tquiz_trx as a')
 			->select(

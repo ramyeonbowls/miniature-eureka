@@ -250,7 +250,7 @@ export default {
 
     mounted() {
         this.idb = this.$route.params.idb;
-        this.getDetail();
+        this.getDetailVideoBook();
     },
 
     methods: {
@@ -264,7 +264,7 @@ export default {
             }else{
                 let loader = this.$loading.show();
                 window.axios
-                .get('/ReadCheck', {
+                .get('/ReadVideoCheck', {
                     params:{
                         pdfToken: encodeURIComponent(this.detail.book_id),
                         age: this.detail.age
@@ -425,10 +425,10 @@ export default {
             });
         },
 
-        async getDetail() {
+        async getDetailVideoBook() {
             try {
                 let loader = this.$loading.show();
-                axios.get('/getDetail', {
+                axios.get('/getDetailVideoBook', {
                     params:{
                         id: this.idb
                     }
@@ -461,7 +461,7 @@ export default {
 
         async refreshData() {
             this.idb = this.$route.params.idb;
-            await this.getDetail();
+            await this.getDetailVideoBook();
             await this.getBukuPopuler();
 
             this.initializeSubMenu();

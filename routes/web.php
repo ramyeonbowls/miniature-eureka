@@ -52,6 +52,8 @@ Route::middleware('destroy.session')->group(function() {
     Route::post('/UpdateProfile', [App\Http\Controllers\ProfileController::class, 'UpdateProfile'])->name('UpdateProfile');
     Route::get('/getAudioBook', [App\Http\Controllers\MainController::class, 'getAudioBook'])->name('getAudioBook');
     Route::get('/getVideoBook', [App\Http\Controllers\MainController::class, 'getVideoBook'])->name('getVideoBook');
+    Route::get('/getDetailVideoBook', [App\Http\Controllers\MainController::class, 'getDetailVideoBook'])->name('getDetailVideoBook');
+    Route::get('/getDetailAudioBook', [App\Http\Controllers\MainController::class, 'getDetailAudioBook'])->name('getDetailAudioBook');
 
     Route::apiResource('form-regis', App\Http\Controllers\FormRegisterController::class);
     Route::get('/agreement-letter', [App\Http\Controllers\FormRegisterController::class, 'exportPDF'])->name('agreement-letter');
@@ -153,8 +155,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 			Route::get('/getDetailQuiz', [App\Http\Controllers\QuizTransactionController::class, 'getDetailQuiz'])->name('getDetailQuiz');
 			Route::get('/getInfoBaca', [App\Http\Controllers\GameController::class, 'getInfoBaca'])->name('getInfoBaca');
 			Route::get('/getWords', [App\Http\Controllers\GameController::class, 'getWords'])->name('getWords');
-
+            
+            Route::get('/ReadAudioCheck', [App\Http\Controllers\AudioBookController::class, 'ReadAudioCheck'])->name('ReadAudioCheck');
             Route::get('/audiobook/stream', [App\Http\Controllers\AudioBookController::class, 'streamAudio'])->name('streamAudio');
+            Route::get('/ReadVideoCheck', [App\Http\Controllers\VideoBookController::class, 'ReadVideoCheck'])->name('ReadVideoCheck');
             Route::get('/videobook/stream', [App\Http\Controllers\VideoBookController::class, 'streamVideo'])->name('streamVideo');
         });
 
