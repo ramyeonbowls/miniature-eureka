@@ -90,6 +90,29 @@ const _routes = [
         name: 'flying-bird',
         component: () => import(/* webpackChunkName: "usr/flying-bird" */ './components/member/GameFlyingBird.vue'),
     },
+
+    {
+        path: '/koleksi-buku-audio',
+        name: 'koleksi-buku-audio',
+        component: () => import(/* webpackChunkName: "usr/audiobook" */ './components/member/AudioBook.vue'),
+    },
+    
+    {
+        path: '/detail-buku-audio/:idb',
+        name: 'detail-buku-audio',
+        component: () => import(/* webpackChunkName: "usr/viewaudiobook" */ './components/member/ViewAudioBook.vue'),
+    },
+    {
+        path: '/koleksi-buku-video',
+        name: 'koleksi-buku-video',
+        component: () => import(/* webpackChunkName: "usr/videobook" */ './components/member/VideoBook.vue'),
+    },
+    
+    {
+        path: '/detail-buku-video/:idb',
+        name: 'detail-buku-video',
+        component: () => import(/* webpackChunkName: "usr/viewvideobook" */ './components/member/ViewVideoBook.vue'),
+    },
 ]
 
 export default _routes

@@ -799,6 +799,132 @@ class MainController extends Controller
         return response()->json($results, 200);
     }
 
+    public function getAudioBook(Request $request)
+    {
+        // $logs = new Logs( Arr::last(explode("\\", get_class())) );
+        // $logs->write(__FUNCTION__, "START");
+        // DB::enableQueryLog();
+
+        $category   = $request->categories ?? [];
+        $parameter  = $request->search ?? '';
+
+        $results = DB::table('tmapping_book as a')
+            ->select([
+                'b.book_id',
+                'a.copy',
+                'b.isbn',
+                'b.title',
+                'b.sinopsis',
+                'b.cover as image',
+                'b.writer',
+                'b.age',
+                'c.description as category'
+            ])
+            ->join('tbook as b', function($join) {
+                $join->on('a.book_id', '=', 'b.book_id');
+            })
+            ->join('tbook_category as c', function($join) {
+                $join->on('b.category_id', '=', 'c.id');
+            })
+            ->when($parameter != '', function($query) use ($parameter) {
+				$query->where(function($query) use ($parameter) {
+					$query->where('b.writer', 'LIKE', '%' . $parameter . '%')
+						  ->orWhere('b.isbn', 'LIKE', '%' . $parameter . '%')
+						  ->orWhere('b.title', 'LIKE', '%' . $parameter . '%');
+				});
+			})
+            ->when(count($category)>0, function($query) use ($category) {
+				$query->whereIn('b.category_id', $category);
+			})
+            ->where('a.client_id', '=', $this->client_id)
+            ->get()
+            ->map(function ($value) {
+                return [
+                    'isbn'     => $value->isbn,
+                    'title'    => $value->title,
+                    'sinopsis' => $value->sinopsis,
+                    'image'    => (isset($value->image) && file_exists(public_path('/storage/covers/' . $value->image))) 
+                                    ? '/storage/covers/' . $value->image 
+                                    : '/storage/covers/default-cover.jpg',
+                    'writer'   => $value->writer
+                ];
+            });
+
+        // $queries = DB::getQueryLog();
+        // for($q = 0; $q < count($queries); $q++) {
+        //     $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
+        //     $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+        //     $logs->write('SQL', $sql);
+        // }
+
+        // $logs->write(__FUNCTION__, "STOP\r\n");
+
+        return response()->json($results, 200);
+    }
+
+    public function getVideoBook(Request $request)
+    {
+        // $logs = new Logs( Arr::last(explode("\\", get_class())) );
+        // $logs->write(__FUNCTION__, "START");
+        // DB::enableQueryLog();
+
+        $category   = $request->categories ?? [];
+        $parameter  = $request->search ?? '';
+
+        $results = DB::table('tmapping_book as a')
+            ->select([
+                'b.book_id',
+                'a.copy',
+                'b.isbn',
+                'b.title',
+                'b.sinopsis',
+                'b.cover as image',
+                'b.writer',
+                'b.age',
+                'c.description as category'
+            ])
+            ->join('tbook as b', function($join) {
+                $join->on('a.book_id', '=', 'b.book_id');
+            })
+            ->join('tbook_category as c', function($join) {
+                $join->on('b.category_id', '=', 'c.id');
+            })
+            ->when($parameter != '', function($query) use ($parameter) {
+				$query->where(function($query) use ($parameter) {
+					$query->where('b.writer', 'LIKE', '%' . $parameter . '%')
+						  ->orWhere('b.isbn', 'LIKE', '%' . $parameter . '%')
+						  ->orWhere('b.title', 'LIKE', '%' . $parameter . '%');
+				});
+			})
+            ->when(count($category)>0, function($query) use ($category) {
+				$query->whereIn('b.category_id', $category);
+			})
+            ->where('a.client_id', '=', $this->client_id)
+            ->get()
+            ->map(function ($value) {
+                return [
+                    'isbn'     => $value->isbn,
+                    'title'    => $value->title,
+                    'sinopsis' => $value->sinopsis,
+                    'image'    => (isset($value->image) && file_exists(public_path('/storage/covers/' . $value->image))) 
+                                    ? '/storage/covers/' . $value->image 
+                                    : '/storage/covers/default-cover.jpg',
+                    'writer'   => $value->writer
+                ];
+            });
+
+        // $queries = DB::getQueryLog();
+        // for($q = 0; $q < count($queries); $q++) {
+        //     $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
+        //     $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+        //     $logs->write('SQL', $sql);
+        // }
+
+        // $logs->write(__FUNCTION__, "STOP\r\n");
+
+        return response()->json($results, 200);
+    }
+
 	private function getResult($client_id, $survey_id, $user_id){
 		return DB::table('tquiz_trx as a')
 			->select(

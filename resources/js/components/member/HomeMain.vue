@@ -137,6 +137,116 @@
                 </div>
             </div>
         </section>
+        <section class="row mt-4">
+            <div class="col-12 col-lg-12">
+                <div class="card hover-shadow">
+                    <div class="row mb-3 px-3">
+                        <div class="col-7 text-start pt-3 pe-0">
+                            <h2>KOLEKSI AUDIO BUKU</h2>
+                        </div>
+                        <div class="col-5 text-end pt-3">
+                            <router-link to="/koleksi-buku-audio" class='menu-link'>
+                                <button class="btn btn-primary btn-sm">Lihat Semua</button>
+                            </router-link>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <swiper
+                                :modules="modules"
+                                :slides-per-view="6"
+                                :space-between="0"
+                                :breakpoints="swiperBreakpoints"
+                                navigation
+                                :scrollbar="{ draggable: true }"
+                                @swiper="onSwiper"
+                                @slideChange="onSlideChange"
+                                :autoplay= "{ delay: 3000 }"
+                                class="swiper-container"
+                                loop
+                            >
+                                <swiper-slide v-for="(item, index) in buku" :key="index" class="col-md-3 col-6">
+                                    <router-link :to="{ name: 'detail-buku-audio', params: { idb: item.isbn } }">
+                                        <div class="card">
+                                            <div class="product-image">
+                                                <img :src="item.image.replace('&amp;', '&')" class="img-fluid" :alt="item.title" style="width: 150px; height: 220px;">
+                                            </div>
+                                            <div class="card-body py-2">
+                                                <p class="card-title mb-0">
+                                                    <div data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="item.writer">{{ item.writer }}</div>
+                                                </p>
+                                                <a href="#">
+                                                    <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" 
+                                                    style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" 
+                                                        :title="item.title">
+                                                        {{ item.title }}
+                                                    </h6>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </router-link>
+                                </swiper-slide>
+                            </swiper>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="row mt-4">
+            <div class="col-12 col-lg-12">
+                <div class="card hover-shadow">
+                    <div class="row mb-3 px-3">
+                        <div class="col-7 text-start pt-3 pe-0">
+                            <h2>KOLEKSI VIDEO BUKU</h2>
+                        </div>
+                        <div class="col-5 text-end pt-3">
+                            <router-link to="/koleksi-buku-video" class='menu-link'>
+                                <button class="btn btn-primary btn-sm">Lihat Semua</button>
+                            </router-link>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <swiper
+                                :modules="modules"
+                                :slides-per-view="6"
+                                :space-between="0"
+                                :breakpoints="swiperBreakpoints"
+                                navigation
+                                :scrollbar="{ draggable: true }"
+                                @swiper="onSwiper"
+                                @slideChange="onSlideChange"
+                                :autoplay= "{ delay: 3000 }"
+                                class="swiper-container"
+                                loop
+                            >
+                                <swiper-slide v-for="(item, index) in buku" :key="index" class="col-md-3 col-6">
+                                    <router-link :to="{ name: 'detail-buku-video', params: { idb: item.isbn } }">
+                                        <div class="card">
+                                            <div class="product-image">
+                                                <img :src="item.image.replace('&amp;', '&')" class="img-fluid" :alt="item.title" style="width: 150px; height: 220px;">
+                                            </div>
+                                            <div class="card-body py-2">
+                                                <p class="card-title mb-0">
+                                                    <div data-bs-toggle="tooltip" data-bs-placement="bottom" style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" :title="item.writer">{{ item.writer }}</div>
+                                                </p>
+                                                <a href="#">
+                                                    <h6 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" 
+                                                    style="display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;" 
+                                                        :title="item.title">
+                                                        {{ item.title }}
+                                                    </h6>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </router-link>
+                                </swiper-slide>
+                            </swiper>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 		<section v-if="quiz.length>0" class="row">
             <div class="col-12 col-lg-12">
                 <div class="testimonial-slider hover-shadow">
