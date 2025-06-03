@@ -63,14 +63,8 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="comment-body">
-                                    <div class="comment-profileName mb-0">Jumlah Halaman </div>
-                                    <div class="comment-time mt-0">{{ detail.page }}</div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="comment-body">
-                                    <div class="comment-profileName mb-0">Kategori </div>
-                                    <div class="comment-time mt-0">{{ detail.category }}</div>
+                                    <div class="comment-profileName mb-0">Penerbit </div>
+                                    <div class="comment-time mt-0">{{ detail.publisher }}</div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -89,20 +83,8 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="comment-body">
-                                    <div class="comment-profileName mb-0">Tahun Terbit </div>
-                                    <div class="comment-time mt-0">{{ detail.year }}</div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="comment-body">
                                     <div class="comment-profileName mb-0">Batas Umur </div>
                                     <div class="comment-time mt-0">{{ detail.age }} Tahun</div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="comment-body">
-                                    <div class="comment-profileName mb-0">Penerbit </div>
-                                    <div class="comment-time mt-0">{{ detail.publisher }}</div>
                                     </div>
                                 </div>
                             </div>

@@ -27,15 +27,15 @@ class AudioBookController extends Controller
         $book_id = $request->input('book_id');
         $book = DB::table(DB::raw("(
                 SELECT
-                    '264fd0fc-2245-405f-888a-a46083e8d765' book_id,
+                    'A1' book_id,
                     'Alexander Agung yang Pemberani.MP3' filename
                 UNION ALL
                 SELECT
-                    '9a0e60da-ae4f-4560-ab7c-f61ed85e3aac' book_id,
+                    'A2' book_id,
                     'Pangeran dari Jerman yang Baik Hati.MP3' filename
                 UNION ALL
                 SELECT
-                    '23c1d145-c7d1-43de-806d-b33d88d54c96' book_id,
+                    'A3' book_id,
                     'Lulu dan Bebe - Mencuri Pistol.mp3' filename
             ) as src"))
             ->where('book_id', $book_id)

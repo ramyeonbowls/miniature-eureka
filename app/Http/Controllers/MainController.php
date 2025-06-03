@@ -833,7 +833,7 @@ class MainController extends Controller
             ->when(count($category)>0, function($query) use ($category) {
 				$query->whereIn('b.category_id', $category);
 			})
-            ->whereRaw("b.book_id IN ('264fd0fc-2245-405f-888a-a46083e8d765','23c1d145-c7d1-43de-806d-b33d88d54c96','9a0e60da-ae4f-4560-ab7c-f61ed85e3aac')")
+            ->whereRaw("b.book_id IN ('A1','A2','A3')")
             ->get()
             ->map(function ($value) {
                 return [
@@ -893,7 +893,7 @@ class MainController extends Controller
             ->when(count($category)>0, function($query) use ($category) {
 				$query->whereIn('b.category_id', $category);
 			})
-            ->whereRaw("b.book_id IN ('19d36c7a-449a-4561-b5e3-592341591587','5de8a187-555f-4d36-94dc-39bdfae442e2','b8f74377-33ac-4256-a267-2e607934def4')")
+            ->whereRaw("b.book_id IN ('B1','B2','B3')")
             ->get()
             ->map(function ($value) {
                 return [

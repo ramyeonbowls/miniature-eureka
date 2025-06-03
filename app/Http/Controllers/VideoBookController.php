@@ -26,15 +26,15 @@ class VideoBookController extends Controller
         $book_id = $request->input('book_id');
         $book = DB::table(DB::raw("(
                 SELECT
-                    '19d36c7a-449a-4561-b5e3-592341591587' book_id,
+                    'B1' book_id,
                     'Abu Ubaidah bin Al Jarrah.mp4' filename
                 UNION ALL
                 SELECT
-                    '5de8a187-555f-4d36-94dc-39bdfae442e2' book_id,
+                    'B2' book_id,
                     'Abu Dzar Al Ghifari.mp4' filename
                 UNION ALL
                 SELECT
-                    'b8f74377-33ac-4256-a267-2e607934def4' book_id,
+                    'B3' book_id,
                     'Bilal bin Rabah.mp4' filename
             ) as src"))
             ->where('book_id', $book_id)
