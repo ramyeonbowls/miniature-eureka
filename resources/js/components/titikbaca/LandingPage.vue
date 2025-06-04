@@ -66,7 +66,7 @@ export default {
 
     async generateQRCode() {
         try {
-            const baseUrl = import.meta.env.APP_URL || 'http://localhost:8000';
+            const baseUrl = document.querySelector('meta[name="app-url"]')?.content;
             const scanLoginUrl = `${baseUrl}/scan-login/${this.idt}`;
             this.qrCodeDataUrl = await QRCode.toDataURL(scanLoginUrl);
         } catch (err) {

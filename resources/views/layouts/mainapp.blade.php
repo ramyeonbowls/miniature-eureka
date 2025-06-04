@@ -15,6 +15,7 @@
         <meta property="og:type" content="website" />
         <meta property="og:updated_time" content="1440432930" />
         <meta property="og:url" content="{{ env('APP_URL') }}" />
+        <meta name="app-url" content="{{ env('APP_URL') }}">
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
