@@ -30,7 +30,7 @@
 
                 <div class="header-top-right d-none d-xl-block">
                     <div class="dropdown">
-                        <template v-if="isAuthenticated">
+                        <!-- <template v-if="isAuthenticated">
                             <a href="#" id="topbarUserDropdown" class="user-dropdown d-flex align-items-center dropend dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                     <div class="avatar avatar-md2">
                                         <img :src="avatar">
@@ -59,7 +59,7 @@
                                     </router-link>
                                 </div>
                             </div>
-                        </template>
+                        </template> -->
                     </div>
                 </div>
             </div>
@@ -119,7 +119,7 @@
                         </div>
                     </li>
                     <template v-if="isAuthenticated">
-						<template v-if="additional_features==2 || additional_features==3">
+						<!-- <template v-if="additional_features==2 || additional_features==3">
 							<li class="menu-item ">
 								<router-link to="/quiz" class='menu-link'>
 									<span> Quiz</span>
@@ -142,7 +142,7 @@
                             <a class="dropdown-item menu-link" href="javascript:void(0);" @click.prevent="logout" style="font-weight: bold;">
                                 <span> Keluar</span>
                             </a>
-                        </li>
+                        </li> -->
                     </template>
                     <div class="d-none d-xl-block" style="position: fixed; right: 8%;">
                         <div class="form-group position-relative has-icon-right">

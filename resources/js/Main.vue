@@ -30,11 +30,11 @@
                                 <i class="bi bi-bookmark"></i> <small style="font-size: 11px;">Pinjaman</small>
                             </router-link>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <router-link to="/profile" class='menu-item'>
                                 <i class="bi bi-person"></i> <small style="font-size: 11px;">Profil</small>
                             </router-link>
-                        </li>
+                        </li> -->
                     </template>
                     <template v-else>
                         <li class="nav-item">
@@ -96,6 +96,7 @@ export default {
 				additional_features: 0
             },
             appname: '',
+            appnameSet: false,
             searchQuery: '',
             isAuthenticated: false,
         }
@@ -143,15 +144,26 @@ export default {
         },
 
         getAppInfo() {
-            this.appname = '';
+            const route = this.$route;
 
-            axios.get('/getAppInfo')
-            .then((response) => {
-                this.appname = response.data[0].application_name;
-            })
-            .catch((e) => {
-                console.error(e)
-            });
+            if (this.appnameSet) return;
+
+            if (route.path.startsWith('/titikbaca/') && route.params.idt) {
+                axios.get(`/check-titik-baca?idt=${route.params.idt}`)
+                .then((response) => {
+                    this.appname = response.data.name;
+                    this.appnameSet = true;
+                })
+                .catch(() => {
+                    this.$router.push({ name: 'NotFound' });
+                });
+            } else if (sessionStorage.getItem('place')){
+                this.appname = sessionStorage.getItem('place');
+                this.appnameSet = true;
+            } else if ( route.path === '/' || route.path === '/titikbaca' || route.path === '/titikbaca/' ) {
+                this.appname = '';
+                this.appnameSet = true;
+            } 
         },
 
         getParam() {
@@ -191,7 +203,17 @@ export default {
         }
     },
 
-    computed: {},
+    watch: {
+        '$route'(to, from) {
+            if (
+                to.path.startsWith('/titikbaca/') &&
+                from.params.idt !== to.params.idt
+            ) {
+                this.appnameSet = false;
+                this.getAppInfo();
+            }
+        }
+    }
 }
 </script>
 

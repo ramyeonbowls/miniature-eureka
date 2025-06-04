@@ -10,14 +10,14 @@
                             </div>
                             <div class="buttons mt-3">
                                 <button class="btn btn-primary btn-md me-2" @click="bacaBuku"><i class="bi bi-book-fill"></i> Baca</button>
-                                <template v-if="isAuthenticated">
+                                <!-- <template v-if="isAuthenticated">
                                     <template v-if="detail.rent=='Y'">
                                         <button class="btn btn-warning text-white btn-md me-2" @click="kembaliBuku"><i class="bi bi-bookmarks"></i> Kembalikan</button>
                                     </template>
                                     <template v-else>
                                         <button class="btn btn-warning text-white btn-md me-2" @click="pinjamBuku"><i class="bi bi-bookmarks"></i> Pinjam</button>
                                     </template>
-                                </template>
+                                </template> -->
                             </div>
                         </div>
                     </div>

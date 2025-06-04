@@ -8,7 +8,16 @@ const _routes = [
         path: '/',
         name: 'main',
         component: () => import(/* webpackChunkName: "/usr/home" */ './components/member/HomeMain.vue'),
-        props: route => ({ isAuthenticated: route.meta.isAuthenticated, additional_features: route.meta.additional_features})
+        props: route => ({ isAuthenticated: route.meta.isAuthenticated, additional_features: route.meta.additional_features}),
+        beforeEnter: (to, from, next) => {
+            const isLoggedInQR = sessionStorage.getItem('isLoggedInQR') === 'true';
+
+            if (isLoggedInQR) {
+                next();
+            } else {
+                next('/titikbaca/');
+            }
+        }
     },
     {
         path: '/mlogin',
@@ -107,11 +116,20 @@ const _routes = [
         name: 'koleksi-buku-video',
         component: () => import(/* webpackChunkName: "usr/videobook" */ './components/member/VideoBook.vue'),
     },
-    
     {
         path: '/detail-buku-video/:idb',
         name: 'detail-buku-video',
         component: () => import(/* webpackChunkName: "usr/viewvideobook" */ './components/member/ViewVideoBook.vue'),
+    },
+    {
+        path: '/titikbaca/:idt',
+        name: 'titikbaca',
+        component: () => import(/* webpackChunkName: "usr/landingtitikbaca" */ './components/titikbaca/LandingPage.vue'),
+    },
+    {
+        path: '/scan-login/:idt',
+        name: 'scan-login',
+        component: () => import(/* webpackChunkName: "usr/logintitikbaca" */ './components/titikbaca/LoginByQrCode.vue')
     },
 ]
 

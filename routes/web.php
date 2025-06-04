@@ -60,6 +60,8 @@ Route::middleware('destroy.session')->group(function() {
 
     Route::get('/offline-visitor', [App\Http\Controllers\PengunjungOfflineController::class, 'index']);
     Route::post('/offline-visitor', [App\Http\Controllers\PengunjungOfflineController::class, 'store']);
+    Route::get('/check-titik-baca', [App\Http\Controllers\TitikBacaController::class, 'index']);
+    Route::post('/login-by-qr', [App\Http\Controllers\TitikBacaController::class, 'loginByQrCode']);
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
