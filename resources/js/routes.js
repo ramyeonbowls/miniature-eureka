@@ -171,10 +171,15 @@ const routes = [
         component: () => import(/* webpackChunkName: "transaction/input_po" */ './components/transaction/InputPO.vue'),
     },
     {
-        path: '/titik-baca/master-titik-baca',
-        name: 'master_titik_baca',
-        component: () => import(/* webpackChunkName: "titik-baca/master_titik_baca" */ './components/master/MasterTitikBaca.vue'),
+        path: '/pusat-literasi/master-pusat-literasi',
+        name: 'master_pusat_literasi',
+        component: () => import(/* webpackChunkName: "pusat_literasi/master_pusat_literasi" */ './components/master/MasterPusatLiterasi.vue'),
     },
+    // {
+    //     path: '/pusat-literasi/aktivitas-pusat-literasi',
+    //     name: 'aktivitas_pusat_literasi',
+    //     component: () => import(/* webpackChunkName: "pusat_literasi/aktivitas_pusat_literasi" */ './components/report/ReportPusatLiterasi.vue'),
+    // },
 ]
 
 export default routes
