@@ -88,6 +88,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                         Route::apiResource('book-mst', BookMasterController::class);
                         Route::apiResource('library-officer-mst', LibraryOfficerMasterController::class);
                         Route::apiResource('teacher-mst', TeacherMasterController::class);
+                        Route::apiResource('titik-baca-mst', MasterTitikBacaController::class);
                     });
 
                     Route::prefix('setting')->namespace('Setting')->group(function() {

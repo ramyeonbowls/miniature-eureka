@@ -56,6 +56,10 @@ class OptionController extends Controller
             case 'Books':
                 return response()->json($this->Books($request), 200);
             break;
+
+            case 'BookMaps':
+                return response()->json($this->BookMaps($request), 200);
+            break;
         }
     }
 
@@ -290,6 +294,70 @@ class OptionController extends Controller
         // }
 
         // $logs->write(__FUNCTION__, "STOP\r\n");
+        
+        return ($results);
+    }
+
+    public function BookMaps(Request $request)
+    {
+        /* $logs = new Logs(Arr::last(explode("\\", get_class())) . 'Log');
+        $logs->write(__FUNCTION__, "START");
+        DB::enableQueryLog(); */
+
+        $mapping = DB::table('tmapping_book as a')
+            ->select(
+                'a.book_id',
+                'a.client_id',
+                DB::raw('sum(a.copy) - sum(ifnull(b.copy, 0)) as copy'),
+                'a.copy as mcopy',
+            )
+            ->leftJoin('tmapping_book_titik_baca as b', function($join) {
+                $join->on('a.book_id', '=', 'b.book_id')
+                    ->on('a.client_id',  '=', 'b.client_id');
+            })
+            ->where('a.client_id', $this->client_id)
+            ->groupBy('a.book_id', 'a.client_id', 'a.copy')
+            ->havingRaw('sum(a.copy) - sum(ifnull(b.copy, 0)) > 0');
+
+        $results = [];
+        $sql = DB::table('tbook as a')
+                ->select([
+                    'a.book_id',
+                    'a.sellprice',
+                    'a.isbn',
+                    'a.eisbn',
+                    'a.title',
+                    'a.writer',
+                    'a.size',
+                    'a.year',
+                    'a.volume',
+                    'a.edition',
+                    'a.page',
+                    'a.city',
+                    'a.cover',
+                    'b.description as publisher',
+                    'a.sinopsis',
+                    'c.copy',
+                    'c.mcopy',
+                ])
+                ->join('tpublisher as b', function($join) {
+                    $join->on('a.publisher_id', '=', 'b.id');
+                })
+                ->joinSub($mapping, 'c', function($join) {
+                    $join->on('a.book_id', '=', 'c.book_id');
+                })
+                ->distinct();
+
+        $results = $sql->get();
+
+        /* $queries = DB::getQueryLog();
+        for($q = 0; $q < count($queries); $q++) {
+            $sql = Str::replaceArray('?', $queries[$q]['bindings'], str_replace('?', "'?'", $queries[$q]['query']));
+            $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
+            $logs->write('SQL', $sql);
+        }
+
+        $logs->write(__FUNCTION__, "STOP\r\n"); */
         
         return ($results);
     }

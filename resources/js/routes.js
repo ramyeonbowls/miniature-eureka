@@ -170,6 +170,11 @@ const routes = [
         name: 'input_po',
         component: () => import(/* webpackChunkName: "transaction/input_po" */ './components/transaction/InputPO.vue'),
     },
+    {
+        path: '/titik-baca/master-titik-baca',
+        name: 'master_titik_baca',
+        component: () => import(/* webpackChunkName: "titik-baca/master_titik_baca" */ './components/master/MasterTitikBaca.vue'),
+    },
 ]
 
 export default routes
