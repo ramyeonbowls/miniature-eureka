@@ -15,8 +15,10 @@
         <meta property="og:type" content="website" />
         <meta property="og:updated_time" content="1440432930" />
         <meta property="og:url" content="{{ env('APP_URL') }}" />
+        <link rel="manifest" href="/manifest.json">
         <link rel="icon" type="image/png" sizes="192x192" href="/storage/images/logo/favicon.png">
         <link rel="apple-touch-icon" href="/storage/images/logo/favicon.png">
+        <meta name="theme-color" content="#ffffff">
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
