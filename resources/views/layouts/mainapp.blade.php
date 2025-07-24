@@ -15,6 +15,8 @@
         <meta property="og:type" content="website" />
         <meta property="og:updated_time" content="1440432930" />
         <meta property="og:url" content="{{ env('APP_URL') }}" />
+        <link rel="icon" type="image/png" sizes="192x192" href="/storage/images/logo/favicon.png">
+        <link rel="apple-touch-icon" href="/storage/images/logo/favicon.png">
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
