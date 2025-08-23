@@ -111,6 +111,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::prefix('report')->namespace('Report')->group(function() {
                         Route::get('readbook-rpt', 'ReadBookController@index')->name('readbook-rpt');
                         Route::post('readbook-xls', 'ReadBookController@ExportXLS')->name('readbook-xls');
+                        Route::get('literasi-rpt', 'ReportPusatLiterasiController@index')->name('literasi-rpt');
+                        Route::post('literasi-xls', 'ReportPusatLiterasiController@ExportXLS')->name('literasi-xls');
                         Route::get('readbook-user-rpt', 'ReadBookUserController@index')->name('readbook-user-rpt');
                         Route::post('readbook-user-xls', 'ReadBookUserController@ExportXLS')->name('readbook-user-xls');
                         Route::get('readbook-content-rpt', 'ReadBookContentController@index')->name('readbook-content-rpt');

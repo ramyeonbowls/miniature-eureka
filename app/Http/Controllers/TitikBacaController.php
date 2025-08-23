@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use UAParser\Parser;
 
 class TitikBacaController extends Controller
 {
@@ -73,11 +74,14 @@ class TitikBacaController extends Controller
             }
             $uuid = (string) Str::uuid();
 
+            $parser = Parser::create();
+            $result = $parser->parse(request()->header('User-Agent'));
+
             DB::table('login_by_qr')->insert([
                 'client_id'     => $this->client_id,
                 'titikbaca_id'  => $id,
                 'uuid'          => $uuid,
-                'device'        => $device.'|'.$ip,
+                'device'        => $result->device->brand.'|'. $result->device->model.'|'.$result->os->family.' '.$result->os->toVersion().'|'.$result->ua->family.'|'.$ip,
                 'created_at'    => Carbon::now(),
             ]);
 

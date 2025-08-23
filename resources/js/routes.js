@@ -175,11 +175,11 @@ const routes = [
         name: 'master_pusat_literasi',
         component: () => import(/* webpackChunkName: "pusat_literasi/master_pusat_literasi" */ './components/master/MasterPusatLiterasi.vue'),
     },
-    // {
-    //     path: '/pusat-literasi/aktivitas-pusat-literasi',
-    //     name: 'aktivitas_pusat_literasi',
-    //     component: () => import(/* webpackChunkName: "pusat_literasi/aktivitas_pusat_literasi" */ './components/report/ReportPusatLiterasi.vue'),
-    // },
+    {
+        path: '/pusat-literasi/aktivitas-pusat-literasi',
+        name: 'aktivitas_pusat_literasi',
+        component: () => import(/* webpackChunkName: "pusat_literasi/aktivitas_pusat_literasi" */ './components/report/ReportPusatLiterasi.vue'),
+    },
 ]
 
 export default routes
