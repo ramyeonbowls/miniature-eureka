@@ -29,9 +29,9 @@
                     <button type="button" class="btn btn-primary ms-1" data-bs-dismiss="modal" @click="openExecute">
                         <i class="bi bi-file-earmark-excel-fill"></i> Proses Data
                     </button>
-                    <button type="button" class="btn btn-success ms-1" data-bs-dismiss="modal" @click="openXLS">
+                    <!-- <button type="button" class="btn btn-success ms-1" data-bs-dismiss="modal" @click="openXLS">
                         <i class="bi bi-file-earmark-excel-fill"></i> Export
-                    </button>
+                    </button> -->
                 </div>
             </div>
         </div>
