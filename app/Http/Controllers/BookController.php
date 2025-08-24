@@ -79,7 +79,7 @@ class BookController extends Controller
             return response()->json($age, 200);
         }
 
-        $cek_stock = DB::table('tmapping_book as a')
+        $cek_stock = DB::table('tmapping_book_titik_baca as a')
             ->select([
                 DB::raw("a.copy - IFNULL(d.total, 0) as remaining")
             ])
@@ -91,7 +91,7 @@ class BookController extends Controller
                         SELECT sr.book_id, COUNT(sr.book_id) AS total, sr.user_id
                         FROM (
                             SELECT book_id, user_id
-                            FROM ttrx_read
+                            FROM ttrx_read_titik_baca
                             WHERE
                                 client_id = '".$this->client_id."'
                                 AND flag_end != 'Y'
@@ -178,17 +178,19 @@ class BookController extends Controller
         // $logs->write(__FUNCTION__, "START");
         // DB::enableQueryLog();
 
-        $existingRecord = DB::table('ttrx_read')
+        $existingRecord = DB::table('ttrx_read_titik_baca')
             ->where('book_id', $request->token)
             ->where('user_id', $user->id)
+            ->where('uuid', $request->useruuid)
             ->where('start_read', $request->start)
             ->where('client_id', $this->client_id)
             ->first();
 
         if ($existingRecord) {
-            $ttrx = DB::table('ttrx_read')
+            $ttrx = DB::table('ttrx_read_titik_baca')
                 ->where('book_id', $request->token)
                 ->where('user_id', $user->id)
+                ->where('uuid', $request->useruuid)
                 ->where('start_read', $request->start)
                 ->where('client_id', $this->client_id)
                 ->update([
@@ -197,11 +199,12 @@ class BookController extends Controller
                     'updated_at'    => Carbon::now('Asia/Jakarta')
                 ]);
         } else {
-            $ttrx = DB::table('ttrx_read')
+            $ttrx = DB::table('ttrx_read_titik_baca')
                 ->insert([
                     'book_id'       => $request->token,
                     'start_read'    => $request->start,
                     'user_id'       => $user->id,
+                    'uuid'          => $request->useruuid,
                     'client_id'     => $this->client_id,
                     'flag_end'      => $request->active,
                     'end_read'      => Carbon::now('Asia/Jakarta'),

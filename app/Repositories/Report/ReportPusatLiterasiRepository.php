@@ -29,9 +29,9 @@ class ReportPusatLiterasiRepository
                 DB::raw('0 as presentaseBaca'),
                 DB::raw('SEC_TO_TIME(SUM(CASE WHEN b.end_read > b.start_read THEN TIMESTAMPDIFF(SECOND, b.start_read, b.end_read) ELSE TIMESTAMPDIFF(SECOND, b.end_read, b.start_read) END)) as durationRead')
             )
-            ->leftJoin('ttrx_read as b', function ($join) {
+            ->leftJoin('ttrx_read_titik_baca as b', function ($join) {
                 $join->on('a.client_id', '=', 'b.client_id')
-                ->on('a.uuid', '=', 'b.id');
+                ->on('a.uuid', '=', 'b.uuid');
             })
             ->leftJoin('tbook as c', function ($join) {
                 $join->on('b.book_id', '=', 'c.book_id');
@@ -44,6 +44,9 @@ class ReportPusatLiterasiRepository
                 return $query->where(DB::raw('DATE(a.created_at)'), '=', $filter['start_date']);
             })
             ->groupBy('a.uuid')
+            ->groupBy('c.title')
+            ->groupBy('b.start_read')
+            ->groupBy('b.end_read')
             ->get();
     }
 }

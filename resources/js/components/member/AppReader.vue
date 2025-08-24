@@ -260,9 +260,11 @@ const getCurrentDateTime = () => {
 
 const SendLastRead = async (param) => {
     try {
+        const useruuid = sessionStorage.getItem("uuid");
         await window.axios.post('/LastRead', {
             start: datenow,
             token: book_id.value,
+            useruuid: useruuid,
             active: param
         });
     } catch (error) {
@@ -275,10 +277,12 @@ const getCsrfToken = () => {
 }
 
 const SendLastReadSync = (param) => {
+    const useruuid = sessionStorage.getItem("uuid");
     const csrfToken = getCsrfToken();
     const data = JSON.stringify({
         start: datenow,
         token: book_id.value,
+        useruuid: useruuid,
         active: param,
         _token: csrfToken
     });

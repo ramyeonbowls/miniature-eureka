@@ -25,6 +25,7 @@ class TitikBacaController extends Controller
             ->select([
                 'a.name',
             ])
+            ->where('a.flag_delete', '!=', 'Y')
             ->where('a.client_id', $this->client_id)
             ->where('a.id', $idt)
             ->first();

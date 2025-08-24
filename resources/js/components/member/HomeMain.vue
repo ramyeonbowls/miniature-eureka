@@ -137,7 +137,7 @@
                 </div>
             </div>
         </section>
-        <section class="row mt-4">
+        <section class="row mt-4" v-if="audiobuku.length>0">
             <div class="col-12 col-lg-12">
                 <div class="card hover-shadow">
                     <div class="row mb-3 px-3">
@@ -192,7 +192,7 @@
                 </div>
             </div>
         </section>
-        <section class="row mt-4">
+        <section class="row mt-4" v-if="videobuku.length>0">
             <div class="col-12 col-lg-12">
                 <div class="card hover-shadow">
                     <div class="row mb-3 px-3">

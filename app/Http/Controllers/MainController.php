@@ -60,7 +60,7 @@ class MainController extends Controller
     
     public function getBukuPopuler()
     {
-        $dibacaBooksQuery = DB::table('ttrx_read as a')
+        $dibacaBooksQuery = DB::table('ttrx_read_titik_baca as a')
             ->select([
                 'b.book_id',
                 'b.isbn',
@@ -90,7 +90,7 @@ class MainController extends Controller
         if ($dibacaBooks->count() < 8) {
             $readIsbns = $dibacaBooks->pluck('book_id')->toArray();
 
-            $remainingBooks = DB::table('tmapping_book as a')
+            $remainingBooks = DB::table('tmapping_book_titik_baca as a')
                 ->select([
                     'b.book_id',
                     'b.isbn',
@@ -138,7 +138,7 @@ class MainController extends Controller
         $category   = $request->categories ?? [];
         $parameter  = $request->search ?? '';
 
-        $results = DB::table('tmapping_book as a')
+        $results = DB::table('tmapping_book_titik_baca as a')
             ->select([
                 'b.book_id',
                 'a.copy',
@@ -194,7 +194,7 @@ class MainController extends Controller
     
     public function getNewCollection()
     {
-        $results = DB::table('tmapping_book as a')
+        $results = DB::table('tmapping_book_titik_baca as a')
             ->select([
                 'b.book_id',
                 'a.copy',
@@ -249,7 +249,7 @@ class MainController extends Controller
         // $logs->write(__FUNCTION__, "START");
         // DB::enableQueryLog();
 
-        $query = DB::table('tmapping_book as a')
+        $query = DB::table('tmapping_book_titik_baca as a')
             ->select([
                 'b.book_id',
                 'a.copy',
@@ -282,7 +282,7 @@ class MainController extends Controller
                         SELECT sr.book_id, COUNT(sr.book_id) AS total, sr.user_id
                         FROM (
                             SELECT book_id, user_id
-                            FROM ttrx_read
+                            FROM ttrx_read_titik_baca
                             WHERE
                                 client_id = '".$this->client_id."'
                                 AND flag_end != 'Y'
@@ -333,7 +333,7 @@ class MainController extends Controller
 
     public function getCategory()
     {
-        $results = DB::table('tmapping_book as a')
+        $results = DB::table('tmapping_book_titik_baca as a')
         ->select(
 			'c.id',
 			'c.description',
