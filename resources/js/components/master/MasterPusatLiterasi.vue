@@ -34,6 +34,8 @@
                                         <thead>
                                             <tr>
                                                 <th class="text-center">Titik Baca</th>
+                                                <th class="text-center">Link QR</th>
+                                                <th class="text-center">Link Login</th>
                                                 <th class="text-center">Created At</th>
                                                 <th class="text-center">Updated At</th>
                                             </tr>
@@ -327,6 +329,8 @@ export default {
             ajax: "/master/titik-baca-mst",
             columns: [
                 { data: "name", class: "text-center text-nowrap" },
+                { data: "link_qr", class: "text-center text-nowrap" },
+                { data: "link_login", class: "text-center text-nowrap" },
                 { data: "created_at", class: "text-center text-nowrap" },
                 { data: "updated_at", class: "text-center text-nowrap" },
             ],

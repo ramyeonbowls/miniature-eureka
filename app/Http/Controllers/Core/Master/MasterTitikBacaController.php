@@ -59,6 +59,12 @@ class MasterTitikBacaController extends Controller
 
         return DataTables::of($results)
             ->escapeColumns()
+            ->addColumn('link_qr', function ($value) {
+                return config('app.url', '') . '/titik-baca/' . $value->id;
+            })
+            ->addColumn('link_login', function ($value) {
+                return config('app.url', '') . '/scan-login/' . $value->id;
+            })
             ->editColumn('created_at', function ($value) {
                 return Carbon::parse($value->created_at)->toDateTimeString();
             })
