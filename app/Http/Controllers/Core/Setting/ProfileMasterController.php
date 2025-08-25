@@ -110,7 +110,7 @@ class ProfileMasterController extends Controller
                     $logo_name = 'logo.' . $extension;
                     $change_logo = 'Y';
 
-                    $request->file('logo')->move(public_path('images/logo'), $logo_name);
+                    $request->file('logo')->move(public_path('storage/images/logo'), $logo_name);
                 } catch (Throwable $th) {
                     $logs->write("ERROR", $th->getMessage());
                 }
@@ -123,7 +123,7 @@ class ProfileMasterController extends Controller
                     $favicon_name       = 'favicon.' . $extension;
                     $change_logo        = 'Y';
 
-                    $logoSmallPath		= $request->file('logo_small')->move(public_path('images/logo'), $logo_small_name);
+                    $logoSmallPath		= $request->file('logo_small')->move(public_path('storage/images/logo'), $logo_small_name);
                     
 					// Resize the favicon image
 					list($width, $height) = getimagesize($logoSmallPath);
@@ -136,7 +136,7 @@ class ProfileMasterController extends Controller
 					// Load the original image based on its type
 					switch (strtolower($extension)) {
 						case 'png':
-							$source = imagecreatefrompng(public_path('images/logo/' . $logo_small_name));
+							$source = imagecreatefrompng(public_path('storage/images/logo/' . $logo_small_name));
 							imagealphablending($resizedImage, false);
 							imagesavealpha($resizedImage, true);
 							break;
@@ -182,8 +182,8 @@ class ProfileMasterController extends Controller
                 'pos_sign_name'         => ($request->pos_sign_name == 'null') ? null : $request->pos_sign_name,
                 'administrator_name'    => ($request->administrator_name == 'null') ? null : $request->administrator_name,
                 'administrator_phone'   => ($request->administrator_phone == 'null') ? null : $request->administrator_phone,
-                'logo'                  => ($request->logo == 'null') ? null : $request->logo,
-                'logo_small'            => ($request->logo_small == 'null') ? null : $request->logo_small,
+                'logo'                  => ($request->logo == 'null') ? null : $logo_name,
+                'logo_small'            => ($request->logo_small == 'null') ? null : $logo_small_name,
                 'company_id'            => ($request->company_id == 'null') ? null : $request->company_id,
                 'web_add'               => ($request->web_add == 'null') ? null : $request->web_add,
                 'agreement'             => ($request->agreement == 'null') ? null : $request->agreement,
@@ -206,14 +206,14 @@ class ProfileMasterController extends Controller
             if ($existingData) {
                 $existingDataArray = (array) $existingData;
                 $compareData = $insertedData;
-                unset($compareData['created_at'], $compareData['flag_appr']);
-                unset($existingDataArray['created_at'], $existingDataArray['updated_at'], $existingDataArray['flag_appr']);
+                unset($compareData['created_at'], $compareData['flag_appr'], $compareData['logo'], $compareData['logo_small']);
+                unset($existingDataArray['created_at'], $existingDataArray['updated_at'], $existingDataArray['flag_appr'], $existingDataArray['logo'], $existingDataArray['logo_small']);
 
                 // Sort both arrays by keys
                 ksort($compareData);
                 ksort($existingDataArray);
                 $differences = array_diff_assoc($compareData, $existingDataArray);
-                // $logs->write("INFO diffrence", print_r($differences, true));
+                $logs->write("INFO diffrence", print_r($differences, true));
                 // $logs->write("INFO change", print_r($compareData, true));
                 // $logs->write("INFO data", print_r($existingDataArray, true));
 
