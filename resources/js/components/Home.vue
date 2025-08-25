@@ -61,7 +61,7 @@
 											</div>
 										</div>
 										<div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-											<h6 class="text-muted font-semibold">Data Member</h6>
+											<h6 class="text-muted font-semibold">Data Titik Baca</h6>
 											<h6 class="font-extrabold mb-0">{{ dashboard.atas.member }}</h6>
 										</div>
 									</div>
@@ -207,7 +207,7 @@
 						</div>
 						<div class="modal-body">
 							<div class="row">
-								<div class="col-md-6 col-6">
+								<!-- <div class="col-md-6 col-6">
 									<div class="row">
 										<div class="col-md-12 mb-12">
 											<div class="form-group">
@@ -228,10 +228,10 @@
 											</div>
 										</div>
 									</div>
-								</div>
-								<div class="col-md-6 col-6">
+								</div> -->
+								<div class="col-md-12 col-12">
 									<div class="row">
-										<div class="col-md-12 mb-12">
+										<!-- <div class="col-md-12 mb-12">
 											<div class="form-group">
 												<label for="basicSelect3" class="form-label">White Label</label>
 												<select class="form-select" id="basicSelect3" v-model="filter.wl">
@@ -239,7 +239,7 @@
 													<option v-for="(inst, key) in option.optWL" :key="key" :value="inst.instansi_name">{{ inst.instansi_name }}</option>
 												</select>
 											</div>
-										</div>
+										</div> -->
 										<div class="col-md-12 mb-12">
 											<div class="form-group">
 												<label for="sdate" class="form-label">Tanggal</label>
