@@ -213,7 +213,7 @@ class ProfileMasterController extends Controller
                 ksort($compareData);
                 ksort($existingDataArray);
                 $differences = array_diff_assoc($compareData, $existingDataArray);
-                $logs->write("INFO diffrence", print_r($differences, true));
+                // $logs->write("INFO diffrence", print_r($differences, true));
                 // $logs->write("INFO change", print_r($compareData, true));
                 // $logs->write("INFO data", print_r($existingDataArray, true));
 
