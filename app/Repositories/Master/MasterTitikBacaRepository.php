@@ -81,6 +81,16 @@ class MasterTitikBacaRepository
                     'client_id' => $data['client_id'],
                     'flag_approve' => 'Y',
                 ]);
+
+            $user = DB::table('users')->select('id')->where('email', $data['uuid'] . '@mail.com')->first();
+            $attribute = DB::table('tattr_member')->insert([
+                'id' => $user->id,
+                'client_id' => $data['client_id'],
+                'birthday' => '1800-01-01',
+                'created_at' => $data['create_date'],
+                'updated_at' => $data['modified_date'],
+                'gender' => 'L',
+            ]);
         } else {
             $failed = true;
         }

@@ -39,9 +39,9 @@ class DashboardController extends Controller
 			$client_id	= [$this->client_id];
 		}
 
-        $visitor = DB::table('tvisitors as a')
+        $visitor = DB::table('login_by_qr as a')
             ->select([
-                DB::raw('COUNT(DISTINCT a.id) as visitor')
+                DB::raw('COUNT(DISTINCT a.uuid) as visitor')
             ])
             ->whereIn('a.client_id', $client_id)
 			->first();
@@ -53,12 +53,12 @@ class DashboardController extends Controller
             ->whereIn('a.client_id', $client_id)
 			->first();
 
-		$member = DB::table('users as a')
+		$member = DB::table('ttitik_baca as a')
             ->select([
                 DB::raw('COUNT( DISTINCT a.id) as member')
             ])
             ->whereIn('a.client_id', $client_id)
-			->where('a.role', 'member')
+			// ->where('a.role', 'member')
 			->first();
 
 		$po = DB::table($this->db_platorm.'tpo_header as a')
@@ -193,7 +193,7 @@ class DashboardController extends Controller
 	}
 
 	private function ReadDaily($request, $days, $client_id) {
-		$reader = DB::table('ttrx_read as a')
+		$reader = DB::table('ttrx_read_titik_baca as a')
             ->select([
                 DB::raw('DAY(start_read) as day'),
                 DB::raw('COUNT(DISTINCT a.book_id) as reader')
@@ -204,7 +204,7 @@ class DashboardController extends Controller
 			})
             ->whereRaw("DATE_FORMAT(a.start_read, '%Y-%m') = '$request->date'")
             ->whereIn('a.client_id', $client_id)
-			->when($request->provinsi != '', function($query) use ($request) {
+			/* ->when($request->provinsi != '', function($query) use ($request) {
 				$query->where('b.provinsi_id', $request->provinsi);
 			})
 			->when($request->kabupaten != '', function($query) use ($request) {
@@ -212,7 +212,7 @@ class DashboardController extends Controller
 			})
 			->when($request->wl != '', function($query) use ($request) {
 				$query->where('b.instansi_name', $request->wl);
-			})
+			}) */
 			->groupBy(DB::raw('DAY(start_read)'))
 			->get();
 
@@ -228,18 +228,18 @@ class DashboardController extends Controller
 	}
 
 	private function VisitDaily($request, $days, $client_id) {
-		$visitor = DB::table('tvisitors as a')
+		$visitor = DB::table('login_by_qr as a')
             ->select([
-                DB::raw('DAY(date) as day'),
-                DB::raw('COUNT(DISTINCT a.id) as visitor')
+                DB::raw('DAY(a.created_at) as day'),
+                DB::raw('COUNT(DISTINCT a.uuid) as visitor')
 				
             ])
 			->join('tclient as b', function($join) {
 				$join->on('a.client_id', '=', 'b.client_id');
 			})
-            ->whereRaw("DATE_FORMAT(a.date, '%Y-%m') = '$request->date'")
+            ->whereRaw("DATE_FORMAT(a.created_at, '%Y-%m') = '$request->date'")
             ->whereIn('a.client_id', $client_id)
-			->when($request->provinsi != '', function($query) use ($request) {
+			/* ->when($request->provinsi != '', function($query) use ($request) {
 				$query->where('b.provinsi_id', $request->provinsi);
 			})
 			->when($request->kabupaten != '', function($query) use ($request) {
@@ -247,8 +247,8 @@ class DashboardController extends Controller
 			})
 			->when($request->wl != '', function($query) use ($request) {
 				$query->where('b.instansi_name', $request->wl);
-			})
-			->groupBy(DB::raw('DAY(date)'))
+			}) */
+			->groupBy(DB::raw('DAY(a.created_at)'))
 			->get();
 
 		$result = collect($days)->map(function($day) use ($visitor) {
@@ -264,7 +264,7 @@ class DashboardController extends Controller
 
 	private function ReadMonthly($request, $months, $client_id) {
 		$month = implode("', '", $months['month']);
-		$reader = DB::table('ttrx_read as a')
+		$reader = DB::table('ttrx_read_titik_baca as a')
             ->select([
                 DB::raw("DATE_FORMAT(a.start_read, '%Y-%m') as month"),
                 DB::raw('COUNT(DISTINCT a.book_id) as reader')
@@ -275,7 +275,7 @@ class DashboardController extends Controller
 			})
             ->whereRaw("DATE_FORMAT(a.start_read, '%Y-%m') IN ('$month')")
             ->whereIn('a.client_id', $client_id)
-			->when($request->provinsi != '', function($query) use ($request) {
+			/* ->when($request->provinsi != '', function($query) use ($request) {
 				$query->where('b.provinsi_id', $request->provinsi);
 			})
 			->when($request->kabupaten != '', function($query) use ($request) {
@@ -283,7 +283,7 @@ class DashboardController extends Controller
 			})
 			->when($request->wl != '', function($query) use ($request) {
 				$query->where('b.instansi_name', $request->wl);
-			})
+			}) */
 			->groupBy(DB::raw("DATE_FORMAT(start_read, '%Y-%m')"))
 			->get();
 
@@ -300,18 +300,18 @@ class DashboardController extends Controller
 
 	private function VisitMonthly($request, $months, $client_id) {
 		$month = implode("', '", $months['month']);
-		$visitor = DB::table('tvisitors as a')
+		$visitor = DB::table('login_by_qr as a')
             ->select([
-                DB::raw("DATE_FORMAT(a.date, '%Y-%m') as month"),
-                DB::raw('COUNT(DISTINCT a.id) as visitor')
+                DB::raw("DATE_FORMAT(a.created_at, '%Y-%m') as month"),
+                DB::raw('COUNT(DISTINCT a.uuid) as visitor')
 				
             ])
 			->join('tclient as b', function($join) {
 				$join->on('a.client_id', '=', 'b.client_id');
 			})
-            ->whereRaw("DATE_FORMAT(a.date, '%Y-%m') IN ('$month')")
+            ->whereRaw("DATE_FORMAT(a.created_at, '%Y-%m') IN ('$month')")
             ->whereIn('a.client_id', $client_id)
-			->when($request->provinsi != '', function($query) use ($request) {
+			/* ->when($request->provinsi != '', function($query) use ($request) {
 				$query->where('b.provinsi_id', $request->provinsi);
 			})
 			->when($request->kabupaten != '', function($query) use ($request) {
@@ -319,8 +319,8 @@ class DashboardController extends Controller
 			})
 			->when($request->wl != '', function($query) use ($request) {
 				$query->where('b.instansi_name', $request->wl);
-			})
-			->groupBy(DB::raw("DATE_FORMAT(date, '%Y-%m')"))
+			}) */
+			->groupBy(DB::raw("DATE_FORMAT(a.created_at, '%Y-%m')"))
 			->get();
 
 		$result = collect($months['month'])->map(function($month) use ($visitor) {
@@ -336,10 +336,10 @@ class DashboardController extends Controller
 
 	private function GrowthMember($request, $months, $client_id) {
 		$month = implode("', '", $months['month']);
-		$visitor = DB::table('users as a')
+		$visitor = DB::table('login_by_qr as a')
             ->select([
                 DB::raw("DATE_FORMAT(a.created_at, '%Y-%m') as month"),
-                DB::raw('COUNT(DISTINCT a.id) as visitor')
+                DB::raw('COUNT(DISTINCT a.uuid) as visitor')
 				
             ])
 			->join('tclient as b', function($join) {
@@ -347,7 +347,7 @@ class DashboardController extends Controller
 			})
             ->whereRaw("DATE_FORMAT(a.created_at, '%Y-%m') IN ('$month')")
             ->whereIn('a.client_id', $client_id)
-			->when($request->provinsi != '', function($query) use ($request) {
+			/* ->when($request->provinsi != '', function($query) use ($request) {
 				$query->where('b.provinsi_id', $request->provinsi);
 			})
 			->when($request->kabupaten != '', function($query) use ($request) {
@@ -355,7 +355,7 @@ class DashboardController extends Controller
 			})
 			->when($request->wl != '', function($query) use ($request) {
 				$query->where('b.instansi_name', $request->wl);
-			})
+			}) */
 			->groupBy(DB::raw("DATE_FORMAT(a.created_at, '%Y-%m')"))
 			->get();
 
@@ -371,10 +371,10 @@ class DashboardController extends Controller
 	}
 
 	private function TopMemberRead($request, $client_id) {
-		$member = DB::table('ttrx_read as a')
+		$member = DB::table('ttrx_read_titik_baca as a')
             ->select([
 				'a.user_id',
-				'c.name',
+				'a.uuid as name',
                 DB::raw('SEC_TO_TIME(SUM(TIMESTAMPDIFF(SECOND, start_read, end_read))) as totalJam')
 				
             ])
@@ -386,7 +386,7 @@ class DashboardController extends Controller
 			})
             ->whereRaw("DATE_FORMAT(a.created_at, '%Y-%m') = '$request->date'")
             ->whereIn('a.client_id', $client_id)
-			->when($request->provinsi != '', function($query) use ($request) {
+			/* ->when($request->provinsi != '', function($query) use ($request) {
 				$query->where('b.provinsi_id', $request->provinsi);
 			})
 			->when($request->kabupaten != '', function($query) use ($request) {
@@ -394,8 +394,8 @@ class DashboardController extends Controller
 			})
 			->when($request->wl != '', function($query) use ($request) {
 				$query->where('b.instansi_name', $request->wl);
-			})
-			->groupBy('a.user_id', 'c.name')
+			}) */
+			->groupBy('a.user_id', 'a.uuid')
 			->orderByRaw('SEC_TO_TIME(SUM(TIMESTAMPDIFF(SECOND, start_read, end_read))) DESC')
 			->limit(10)
 			->get();
@@ -404,7 +404,7 @@ class DashboardController extends Controller
 	}
 
 	private function TopBookRead($request, $client_id) {
-		$book = DB::table('ttrx_read as a')
+		$book = DB::table('ttrx_read_titik_baca as a')
             ->select([
 				'a.book_id',
 				'c.title',
@@ -420,7 +420,7 @@ class DashboardController extends Controller
 			})
             ->whereRaw("DATE_FORMAT(a.start_read, '%Y-%m') = '$request->date'")
             ->whereIn('a.client_id', $client_id)
-			->when($request->provinsi != '', function($query) use ($request) {
+			/* ->when($request->provinsi != '', function($query) use ($request) {
 				$query->where('b.provinsi_id', $request->provinsi);
 			})
 			->when($request->kabupaten != '', function($query) use ($request) {
@@ -428,7 +428,7 @@ class DashboardController extends Controller
 			})
 			->when($request->wl != '', function($query) use ($request) {
 				$query->where('b.instansi_name', $request->wl);
-			})
+			}) */
 			->groupBy('a.book_id', 'c.title', 'c.cover')
 			->orderByRaw('COUNT(DISTINCT a.user_id) DESC')
 			->limit(10)
