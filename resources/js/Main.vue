@@ -4,7 +4,7 @@
             <headerItems :isAuthenticated="isAuthenticated" :name="user.name" :avatar="user.avatar" :appname="appname" :register="param.register" :additional_features="param.additional_features"></headerItems>
         
             <div class="content-wrapper container">
-                <router-view :isAuthenticated="isAuthenticated" :register="param.register"  :additional_features="param.additional_features"></router-view>
+                <router-view :isAuthenticated="isAuthenticated" :register="param.register" :additional_features="param.additional_features"></router-view>
             </div>
 
             <nav class="navbar-dark navbar-expand d-block d-xs-block d-xl-none fixed-bottom" role="navigation" style="border-radius: 10px 10px 0 0 !important;  background: rgb(21,47,74); background: linear-gradient(180deg, rgba(21,47,74,1) 0%, rgba(69,62,190,1) 100%);">
@@ -45,6 +45,13 @@
                     </template>
                 </ul>
             </nav>
+
+            <template v-if="param.online">
+            <button class="floating-btn" @click="goOnline" title="Ke Mode Online">
+                <i class="bi bi-cloud-upload"></i>
+            </button>
+            </template>
+
             <footer class="bottom-mobile">
                 <footerItems></footerItems>
             </footer>
@@ -93,7 +100,8 @@ export default {
             },
             param: {
                 register: true,
-				additional_features: 0
+				additional_features: 0,
+				online: false
             },
             appname: '',
             searchQuery: '',
@@ -159,8 +167,9 @@ export default {
 
             axios.get('/getParam')
             .then((response) => {
-                this.param.register = (response.data.reg_member==1) ? true : false;
-                this.param.additional_features = parseInt(response.data.additional_features);
+                this.param.register             = (response.data.reg_member==1) ? true : false;
+                this.param.additional_features  = parseInt(response.data.additional_features);
+                this.param.online               = response.data.online;
             })
             .catch((e) => {
                 console.error(e)
@@ -188,6 +197,18 @@ export default {
                     e.preventDefault()
                 })
             })
+        },
+
+        goOnline() {
+            sessionStorage.setItem("fromOffline", "Y");
+            const url_online = import.meta.env.VITE_URL_ONLINE
+
+            window.location.replace(url_online);
+
+            setTimeout(() => {
+                history.pushState(null, '', window.location.href);
+                window.onpopstate = () => history.go(1);
+            }, 500);
         }
     },
 
@@ -234,6 +255,31 @@ export default {
         .bottom-mobile {
             margin-bottom: 45px;
         }
+
+        body:has(.navbar-dark.navbar-expand.d-block.d-xs-block.d-xl-none.fixed-bottom) .floating-btn {
+            bottom: 70px;
+        }
     }
 
+    .floating-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 56px;
+        height: 56px;
+        font-size: 22px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        cursor: pointer;
+        z-index: 9999;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .floating-btn:hover {
+        transform: scale(1.1);
+        background-color: #0056b3;
+    }
 </style>

@@ -698,6 +698,20 @@ class MainController extends Controller
 				return $item->value;
 			});
 
+        $serverIps  = [$this->getServerIp(), '127.0.0.1', 'localhost', '::1'];
+        $userIp     = request()->ip();
+
+        // \Log::info('Server IP: ' . print_r($serverIps, true));
+        // \Log::info('User IP: ' . $userIp);
+
+        $isServer   = in_array($userIp, $serverIps);
+
+        if ($isServer) {
+            $results['online'] = true;  
+        }else{
+            $results['online'] = false;
+        }
+
         return response()->json($results, 200);
     }
 
@@ -823,6 +837,9 @@ class MainController extends Controller
             ->join('tbook_category as c', function($join) {
                 $join->on('b.category_id', '=', 'c.id');
             })
+            ->join('tmapping_book as a', function($join) {
+                $join->on('a.book_id', '=', 'b.book_id');
+            })
             ->when($parameter != '', function($query) use ($parameter) {
 				$query->where(function($query) use ($parameter) {
 					$query->where('b.writer', 'LIKE', '%' . $parameter . '%')
@@ -833,6 +850,7 @@ class MainController extends Controller
             ->when(count($category)>0, function($query) use ($category) {
 				$query->whereIn('b.category_id', $category);
 			})
+            ->where('a.client_id', '=', $this->client_id)
             ->whereRaw("b.book_id IN ('A1','A2','A3')")
             ->get()
             ->map(function ($value) {
@@ -883,6 +901,9 @@ class MainController extends Controller
             ->join('tbook_category as c', function($join) {
                 $join->on('b.category_id', '=', 'c.id');
             })
+            ->join('tmapping_book as a', function($join) {
+                $join->on('a.book_id', '=', 'b.book_id');
+            })
             ->when($parameter != '', function($query) use ($parameter) {
 				$query->where(function($query) use ($parameter) {
 					$query->where('b.writer', 'LIKE', '%' . $parameter . '%')
@@ -893,6 +914,7 @@ class MainController extends Controller
             ->when(count($category)>0, function($query) use ($category) {
 				$query->whereIn('b.category_id', $category);
 			})
+            ->where('a.client_id', '=', $this->client_id)
             ->whereRaw("b.book_id IN ('B1','B2','B3')")
             ->get()
             ->map(function ($value) {
@@ -1106,4 +1128,20 @@ class MainController extends Controller
 			->where('a.user_id', '=', $user_id)
 			->first();
 	}
+
+    private function getServerIp()
+    {
+        $serverIp = request()->server('SERVER_ADDR');
+
+        if (empty($serverIp)) {
+            $hostname = gethostname();
+            $serverIp = gethostbyname($hostname);
+        }
+
+        if ($serverIp === $hostname || $serverIp === 'localhost') {
+            $serverIp = '127.0.0.1';
+        }
+
+        return $serverIp;
+    }
 }
