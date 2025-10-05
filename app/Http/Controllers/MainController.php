@@ -823,6 +823,9 @@ class MainController extends Controller
             ->join('tbook_category as c', function($join) {
                 $join->on('b.category_id', '=', 'c.id');
             })
+            ->join('tmapping_book_titik_baca as a', function($join) {
+                $join->on('a.book_id', '=', 'b.book_id');
+            })
             ->when($parameter != '', function($query) use ($parameter) {
 				$query->where(function($query) use ($parameter) {
 					$query->where('b.writer', 'LIKE', '%' . $parameter . '%')
@@ -833,6 +836,7 @@ class MainController extends Controller
             ->when(count($category)>0, function($query) use ($category) {
 				$query->whereIn('b.category_id', $category);
 			})
+            ->where('a.client_id', '=', $this->client_id)
             ->whereRaw("b.book_id IN ('A1','A2','A3')")
             ->get()
             ->map(function ($value) {
@@ -883,6 +887,9 @@ class MainController extends Controller
             ->join('tbook_category as c', function($join) {
                 $join->on('b.category_id', '=', 'c.id');
             })
+            ->join('tmapping_book_titik_baca as a', function($join) {
+                $join->on('a.book_id', '=', 'b.book_id');
+            })
             ->when($parameter != '', function($query) use ($parameter) {
 				$query->where(function($query) use ($parameter) {
 					$query->where('b.writer', 'LIKE', '%' . $parameter . '%')
@@ -893,6 +900,7 @@ class MainController extends Controller
             ->when(count($category)>0, function($query) use ($category) {
 				$query->whereIn('b.category_id', $category);
 			})
+            ->where('a.client_id', '=', $this->client_id)
             ->whereRaw("b.book_id IN ('B1','B2','B3')")
             ->get()
             ->map(function ($value) {
