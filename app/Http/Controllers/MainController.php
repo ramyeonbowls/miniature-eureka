@@ -698,6 +698,20 @@ class MainController extends Controller
 				return $item->value;
 			});
 
+        $serverIps  = [$this->getServerIp(), '127.0.0.1', 'localhost', '::1'];
+        $userIp     = request()->ip();
+
+        // \Log::info('Server IP: ' . print_r($serverIps, true));
+        // \Log::info('User IP: ' . $userIp);
+
+        $isServer   = in_array($userIp, $serverIps);
+
+        if ($isServer) {
+            $results['online'] = true;  
+        }else{
+            $results['online'] = false;
+        }
+
         return response()->json($results, 200);
     }
 

@@ -46,9 +46,9 @@
                 </ul>
             </nav>
 
-            <template v-if="param.fromOffline">
-                <button class="floating-btn" @click="goOffline" title="Ke Mode Offline">
-                    <i class="bi bi-cloud-slash"></i>
+            <template v-if="param.online">
+                <button class="floating-btn" @click="goOnline" title="Ke Mode Online">
+                    <i class="bi bi-cloud-upload"></i>
                 </button>
             </template>
 
@@ -92,13 +92,6 @@ export default {
         footerItems,
     },
 
-    created() {
-        const fromOffline = sessionStorage.getItem("fromOffline");
-        if (fromOffline === "Y") {
-            this.param.fromOffline = true;
-        }
-    },
-
     data() {
         return {
             user: {
@@ -108,7 +101,7 @@ export default {
             param: {
                 register: true,
 				additional_features: 0,
-                fromOffline: false
+				online: false
             },
             appname: '',
             appnameSet: false,
@@ -186,8 +179,9 @@ export default {
 
             axios.get('/getParam')
             .then((response) => {
-                this.param.register = (response.data.reg_member==1) ? true : false;
-                this.param.additional_features = parseInt(response.data.additional_features);
+                this.param.register             = (response.data.reg_member==1) ? true : false;
+                this.param.additional_features  = parseInt(response.data.additional_features);
+                this.param.online               = response.data.online;
             })
             .catch((e) => {
                 console.error(e)
@@ -217,11 +211,11 @@ export default {
             })
         },
 
-        goOffline() {
-            sessionStorage.removeItem("fromOffline");
+        goOnline() {
+            sessionStorage.setItem("fromOffline", "Y");
+            const url_online = import.meta.env.VITE_URL_ONLINE
 
-            const url_offline = import.meta.env.VITE_URL_OFFLINE
-            window.location.replace(url_offline);
+            window.location.replace(url_online);
 
             setTimeout(() => {
                 history.pushState(null, '', window.location.href);
