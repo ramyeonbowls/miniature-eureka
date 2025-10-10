@@ -45,6 +45,13 @@
                     </template>
                 </ul>
             </nav>
+
+            <template v-if="param.fromOffline">
+                <button class="floating-btn" @click="goOffline" title="Ke Mode Offline">
+                    <i class="bi bi-cloud-slash"></i>
+                </button>
+            </template>
+
             <footer class="bottom-mobile">
                 <footerItems></footerItems>
             </footer>
@@ -85,6 +92,13 @@ export default {
         footerItems,
     },
 
+    created() {
+        const fromOffline = sessionStorage.getItem("fromOffline");
+        if (fromOffline === "Y") {
+            this.param.fromOffline = true;
+        }
+    },
+
     data() {
         return {
             user: {
@@ -93,7 +107,8 @@ export default {
             },
             param: {
                 register: true,
-				additional_features: 0
+				additional_features: 0,
+                fromOffline: false
             },
             appname: '',
             appnameSet: false,
@@ -200,6 +215,18 @@ export default {
                     e.preventDefault()
                 })
             })
+        },
+
+        goOffline() {
+            sessionStorage.removeItem("fromOffline");
+
+            const url_offline = import.meta.env.VITE_URL_OFFLINE
+            window.location.replace(url_offline);
+
+            setTimeout(() => {
+                history.pushState(null, '', window.location.href);
+                window.onpopstate = () => history.go(1);
+            }, 500);
         }
     },
 
@@ -256,6 +283,32 @@ export default {
         .bottom-mobile {
             margin-bottom: 45px;
         }
+
+        body:has(.navbar-dark.navbar-expand.d-block.d-xs-block.d-xl-none.fixed-bottom) .floating-btn {
+            bottom: 70px;
+        }
+    }
+
+    .floating-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 56px;
+        height: 56px;
+        font-size: 22px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        cursor: pointer;
+        z-index: 9999;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .floating-btn:hover {
+        transform: scale(1.1);
+        background-color: #0056b3;
     }
 
 </style>
