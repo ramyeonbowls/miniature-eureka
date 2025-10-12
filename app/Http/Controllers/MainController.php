@@ -1128,4 +1128,20 @@ class MainController extends Controller
 			->where('a.user_id', '=', $user_id)
 			->first();
 	}
+
+    private function getServerIp()
+    {
+        $serverIp = request()->server('SERVER_ADDR');
+
+        if (empty($serverIp)) {
+            $hostname = gethostname();
+            $serverIp = gethostbyname($hostname);
+        }
+
+        if ($serverIp === $hostname || $serverIp === 'localhost') {
+            $serverIp = '127.0.0.1';
+        }
+
+        return $serverIp;
+    }
 }
