@@ -211,17 +211,47 @@ export default {
             })
         },
 
-        goOnline() {
+        async goOnline() {
             const url_online = import.meta.env.VITE_URL_ONLINE;
             const redirectUrl = `${url_online}?fromOffline=Y`;
+            const hasInternet = await this.checkInternetConnection(url_online);
 
-            window.location.replace(redirectUrl);
+            if (hasInternet) {
 
-            setTimeout(() => {
-                history.pushState(null, '', window.location.href);
-                window.onpopstate = () => history.go(1);
-            }, 500);
+                window.location.replace(redirectUrl);
+
+                setTimeout(() => {
+                    history.pushState(null, '', window.location.href);
+                    window.onpopstate = () => history.go(1);
+                }, 500);
+            } else {
+                this.$swal({
+                    toast: true,
+                    icon: 'warning',
+                    text: 'Tidak ada koneksi internet. Silakan periksa koneksi Anda dan coba lagi.'
+                });
+            }
+        },
+
+        async checkInternetConnection(pingUrl = "https://www.google.com/favicon.ico") {
+        try {
+            if (!navigator.onLine) return false;
+
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 3000);
+
+            const response = await fetch(pingUrl, {
+                method: "HEAD",
+                mode: "no-cors",
+                signal: controller.signal
+            });
+
+            clearTimeout(timeout);
+            return true;
+        } catch (error) {
+            return false;
         }
+    }
     },
 
     watch: {

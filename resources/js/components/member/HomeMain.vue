@@ -99,7 +99,7 @@
                         <div class="col-12">
                             <swiper
                                 :modules="modules"
-                                :slides-per-view="6"
+                                :slides-per-view="5"
                                 :space-between="0"
                                 :breakpoints="swiperBreakpoints"
                                 navigation
@@ -154,7 +154,7 @@
                         <div class="col-12">
                             <swiper
                                 :modules="modules"
-                                :slides-per-view="6"
+                                :slides-per-view="5"
                                 :space-between="0"
                                 :breakpoints="swiperBreakpoints"
                                 navigation
@@ -209,7 +209,7 @@
                         <div class="col-12">
                             <swiper
                                 :modules="modules"
-                                :slides-per-view="6"
+                                :slides-per-view="5"
                                 :space-between="0"
                                 :breakpoints="swiperBreakpoints"
                                 navigation
@@ -886,7 +886,7 @@ export default {
                     spaceBetween: 10
                 },
                 1024: {
-                    slidesPerView: 6,
+                    slidesPerView: 5,
                     spaceBetween: 10
                 }
             },
