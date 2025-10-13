@@ -136,6 +136,7 @@ export default {
                 return new bootstrap.Tooltip(tooltipTriggerEl)
             })
         }, false);
+        console.log(this.param.fromOffline);
     },
 
     methods: {
