@@ -93,9 +93,18 @@ export default {
     },
 
     created() {
-        const fromOffline = sessionStorage.getItem("fromOffline");
-        if (fromOffline === "Y") {
+        const urlParams = new URLSearchParams(window.location.search);
+        const fromOffline = urlParams.get('fromOffline');
+
+        if (fromOffline === 'Y') {
             this.param.fromOffline = true;
+            document.cookie = "fromOffline=Y; path=/; Secure; SameSite=None";
+            window.history.replaceState({}, document.title, window.location.pathname);
+        } else {
+            const cookies = Object.fromEntries(document.cookie.split('; ').map(c => c.split('=')));
+            if (cookies.fromOffline === 'Y') {
+                this.param.fromOffline = true;
+            }
         }
     },
 
@@ -136,7 +145,6 @@ export default {
                 return new bootstrap.Tooltip(tooltipTriggerEl)
             })
         }, false);
-        console.log(this.param.fromOffline);
     },
 
     methods: {
@@ -219,7 +227,7 @@ export default {
         },
 
         goOffline() {
-            sessionStorage.removeItem("fromOffline");
+            document.cookie = "fromOffline=N; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; Secure; SameSite=None";
 
             const url_offline = import.meta.env.VITE_URL_OFFLINE
             window.location.replace(url_offline);
