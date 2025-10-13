@@ -212,10 +212,10 @@ export default {
         },
 
         goOnline() {
-            sessionStorage.setItem("fromOffline", "Y");
-            const url_online = import.meta.env.VITE_URL_ONLINE
+            const url_online = import.meta.env.VITE_URL_ONLINE;
+            const redirectUrl = `${url_online}?fromOffline=Y`;
 
-            window.location.replace(url_online);
+            window.location.replace(redirectUrl);
 
             setTimeout(() => {
                 history.pushState(null, '', window.location.href);
