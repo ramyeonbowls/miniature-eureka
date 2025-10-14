@@ -1130,18 +1130,24 @@ class MainController extends Controller
 	}
 
     private function getServerIp()
-    {
-        $serverIp = request()->server('SERVER_ADDR');
+{
+    // Pastikan hostname selalu tersedia
+    $hostname = gethostname();
 
-        if (empty($serverIp)) {
-            $hostname = gethostname();
-            $serverIp = gethostbyname($hostname);
-        }
+    // Ambil IP dari server
+    $serverIp = request()->server('SERVER_ADDR');
 
-        if ($serverIp === $hostname || $serverIp === 'localhost') {
-            $serverIp = '127.0.0.1';
-        }
-
-        return $serverIp;
+    // Jika tidak ada, ambil dari hostname
+    if (empty($serverIp)) {
+        $serverIp = gethostbyname($hostname);
     }
+
+    // Jika IP sama dengan hostname atau localhost, pakai 127.0.0.1
+    if ($serverIp === $hostname || $serverIp === 'localhost') {
+        $serverIp = '127.0.0.1';
+    }
+
+    return $serverIp;
+}
+
 }
