@@ -14,7 +14,7 @@
             </template>
 
             <footer class="bottom-mobile">
-                <footerItems></footerItems>
+                <footerItems :isAuthenticated="isAuthenticated"></footerItems>
             </footer>
         </div>
 
@@ -802,6 +802,10 @@ export default {
         padding-bottom: max(4.5rem, calc(env(safe-area-inset-bottom) + 3.5rem));
     }
 
+    #main.member-layout:has(.pagination-float) :deep(.mobile-bottom-nav) {
+        display: none;
+    }
+
     .menu-item {
         color: var(--member-muted);
         text-decoration: none;
@@ -851,18 +855,28 @@ export default {
         #app-usr :deep(.content-wrapper) {
             min-height: 0;
             margin: 68px 0 0;
-            padding: 1.5rem clamp(1rem, 4vw, 2rem) 3rem;
+            padding: 1.5rem clamp(1rem, 4vw, 2rem) calc(6rem + env(safe-area-inset-bottom));
         }
 
         #app-usr :deep(.bottom-mobile) {
+            position: fixed;
+            z-index: 1030;
+            right: 0;
+            bottom: 0;
+            left: 0;
             margin-left: 0;
-            padding-inline: clamp(1rem, 4vw, 2rem);
+            padding: 0 clamp(.5rem, 2vw, 1rem) max(.5rem, env(safe-area-inset-bottom));
+            pointer-events: none;
+        }
+
+        #app-usr :deep(.bottom-mobile .container) {
+            pointer-events: auto;
         }
     }
 
     @media (max-width: 575px) {
         #app-usr :deep(.content-wrapper) {
-            padding: 1rem .875rem max(3rem, calc(env(safe-area-inset-bottom) + 2rem));
+            padding: 1rem .875rem calc(6rem + env(safe-area-inset-bottom));
         }
 
         #app-usr :deep(.page-content > section),
