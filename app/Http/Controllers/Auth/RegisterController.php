@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Logs;
 use Carbon\Carbon;
 use App\Models\User;
-use App\NetworkHelper;
 use App\Models\Parameter;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -64,6 +63,10 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'phone' => ['required', 'string', 'max:15'],
+            'birthday' => ['required', 'date_format:Y-m-d'],
+            'gender' => ['required', 'string', 'in:L,P'],
+            'nik' => ['nullable', 'string', 'max:20'],
         ]);
     }
 
@@ -89,8 +92,6 @@ class RegisterController extends Controller
     {
         $this->validator($request->all())->validate();
 
-        // Begin transaction
-        \DB::beginTransaction();
         // $logs = new Logs( Arr::last(explode("\\", get_class())) );
         // $logs->write(__FUNCTION__, "START");
         // DB::enableQueryLog();
@@ -99,21 +100,18 @@ class RegisterController extends Controller
             ->where('name', 'reg_member')
             ->first();
 
-        if(!$registrasi->value){
+        if(!$registrasi || !$registrasi->value){
             return response()->json('Pendaftaran ditutup, silahkan hubungi petugas perpustakaan.', 500);
         }
 
         try {
+            DB::beginTransaction();
             $flag_approve = Parameter::where('client_id', $this->client_id)
             ->where('name', 'app_reg_member')
             ->first();
 
-            $request['flag_approve'] = 'Y';
-            if($flag_approve->value){
-                $request['flag_approve'] = 'N';
-            }else{
-                $request['flag_approve'] = 'Y';
-            }
+            $request['flag_approve'] = $flag_approve && $flag_approve->value ? 'N' : 'Y';
+            $request['role'] = 'member';
 
             $user = $this->create($request->all());
 
@@ -138,25 +136,23 @@ class RegisterController extends Controller
             // $logs->write(__FUNCTION__, "STOP\r\n");
             \DB::commit();
 
-            if (NetworkHelper::hasInternetConnection()) {
-				event(new Registered($user));
-
-            	$user->sendEmailVerificationNotification();
-				$message = 'Pendaftaran berhasil! Silahkan konfirmasi email anda.';
-				$statusCode = 201;
-			} else {
-				Log::warning('Email verification could not be sent for user ' . $user->email . ' because there is no internet connection.');
-				$message = 'Pendaftaran berhasil!.';
-				$statusCode = 201;
-			}
-
-            return response()->json($message, $statusCode);
         } catch (\Exception $e) {
             // $logs->write('error', $e);
             // $logs->write(__FUNCTION__, "STOP\r\n");
             \DB::rollBack();
+            Log::error('Pendaftaran member gagal.', ['exception' => $e]);
 
             return response()->json('Pendaftaran gagal! Silahkan coba lagi.', 500);
         }
+
+        try {
+            event(new Registered($user));
+        } catch (\Throwable $e) {
+            Log::error('Email verifikasi gagal dikirim.', ['exception' => $e, 'user_id' => $user->id]);
+
+            return response()->json('Pendaftaran berhasil, tetapi email verifikasi gagal dikirim. Silakan masuk untuk meminta pengiriman ulang email verifikasi.', 201);
+        }
+
+        return response()->json('Pendaftaran berhasil! Silakan verifikasi email sebelum masuk.', 201);
     }
 }

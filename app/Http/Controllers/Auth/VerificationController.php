@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\Verified;
-use Illuminate\Foundation\Auth\User;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -60,24 +60,31 @@ class VerificationController extends Controller
         if ($user->hasVerifiedEmail()) {
             return $request->wantsJson()
                         ? new JsonResponse([], 204)
-                        : redirect($this->redirectPath())->with('verified', true);
+                        : redirect($user->role === 'member' ? '/mlogin' : '/login')->with('verified', true);
         }
 
         if ($user->markEmailAsVerified()) {
             event(new Verified($user));
 
-            if ($user->flag_approve === 'Y') {
-                Auth::login($user);
-            } else {
+            if ($user->flag_approve !== 'Y') {
+                if (Auth::check() && Auth::id() === $user->id) {
+                    Auth::logout();
+                    $request->session()->invalidate();
+                    $request->session()->regenerateToken();
+                }
                 return $request->wantsJson()
                         ? new JsonResponse(['message' => 'Akun anda belum di approve, silahkan hubungi petugas perpustakaan.'], 403)
                         : redirect($this->redirectPath())->withErrors(['email' => 'Akun anda belum di approve, silahkan hubungi petugas perpustakaan.']);
             }
         }
 
+        if (Auth::check() && Auth::id() === $user->id) {
+            return redirect($user->role === 'member' ? '/' : '/admin')->with('verified', true);
+        }
+
         return $request->wantsJson()
                     ? new JsonResponse([], 204)
-                    : redirect($this->redirectPath())->with('verified', true);
+                    : redirect($user->role === 'member' ? '/mlogin' : '/login')->with('verified', true);
     }
 
     /**

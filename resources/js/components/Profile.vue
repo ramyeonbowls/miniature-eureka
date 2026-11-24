@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="alert alert-danger fade show" role="alert" v-if="change_request =='Y'">
-                    Perubahan data sedang diajukan, anda tidak bisa mengajukan perubahan sebelum permintaan sebelumnya di setujui.
+                    Perubahan data sedang diajukan. Perubahan berikutnya akan memperbarui pengajuan tersebut.
                 </div>
                 <div class="card">
                     <div class="card-body">
@@ -94,10 +94,11 @@
                                         <label for="phone" class="form-label">Nama Pengelola (Admin) <small class="text-danger">*</small></label>
                                         <input type="text" name="phone" id="phone" class="form-control" v-model="form.field.info.administrator_name" placeholder="Nama Pengelola" />
                                     </div>
-                                    <!-- <div class="form-group">
-                                        <label for="email" class="form-label">E-Mail Pengelola (Admin) </label>
-                                        <input type="text" name="email" id="email" class="form-control" v-model="user.email" placeholder="E-Mail Pengelola" readonly/>
-                                    </div> -->
+                                    <div class="form-group">
+                                        <label for="client-email" class="form-label">E-Mail</label>
+                                        <input type="email" name="email" id="client-email" class="form-control" :class="{'is-invalid': errors.email}" v-model="form.field.info.email" placeholder="E-Mail" />
+                                        <div v-if="errors.email" class="invalid-feedback">{{ errors.email[0] }}</div>
+                                    </div>
                                     <div class="form-group">
                                         <label for="password-column">Kata Sandi</label>
                                         <div class="form-group position-relative has-icon-left mb-4">
@@ -145,7 +146,7 @@
                             </div>
                             <div class="col-md-12 mb-4">
                                 <div class="form-group my-2 d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary" :disabled="(change_request =='Y') ? true : false">Simpan Perubahan</button>
+                                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                                 </div>
                             </div>
                         </form>
@@ -430,6 +431,7 @@ export default {
         },
 
         async handleUpdateProfile() {
+            this.errors = {};
             if(this.form.field.info.password!=''){
                 if (this.form.field.info.password !== this.form.field.info.passwordConfirm) {
                     this.errors.passwordConfirm = ['Kata sandi tidak sesuai!'];
@@ -460,7 +462,7 @@ export default {
             })
             .catch(error => {
                 loader.hide();
-                if (error.response && error.response.status === 400) {
+                if (error.response && [400, 422].includes(error.response.status)) {
                     this.errors = error.response.data.errors;
                     let errorMessages = '';
 

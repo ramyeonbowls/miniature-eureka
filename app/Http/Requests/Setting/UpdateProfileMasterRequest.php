@@ -8,6 +8,13 @@ use Illuminate\Validation\Rule;
 
 class UpdateProfileMasterRequest extends FormRequest
 {
+    protected function prepareForValidation(): void
+    {
+        if ($this->input('email') === 'null') {
+            $this->merge(['email' => null]);
+        }
+    }
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -37,6 +44,7 @@ class UpdateProfileMasterRequest extends FormRequest
             'pos_sign_name' => 'required|string|max:50',
             'administrator_name' => 'required|string|max:50',
             'administrator_phone' => 'required|string|max:20',
+            'email' => 'nullable|email|max:255',
             'updated_at' => 'nullable',
             'country_id' => 'string|max:25'
         ];
@@ -63,6 +71,7 @@ class UpdateProfileMasterRequest extends FormRequest
             'pos_sign_name' => 'Jabatan Penandatangan MOU',
             'administrator_name' => 'Nama Pengelola (Admin)',
             'administrator_phone' => 'Nomor HP Pengelola (Admin)',
+            'email' => 'Email',
             'country_id' => 'Negara'
         ];
     }

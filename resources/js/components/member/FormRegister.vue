@@ -15,10 +15,11 @@
                         <div class="form-group">
                             <label for="name-column">Nama Lengkap</label>
                             <div class="form-group position-relative has-icon-left mb-4">
-                                <input type="text" class="form-control form-control-md" placeholder="Nama Lengkap" v-model="name" required/>
+                                <input type="text" class="form-control form-control-md" :class="{'is-invalid': errors.name}" placeholder="Nama Lengkap" v-model="name" required/>
                                 <div class="form-control-icon">
                                     <i class="bi bi-person"></i>
                                 </div>
+                                <div v-if="errors.name" class="invalid-feedback">{{ errors.name[0] }}</div>
                             </div>
                         </div>
                     </div>
@@ -32,27 +33,30 @@
                                 </div>
                                 <div v-if="errors.email" class="invalid-feedback">{{ errors.email[0] }}</div>
                             </div>
+                            <p class="email-note">Gunakan email yang valid dan aktif. Kami akan mengirim tautan verifikasi ke email ini, dan akun baru dapat digunakan setelah email dikonfirmasi. Periksa juga folder Spam jika email belum masuk.</p>
                         </div>
                     </div>
                     <div class="col-md-6 col-12">
                         <div class="form-group">
                             <label for="no-hp-column">No. HP</label>
                             <div class="form-group position-relative has-icon-left mb-4">
-                                <input type="text" id="phoneNumberInput" class="form-control form-control-md" placeholder="No. Handphone" maxlength="15" required v-model="phone" @input="filterInput($event, 'phone')" />
+                                <input type="text" id="phoneNumberInput" class="form-control form-control-md" :class="{'is-invalid': errors.phone}" placeholder="No. Handphone" maxlength="15" required v-model="phone" @input="filterInput($event, 'phone')" />
                                 <div class="form-control-icon">
                                     <i class="bi bi-phone"></i>
                                 </div>
+                                <div v-if="errors.phone" class="invalid-feedback">{{ errors.phone[0] }}</div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6 col-12">
                         <div class="form-group">
                             <label for="jenis-kelamin-floating">Jenis Kelamin</label>
-                            <select class="form-select" id="gender" v-model="gender" required>
+                            <select class="form-select" :class="{'is-invalid': errors.gender}" id="gender" v-model="gender" required>
                                 <option value="">--</option>
                                 <option value="L">Laki - Laki</option>
                                 <option value="P">Perempuan</option>
                             </select>
+                            <div v-if="errors.gender" class="invalid-feedback">{{ errors.gender[0] }}</div>
                         </div>
                     </div>
                     <div class="col-md-6 col-12">
@@ -64,6 +68,7 @@
                                     <i class="bi bi-calendar3"></i>
                                 </div>
                                 <span v-if="errors.isBirthdayValid" class="text-danger">{{ errors.isBirthdayValid[0] }}</span>
+                                <span v-if="errors.birthday" class="text-danger">{{ errors.birthday[0] }}</span>
                             </div>
                         </div>
                     </div>
@@ -75,6 +80,7 @@
                                 <div class="form-control-icon">
                                     <i class="bi bi-credit-card"></i>
                                 </div>
+                                <div v-if="errors.nik" class="text-danger">{{ errors.nik[0] }}</div>
                             </div>
                         </div>
                     </div>
@@ -177,6 +183,7 @@ export default {
         },
 
         async handleRegister() {
+            this.errors = {};
             if (this.password !== this.passwordConfirm) {
                 this.errors.passwordConfirm = ['Kata sandi tidak sesuai!'];
                 return;
@@ -215,8 +222,12 @@ export default {
                 });
             })
             .catch(error => {
-                let err = (error.response.data.message ? error.response.data.message : (error.response.data) ? error.response.data : error.message);
                 loader.hide();
+                if (error.response && error.response.status === 422) {
+                    this.errors = error.response.data.errors || {};
+                    return;
+                }
+                let err = error.response?.data?.message || error.response?.data || error.message;
                 this.$swal({
                     title: "Pendaftaran",
                     text: err,
@@ -309,6 +320,13 @@ export default {
 
 .register-form .form-control-icon {
     color: var(--member-muted, #64716c);
+}
+
+.email-note {
+    padding: .65rem .8rem;
+    border-left: 3px solid var(--member-accent, #236b58);
+    background: var(--member-soft, #edf4ef);
+    font-size: .85rem;
 }
 
 .register-form button[type="submit"] {

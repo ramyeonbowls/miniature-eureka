@@ -9,24 +9,28 @@ Route::get('/form-register', function () {
     return view('formregister');
 });
 
-Route::get('/email/verify', function () {
-    return view('auth.verify-email');
-})->middleware('auth')->name('verification.notice');
-
-Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])
-    ->middleware(['signed', 'throttle:6,1'])
-    ->name('verification.verify');
-
-Route::post('/email/resend', [VerificationController::class, 'resend'])
-    ->middleware(['auth', 'throttle:6,1'])
-    ->name('verification.resend');
-
 Auth::routes([
-    'register' => true,
+    'register' => false,
     'verify' => true,
     'confirm' => true,
     'reset' => true
 ]);
+
+Route::redirect('/register', '/mregister')->name('register');
+Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'mregist']);
+
+Route::get('/email/verify/{id}/{hash}', [App\Http\Controllers\Auth\VerificationController::class, 'verify'])
+    ->middleware(['signed', 'throttle:6,1'])
+    ->name('verification.verify');
+
+Route::get('/password/success', function (Request $request) {
+    $loginPath = $request->session()->get('password_reset_login');
+    if (!in_array($loginPath, ['/mlogin', '/login'], true)) {
+        return redirect('/mlogin');
+    }
+
+    return view('auth.passwords.success', ['loginPath' => $loginPath]);
+})->name('password.success');
 
 Route::middleware('destroy.session')->group(function() {
 	Route::get('/', function () {
@@ -48,8 +52,8 @@ Route::middleware('destroy.session')->group(function() {
     Route::get('/getDetailArticle', [App\Http\Controllers\MainController::class, 'getDetailArticle'])->name('getDetailArticle');
     Route::get('/getNewCollection', [App\Http\Controllers\MainController::class, 'getNewCollection'])->name('getNewCollection');
     Route::get('/getVideo', [App\Http\Controllers\MainController::class, 'getVideo'])->name('getVideo');
-    Route::get('/getProfile', [App\Http\Controllers\ProfileController::class, 'index'])->name('getProfile');
-    Route::post('/UpdateProfile', [App\Http\Controllers\ProfileController::class, 'UpdateProfile'])->name('UpdateProfile');
+    Route::get('/getProfile', [App\Http\Controllers\ProfileController::class, 'index'])->middleware('verified')->name('getProfile');
+    Route::post('/UpdateProfile', [App\Http\Controllers\ProfileController::class, 'UpdateProfile'])->middleware('verified')->name('UpdateProfile');
     Route::get('/getAudioBook', [App\Http\Controllers\MainController::class, 'getAudioBook'])->name('getAudioBook');
     Route::get('/getVideoBook', [App\Http\Controllers\MainController::class, 'getVideoBook'])->name('getVideoBook');
     Route::get('/getDetailVideoBook', [App\Http\Controllers\MainController::class, 'getDetailVideoBook'])->name('getDetailVideoBook');
@@ -177,4 +181,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::get('/{any}', [App\Http\Controllers\MainController::class, 'index'])
     ->where('any', '.*')
     ->name('catch-all')
-    ->middleware('auth.role');
+    ->middleware(['destroy.session', 'auth.role']);

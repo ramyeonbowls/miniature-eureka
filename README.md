@@ -7,6 +7,12 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## Konfigurasi email client GIA
+
+Email verifikasi dan reset kata sandi dikirim langsung (sinkron), bukan melalui queue. Konfigurasikan SMTP, `APP_URL`, `APP_NAME`, dan `APP_LOCALE=id` pada environment client. `MAIL_SCHEME` dapat digunakan bila diperlukan oleh server SMTP. Setelah mengubah konfigurasi, perbarui cache konfigurasi jika digunakan. Supervisor atau worker queue tidak perlu dijalankan ulang untuk email client ini.
+
+Pengajuan profil disimpan di `tclient_temp` pada database platform yang ditentukan oleh `APP_DB_PLATFORM`, bukan di database client. Kolom `email` harus tersedia pada data `tclient` client dan `tclient_temp` platform, dan proses persetujuan serta sinkronisasi platform harus meneruskan kolom tersebut. Migrasi dan perubahan platform dikelola di project platform; project client ini tidak membuat tabel atau migrasi tersebut.
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:

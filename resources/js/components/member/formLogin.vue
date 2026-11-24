@@ -86,7 +86,7 @@ export default {
                     from: 'member'
                 })
                 loader.hide()
-                window.location.href = '/'
+                window.location.href = response.data.redirect || '/'
             } catch (error) {
                 loader.hide();
                 if (error.response && error.response.status === 422) {

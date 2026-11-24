@@ -89,12 +89,23 @@ class LoginController extends Controller
             	->withInput(['email' => $request->email]);
 		}
 
-        if ($user && $user->flag_approve === 'N') {
-            return response()->json(['message' => 'Akun anda belum di approve, silahkan hubungi petugas perpustakaan.'], 403);
-        }
-
-        if (Auth::attempt($request->only('email', 'password'))) {
-			return $this->authenticated($request, Auth::user());
+        if (Auth::attempt($request->only('email', 'password') + ['client_id' => $this->client_id])) {
+            $request->session()->regenerate();
+            if (!Auth::user()->hasVerifiedEmail()) {
+                return $request->expectsJson()
+                    ? response()->json(['redirect' => route('verification.notice')])
+                    : redirect()->route('verification.notice');
+            }
+            if (Auth::user()->flag_approve === 'N') {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+                return response()->json(['message' => 'Akun anda belum di approve, silahkan hubungi petugas perpustakaan.'], 403);
+            }
+            if ($request->expectsJson()) {
+                return response()->json(['redirect' => Auth::user()->role === 'member' ? '/' : '/admin']);
+            }
+            return $this->authenticated($request, Auth::user());
 		}
 
         if ($user && $user->role === 'member') {

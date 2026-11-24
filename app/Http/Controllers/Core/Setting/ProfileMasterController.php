@@ -124,6 +124,7 @@ class ProfileMasterController extends Controller
                 'pos_sign_name'         => ($request->pos_sign_name == 'null') ? null : $request->pos_sign_name,
                 'administrator_name'    => ($request->administrator_name == 'null') ? null : $request->administrator_name,
                 'administrator_phone'   => ($request->administrator_phone == 'null') ? null : $request->administrator_phone,
+                'email'                 => $request->input('email') ?: null,
                 'logo'                  => ($request->logo == 'null') ? null : $request->logo,
                 'logo_small'            => ($request->logo_small == 'null') ? null : $request->logo_small,
                 'company_id'            => ($request->company_id == 'null') ? null : $request->company_id,
@@ -135,7 +136,8 @@ class ProfileMasterController extends Controller
                 'created_at'            => Carbon::now('Asia/Jakarta')
             ];
 
-            if ($request->has('password')) {
+            DB::beginTransaction();
+            if ($request->filled('password') && $request->input('password') !== 'null') {
                 $user->update([
                     'password' => Hash::make($request->password),
                 ]);
@@ -143,6 +145,7 @@ class ProfileMasterController extends Controller
 
             $existingData = DB::table('tclient')
                 ->where('client_id', $this->client_id)
+                ->lockForUpdate()
                 ->first();
 
             if ($existingData) {
@@ -162,15 +165,29 @@ class ProfileMasterController extends Controller
                 // $logs->write("INFO change", print_r($compareData, true));
                 // $logs->write("INFO data", print_r($existingDataArray, true));
 
-                if (!empty($differences)) {
-                    $created = DB::table($this->db_platform.'tclient_temp')->insert($insertedData);
+                $pending = DB::table($this->db_platform.'tclient_temp')
+                    ->where('client_id', $this->client_id)
+                    ->where('flag_appr', 'N')
+                    ->orderByDesc('id')
+                    ->lockForUpdate()
+                    ->first();
 
-                    if ($created) {
-                        $logs->write("INFO", "Request update Successfully");
-
-                        $result['status'] = 201;
-                        $result['message'] = "Permohonan perubahan data berhasil.";
+                if ($pending || !empty($differences)) {
+                    if ($pending) {
+                        unset($insertedData['created_at']);
+                        $insertedData['updated_at'] = Carbon::now('Asia/Jakarta');
+                        DB::table($this->db_platform.'tclient_temp')
+                            ->where('id', $pending->id)
+                            ->where('client_id', $this->client_id)
+                            ->where('flag_appr', 'N')
+                            ->update($insertedData);
+                    } else {
+                        DB::table($this->db_platform.'tclient_temp')->insert($insertedData);
                     }
+                    $logs->write("INFO", "Request update Successfully");
+
+                    $result['status'] = 201;
+                    $result['message'] = "Permohonan perubahan data berhasil.";
                 }else{
                     $logs->write("INFO", "No changes detected.");
 
@@ -180,15 +197,18 @@ class ProfileMasterController extends Controller
 
             }
 
+            DB::commit();
             $queries = DB::getQueryLog();
             for ($q = 0; $q < count($queries); $q++) {
                 $logs->write('BINDING', '[' . implode(', ', $queries[$q]['bindings']) . ']');
                 $logs->write('SQL', $queries[$q]['query']);
             }
         } catch (Throwable $th) {
+            DB::rollBack();
             $logs->write("ERROR", $th->getMessage());
 
-            $result['message'] = "Failed created.<br>" . $th->getMessage();
+            $result['status'] = 500;
+            $result['message'] = "Permohonan perubahan data gagal. Silakan coba lagi.";
         }
         $logs->write(__FUNCTION__, "STOP\r\n");
 
@@ -268,6 +288,7 @@ class ProfileMasterController extends Controller
                         ->select(
                             DB::raw("case when a.flag_appr = 'N' then 'Y' else 'N' end as change_request")
                         )
+                        ->where('a.client_id', $this->client_id)
                         ->where('flag_appr', 'N')
                         ->orderBy('created_at', 'DESC')
                         ->first();
